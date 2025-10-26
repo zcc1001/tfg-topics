@@ -352,12 +352,12 @@
   }
 \makeatother
 
-\newcommand{\nombre}{Nombre del alumno} %%% cambio de comando
+\newcommand{\nombre}{Zeldan Javier Campos Cordero} %%% cambio de comando
 
 % Datos de portada
-\title{título del TFG}
+\title{Análisis de temas en Trabajos Fin de Grado}
 \author{\nombre}
-\tutor{nombre tutor}
+\tutor{Carlos López Nozal}
 \date{\today}
 
 \begin{document}
@@ -374,11 +374,11 @@
 
 \noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
 
-\noindent D. nombre tutor, profesor del departamento de nombre departamento, área de nombre área.
+\noindent D. Carlos López Nozal, profesor del departamento de Ingeniería Informática, área de Lenguajes y Sistemas Informáticos.
 
 \noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI dni, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+\noindent Que el alumno D. \nombre, con DNI 55462889E, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado Análisis de temas en Trabajos Fin de Grado.
 
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
@@ -388,28 +388,10 @@ En Burgos, {\large \today}
 
 \vfill\vfill\vfill
 
-% Author and supervisor
-\begin{minipage}{0.45\textwidth}
-\begin{flushleft} %\large
-Vº. Bº. del Tutor:\\[2cm]
-D. nombre tutor
-\end{flushleft}
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-\begin{flushleft} %\large
-Vº. Bº. del co-tutor:\\[2cm]
-D. nombre co-tutor
-\end{flushleft}
-\end{minipage}
-\hfill
-
-\vfill
-
-% para casos con solo un tutor comentar lo anterior
-% y descomentar lo siguiente
-%Vº. Bº. del Tutor:\\[2cm]
-%D. nombre tutor
+\begin{center}
+  Vº. Bº. del Tutor:\\[2cm]
+  D. Carlos López Nozal
+  \end{center}
 
 
 \newpage\null\thispagestyle{empty}\newpage
@@ -422,12 +404,16 @@ D. nombre co-tutor
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este primer apartado se hace una \textbf{breve} presentación del tema que se aborda en el proyecto.
+\textit{TFG topics} es una aplicación que pretende realizar análisis temáticos cualitativos de los textos contenidos en las memorias de los trabajos finales de grado (TFG). Su objetivo es desarrollar una herramienta que permita a los docentes y estudiantes explorar e identificar tendencias en el contenido académico de dichos trabajos.
+
+Para ello, se parte de un conjunto de datos creado con las memorias de TFG en formato LaTex disponibles públicamente en GitHub. Sobre estos textos se lleva a cavo el procesamiento y modelado de temas utilizando diversos algoritmos como: \textbf{Latent Dirichlet Allocation (LDA)},\textbf{Top2Vec}, \textbf{BERTopic} y \textbf{FASTopic}.
+
+Este trabajo se centra en la implementación, comparación y evaluación de diferentes algoritmos de modelado de temas \textbf{(Topic Modeling)}, con el fin de construir una herramienta que ayude a la gestión del conocimiento académico en el ámbito universitario.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-Palabras separadas por comas que identifiquen el contenido del proyecto Ej: servidor web, buscador de vuelos, android \ldots
+  Análisis temático, Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG, Análisis de Datos, Procesamiento del Lenguaje Natural, Ingeniería Informática.
 \end{abstract}
 
 \clearpage
@@ -435,12 +421,16 @@ Palabras separadas por comas que identifiquen el contenido del proyecto Ej: serv
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+\textit{TFG Topic} is an application designed to perform qualitative thematic analysis of the texts contained in Bachelor's Thesis (TFG) reports. Its main goal is to develop a tool that enables teachers and students to explore and identify trends within the academic content of these works.
+
+To achieve this, a dataset was built from TFG reports written in LaTeX format and publicly available on GitHub. These texts are processed and analyzed using various topic modeling algorithms, such as \textbf{Latent Dirichlet Allocation (LDA)}, \textbf{Top2Vec}, \textbf{BERTopic}, and \textbf{FASTopic}.
+
+This work focuses on the implementation, comparison, and evaluation of different \textbf{Topic Modeling} algorithms, with the aim of building a tool that supports academic knowledge management within the university context.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-keywords separated by commas.
+  Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG, Data Analysis, PNL, Computer Science.
 \end{abstract}
 
 \clearpage
