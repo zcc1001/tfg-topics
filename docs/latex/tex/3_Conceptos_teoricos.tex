@@ -4,105 +4,67 @@ A continuación se exponen conceptos teóricos que sientan las bases del proyect
 
 \section{Procesamiento de lenguaje natural}
 
-El procesamiento de lenguaje natural (NPL) es un campo de la Inteligencia Artificial (IA) que se ocupa del análisis y la interpretación de textos que se encuentran en lenguaje humano. Utilizando estas técnicas los computadores pueden dar sentido a los datos contenidos en un conjunto de textos y asi adquirir su conocimiento implícito\cite{atkinson-abutridyAnaliticaTextual2023}.
+El PLN (procesamiento de lenguaje natural) es un campo de la IA (Inteligencia Artificial) que se ocupa del análisis y la interpretación de textos que se encuentran en lenguaje humano. Utilizando estas técnicas los computadores pueden dar sentido a los datos contenidos en un conjunto de textos y asi adquirir su conocimiento implícito\cite{atkinson-abutridyAnaliticaTextual2023}.
  
 NPL usa gran variedad de técnicas y modelos para analizar diferentes aspectos de los textos como la formación de palabras, el léxico, la sintaxis entre otros, con esto se pretende resolver problemas específicos relacionados con el lenguaje.
 
-Entre las tareas más comunes del NLP se encuentran la tokenización, lematización, eliminación de palabras vacías (\textit{stopwords}), análisis sintáctico y extracción de información. En el contexto de este trabajo, las técnicas de NLP se utilizan para preparar los textos de las memorias de TFG, transformándolos en datos estructurados que puedan ser analizados mediante algoritmos de modelado de temas.
+Entre las tareas más comunes del NLP se encuentran la tokenización, lematización, eliminación de palabras vacías \textit{(stopwords)}, análisis sintáctico y extracción de información. En el contexto de este trabajo, las técnicas de NLP se utilizan para preparar los textos de las memorias de TFG, transformándolos en datos estructurados que puedan ser analizados mediante algoritmos de modelado de temas.
 
 \section{Modelado de temas}
 
-El modelado de temas (Topic Modeling) es una técnica muy utilizada para realizar tareas de procesamiento de lenguaje natural, con la cual podemos encontrar temas subyacentes dentro de un grupo de documentos que deseemos analizar. Esta sigue un enfoque estadístico y proporciona una forma de representar textos de una manera estructurada, lo que la hace ideal para analizar grandes conjuntos de datos textuales \cite{bismiTopicModellingUsing2023a}.
+El modelado de temas \textit{(Topic Modeling)} es una técnica muy utilizada para realizar tareas de procesamiento de lenguaje natural, con la cual podemos encontrar temas subyacentes dentro de un grupo de documentos que deseemos analizar. Esta sigue un enfoque estadístico y proporciona una forma de representar textos de una manera estructurada, lo que la hace ideal para analizar grandes conjuntos de datos textuales \cite{bismiTopicModellingUsing2023a}.
 
+Dependiendo del algoritmo utilizado los términos se pueden obtener utilizando distintos enfoques como la bolsa de palabras \textit{(Bag of words)}, frecuencia de términos, frecuencia inversa de términos o basado en clases. \cite{phdTopicModelingAlgorithms2023}
 
-\subsubsection{Latent Dirichlet Allocation (LDA)}
-
-\subsubsection{Top2Vec}
-
-\subsubsection{BERTopic}
-
-\subsubsection{FASTopic}
-
-\subsection{Evaluación de modelos de temas}
-
----
-
-Algunos conceptos teóricos de \LaTeX{} \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
-
-\section{Secciones}
-
-Las secciones se incluyen con el comando section.
-
-\subsection{Subsecciones}
-
-Además de secciones tenemos subsecciones.
-
-\subsubsection{Subsubsecciones}
-
-Y subsecciones. 
-
-
-\section{Referencias}
-
-Las referencias se incluyen en el texto usando cite~\cite{wiki:latex}. Para citar webs, artículos o libros~\cite{koza92}, si se desean citar más de uno en el mismo lugar~\cite{bortolot2005, koza92}.
-
-
-\section{Imágenes}
-
-Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
-
-\imagen{escudoInfor}{Autómata para una expresión vacía}{.5}
-
-
-
-\section{Listas de items}
-
-Existen tres posibilidades:
-
-\begin{itemize}
-	\item primer item.
-	\item segundo item.
-\end{itemize}
-
-\begin{enumerate}
-	\item primer item.
-	\item segundo item.
-\end{enumerate}
+Podemos destacar la importancia del modelado de temas en los siguientes aspectos\cite{bismiTopicModellingUsing2023a}:
 
 \begin{description}
-	\item[Primer item] más información sobre el primer item.
-	\item[Segundo item] más información sobre el segundo item.
+	\item[Organización de la información] permite categorizar los documentos en temas lo cual hace mas fácil el proceso de búsqueda.
+	\item[Resumen] permite capturar la esencia de la temática del documento.
+	\item[Recomendación] facilita realizar recomendaciones personalizadas para cada usuario usuarios   
 \end{description}
-	
+
+En este TFG nos centraremos en el uso de los siguiente modelos:
 \begin{itemize}
-\item 
+	\item Latent Dirichlet Allocation
+	\item Top2Vec
+	\item BERTopic
+	\item FASTopic
 \end{itemize}
 
-\section{Tablas}
+\subsection{Latent Dirichlet Allocation (LDA)}
 
-Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
+LDA \textit{(Latent Dirichlet Allocation)} es un modelo probabilístico que usa matrices de factorización basado en la distribución de Dirichlet. En este modelo se asume que cada documento expone una serie de temas y cada tema se caracteriza por una distribución de palabras basada en la frecuencia de aparición en el documento. Los resultados obtenidos al ejecutar el modelo no son deterministas, por lo que se puede obtener un resultado distinto encada ejecución para el mismo \textit{dataset}.\cite{phdTopicModelingAlgorithms2023,bismiTopicModellingUsing2023a}
 
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+LDA posee dos hiperparámetros \cite{bhangaleIntroductionTopicModelling2023} que debemos ajustar para mejorar los resultados obtenidos:
+\begin{itemize}
+	\item Numero de temas
+	\item Factor de densidad del documento-tema
+	\item Factor de densidad tema-palabra
+\end{itemize}
+
+
+\subsection{Top2Vec}
+
+Top2Vec es un algoritmo de modelado de temas basado en \textit{embeddings}\footnote{Los embeddings son una técnica de procesamiento de lenguaje natural que convierte el lenguaje humano en vectores matemáticos. Estos vectores son una representación del significado subyacente de las palabras, lo que permite que las computadoras procesen el lenguaje de manera más efectiva.\cite{espindolaQueSonEmbeddings2023}}, documentos y vectores de palabras. Este algoritmo asume que la semántica interna de los documentos es indicativo de que existe una temática común.\cite{gTop2vecTopicModeling2022}
+
+\subsection{BERTopic}
+
+BERTopic es un modelo que se basa en el uso de BERT preentrenado para genera representaciones vectoriales de los documentos y temas. El funcionamiento de BERTopic se apoya en dos fases: la codificación de los documentos y el modelado de temas. En la primera etapa, cada texto se transforma en un vector mediante BERT. Posteriormente, se emplea el algoritmo HDBSCAN para agrupar estos vectores y así identificar los distintos temas. A partir de cada grupo, es posible extraer las palabras clave que describen su contenido. \cite{gan2023experimental} 
+
+La principal ventaja de BERTopic es su capacidad para encontrar matices semánticos y manejar grandes volúmenes de información textual. Puede identificar significados complejos y relaciones contextuales con mayor precisión. Además, a diferencia de otros métodos, no es necesario fijar de antemano cuántos temas se generarán, ya que el algoritmo de clustering determina este número automáticamente. \cite{gan2023experimental}
+
+\subsection{FASTopic}
+
+FASTopic \textit{(Fast, Adaptative, Stable and Transferable topic model)}. Es un modelo que sigue el enfoque denominado DSR (Reconstrucción de Relaciones Semánticas Dual), este no utiliza redes neuronales y se basa en tres elementos: la representación vectorial de los documentos graneados por un transformador predeterminado, los vectores de temas y de palabras.\cite{2024arXiv240517978W}
+
+DSR captura dos tipos de relaciones semánticas: entre documentos y temas, y entre temas y palabras, interpretándolas como distribuciones que permiten descubrir los temas de manera ordenada y eficiente, eliminando la necesidad de estructuras complicadas. Para modelar estas relaciones, se propone además el \textit{Embedding Transport Plan} (ETP), un mecanismo novedoso que, en lugar de emplear funciones \textit{softmax} parametrizadas, regula estas relaciones como planes de transporte óptimo entre los embeddings de documentos, temas y palabras. Esto reduce el sesgo en las relaciones y permite obtener temas bien diferenciados y distribuciones más precisas. \cite{2024arXiv240517978W}
+
+\section{Evaluación de modelos}
+
+Para evaluar el desempeño de estos modelos podemos seguir las siguiente métricas:
+
+\begin{description}
+	\item[Coherencia] evalúa que tan relacionada están, en términos de semántica las palabras mas representativas de un tema. Esta métrica permite identificar cuantos temas son adecuados para un conjunto de datos determinado.
+	\item[Perplejidad] valora el rendimiento del los modelos como LDA. Indica que tan bien el modelo es capaz de predecir documentos no vistos. Cuanto mas baja mejor se considera el desempeño del modelo, implica que el modelo tiene una mayor capacidad para anticipar las palabras de textos que no han sido utilizados durante el entrenamiento. 
+\end{description}
