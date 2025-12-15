@@ -26,11 +26,25 @@ def main():
     if not github_token:
         logger.warning("GITHUB_TOKEN environment variable not set. Proceeding with unauthenticated requests.")
 
-    csv_file_path = "../../data/repos.csv"
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    logger.info(f"Directorio actual: {current_dir}")
+
+    data_dir = os.path.join(current_dir, "data")
+    logger.info(f"Directorio de datos: {data_dir}")
+    
+    # ruta al fichero CSV
+    csv_file_path = os.path.join(data_dir, "repos.csv")
+    
+    logger.info(f"Buscando repos.csv en: {csv_file_path}")
+    logger.info(f"Guardando datos en: {data_dir}")
+    # --------------------------------
+
     repo_list_csv_reader = RepoListCsvReaderPort(file_path=csv_file_path)
 
     github_rest_adapter = GithubRestAdapter(token=github_token)
-    data_parquet_storage = ParquetStorage()
+    
+    data_parquet_storage = ParquetStorage(base_dir=data_dir)
+
     ingestor = DataIngestionUsecase(github_port=github_rest_adapter, repo_info_reader=repo_list_csv_reader,
                                     storage_port=data_parquet_storage)
 
