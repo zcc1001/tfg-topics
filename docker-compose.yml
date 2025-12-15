@@ -1,0 +1,16 @@
+services:
+  ingestion:
+    build:
+      context: ./ingestion
+      dockerfile: Dockerfile
+    image: tfg-topics-ingestion
+    container_name: tfg_topics_ingestion
+    environment:
+      # Asegúrate de tener un fichero .env en la raíz del proyecto con GITHUB_TOKEN=tu_token
+      # o reemplaza ${GITHUB_TOKEN} directamente por tu token si no usas un .env.
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      # Mapea la carpeta 'data' local a la carpeta 'data' dentro del contenedor.
+      # Esto asegura que los ficheros Parquet generados se guarden en tu máquina.
+      - ./ingestion/data:/app/data
+    command: python ingestion/src/main.py
