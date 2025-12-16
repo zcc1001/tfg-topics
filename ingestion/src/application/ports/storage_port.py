@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from ingestion.src.domain.entities.entities import ReadmeData, IssueData
+from domain.entities.entities import ReadmeData, IssueData
 
 
 class StoragePort(ABC):

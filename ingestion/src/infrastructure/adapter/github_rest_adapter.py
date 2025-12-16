@@ -3,8 +3,8 @@ from typing import List, Optional
 
 import requests
 
-from ingestion.src.application.ports.github_port import GitHubPort
-from ingestion.src.domain.entities.entities import IssueData, ReadmeData
+from application.ports.github_port import GitHubPort
+from domain.entities.entities import IssueData, ReadmeData
 
 logger = logging.getLogger(__name__)
 

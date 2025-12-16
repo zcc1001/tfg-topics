@@ -1,9 +1,11 @@
 import logging
 import os
 from typing import List
+
 import pandas as pd
-from ingestion.src.application.ports.storage_port import StoragePort
-from ingestion.src.domain.entities.entities import ReadmeData, IssueData
+
+from application.ports.storage_port import StoragePort
+from domain.entities.entities import ReadmeData, IssueData
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +42,8 @@ class ParquetStorage(StoragePort):
                 is_first_batch = False
             else:
                 logger.info(f"Appending batch of {len(batch)} issues to '{self.issues_path}'.")
-                df.to_parquet(self.issues_path, engine='fastparquet', compression=self.compression, append=True, index=False)
+                df.to_parquet(self.issues_path, engine='fastparquet', compression=self.compression, append=True,
+                              index=False)
         logger.info(f"Successfully saved {len(issue_data)} issues to '{self.issues_path}'.")
 
     def save_readme(self, readme_data: List[ReadmeData]) -> None:
@@ -60,5 +63,6 @@ class ParquetStorage(StoragePort):
                 is_first_batch = False
             else:
                 logger.info(f"Appending batch of {len(batch)} readmes to '{self.readmes_path}'.")
-                df.to_parquet(self.readmes_path, engine='fastparquet', compression=self.compression, append=True, index=False)
+                df.to_parquet(self.readmes_path, engine='fastparquet', compression=self.compression, append=True,
+                              index=False)
         logger.info(f"Successfully saved {len(readme_data)} readmes to '{self.readmes_path}'.")

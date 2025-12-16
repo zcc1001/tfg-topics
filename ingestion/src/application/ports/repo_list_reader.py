@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from ingestion.src.domain.entities.entities import RepositoryInfo
+from domain.entities.entities import RepositoryInfo
 
 
 class RepoListReaderPort(ABC):

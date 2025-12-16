@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from ingestion.src.domain.entities.entities import IssueData, ReadmeData
+from domain.entities.entities import IssueData, ReadmeData
 
 
 class GitHubPort(ABC):

@@ -1,8 +1,8 @@
 import itertools
 
-from ingestion.src.application.ports.github_port import GitHubPort
-from ingestion.src.application.ports.repo_list_reader import RepoListReaderPort
-from ingestion.src.application.ports.storage_port import StoragePort
+from application.ports.github_port import GitHubPort
+from application.ports.repo_list_reader import RepoListReaderPort
+from application.ports.storage_port import StoragePort
 
 
 class DataIngestionUsecase():

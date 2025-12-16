@@ -1,9 +1,8 @@
-
 import csv
 from typing import List
 
-from ingestion.src.application.ports.repo_list_reader import RepoListReaderPort
-from ingestion.src.domain.entities.entities import RepositoryInfo
+from application.ports.repo_list_reader import RepoListReaderPort
+from domain.entities.entities import RepositoryInfo
 
 
 class RepoListCsvReaderPort(RepoListReaderPort):

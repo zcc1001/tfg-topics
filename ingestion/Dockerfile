@@ -6,11 +6,11 @@ WORKDIR /app
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
 # Copiar el fichero de requisitos e instalar las dependencias
-COPY requirements.txt /app/ingestion/requirements.txt
-RUN pip install --no-cache-dir -r /app/ingestion/requirements.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar el código fuente de la aplicación
-COPY src /app/ingestion/src
+COPY src ./src
 
 # Comando para ejecutar la aplicación
-CMD ["python", "ingestion/src/main.py"]
+ENTRYPOINT ["python", "src/main.py"]

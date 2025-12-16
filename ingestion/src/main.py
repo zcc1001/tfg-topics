@@ -1,11 +1,13 @@
 import logging
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
-from ingestion.src.application.usecase.data_ingestion_usecase import DataIngestionUsecase
-from ingestion.src.infrastructure.adapter.data_parquet_storage import ParquetStorage
-from ingestion.src.infrastructure.adapter.github_rest_adapter import GithubRestAdapter
-from ingestion.src.infrastructure.adapter.repo_list_csv_reader import RepoListCsvReaderPort
+from application.usecase.data_ingestion_usecase import DataIngestionUsecase
+from infrastructure.adapter.data_parquet_storage import ParquetStorage
+from infrastructure.adapter.github_rest_adapter import GithubRestAdapter
+from infrastructure.adapter.repo_list_csv_reader import RepoListCsvReaderPort
 
 load_dotenv()
 
@@ -26,25 +28,26 @@ def main():
     if not github_token:
         logger.warning("GITHUB_TOKEN environment variable not set. Proceeding with unauthenticated requests.")
 
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    logger.info(f"Directorio actual: {current_dir}")
+    # Calculo de rutas de salida/entrada ficheros
+    project_root = Path(__file__).resolve().parents[2]
+    default_data_dir = os.path.join(project_root, "data")
+    data_dir = os.getenv("DATA_DIR", default_data_dir)
+    ingestion_output_dir = os.path.join(data_dir, "ingestion")
+    repos_csv_path = os.path.join(data_dir, "repos.csv")
 
-    data_dir = os.path.join(current_dir, "data")
-    logger.info(f"Directorio de datos: {data_dir}")
-    
-    # ruta al fichero CSV
-    csv_file_path = os.path.join(data_dir, "repos.csv")
-    
-    logger.info(f"Buscando repos.csv en: {csv_file_path}")
-    logger.info(f"Guardando datos en: {data_dir}")
-    # --------------------------------
+    logger.info("Data dir: %s", os.path.abspath(data_dir))
+    logger.info("Repos CSV: %s", os.path.abspath(repos_csv_path))
+    logger.info("Ingestion output dir: %s", os.path.abspath(ingestion_output_dir))
 
-    repo_list_csv_reader = RepoListCsvReaderPort(file_path=csv_file_path)
+    os.makedirs(ingestion_output_dir, exist_ok=True)
 
+    if not os.path.exists(repos_csv_path):
+        raise FileNotFoundError(f"repos.csv not found at {repos_csv_path}")
+
+    # adapters
+    repo_list_csv_reader = RepoListCsvReaderPort(file_path=repos_csv_path)
     github_rest_adapter = GithubRestAdapter(token=github_token)
-    
-    data_parquet_storage = ParquetStorage(base_dir=data_dir)
-
+    data_parquet_storage = ParquetStorage(base_dir=ingestion_output_dir)
     ingestor = DataIngestionUsecase(github_port=github_rest_adapter, repo_info_reader=repo_list_csv_reader,
                                     storage_port=data_parquet_storage)
 
@@ -58,6 +61,7 @@ def main():
         logger.info("Ingestion Readme Completed")
     except RuntimeError as e:
         logger.error(f"A critical error occurred: {e}", exc_info=True)
+        raise
 
 
 if __name__ == "__main__":
