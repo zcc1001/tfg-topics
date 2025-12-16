@@ -3,7 +3,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Establecer la variable de entorno PYTHONPATH para que los imports funcionen
-ENV PYTHONPATH "${PYTHONPATH}:/app"
+ENV PYTHONPATH=/app
 
 # Copiar el fichero de requisitos e instalar las dependencias
 COPY requirements.txt .

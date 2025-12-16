@@ -33,7 +33,9 @@ def main():
     default_data_dir = os.path.join(project_root, "data")
     data_dir = os.getenv("DATA_DIR", default_data_dir)
     ingestion_output_dir = os.path.join(data_dir, "ingestion")
-    repos_csv_path = os.path.join(data_dir, "repos.csv")
+
+    repos_csv_file_name = os.getenv("REPOS_CSV_FILE_NAME", "repos.csv")
+    repos_csv_path = os.path.join(data_dir, repos_csv_file_name)
 
     logger.info("Data dir: %s", os.path.abspath(data_dir))
     logger.info("Repos CSV: %s", os.path.abspath(repos_csv_path))

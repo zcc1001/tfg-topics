@@ -10,5 +10,6 @@ services:
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - DATA_DIR=/data
+      - REPOS_CSV_FILE_NAME=repos.csv
     volumes:
       - ./data:/data

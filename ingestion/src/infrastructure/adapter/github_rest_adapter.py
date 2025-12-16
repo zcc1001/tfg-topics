@@ -1,4 +1,5 @@
 import logging
+from datetime import timezone, datetime
 from typing import List, Optional
 
 import requests
@@ -54,7 +55,9 @@ class GithubRestAdapter(GitHubPort):
                 if 'pull_request' in issue:
                     continue
                 issues.append(
-                    IssueData(number=issue.get("number"), title=issue.get("title"), description=issue.get("body")))
+                    IssueData(repo_name=repo_name, repo_owner=owner, issue_id=issue.get("number"),
+                              title=issue.get("title"), description=issue.get("body"),
+                              retrieved_at=datetime.now(timezone.utc)))
             page += 1
         logger.info(f"Found {len(issues)} issues for repository: {owner}/{repo_name}")
         return issues
@@ -68,6 +71,7 @@ class GithubRestAdapter(GitHubPort):
             logger.warning(f"README not found for repository: {owner}/{repo_name}")
             return None
 
-        readme = ReadmeData(download_url=json_data.get("download_url"), content=json_data.get("content"))
+        readme = ReadmeData(repo_name=repo_name, repo_owner=owner, download_url=json_data.get("download_url"),
+                            content=json_data.get("content"), retrieved_at=datetime.now(timezone.utc))
         logger.info(f"README found for repository: {owner}/{repo_name}")
         return readme
