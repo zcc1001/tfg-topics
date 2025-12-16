@@ -24,6 +24,6 @@ class RepoListCsvReaderPort(RepoListReaderPort):
                         repo_list.append(RepositoryInfo(owner=owner.strip(), name=name.strip(), type=type.strip()))
             return repo_list
         except FileNotFoundError:
-            raise FileNotFoundError(f"El archivo de entrada '{self.file_path}' no fue encontrado.")
+            raise FileNotFoundError(f"File not found '{self.file_path}'")
         except Exception as e:
-            raise RuntimeError(f"Error al leer el archivo CSV: {e}")
+            raise RuntimeError(f"Error reading file CSV: {e}")
