@@ -1,6 +1,6 @@
 # Ingestion Module
 
-This modulo is responsible for extracting textual data from Github repositories that are part of TFG dataset.
+This module is responsible for extracting textual data from GitHub repositories that are part of TFG dataset.
 Its main porpose is to collect normalize, and persist documents that will be later processed by the `processing module`.
 This module follows a hexagonal (ports and adapters) architecture, ensuring a clear separation between domain logic and
 infrastructure concerns.
@@ -113,7 +113,7 @@ pip install requirements.txt
 python src/main.py
 ```
 
-### Docker compose(recommended)
+### Docker compose (recommended)
 
 From root directory `/` execute:
 
