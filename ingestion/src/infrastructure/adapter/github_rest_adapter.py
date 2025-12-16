@@ -44,7 +44,6 @@ class GithubRestAdapter(GitHubPort):
         page = 1
         issues = []
         while True:
-            # CORRECCIÓN: Cambiado 'type' por 'state'
             params = {"per_page": 100, "page": page, "state": "all", "sort": "updated"}
             response = requests.get(url, headers=self.HEADERS, params=params)
             json_data = self._handle_response(response)
