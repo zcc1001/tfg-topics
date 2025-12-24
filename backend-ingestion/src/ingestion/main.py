@@ -1,0 +1,120 @@
+import argparse
+import logging
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+from ingestion.application.usecase.data_ingestion_usecase import DataIngestionUsecase
+from ingestion.infrastructure.adapter.github_rest_adapter import GithubRestAdapter
+from ingestion.infrastructure.adapter.ingestion_parquet_storage import (
+    IngestionParquetStorage,
+)
+from ingestion.infrastructure.adapter.repo_list_csv_reader import RepoListCsvReaderPort
+
+load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
+logger = logging.getLogger(__name__)
+
+
+def main() -> None:
+    """
+    Main entrypoint for the ingestion pipeline.
+    Reads configuration from environment variables and the repository CSV,
+    instantiates adapters and the ingestion use case, and runs the
+    ingestion steps.
+    Side effects:
+    - Creates directories (ingestion output dir).
+    - Performs network calls to GitHub (may be rate-limited for unauthenticated
+      requests).
+    - Writes ingestion output (parquet) to the ingestion output directory.
+    - Emits informational and error logs.
+    Exceptions:
+    - FileNotFoundError when the repos CSV is missing.
+    - Re-raises RuntimeError after logging any critical error encountered
+    during ingestion.
+    Returns:
+    - None
+    """
+    parser = argparse.ArgumentParser(
+        description="Data ingestion pipeline for GitHub repositories."
+    )
+    parser.add_argument(
+        "--ingest",
+        nargs="+",
+        choices=["issues", "readmes", "thesis", "all"],
+        default=["all"],
+        help="Specify which data to ingest. Use 'all' to ingest all data types. "
+        "Can be one or more of: issues, readmes, thesis.",
+    )
+    args = parser.parse_args()
+
+    logger.info("Ingestion Started")
+
+    # --- token form environment variables
+    github_token = os.getenv("GITHUB_TOKEN")
+    if not github_token:
+        logger.warning(
+            "GITHUB_TOKEN environment variable not set. Proceeding with "
+            "unauthenticated requests."
+        )
+
+    # --- file paths
+    project_root = Path(__file__).resolve().parents[3]
+    default_data_dir = os.path.join(project_root, "data")
+    data_dir = os.getenv("DATA_DIR", default_data_dir)
+    ingestion_output_dir = os.path.join(data_dir, "ingestion")
+
+    repos_csv_file_name = os.getenv("REPOS_CSV_FILE_NAME", "repos.csv")
+    repos_csv_path = os.path.join(data_dir, repos_csv_file_name)
+
+    logger.info("Data dir: %s", os.path.abspath(data_dir))
+    logger.info("Repos CSV: %s", os.path.abspath(repos_csv_path))
+    logger.info("Ingestion output dir: %s", os.path.abspath(ingestion_output_dir))
+
+    os.makedirs(ingestion_output_dir, exist_ok=True)
+
+    if not os.path.exists(repos_csv_path):
+        raise FileNotFoundError(f"repos.csv not found at {repos_csv_path}")
+
+    # --- adapters
+    repo_list_csv_reader = RepoListCsvReaderPort(file_path=repos_csv_path)
+    github_rest_adapter = GithubRestAdapter(token=github_token)
+    data_parquet_storage = IngestionParquetStorage(base_dir=ingestion_output_dir)
+    ingestor = DataIngestionUsecase(
+        github_port=github_rest_adapter,
+        repo_info_reader=repo_list_csv_reader,
+        storage_port=data_parquet_storage,
+    )
+
+    ingest_targets = args.ingest
+    logger.info("Ingestion targets: %s", ingest_targets)
+
+    try:
+        if "all" in ingest_targets or "issues" in ingest_targets:
+            logger.info("Ingesting issue data")
+            ingestor.ingest_issues_data()
+            logger.info("Ingestion issues Completed")
+
+        if "all" in ingest_targets or "readmes" in ingest_targets:
+            logger.info("Ingesting Readme data")
+            ingestor.ingest_readme_data()
+            logger.info("Ingestion Readme Completed")
+
+        if "all" in ingest_targets or "thesis" in ingest_targets:
+            logger.info("Ingesting Thesis data")
+            ingestor.ingest_thesis_data()
+            logger.info("Ingestion Thesis Completed")
+    except RuntimeError as e:
+        logger.error("A critical error occurred:%s", e, exc_info=True)
+        raise
+
+
+if __name__ == "__main__":
+    main()

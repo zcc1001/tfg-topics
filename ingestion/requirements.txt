@@ -1,5 +1,0 @@
-pandas
-pyarrow==22.0.0
-requests
-fastparquet==2024.11.0
-python-dotenv==1.2.1

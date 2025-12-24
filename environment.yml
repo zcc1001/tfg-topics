@@ -1,0 +1,7 @@
+# needed for create conda env
+name: tfg-topics
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
