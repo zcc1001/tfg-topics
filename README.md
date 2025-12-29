@@ -29,7 +29,7 @@ The project is organized into several key directories:
 
 - **`/backend-ingestion`**: Contains the logic for data collection from GitHub.
 - **`/backend-processing`**: Includes scripts for text preprocessing, topic modeling, and hyperparameter tuning.
-- **`/web`**: A simple web interface to display the results.
+- **`/frontent-web`**: A simple web interface to display the results.
 - **`/data`**: Stores the raw and processed data.
 - **`/prototypes`**: Jupyter notebooks for experimentation and prototyping.
 - **`/docs`**: Project documentation.

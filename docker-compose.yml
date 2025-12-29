@@ -2,7 +2,7 @@ services:
 
   ingestion:
     build:
-      context: ./ingestion
+      context: ./backend-ingestion
     image: tfg-topics-ingestion
     container_name: tfg_topics_ingestion
     profiles:
@@ -11,5 +11,17 @@ services:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - DATA_DIR=/data
       - REPOS_CSV_FILE_NAME=repos.csv
+    volumes:
+      - ./data:/data
+
+  processing:
+    build:
+      context: ./backend-processing
+    image: tfg-topics-processing
+    container_name: tfg_topics_processing
+    profiles:
+      - processing
+    environment:
+      - DATA_DIR=/data
     volumes:
       - ./data:/data
