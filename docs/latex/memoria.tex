@@ -365,13 +365,10 @@
 
 \maketitle
 
-
 \newpage\null\thispagestyle{empty}\newpage
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \thispagestyle{empty}
-
 
 \noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
 
@@ -384,7 +381,7 @@
 \noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
 \begin{center} %\large
-En Burgos, {\large \today}
+  En Burgos, {\large \today}
 \end{center}
 
 \vfill\vfill\vfill
@@ -392,24 +389,29 @@ En Burgos, {\large \today}
 \begin{center}
   Vº. Bº. del Tutor:\\[2cm]
   D. Carlos López Nozal
-  \end{center}
-
+\end{center}
 
 \newpage\null\thispagestyle{empty}\newpage
-
-
-
 
 \frontmatter
 
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-\textit{TFG topics} es una aplicación que pretende realizar análisis temáticos cualitativos de los textos contenidos en las memorias de los trabajos finales de grado (TFG). Su objetivo es desarrollar una herramienta que permita a los docentes y estudiantes explorar e identificar tendencias en el contenido académico de dichos trabajos.
+  \textit{TFG topics} es una aplicación que pretende realizar análisis temáticos cualitativos de los textos contenidos en las memorias de los trabajos finales de grado (TFG). Su objetivo es desarrollar una herramienta que permita a los docentes y estudiantes explorar e identificar tendencias en el contenido académico de dichos trabajos.
 
-Para ello, se parte de un conjunto de datos creado con las memorias de TFG en formato LaTex disponibles públicamente en GitHub. Sobre estos textos se lleva a cavo el procesamiento y modelado de temas utilizando diversos algoritmos como: \textbf{Latent Dirichlet Allocation (LDA)},\textbf{Top2Vec}, \textbf{BERTopic} y \textbf{FASTopic}.
+  Para ello, se parte de un conjunto de datos creado con las memorias de TFG en
+  formato LaTex disponibles públicamente en GitHub. Sobre estos textos se lleva a
+  cabo el procesamiento y modelado de temas utilizando diversos algoritmos como:
+  \textbf{Latent Dirichlet Allocation (LDA)} \cite{blei2003lda},\textbf{Top2Vec}
+  \cite{angelovTop2VecDistributedRepresentations2020}, \textbf{BERTopic}
+  \cite{grootendorstBERTopicNeuralTopic2022} y \textbf{FASTopic}
+  \cite{2024arXiv240517978W} \cite{2024arXiv240517978W}.
 
-Este trabajo se centra en la implementación, comparación y evaluación de diferentes algoritmos de modelado de temas \textbf{(Topic Modeling)}, con el fin de construir una herramienta que ayude a la gestión del conocimiento académico en el ámbito universitario.
+  Este trabajo se centra en la implementación, comparación y evaluación de
+  diferentes algoritmos de modelado de temas \textbf{(Topic Modeling)}, con el
+  fin de construir una herramienta que ayude a la gestión del conocimiento
+  académico en el ámbito universitario.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
@@ -422,11 +424,16 @@ Este trabajo se centra en la implementación, comparación y evaluación de dife
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-\textit{TFG Topic} is an application designed to perform qualitative thematic analysis of the texts contained in Bachelor's Thesis (TFG) reports. Its main goal is to develop a tool that enables teachers and students to explore and identify trends within the academic content of these works.
+  \textit{TFG Topic} is an application designed to perform qualitative thematic analysis of the texts contained in Bachelor's Thesis (TFG) reports. Its main goal is to develop a tool that enables teachers and students to explore and identify trends within the academic content of these works.
 
-To achieve this, a dataset was built from TFG reports written in LaTeX format and publicly available on GitHub. These texts are processed and analyzed using various topic modeling algorithms, such as \textbf{Latent Dirichlet Allocation (LDA)}, \textbf{Top2Vec}, \textbf{BERTopic}, and \textbf{FASTopic}.
+  To achieve this, a dataset was built from TFG reports written in LaTeX format
+  and publicly available on GitHub. These texts are processed and analyzed using
+  various topic modeling algorithms, such as \textbf{Latent Dirichlet Allocation
+    (LDA)}, \textbf{Top2Vec}, \textbf{BERTopic}, and \textbf{FASTopic}.
 
-This work focuses on the implementation, comparison, and evaluation of different \textbf{Topic Modeling} algorithms, with the aim of building a tool that supports academic knowledge management within the university context.
+  This work focuses on the implementation, comparison, and evaluation of
+  different \textbf{Topic Modeling} algorithms, with the aim of building a tool
+  that supports academic knowledge management within the university context.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
@@ -456,7 +463,6 @@ This work focuses on the implementation, comparison, and evaluation of different
 \include{./tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto}
 \include{./tex/6_Trabajos_relacionados}
 \include{./tex/7_Conclusiones_Lineas_de_trabajo_futuras}
-
 
 \bibliographystyle{plain}
 \bibliography{bibliografia}
