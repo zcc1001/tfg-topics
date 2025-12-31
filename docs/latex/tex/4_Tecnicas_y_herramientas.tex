@@ -1,6 +1,147 @@
 \capitulo{4}{Técnicas y herramientas}
 
-Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
-No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
+En este capítulo se describen las técnicas y herramientas utilizadas durante el
+desarrollo del proyecto. Se abordan tanto las metodologías empleadas como las
+herramientas de software que facilitaron la implementación y gestión del mismo.
 
+\section{Metodologías de desarrollo}
+
+El desarrollo del proyecto se llevó a cabo utilizando la metodología ágil
+\textbf{SCRUM}~\cite{agile_alliance} de forma adaptada al contexto de un
+proyecto académico individual. Esta metodología permitió una gestión flexible y
+adaptativa del proyecto. El trabajo se organizó en \textit{sprints} de dos
+semanas, donde se definieron objetivos claros y se realizaron revisiones
+periódicas para evaluar el progreso. Frente a metodologías estrictamente
+secuenciales, este enfoque resulta especialmente adecuado en proyectos de
+carácter experimental, como es el caso del modelado de temas, donde los
+resultados dependen en gran medida de la calidad del preprocesado y de la
+configuración de los modelos.
+
+Para la planificación de tareas y realizar seguimiento del proyecto se utilizó
+la aplicación web \textbf{Zube}~\cite{zube}. Esta herramienta se integra
+fácilmente con GitHub, permite crear \textit{sprints}, épicas y tableros
+Kanban.
+
+Para seguir el flujo de trabajo de SCRUM y facilitar el proceso de desarrollo,
+en este caso el tutor adoptó los roles de product owner y SCRUM master.
+
+\section{Herramientas de gestión de proyectos}
+
+Para la gestión del proyecto se utilizó la plataforma \textbf{GitHub}. Esta
+herramienta permitió el alojamiento y gestión del código fuente, permitiendo
+llevar un control de versiones eficiente utilizando Git~\cite{GitReference}.
+
+\section{Herramientas de desarrollo}
+
+\subsection{Entorno de desarrollo}
+
+El entorno de desarrollo utilizado fue \textbf{Visual Studio Code}, un editor
+de código fuente ligero y gratuito desarrollado por
+Microsoft~\cite{QueEsVisualStudioCode}. Este entorno ofrece una amplia gama de
+extensiones y funcionalidades que facilitan la escritura, depuración y gestión
+de código en múltiples lenguajes de programación. Fue una herramienta esencial
+para el desarrollo de este proyecto gracias a su amplia integración con
+\textit{plugins} que ayudan al desarrollo y depuración con el lenguaje de
+programación Python. Además,Visual Studio Code cuenta con integración nativa
+con GitHub, lo que facilita la gestión de versiones. Se valoró el uso de otros
+entornos como \textbf{PyCharm}~\cite{PyCharmTodoSobre2022}, pero se optó por
+Visual Studio por su ligereza y flexibilidad.
+
+También se utilizó \textbf{Jupyter
+    Notebooks}~\cite{ProjectJupyterDocumentation} para la experimentación y
+análisis de datos, ya que permite combinar código, visualizaciones y
+documentación en un solo documento interactivo.
+
+\subsection{Lenguajes de programación}
+
+El lenguaje de programación principal utilizado en el desarrollo del proyecto
+fue \textbf{Python}~\cite{31019Documentation}. Python es un lenguaje de alto
+nivel, interpretado y de propósito general, conocido por su sintaxis clara. Su
+elección se basa en la amplia gama de bibliotecas y \textit{frameworks} para el
+procesamiento de datos y modelado de temas disponibles.
+\subsubsection{Bibliotecas y frameworks}
+
+El núcleo del proyecto se apoya en técnicas de NLP aplicadas al análisis de
+documentos. Para el procesamiento de datos y modelado de temas se utilizaron
+diversas bibliotecas de Python, entre las que destacan:
+
+\begin{itemize}
+    \item \textbf{Pandas}~\cite{UserGuidePandas}: Biblioteca fundamental para la manipulación y análisis de datos.
+    \item \textbf{NumPy}~\cite{NumPyUserGuide}: Biblioteca para computación científica y manejo de arreglos multidimensionales.
+    \item \textbf{Gensim}~\cite{GensimTopicModelling}: Biblioteca especializada en modelado de temas y procesamiento de lenguaje natural.
+    \item \textbf{NLTK}~\cite{NLTKNaturalLanguage}: Biblioteca para el procesamiento de lenguaje natural, usado para tareas básicas tokenización y \textit{stopwords}.
+    \item \textbf{spaCy}~\cite{SpaCy101Everything}: Biblioteca avanzada para procesamiento mas avanzado de lenguaje natural.
+\end{itemize}
+
+Sobre los textos preprocesados se aplican técnicas de modelado de temas. Se han
+estudiado y utilizado distintos enfoques, desde modelos probabilísticos
+clásicos hasta métodos más recientes basados en representaciones vectoriales.
+La comparación entre estas técnicas permite analizar sus fortalezas y
+limitaciones en función de criterios como la coherencia semántica de los temas,
+la interpretabilidad y el coste computacional.
+
+Se utilizaron las siguientes bibliotecas de Python para el modelado de temas:
+\begin{itemize}
+    \item \textbf{LDA}~\cite{LdaTopicModelingb}: Implementación del modelo Latent Dirichlet Allocation para descubrir temas en grandes colecciones de documentos.
+    \item \textbf{BERTopic}~\cite{QuickStartBERTopic}: Biblioteca que utiliza modelos de lenguaje basados en transformadores para generar representaciones de documentos y realizar clustering.
+    \item \textbf{Top2Vec}~\cite{angelovDdangelovTop2Vec2025a}: Biblioteca que combina incrustaciones de documentos y clustering para identificar temas en grandes conjuntos de datos.
+    \item \textbf{FASTopic}~\cite{FastopicFASTopic}: Biblioteca que utiliza técnicas de reducción de dimensionalidad y clustering para el modelado eficiente de temas en grandes conjuntos de datos.
+\end{itemize}
+
+En cuanto a la experimentación con modelos y la optimización de
+hiperparámetros, se ha utilizado
+\textbf{Optuna}~\cite{OptunaHyperparameterOptimization} como herramienta
+principal para la exploración del espacio de configuraciones. Esta biblioteca
+permite definir procesos de búsqueda automatizados y eficientes y facilita la
+comparación objetiva de los resultados mediante métricas cuantitativas como la
+coherencia de los temas. Frente a la selección manual de parámetros, este
+enfoque resulta más riguroso y contribuye a la reproducibilidad y trazabilidad
+de los experimentos realizados.
+
+Finalmente, para la presentación y exploración de los resultados se ha
+desarrollado un interfaz web utilizando la librería
+\textbf{Streamlit}~\cite{StreamlitDocsa}. Su elección se debe principalmente a
+que esta herramienta permite construir interfaces web interactivas de forma
+ágil sin entrar en detalles complejos de desarrollo web. Streamlit facilita la
+creación de paneles donde se pueden cargar datos y ajustar parámetros
+facilitando la visualización de los modelos generados y de sus métricas
+asociadas.
+
+\subsection{Otras herramientas}
+
+Además de las herramientas mencionadas anteriormente, se utilizaron diversas
+herramientas de apoyo orientadas a la gestión del entorno de ejecución y a la
+calidad del software desarrollado.
+
+En primer lugar, se ha utilizado \textbf{Docker}~\cite{DockerManuals} y
+\textbf{Docker Compose} como tecnología de contenedorización. Docker permite
+encapsular la aplicación junto con todas sus dependencias en entornos
+reproducibles y aislados, lo que simplifica tanto el despliegue como la
+ejecución del sistema en diferentes máquinas. Este enfoque resulta
+especialmente útil ya que reduce problemas derivados de incompatibilidades de
+versiones y facilita la portabilidad y reproducibilidad de los experimentos.
+
+Por otro lado, se han utilizado sistemas orientados a garantizar la calidad del
+código. En primer lugar, para el formateo automático del código se ha utilizado
+\textbf{Black}, lo que asegura un estilo de código uniforme en todo el
+proyecto. La organización y limpieza de importaciones se ha gestionado usando
+\textbf{isort}, mientras que el análisis estático y la detección de posibles
+errores o incumplimientos de estilo se han realizado con \textbf{flake8}. Estas
+herramientas mejoran la legibilidad del código y reducen la aparición de
+errores durante el desarrollo.
+
+\section{Documentación}
+
+Para la creación de la documentación del proyecto se utilizó
+\textbf{LaTeX}~\cite{LaTeXDocumentPreparation}. LaTeX es especialmente adecuado
+para la creación de documentos técnicos y científicos debido a su capacidad
+para manejar fórmulas matemáticas complejas, referencias bibliográficas y
+estructuras avanzadas de documentos. Además, LaTeX permite separar el contenido
+de la presentación, facilitando la gestión y el formato del documento final. Se
+optó por LaTeX frente a procesadores de texto tradicionales como Microsoft Word
+o Google Docs, ya que estos últimos pueden presentar limitaciones en la gestión
+de referencias y fórmulas complejas. Además, la universidad proporciona
+plantillas pre formateadas y estandarizadas para la creación de la memoria en
+LaTeX. Como editor de LaTeX se utilizó Visual Studio Code con la extensión
+\textbf{LaTeX Workshop}~\cite{yuJamesYuLaTeXWorkshop2025}.
 
