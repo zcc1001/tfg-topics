@@ -147,7 +147,7 @@ From the root directory of the project (`/`) execute:
 
 ```shell
 # Build the ingestion image
-docker compose build ingestion
+docker compose --profile ingestion build
 
 # Run the ingestion container
 docker compose --profile ingestion run --rm ingestion

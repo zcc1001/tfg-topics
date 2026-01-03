@@ -37,39 +37,27 @@ class IngestionParquetStorage(StoragePort):
             return
 
         logger.info(
-            "Attempting to save %s issues to %s", len(issue_data), self.issues_path
+            "Attempting to save/append %s issues to %s",
+            len(issue_data),
+            self.issues_path,
         )
-        is_first_batch = True
-        for i in range(0, len(issue_data), self.buffer_size):
-            batch = issue_data[i : i + self.buffer_size]
-            df = pd.DataFrame([asdict(issue) for issue in batch])
+        df = pd.DataFrame([asdict(issue) for issue in issue_data])
 
-            if is_first_batch:
-                logger.info(
-                    "Writing first batch of %s issues, overwriting %s",
-                    len(batch),
-                    self.issues_path,
-                )
-                df.to_parquet(
-                    self.issues_path,
-                    engine="fastparquet",
-                    compression=self.compression,
-                    index=False,
-                )
-                is_first_batch = False
-            else:
-                logger.info(
-                    "Appending batch of %s issues to %s", len(batch), self.issues_path
-                )
-                df.to_parquet(
-                    self.issues_path,
-                    engine="fastparquet",
-                    compression=self.compression,
-                    append=True,
-                    index=False,
-                )
+        if os.path.exists(self.issues_path):
+            existing_df = pd.read_parquet(self.issues_path)
+            df = pd.concat([existing_df, df], ignore_index=True)
+
+        df.to_parquet(
+            self.issues_path,
+            engine="fastparquet",
+            compression=self.compression,
+            index=False,
+        )
         logger.info(
-            f"Successfully saved {len(issue_data)} issues to '{self.issues_path}'."
+            "Successfully saved/appended %s issues. Total issues in %s: %s.",
+            len(issue_data),
+            self.issues_path,
+            len(df),
         )
 
     def save_readme(self, readme_data: List[ReadmeData]) -> None:
@@ -78,39 +66,27 @@ class IngestionParquetStorage(StoragePort):
             return
 
         logger.info(
-            "Attempting to save %s readmes to %s", len(readme_data), self.readmes_path
+            "Attempting to save/append %s readmes to %s",
+            len(readme_data),
+            self.readmes_path,
         )
-        is_first_batch = True
-        for i in range(0, len(readme_data), self.buffer_size):
-            batch = readme_data[i : i + self.buffer_size]
-            df = pd.DataFrame([asdict(readme) for readme in batch])
+        df = pd.DataFrame([asdict(readme) for readme in readme_data])
 
-            if is_first_batch:
-                logger.info(
-                    "Writing first batch of %s readmes, overwriting %s",
-                    len(batch),
-                    self.readmes_path,
-                )
-                df.to_parquet(
-                    self.readmes_path,
-                    engine="fastparquet",
-                    compression=self.compression,
-                    index=False,
-                )
-                is_first_batch = False
-            else:
-                logger.info(
-                    "Appending batch of %s readmes to %s", len(batch), self.readmes_path
-                )
-                df.to_parquet(
-                    self.readmes_path,
-                    engine="fastparquet",
-                    compression=self.compression,
-                    append=True,
-                    index=False,
-                )
+        if os.path.exists(self.readmes_path):
+            existing_df = pd.read_parquet(self.readmes_path)
+            df = pd.concat([existing_df, df], ignore_index=True)
+
+        df.to_parquet(
+            self.readmes_path,
+            engine="fastparquet",
+            compression=self.compression,
+            index=False,
+        )
         logger.info(
-            "Successfully saved %s readmes to %s.", len(readme_data), self.readmes_path
+            "Successfully saved/appended %s readmes. Total readmes in %s: %s.",
+            len(readme_data),
+            self.readmes_path,
+            len(df),
         )
 
     def save_thesis_data(self, thesis_data: List[ThesisData]) -> None:
@@ -119,43 +95,25 @@ class IngestionParquetStorage(StoragePort):
             return
 
         logger.info(
-            "Attempting to save %s thesis data to %s",
+            "Attempting to save/append %s thesis data to %s",
             len(thesis_data),
             self.thesis_path,
         )
-        is_first_batch = True
-        for i in range(0, len(thesis_data), self.buffer_size):
-            batch = thesis_data[i : i + self.buffer_size]
-            df = pd.DataFrame([asdict(thesis) for thesis in batch])
+        df = pd.DataFrame([asdict(thesis) for thesis in thesis_data])
 
-            if is_first_batch:
-                logger.info(
-                    "Writing first batch of %s thesis data, overwriting %s",
-                    len(batch),
-                    self.thesis_path,
-                )
-                df.to_parquet(
-                    self.thesis_path,
-                    engine="fastparquet",
-                    compression=self.compression,
-                    index=False,
-                )
-                is_first_batch = False
-            else:
-                logger.info(
-                    "Appending batch of %s thesis data to %s",
-                    len(batch),
-                    self.thesis_path,
-                )
-                df.to_parquet(
-                    self.thesis_path,
-                    engine="fastparquet",
-                    compression=self.compression,
-                    append=True,
-                    index=False,
-                )
+        if os.path.exists(self.thesis_path):
+            existing_df = pd.read_parquet(self.thesis_path)
+            df = pd.concat([existing_df, df], ignore_index=True)
+
+        df.to_parquet(
+            self.thesis_path,
+            engine="fastparquet",
+            compression=self.compression,
+            index=False,
+        )
         logger.info(
-            "Successfully saved %s thesis data to %s.",
+            "Successfully saved/appended %s thesis data. Total thesis data in %s: %s.",
             len(thesis_data),
             self.thesis_path,
+            len(df),
         )

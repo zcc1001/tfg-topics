@@ -3,14 +3,14 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Establecer la variable de entorno PYTHONPATH para que los imports funcionen
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app/src
 
 # Copiar el fichero de requisitos e instalar las dependencias
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar el código fuente de la aplicación
-COPY ../ingestion/src ./src
+COPY src ./src
 
 # Comando para ejecutar la aplicación
-ENTRYPOINT ["python", "src/main.py"]
+CMD ["python", "-m", "ingestion.main"]
