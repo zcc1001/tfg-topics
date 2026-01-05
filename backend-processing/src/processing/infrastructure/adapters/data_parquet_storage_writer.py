@@ -96,7 +96,6 @@ class DataParquetStorageWriter(StoragePort):
         self._write_document_topics(result_dir, result, run_id)
         self._write_metrics(result_dir, result, run_id)
         self._write_params(result_dir, result, run_id)
-        self._write_hierarchy(result_dir, result, run_id)
         self._write_topic_coordinates(result_dir, result, run_id)
 
     def _write_model_info(
@@ -192,29 +191,9 @@ class DataParquetStorageWriter(StoragePort):
             )
 
         df = pd.DataFrame(rows)
+        df["value"] = df["value"].astype(str)
         df.to_parquet(
             os.path.join(result_dir, result.source + "_params.parquet"), index=False
-        )
-
-    def _write_hierarchy(
-        self, result_dir: str, result: TopicModelResult, run_id: str
-    ) -> None:
-        if not result.hierarchy:
-            df = pd.DataFrame(
-                columns=[
-                    "model_name",
-                    "run_id",
-                    "parent_topic",
-                    "child_topic",
-                    "weight",
-                ]
-            )
-        else:
-            df = pd.DataFrame(result.hierarchy)
-            df["model_name"] = result.model_name
-            df["run_id"] = run_id
-        df.to_parquet(
-            os.path.join(result_dir, result.source + "_hierarchy.parquet"), index=False
         )
 
     def _write_topic_coordinates(

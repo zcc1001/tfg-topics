@@ -15,7 +15,6 @@ class TopicModelResult:
     model_name: str
     topics: Dict[int, List[str]]
     document_topics: List[Dict[str, Any]]
-    hierarchy: List[Dict[str, int]]
     metrics: Dict[str, float]
     params: Dict[str, Any]
     topic_coordinates: list

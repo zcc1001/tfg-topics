@@ -47,6 +47,11 @@ class HyperparameterSearchService:
             self.timeout,
         )
 
+        # Guard against empty input texts
+        if not texts:
+            logger.warning("No documents to train on after cleaning.")
+            raise RuntimeError("No documents to train on after cleaning.")
+
         # init optuna
         sampler = optuna.samplers.TPESampler(seed=self.random_seed)
         study = optuna.create_study(direction="maximize", sampler=sampler)

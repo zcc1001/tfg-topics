@@ -132,7 +132,6 @@ class LdaTopicModelAdapter(TopicModelPort):
             model_name=self.model_name(),
             topics=topics,
             document_topics=document_topics,
-            hierarchy=[],
             metrics={"coherence": coherence},
             params=params,
             topic_coordinates=topic_coordinates,

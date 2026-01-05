@@ -14,11 +14,17 @@ from processing.application.usecases.topic_modeling_usecase import TopicModeling
 from processing.infrastructure.adapters.data_parquet_storage_writer import (
     DataParquetStorageWriter,
 )
-from processing.infrastructure.adapters.modeling.bert_topic_model_adapter import (
+from processing.infrastructure.adapters.modeling.bertopic_model_adapter import (
     BerTopicModelAdapter,
+)
+from processing.infrastructure.adapters.modeling.fastopic_model_adapter import (
+    FastTopicModelAdapter,
 )
 from processing.infrastructure.adapters.modeling.lda_topic_model_adapter import (
     LdaTopicModelAdapter,
+)
+from processing.infrastructure.adapters.modeling.top2vec_topic_adapter import (
+    Top2VecModelAdapter,
 )
 from processing.infrastructure.adapters.parquet_document_reader import (
     ParquetDocumentRepository,
@@ -66,6 +72,10 @@ def main() -> None:
         model_adapter = LdaTopicModelAdapter()
     elif args.model.lower() == "bertopic":
         model_adapter = BerTopicModelAdapter()
+    elif args.model.lower() == "top2vec":
+        model_adapter = Top2VecModelAdapter()
+    elif args.model.lower() == "fastopic":
+        model_adapter = FastTopicModelAdapter()
     else:
         logger.error("Model '%s' is not supported.", args.model)
         return

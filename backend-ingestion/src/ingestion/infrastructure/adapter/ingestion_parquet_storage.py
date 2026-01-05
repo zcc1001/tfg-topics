@@ -99,13 +99,13 @@ class IngestionParquetStorage(StoragePort):
             len(thesis_data),
             self.thesis_path,
         )
-        df = pd.DataFrame([asdict(thesis) for thesis in thesis_data])
+        new_df = pd.DataFrame([asdict(thesis) for thesis in thesis_data])
 
         if os.path.exists(self.thesis_path):
             existing_df = pd.read_parquet(self.thesis_path)
-            df = pd.concat([existing_df, df], ignore_index=True)
+            new_df = pd.concat([existing_df, new_df], ignore_index=True)
 
-        df.to_parquet(
+        new_df.to_parquet(
             self.thesis_path,
             engine="fastparquet",
             compression=self.compression,
@@ -115,5 +115,5 @@ class IngestionParquetStorage(StoragePort):
             "Successfully saved/appended %s thesis data. Total thesis data in %s: %s.",
             len(thesis_data),
             self.thesis_path,
-            len(df),
+            len(new_df),
         )
