@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import Any, Dict, List, Optional, Tuple
 
 import lda
@@ -103,12 +104,13 @@ class LdaTopicModelAdapter(TopicModelPort):
 
     def fit(
         self,
-        source: str,
+        dataset: str,
         texts: List[str],
         params: Dict[str, Any],
     ) -> TopicModelResult:
         logger.info("Fitting LDA model to %d documents.", len(texts))
         logger.debug("Using parameters: %s", params)
+        start_time = time.perf_counter()
 
         tokens, joined = self._preprocess(documents=texts)
         model, vectorizer = self._train(joined, params)
@@ -127,14 +129,19 @@ class LdaTopicModelAdapter(TopicModelPort):
             topic_word=topic_word,
             doc_topic=doc_topic,
         )
+
+        end_time = time.perf_counter()
+        runtime_seconds = end_time - start_time
+
         result = TopicModelResult(
-            source=source,
+            dataset=dataset,
             model_name=self.model_name(),
             topics=topics,
             document_topics=document_topics,
             metrics={"coherence": coherence},
             params=params,
             topic_coordinates=topic_coordinates,
+            runtime_seconds=runtime_seconds,
         )
         logger.info("LDA model fitting completed.")
         return result

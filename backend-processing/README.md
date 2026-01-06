@@ -34,20 +34,20 @@ The module is designed to be flexible, supporting different data sources and top
 The main entry point for the module is `src/processing/main.py`. It can be executed from the command line with the following arguments:
 
 -   `--model`: The topic modeling algorithm to use. (Required, e.g., `bertopic`, `lda`)
--   `--source`: The data source to process. (Required, e.g., `readmes`, `issues`, `thesis`)
+-   `--dataset`: The data source to process. (Required, e.g., `readmes`, `issues`, `thesis`)
 
 ### Examples
 
 **Running BERTopic on README files:**
 
 ```bash
-python src/processing/main.py --model bertopic --source readmes
+python src/processing/main.py --model bertopic --dataset readmes
 ```
 
 **Running LDA on GitHub issues:**
 
 ```bash
-python src/processing/main.py --model lda --source issues
+python src/processing/main.py --model lda --dataset issues
 ```
 
 The script will read the corresponding data from the ingestion output directory, run the topic modeling pipeline, and save the results in the processing output directory.
@@ -62,7 +62,7 @@ The module generates several Parquet files containing the results of the hyperpa
 
 ### Hyperparameter Search Files
 
-- `[source]_hyperparameter_trials.parquet`: Records each trial from the Optuna search.
+- `[dataset]_hyperparameter_trials.parquet`: Records each trial from the Optuna search.
 
 | Column      | Type   | Description                                    |
 |-------------|--------|------------------------------------------------|
@@ -72,10 +72,11 @@ The module generates several Parquet files containing the results of the hyperpa
 | `state`     | string | State of the trial (`COMPLETE`, `FAIL`, etc.). |
 | `...params` | -      | Columns for each hyperparameter tested.        |
 
-- `[source]_best_hyperparameters.parquet`: Stores the best parameters found.
+- `[dataset]_best_hyperparameters.parquet`: Stores the best parameters found.
 
 | Column       | Type   | Description                                 |
 |--------------|--------|---------------------------------------------|
+| `dataset`    | string | Name of the dataset.                        |
 | `model`      | string | Name of the model.                          |
 | `best_score` | float  | The best score achieved.                    |
 | `...params`  | -      | Columns for the best hyperparameter values. |
@@ -84,47 +85,57 @@ The module generates several Parquet files containing the results of the hyperpa
 
 These files share a `run_id` to link them to a specific execution.
 
-- `[source]_model_info.parquet`: Metadata about the model run.
+- `[dataset]_model_summary.parquet`: Metadata about the model run.
 
-| Column       | Type      | Description         |
-|--------------|-----------|---------------------|
-| `model_name` | string    | Name of the model.  |
-| `model_type` | string    | Type of the model.  |
-| `run_id`     | string    | Unique run ID.      |
-| `created_at` | timestamp | Creation timestamp. |
-| `num_topics` | int       | Number of topics.   |
+| Column       | Type      | Description          |
+|--------------|-----------|----------------------|
+| `dataset`    | string    | Name of the dataset. |
+| `model_name` | string    | Name of the model.   |
+| `model_type` | string    | Type of the model.   |
+| `run_id`     | string    | Unique run ID.       |
+| `created_at` | timestamp | Creation timestamp.  |
+| `num_topics` | int       | Number of topics.    |
 
-- `[source]_topics.parquet`: The words that constitute each topic.
-
-| Column       | Type   | Description         |
-|--------------|--------|---------------------|
-| `model_name` | string | Name of the model.  |
-| `run_id`     | string | Unique run ID.      |
-| `topic_id`   | int    | Topic identifier.   |
-| `word`       | string | Word in the topic.  |
-| `weight`     | float  | Word weight/score.  |
-| `rank`       | int    | Word rank in topic. |
-
-- `[source]_document_topics.parquet`: The mapping of documents to topics.
-- `[source]_metrics.parquet`: Evaluation metrics for the model.
+- `[dataset]_topics.parquet`: The words that constitute each topic.
 
 | Column       | Type   | Description          |
 |--------------|--------|----------------------|
+| `dataset`    | string | Name of the dataset. |
+| `model_name` | string | Name of the model.   |
+| `run_id`     | string | Unique run ID.       |
+| `topic_id`   | int    | Topic identifier.    |
+| `word`       | string | Word in the topic.   |
+| `rank`       | int    | Word rank in topic.  |
+
+- `[dataset]_document_topics.parquet`: The mapping of documents to topics.
+
+| Column        | Type   | Description               |
+|---------------|--------|---------------------------|
+| `document_id` | string | Document identifier.      |
+| `topic_id`    | int    | Topic identifier.         |
+| `probability` | float  | Probability of the topic. |
+
+- `[dataset]_metrics.parquet`: Evaluation metrics for the model.
+
+| Column       | Type   | Description          |
+|--------------|--------|----------------------|
+| `dataset`    | string | Name of the dataset. |
 | `model_name` | string | Name of the model.   |
 | `run_id`     | string | Unique run ID.       |
 | `metric`     | string | Name of the metric.  |
 | `value`      | float  | Value of the metric. |
 
-- `[source]_params.parquet`: The specific parameters used for the final model run.
+- `[dataset]_params.parquet`: The specific parameters used for the final model run.
 
-| Column       | Type   | Description        |
-|--------------|--------|--------------------|
-| `model_name` | string | Name of the model. |
-| `run_id`     | string | Unique run ID.     |
-| `param`      | string | Parameter name.    |
-| `value`      | string | Parameter value.   |
+| Column       | Type   | Description          |
+|--------------|--------|----------------------|
+| `dataset`    | string | Name of the dataset. |
+| `model_name` | string | Name of the model.   |
+| `run_id`     | string | Unique run ID.       |
+| `param`      | string | Parameter name.      |
+| `value`      | string | Parameter value.     |
 
-- `[source]_topic_coordinates.parquet`: 2D or 3D coordinates for topic visualization.
+- `[dataset]_topic_coordinates.parquet`: 2D or 3D coordinates for topic visualization.
 
 ## Main Dependencies
 
@@ -143,5 +154,5 @@ You can also build and run this module as a Docker container from de root direct
 docker compose --profile processing build
 
 # Run the container (example)
-docker compose --profile processing run --rm processing --model bertopic --source readmes
+docker compose --profile processing run --rm processing --model bertopic --dataset readmes
 ```

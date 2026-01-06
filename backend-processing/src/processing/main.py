@@ -49,7 +49,7 @@ def main() -> None:
         "--model", required=True, help="Model to be used for topic modeling"
     )
     parser.add_argument(
-        "--source",
+        "--dataset",
         required=True,
         help="Data source to be used",
         choices=["readmes", "issues", "thesis"],
@@ -90,7 +90,7 @@ def main() -> None:
         writer=writer,
     )
 
-    topic_modeling_use_case.execute(source=args.source)
+    topic_modeling_use_case.execute(dataset=args.dataset)
     logger.info("Processing-Module Completed...")
 
 

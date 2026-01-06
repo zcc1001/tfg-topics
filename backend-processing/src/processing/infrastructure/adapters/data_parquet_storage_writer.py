@@ -53,7 +53,7 @@ class DataParquetStorageWriter(StoragePort):
 
         trials_df = pd.DataFrame(trials_rows)
         trials_output_path = os.path.join(
-            result_dir, result.source + "_hyperparameter_trials.parquet"
+            result_dir, result.dataset + "_hyperparameter_trials.parquet"
         )
         trials_df.to_parquet(
             trials_output_path,
@@ -64,6 +64,7 @@ class DataParquetStorageWriter(StoragePort):
         best_df = pd.DataFrame(
             [
                 {
+                    "dataset": result.dataset,
                     "model": result.model_name,
                     "best_score": result.best_score,
                     **result.best_params,
@@ -72,7 +73,7 @@ class DataParquetStorageWriter(StoragePort):
         )
 
         best_output_path = os.path.join(
-            result_dir, result.source + "_best_hyperparameters.parquet"
+            result_dir, result.dataset + "_best_hyperparameters.parquet"
         )
         best_df.to_parquet(
             best_output_path,
@@ -91,14 +92,14 @@ class DataParquetStorageWriter(StoragePort):
         logger.info("Writing topic model results to %s", result_dir)
         os.makedirs(result_dir, exist_ok=True)
 
-        self._write_model_info(result_dir, result, run_id)
+        self._write_model_summary(result_dir, result, run_id)
         self._write_topics(result_dir, result, run_id)
         self._write_document_topics(result_dir, result, run_id)
         self._write_metrics(result_dir, result, run_id)
         self._write_params(result_dir, result, run_id)
         self._write_topic_coordinates(result_dir, result, run_id)
 
-    def _write_model_info(
+    def _write_model_summary(
         self,
         result_dir: str,
         result: TopicModelResult,
@@ -107,16 +108,19 @@ class DataParquetStorageWriter(StoragePort):
         df = pd.DataFrame(
             [
                 {
-                    "model_name": result.model_name,
-                    "model_type": result.model_name.lower(),
+                    "dataset": result.dataset,
+                    "model_name": result.model_name.lower(),
                     "run_id": run_id,
-                    "created_at": datetime.now(timezone.utc),
+                    "coherence": result.metrics.get("coherence", None),
                     "num_topics": len(result.topics),
+                    "runtime_seconds": result.runtime_seconds,
+                    "created_at": datetime.now(timezone.utc),
                 }
             ]
         )
         df.to_parquet(
-            os.path.join(result_dir, result.source + "_model_info.parquet"), index=False
+            os.path.join(result_dir, result.dataset + "_model_summary.parquet"),
+            index=False,
         )
 
     def _write_topics(
@@ -128,18 +132,18 @@ class DataParquetStorageWriter(StoragePort):
             for rank, word in enumerate(words, start=1):
                 rows.append(
                     {
-                        "model_name": result.model_name,
+                        "dataset": result.dataset,
+                        "model_name": result.model_name.lower(),
                         "run_id": run_id,
                         "topic_id": topic_id,
                         "word": word,
-                        "weight": None,
                         "rank": rank,
                     }
                 )
 
         df = pd.DataFrame(rows)
         df.to_parquet(
-            os.path.join(result_dir, result.source + "_topics.parquet"), index=False
+            os.path.join(result_dir, result.dataset + "_topics.parquet"), index=False
         )
 
     def _write_document_topics(
@@ -148,10 +152,11 @@ class DataParquetStorageWriter(StoragePort):
         df = pd.DataFrame(result.document_topics)
 
         if not df.empty:
+            df["dataset"] = result.dataset
             df["model_name"] = result.model_name
             df["run_id"] = run_id
         df.to_parquet(
-            os.path.join(result_dir, result.source + "_document_topics.parquet"),
+            os.path.join(result_dir, result.dataset + "_document_topics.parquet"),
             index=False,
         )
 
@@ -163,6 +168,7 @@ class DataParquetStorageWriter(StoragePort):
         for metric, value in result.metrics.items():
             rows.append(
                 {
+                    "dataset": result.dataset,
                     "model_name": result.model_name,
                     "run_id": run_id,
                     "metric": metric,
@@ -172,7 +178,7 @@ class DataParquetStorageWriter(StoragePort):
 
         df = pd.DataFrame(rows)
         df.to_parquet(
-            os.path.join(result_dir, result.source + "_metrics.parquet"), index=False
+            os.path.join(result_dir, result.dataset + "_metrics.parquet"), index=False
         )
 
     def _write_params(
@@ -183,6 +189,7 @@ class DataParquetStorageWriter(StoragePort):
         for param, value in result.params.items():
             rows.append(
                 {
+                    "dataset": result.dataset,
                     "model_name": result.model_name,
                     "run_id": run_id,
                     "param": param,
@@ -193,17 +200,18 @@ class DataParquetStorageWriter(StoragePort):
         df = pd.DataFrame(rows)
         df["value"] = df["value"].astype(str)
         df.to_parquet(
-            os.path.join(result_dir, result.source + "_params.parquet"), index=False
+            os.path.join(result_dir, result.dataset + "_params.parquet"), index=False
         )
 
     def _write_topic_coordinates(
         self, result_dir: str, result: TopicModelResult, run_id: str
     ) -> None:
         df = pd.DataFrame(result.topic_coordinates)
+        df["dataset"] = result.dataset
         df["model_name"] = result.model_name
         df["run_id"] = run_id
 
         df.to_parquet(
-            os.path.join(result_dir, result.source + "_topic_coordinates.parquet"),
+            os.path.join(result_dir, result.dataset + "_topic_coordinates.parquet"),
             index=False,
         )

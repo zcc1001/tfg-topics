@@ -11,13 +11,14 @@ class Document:
 
 @dataclass
 class TopicModelResult:
-    source: str
+    dataset: str
     model_name: str
     topics: Dict[int, List[str]]
     document_topics: List[Dict[str, Any]]
     metrics: Dict[str, float]
     params: Dict[str, Any]
     topic_coordinates: list
+    runtime_seconds: float
 
 
 @dataclass
@@ -32,7 +33,7 @@ class HyperparameterTrialResult:
 @dataclass
 class HyperparameterSearchResult:
     model_name: str
-    source: str
+    dataset: str
     best_params: Dict[str, Any]
     best_score: float
     trials: List[HyperparameterTrialResult]

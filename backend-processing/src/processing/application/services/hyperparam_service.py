@@ -29,11 +29,11 @@ class HyperparameterSearchService:
         self.timeout = timeout
 
     def search(
-        self, source: str, model_wrapper: TopicModelPort, texts: List[str]
+        self, dataset: str, model_wrapper: TopicModelPort, texts: List[str]
     ) -> HyperparameterSearchResult:
         """Performs a hyperparameter search on the given texts.
         Args:
-            source: The name of the data source.
+            dataset: The name of the data source.
             model_wrapper: The topic model wrapper to use for the search.
             texts: The texts to use for the search.
         Raises:
@@ -101,7 +101,7 @@ class HyperparameterSearchService:
             )
 
         return HyperparameterSearchResult(
-            source=source,
+            dataset=dataset,
             model_name=model_wrapper.model_name(),
             best_params=study.best_params,
             best_score=study.best_value,

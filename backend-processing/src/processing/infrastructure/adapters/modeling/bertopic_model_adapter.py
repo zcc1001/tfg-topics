@@ -1,4 +1,5 @@
 import logging
+import time
 from numbers import Integral, Real
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -92,12 +93,14 @@ class BerTopicModelAdapter(TopicModelPort):
 
     def fit(
         self,
-        source: str,
+        dataset: str,
         texts: List[str],
         params: Dict[str, Any],
     ) -> TopicModelResult:
 
         logger.info("Fitting BERTopic model to %d documents.", len(texts))
+        start_time = time.perf_counter()
+
         clean_texts = [LatexTextProcessor.clean(doc) for doc in texts]
         tokens = self._preprocess(clean_texts)
 
@@ -124,14 +127,18 @@ class BerTopicModelAdapter(TopicModelPort):
 
         topic_coordinates = self._compute_intertopic_coordinates(model)
 
+        end_time = time.perf_counter()
+        runtime_seconds = end_time - start_time
+
         return TopicModelResult(
-            source=source,
+            dataset=dataset,
             model_name=self.model_name(),
             topics=topics,
             document_topics=document_topics,
             metrics={"coherence": coherence},
             params=params,
             topic_coordinates=topic_coordinates,
+            runtime_seconds=runtime_seconds,
         )
 
     @staticmethod

@@ -8,11 +8,11 @@ class TopicModelPort(ABC):
     """Create a topic model model ."""
 
     @abstractmethod
-    def fit(self, source: str, texts: List[str], params: Dict) -> TopicModelResult:
+    def fit(self, dataset: str, texts: List[str], params: Dict) -> TopicModelResult:
         """Fit the model to the given texts.
 
         Args:
-            source (str): Identifier for the data source (e.g., 'issues', 'thesis').
+            dataset (str): Identifier for the data source (e.g., 'issues', 'thesis').
             texts (List[str]): A list of documents to train the model on.
             params (Dict): Hyperparameters for the topic model.
 

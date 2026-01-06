@@ -27,15 +27,15 @@ class TopicModelingUseCase:
         self.model_adapter = model_adapter
         self.writer = writer
 
-    def execute(self, source: str) -> None:
+    def execute(self, dataset: str) -> None:
         """Execute the search and return the result .
 
         Args:
-            source (str): Source file name without extension.
+            dataset (str): dataset file name without extension.
         """
         logger.info("Starting topic modeling use case.")
         documents = self.document_repository.load_documents(
-            doc_name=f"{source}.parquet"
+            doc_name=f"{dataset}.parquet"
         )
         texts = [d.text for d in documents]
         logger.info("Loaded %d documents.", len(texts))
@@ -43,7 +43,7 @@ class TopicModelingUseCase:
         logger.info("Starting hyperparameter search.")
         start_time = time.time()
         search_result = self.hyperparam_service.search(
-            source=source, model_wrapper=self.model_adapter, texts=texts
+            dataset=dataset, model_wrapper=self.model_adapter, texts=texts
         )
         end_time = time.time()
         hyperparam_duration = end_time - start_time
@@ -51,7 +51,7 @@ class TopicModelingUseCase:
         logger.info("Starting final training.")
         start_time = time.time()
         topic_result = self.model_adapter.fit(
-            source=source, texts=texts, params=search_result.best_params
+            dataset=dataset, texts=texts, params=search_result.best_params
         )
         end_time = time.time()
         training_duration = end_time - start_time
