@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
@@ -133,7 +134,11 @@ def test_save_thesis_data(
     df = pd.read_parquet(storage.thesis_path)
     assert len(df) == 2
     assert df["repo_name"].tolist() == ["repo0", "repo1"]
-    assert len(df["texts"][0]) == 1
+
+    texts = df["texts"][0]
+    if isinstance(texts, str):
+        texts = json.loads(texts)
+    assert len(texts) == 1
 
 
 def test_save_empty_lists(tmp_path: Path) -> None:
