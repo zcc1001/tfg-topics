@@ -7,29 +7,29 @@ herramientas de software que facilitaron la implementación y gestión del mismo
 \section{Metodologías de desarrollo}
 
 El desarrollo del proyecto se llevó a cabo utilizando la metodología ágil
-\textbf{SCRUM}~\cite{agile_alliance} de forma adaptada al contexto de un
+\acrfull{scrum}~\cite{agile_alliance} de forma adaptada al contexto de un
 proyecto académico individual. Esta metodología permitió una gestión flexible y
-adaptativa del proyecto. El trabajo se organizó en \textit{sprints} de dos
-semanas, donde se definieron objetivos claros y se realizaron revisiones
-periódicas para evaluar el progreso. Frente a metodologías estrictamente
-secuenciales, este enfoque resulta especialmente adecuado en proyectos de
-carácter experimental, como es el caso del modelado de temas, donde los
-resultados dependen en gran medida de la calidad del preprocesado y de la
-configuración de los modelos.
+adaptativa del proyecto. El trabajo se organizó en \gls{sprint} de dos semanas,
+donde se definieron objetivos claros y se realizaron revisiones periódicas para
+evaluar el progreso. Frente a metodologías estrictamente secuenciales, este
+enfoque resulta especialmente adecuado en proyectos de carácter experimental,
+como es el caso del modelado de temas, donde los resultados dependen en gran
+medida de la calidad del preprocesado y de la configuración de los modelos.
 
 Para la planificación de tareas y realizar seguimiento del proyecto se utilizó
 la aplicación web \textbf{Zube}~\cite{zube}. Esta herramienta se integra
-fácilmente con GitHub, permite crear \textit{sprints}, épicas y tableros
-Kanban.
+fácilmente con GitHub, permite crear \gls{sprint}, épicas y tableros
+\gls{kanban}.
 
-Para seguir el flujo de trabajo de SCRUM y facilitar el proceso de desarrollo,
-en este caso el tutor adoptó los roles de product owner y SCRUM master.
+Para seguir el flujo de trabajo de \acrshort{scrum} y facilitar el proceso de
+desarrollo, en este caso el tutor adoptó los roles de product owner y
+\acrshort{scrum} master.
 
 \section{Herramientas de gestión de proyectos}
 
 Para la gestión del proyecto se utilizó la plataforma \textbf{GitHub}. Esta
 herramienta permitió el alojamiento y gestión del código fuente, permitiendo
-llevar un control de versiones eficiente utilizando Git~\cite{GitReference}.
+llevar un \gls{control_versiones} eficiente utilizando Git~\cite{GitReference}.
 
 \section{Herramientas de desarrollo}
 
@@ -57,7 +57,7 @@ documentación en un solo documento interactivo.
 El lenguaje de programación principal utilizado en el desarrollo del proyecto
 fue \textbf{Python}~\cite{31019Documentation}. Python es un lenguaje de alto
 nivel, interpretado y de propósito general, conocido por su sintaxis clara. Su
-elección se basa en la amplia gama de bibliotecas y \textit{frameworks} para el
+elección se basa en la amplia gama de bibliotecas y \gls{framework} para el
 procesamiento de datos y modelado de temas disponibles.
 \subsubsection{Bibliotecas y frameworks}
 
@@ -82,7 +82,7 @@ la interpretabilidad y el coste computacional.
 
 Se utilizaron las siguientes bibliotecas de Python para el modelado de temas:
 \begin{itemize}
-    \item \textbf{LDA}~\cite{LdaTopicModelingb}: Implementación del modelo Latent Dirichlet Allocation para descubrir temas en grandes colecciones de documentos.
+    \item \acrshort{lda}~\cite{LdaTopicModelingb}: Implementación del modelo Latent Dirichlet Allocation para descubrir temas en grandes colecciones de documentos.
     \item \textbf{BERTopic}~\cite{QuickStartBERTopic}: Biblioteca que utiliza modelos de lenguaje basados en transformadores para generar representaciones de documentos y realizar clustering.
     \item \textbf{Top2Vec}~\cite{angelovDdangelovTop2Vec2025a}: Biblioteca que combina incrustaciones de documentos y clustering para identificar temas en grandes conjuntos de datos.
     \item \textbf{FASTopic}~\cite{FastopicFASTopic}: Biblioteca que utiliza técnicas de reducción de dimensionalidad y clustering para el modelado eficiente de temas en grandes conjuntos de datos.
@@ -114,8 +114,8 @@ herramientas de apoyo orientadas a la gestión del entorno de ejecución y a la
 calidad del software desarrollado.
 
 En primer lugar, se ha utilizado \textbf{Docker}~\cite{DockerManuals} y
-\textbf{Docker Compose} como tecnología de contenedorización. Docker permite
-encapsular la aplicación junto con todas sus dependencias en entornos
+\textbf{Docker Compose} como tecnología de \gls{contenedorizacion}. Docker
+permite encapsular la aplicación junto con todas sus dependencias en entornos
 reproducibles y aislados, lo que simplifica tanto el despliegue como la
 ejecución del sistema en diferentes máquinas. Este enfoque resulta
 especialmente útil ya que reduce problemas derivados de incompatibilidades de

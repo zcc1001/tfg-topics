@@ -21,6 +21,151 @@
 	allcolors = {red}
 }
 
+% Acrónimos y glosario
+\usepackage[acronym,toc]{glossaries}
+
+\makenoidxglossaries
+\newacronym{tfg}{TFG}{Trabajo de Fin de Grado}
+\newacronym{eps}{EPS}{Escuela Politécnica Superior }
+\newacronym{ects}{ECTS}{European Credit Transfer and Accumulation System}
+\newacronym{lda}{LDA}{Latent Dirichlet Allocation}
+\newacronym{nlp}{NLP}{Natural Language Processing}
+\newacronym{ai}{AI}{Artificial Intelligence}
+\newacronym{nltk}{NLTK}{Natural Language Tool Kit}
+\newacronym{bow}{BOW}{Bag of Words}
+\newacronym{tf}{TF}{Term Frequency}
+\newacronym{tf-idf}{TF-IDF}{Term Frequency-Inverse Document Frequency}
+\newacronym{ann}{ANN}{Artificial Neural Networks}
+\newacronym{bert}{BERT}{Bidirectional Encoder Representations from Transformers}
+\newacronym{umap}{UMAP}{Uniform Manifold Approximation and Projection}
+\newacronym{hdbscan}{HDBSCAN}{Hierarchical Density-Based Spatial Clustering of Applications with Noise}
+\newacronym{c-tf-idf}{c-TF-IDF}{Class-based Term Frequency-Inverse Document Frequency}
+\newacronym{dsr}{DSR}{Reconstrucción de Relaciones Semánticas Dual}
+\newacronym{etp}{ETP}{Embedding Transport Plan}
+\newacronym{scrum}{SCRUM}{Scrum Framework}
+
+
+% Glosario
+
+\newglossaryentry{tokenizacion}
+{
+	name=Tokenización,
+	description={Proceso de dividir texto en unidades mínimas (tokens)}
+}
+\newglossaryentry{lematizacion}
+{
+	name=Lematización,
+	description={Proceso de reducir las palabras a su forma canónica o lema}
+}
+\newglossaryentry{stopwords}
+{
+	name=Stopwords,
+	description={Palabras vacías con bajo valor semántico que se eliminan en la fase de preprocesamiento}
+}
+\newglossaryentry{embeddings}
+{
+	name=Embeddings,
+	description={Representación vectorial (numérica) del significado semántico de las palabras en un espacio multidimensional}
+}
+\newglossaryentry{topic_modeling}
+{
+	name=Modelado de temas,
+	description={Técnica de aprendizaje no supervisado para encontrar temas subyacentes en un corpus de documentos}
+}
+\newglossaryentry{perplejidad}
+{
+	name=Perplejidad,
+	description={Métrica para modelos probabilísticos que indica qué tan bien un modelo predice datos no vistos}
+}
+\newglossaryentry{coherencia}
+{
+	name=Coherencia,
+	description={Métrica que evalúa la relación semántica entre los términos más representativos de un tema}
+}
+\newglossaryentry{hiperparametrizacion}
+{
+	name=Hiperparametrización,
+	description={Proceso de configuración y ajuste de los hiperparámetros de un modelo para optimizar su rendimiento}
+}
+\newglossaryentry{grid_search}
+{
+	name=Grid Search,
+	description={Método de búsqueda de hiperparámetros que explora una parrilla de valores predefinida}
+}
+\newglossaryentry{random_search}
+{
+	name=Random Search,
+	description={Método de búsqueda de hiperparámetros que explora combinaciones aleatorias en un espacio de búsqueda}
+}
+\newglossaryentry{optimizacion_bayesiana}
+{
+	name=Optimización Bayesiana,
+	description={Método de búsqueda de hiperparámetros que utiliza un modelo probabilístico para encontrar los valores óptimos de forma eficiente}
+}
+\newglossaryentry{preprocesamiento_texto}{
+  name=Preprocesamiento de texto,
+  description={Conjunto de técnicas aplicadas a textos sin estructurar para limpiarlos, normalizarlos y prepararlos para su análisis automático}
+}
+\newglossaryentry{clustering}{
+  name=Clustering,
+  description={Proceso de agrupación automática de elementos en conjuntos homogéneos basados en medidas de similitud}
+}
+\newglossaryentry{reduccion_dimensionalidad}{
+  name=Reducción de dimensionalidad,
+  description={Técnica que reduce el número de variables de un conjunto de datos preservando la información relevante}
+}
+\newglossaryentry{similitud_coseno}{
+  name=Similitud del coseno,
+  description={Métrica que mide la similitud entre dos vectores calculando el coseno del ángulo que los separa}
+}
+\newglossaryentry{distancia_euclidiana}{
+  name=Distancia euclidiana,
+  description={Métrica que calcula la distancia geométrica directa entre dos puntos en un espacio vectorial}
+}
+\newglossaryentry{corpus}{
+  name=Corpus,
+  description={Conjunto estructurado de documentos utilizado como base para el análisis lingüístico o estadístico}
+}
+\newglossaryentry{ventana_deslizante}{
+  name=Ventana deslizante,
+  description={Técnica que analiza secuencias de elementos consecutivos dentro de un texto para estudiar coocurrencias}
+}
+\newglossaryentry{kmeans}{
+  name=K-Means,
+  description={Algoritmo de clustering que agrupa datos en k conjuntos minimizando la distancia interna a los centroides}
+}
+\newglossaryentry{doc2vec}{
+  name=Doc2Vec,
+  description={Modelo de aprendizaje no supervisado que genera representaciones vectoriales de documentos completos}
+}
+\newglossaryentry{fasttext}{
+  name=FastText,
+  description={Modelo de representaciones vectoriales que incorpora información de subpalabras para mejorar el tratamiento de palabras raras}
+}
+\newglossaryentry{sprint}{
+  name=Sprint,
+  description={Iteración temporal fija dentro de una metodología ágil en la que se desarrollan y revisan funcionalidades concretas}
+}
+\newglossaryentry{kanban}{
+  name=Kanban,
+  description={Sistema visual de gestión del trabajo que permite controlar el flujo de tareas mediante columnas y estados}
+}
+\newglossaryentry{control_versiones}{
+  name=Control de versiones,
+  description={Sistema que permite gestionar y registrar los cambios realizados sobre el código fuente a lo largo del tiempo}
+}
+\newglossaryentry{framework}{
+  name=Framework,
+  description={Estructura de software que proporciona una base sobre la que desarrollar aplicaciones de forma estandarizada}
+}
+\newglossaryentry{contenedorizacion}{
+  name=Contenedorización,
+  description={Técnica de virtualización ligera que encapsula una aplicación y sus dependencias en entornos aislados}
+}
+
+\renewcommand{\glossaryname}{Glosario}
+\renewcommand{\acronymname}{Acrónimos}
+
 % Ecuaciones
 \usepackage{amsmath}
 
@@ -429,7 +574,10 @@
   To achieve this, a dataset was built from TFG reports written in LaTeX format
   and publicly available on GitHub. These texts are processed and analyzed using
   various topic modeling algorithms, such as \textbf{Latent Dirichlet Allocation
-    (LDA)}, \textbf{Top2Vec}, \textbf{BERTopic}, and \textbf{FASTopic}.
+    (LDA)} \cite{blei2003lda},\textbf{Top2Vec}
+  \cite{angelovTop2VecDistributedRepresentations2020}, \textbf{BERTopic}
+  \cite{grootendorstBERTopicNeuralTopic2022} and \textbf{FASTopic}
+  \cite{2024arXiv240517978W} \cite{2024arXiv240517978W}.
 
   This work focuses on the implementation, comparison, and evaluation of
   different \textbf{Topic Modeling} algorithms, with the aim of building a tool
@@ -463,6 +611,9 @@
 \include{./tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto}
 \include{./tex/6_Trabajos_relacionados}
 \include{./tex/7_Conclusiones_Lineas_de_trabajo_futuras}
+
+\printnoidxglossary[type=\acronymtype,toctitle= Acrónimos,title=Acrónimos]
+\printnoidxglossary[title=Glosario,toctitle=Glosario]
 
 \bibliographystyle{plain}
 \bibliography{bibliografia}

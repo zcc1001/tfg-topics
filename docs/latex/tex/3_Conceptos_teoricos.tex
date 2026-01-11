@@ -6,25 +6,26 @@ avanzados de modelado.
 
 \section{Procesamiento de lenguaje natural}
 
-El procesamiento de lenguaje natural (PLN, del inglés \textit{Natural Language
-	Processing}, NLP) es un campo de la Inteligencia Artificial (IA, del inglés
-\textit{Artificial Intelligence}, AI) que se ocupa del análisis y la
-interpretación de textos que se encuentran en lenguaje humano. Utilizando estas
-técnicas los computadores pueden dar sentido a los datos contenidos en un
-conjunto de textos y asi adquirir su conocimiento
+El procesamiento de lenguaje natural (\acrshort{nlp}, del inglés \acrlong{nlp})
+es un campo de la Inteligencia Artificial (\acrshort{ai}, del inglés
+\acrlong{ai}) que se ocupa del análisis y la interpretación de textos que se
+encuentran en lenguaje humano. Utilizando estas técnicas los computadores
+pueden dar sentido a los datos contenidos en un conjunto de textos y asi
+adquirir su conocimiento
 implícito~\cite{atkinson-abutridyAnaliticaTextual2023}.
 
-NLP usa gran variedad de técnicas y modelos para analizar diferentes aspectos
+\acrshort{nlp} usa gran variedad de técnicas y modelos para analizar diferentes aspectos
 de los textos como la formación de palabras, el léxico, la sintaxis entre
 otros, con esto se pretende resolver problemas específicos relacionados con el
 lenguaje.
 
-Entre las técnicas más usadas en NLP se encuentran la tokenización,
-lematización, eliminación de palabras vacías (del inglés \textit{stopwords}),
-análisis sintáctico y extracción de información. En el contexto de este
-trabajo, las técnicas de NLP se utilizan para preparar los textos de las
-memorias de TFG, transformándolos en datos estructurados que puedan ser
-analizados mediante algoritmos de modelado de temas.
+Entre las técnicas más usadas en \acrshort{nlp} se encuentran la
+\gls{tokenizacion}, \gls{lematizacion}, eliminación de palabras vacías (del
+inglés \gls{stopwords}), análisis sintáctico y extracción de información. En el
+contexto de este trabajo, las técnicas de \acrshort{nlp} se utilizan para
+preparar los textos de las memorias de \acrshort{tfg}, transformándolos en
+datos estructurados que puedan ser analizados mediante algoritmos de modelado
+de temas.
 
 \section{Preprocesamiento del textos}
 
@@ -33,15 +34,15 @@ procesos para garantizar su limpieza, normalización y reducir dimensión del
 vocabulario, con el fin de garantizar la calidad de los análisis resultantes.
 
 \subsection{Tokenización}
-a La tokenización es un proceso fundamental dentro de el NLP y la AI, pues
-permite dividir el texto en unidades mínimas denominadas tokens, que pueden ser
-palabras, subpalabras, caracteres o unidades semánticas mas
-complejas~\cite{jm3}. Este proceso constituye la base para la mayoría de
+a La \gls{tokenizacion} es un proceso fundamental dentro de el \acrshort{nlp} y
+la \acrshort{ai}, pues permite dividir el texto en unidades mínimas denominadas
+tokens, que pueden ser palabras, subpalabras, caracteres o unidades semánticas
+mas complejas~\cite{jm3}. Este proceso constituye la base para la mayoría de
 técnicas posteriores de análisis textual, ya que permite transformar cadenas de
 texto sin estructura en secuencias manejables por algoritmos computacionales.
 
-La tokenización presenta una serie de problemas que son específicos de cada
-idioma. Por lo tanto, se requiere conocer el idioma del documento. La
+La \gls{tokenizacion} presenta una serie de problemas que son específicos de
+cada idioma. Por lo tanto, se requiere conocer el idioma del documento. La
 identificación del idioma mediante clasificadores que usan subsecuencias cortas
 de caracteres como características resulta muy efectiva, ya que la mayoría de
 los idiomas tienen patrones distintivos~\cite{QueEsTokenizacion}.
@@ -50,58 +51,58 @@ los idiomas tienen patrones distintivos~\cite{QueEsTokenizacion}.
 Existen varios métodos comunes para realizar esta segmentación
 
 \begin{description}
-	\item[Tokenización de palabras] El texto se divide en palabras individuales basándose
+	\item[\gls{tokenizacion} de palabras] El texto se divide en palabras individuales basándose
 	      en un delimitador, típicamente el espacio. Esta representación puede fallar con
 	      palabras compuestas o en idiomas sin espacios entre palabras (como el
 	      chino)~\cite{gewarrenDescripcionTokensNET}.
-	\item[Tokenización de caracteres] El texto se divide en caracteres individuales. Este
+	\item[\gls{tokenizacion} de caracteres] El texto se divide en caracteres individuales. Este
 	      método es útil para lenguajes con alfabetos complejos y permite al modelo
 	      manejar un rango más amplio de entradas, como palabras desconocidas o errores
 	      tipográficos~\cite{josefatRevisionSistematicaTecnicas,
 		      gewarrenDescripcionTokensNET}.
-	\item[Tokenización de subpalabras] El texto se divide en subpalabras o fragmentos
+	\item[\gls{tokenizacion} de subpalabras] El texto se divide en subpalabras o fragmentos
 	      frecuentes de caracteres. Este método reduce la dimensionalidad y maneja
 	      eficazmente palabras raras y
 	      desconocidas~\cite{josefatRevisionSistematicaTecnicas,
 		      gewarrenDescripcionTokensNET}.
-	\item[Tokenización de espaciado blanco] Divide el texto basándose únicamente en los
+	\item[\gls{tokenizacion} de espaciado blanco] Divide el texto basándose únicamente en los
 	      espacios, lo que resulta en una gestión incorrecta de puntuaciones o errores
 	      gramaticales~\cite{josefatRevisionSistematicaTecnicas}.
 \end{description}
 
-En el contexto del análisis temático de TFG, la tokenización cumple varias
-funciones clave:
+En el contexto del análisis temático de \acrshort{tfg}, la \gls{tokenizacion}
+cumple varias funciones clave:
 \begin{itemize}
 	\item Estandarizar los textos, permitiendo compararlos entre sí.
 	\item Reduce ruido, al separar puntuación, símbolos o caracteres no relevantes.
-	\item Facilita operaciones posteriores, como lematización, extracción de n-grams o
-	      cálculo de frecuencias.
+	\item Facilita operaciones posteriores, como \gls{lematizacion}, extracción de
+	      n-grams o cálculo de frecuencias.
 	\item Mejora la precisión del modelado de temas, ya que una buena segmentación
 	      permite que los modelos identifiquen patrones semánticos coherentes.
 \end{itemize}
 
-En particular para este trabajo la tokenización presenta varios problemas o
-desafíos:
+En particular para este trabajo la \gls{tokenizacion} presenta varios problemas
+o desafíos:
 \begin{description}
 	\item[Tratamiento de compuestos] palabras como “aprendizaje-servicio” deben decidirse
 	      como uno o dos tokens.
-	\item[Abreviaturas universitarias] “TFG”, “EPS", “ECTS”, etc., que pueden requerir
-	      reglas específicas.
+	\item[Abreviaturas universitarias] “\acrshort{tfg}”, “\acrshort{eps}”,
+	      “\acrshort{ects}”, etc., que pueden requerir reglas específicas.
 	\item[Símbolos técnicos o matemáticos] comunes en textos de informática.
 	\item[Preservación del contexto] eliminar puntuación puede afectar el significado y
 	      perdida de contexto en algunos casos.
 \end{description}
 
-La tokenización es un proceso esencial y su correcta implementación afecta
-directamente la calidad del análisis temático y de los modelos posteriores,
-desde la extracción de palabras clave hasta el modelado de temas.
+La \gls{tokenizacion} es un proceso esencial y su correcta implementación
+afecta directamente la calidad del análisis temático y de los modelos
+posteriores, desde la extracción de palabras clave hasta el modelado de temas.
 
 \subsection{Lematización}
-La lematización es una técnica clave dentro del NLP que tiene como principal
-objetivo trasformar o reducir las palabras a su forma canónica o lema, es
-decir, la forma bajo la cual se encontrarían en un diccionario. En muchas
-lenguas, el infinitivo se utiliza como lema para el verbo; por ejemplo, en
-español, dormir es el lema para la forma duermes~\cite{jm3}.
+La \gls{lematizacion} es una técnica clave dentro del \acrshort{nlp} que tiene
+como principal objetivo trasformar o reducir las palabras a su forma canónica o
+lema, es decir, la forma bajo la cual se encontrarían en un diccionario. En
+muchas lenguas, el infinitivo se utiliza como lema para el verbo; por ejemplo,
+en español, dormir es el lema para la forma duermes~\cite{jm3}.
 
 El lema \textit{(lemma)} se define como la forma de citación o forma base de
 una palabra. El concepto del lema es relevante para comprender la estructura
@@ -110,98 +111,100 @@ sentidos.Cada aspecto individual del significado de un lema se denomina sentido
 de palabra \textit{(word sense)}. Por ejemplo, el lema ratón tiene al menos dos
 sentidos distintos: El roedor ó el dispositivo de control de cursor~\cite{jm3}.
 
-La lematización, al reducir las palabras a su forma base, asegura que un
-sistema de PLN trate variantes flexionales (como singular, plural o diferentes
-tiempos verbales) como la misma unidad, facilitando la generalización sobre el
-significado fundamental de la palabra.
+La \gls{lematizacion}, al reducir las palabras a su forma base, asegura que un
+sistema de \acrshort{nlp} trate variantes flexionales (como singular, plural o
+diferentes tiempos verbales) como la misma unidad, facilitando la
+generalización sobre el significado fundamental de la palabra.
 
 \subsection{\textit{Stopwords}}
 
-Las palabras vacías (del ingles \textit{stopwords}) es un termino que hace
+Las palabras vacías (del ingles \gls{stopwords}) es un termino que hace
 referencia a las palabras que deben ser eliminadas en la fase de
-preprocesamiento de texto para garantizar la precisión y eficiencia de las
-tareas de NLP. Estas palabras aparecen frecuentemente en muchos documentos,
-pero transmiten poca o nula información sobre la sección del texto al que
-pertenecen~\cite{sarica2021stopwords}.
+\gls{preprocesamiento_texto} para garantizar la precisión y eficiencia de las
+tareas de \acrshort{nlp}. Estas palabras aparecen frecuentemente en muchos
+documentos, pero transmiten poca o nula información sobre la sección del texto
+al que pertenecen~\cite{sarica2021stopwords}.
 
 Al eliminar estas palabras que aportan baja información, se incrementa la
 significación estadística de los términos que si son relevantes y son
 verdaderamente importantes para la tarea. Ejemplos específicos de estas
 palabras son: cada, sobre, tal, el, la, entre otros~\cite{sarica2021stopwords}.
 
-Históricamente, se han realizado esfuerzos para identificar \textit{stopwords}
-a partir de fuentes de conocimiento genéricas, como \textit{Brown Corpus} o
+Históricamente, se han realizado esfuerzos para identificar \gls{stopwords} a
+partir de fuentes de conocimiento genéricas, como \textit{Brown Corpus} o
 \textit{20 newsgroup corpus}. Esto ha provocado la creación de listas genéricas
-que se utilizan en aplicaciones de NLP. Una de las listas más utilizadas es la
-distribuida con el paquete de Python NLTK (del inglés, \textit{Natural Language
-	Tool Kit})~\cite{sarica2021stopwords}.
+que se utilizan en aplicaciones de \acrshort{nlp}. Una de las listas más
+utilizadas es la distribuida con el paquete de Python \acrshort{nltk} (del
+inglés, \Acrlong{nltk})~\cite{sarica2021stopwords}.
 
 Sin embargo, el lenguaje técnico utilizado en textos de ingeniería o tecnología
 se distingue del lenguaje común. El lenguaje técnico contiene su propio argot y
 palabras altamente frecuentes y poco informativas que no están presentes en las
-listas genéricas. No existe una lista estándar de \textit{stopwords} para
+listas genéricas. No existe una lista estándar de \gls{stopwords} para
 aplicaciones de procesamiento de lenguaje técnico. La adopción simple de listas
 genéricas deja muchos términos repetitivos y poco informativos específicos del
 dominio en los datos. Es por esto que el proceso de identificación de
-\textit{stopwords} incluye una etapa posterior de evaluación humana por parte
-de expertos para confirmar que el término no contiene información sobre
-ingeniería y tecnología~\cite{sarica2021stopwords}.
+\gls{stopwords} incluye una etapa posterior de evaluación humana por parte de
+expertos para confirmar que el término no contiene información sobre ingeniería
+y tecnología~\cite{sarica2021stopwords}.
 
 \section{Representación del texto}
 
 \subsection{Bolsa de palabras}
 
-La bolsa de palabras (del inglés \textit{Bag of Words}, BOW) es una de las
+La bolsa de palabras (\acrshort{bow}, inglés \acrlong{bow}) es una de las
 técnicas de representación de texto utilizada por distintas aplicaciones de
-NLP. Esta representación se basa en el conteo de palabras, ignorando el orden y
-la estructura gramatical del texto~\cite{hankarComprehensiveOverviewTopic2025}.
+\acrshort{nlp}. Esta representación se basa en el conteo de palabras, ignorando
+el orden y la estructura gramatical del
+texto~\cite{hankarComprehensiveOverviewTopic2025}.
 
-El método BOW implica la construcción de un vocabulario compuesto por todas las
-palabras únicas presentes en los documentos analizados y la definición de una
-métrica concreta para determinar el peso de cada termino. Las métricas mas
-empleadas para este fin son la frecuencia de términos (del inglés \textit{term
-	frequency}, TF), y la frecuencia inversa de documentos (del inglés \textit{Term
-	frequency-inverse document frequency},
-TF-IDF)~\cite{hankarComprehensiveOverviewTopic2025}.
+El método \acrshort{bow} implica la construcción de un vocabulario compuesto
+por todas las palabras únicas presentes en los documentos analizados y la
+definición de una métrica concreta para determinar el peso de cada termino. Las
+métricas mas empleadas para este fin son la frecuencia de términos
+(\acrshort{tf}, inglés \acrlong{tf}), y la frecuencia inversa de documentos
+(\acrshort{tf-idf}, del inglés
+\acrlong{tf-idf})~\cite{hankarComprehensiveOverviewTopic2025}.
 
-Una de las principales limitaciones de BOW es la perdida de información
-contextual de los términos dentro de los documentos. Otro inconveniente de BOW
-es que no captura el significado de las palabras y trata todas las palabras
-como entidades independientes dentro del documento. Además, la vectorización
-mediante BW genera vectores dispersos de alta dimensión cuando se trabaja con
-corpus extensos, lo que incrementa la complejidad computacional y los
-requisitos de memoria. BOW no es capaz de gestionar los sinónimos, tratando
-palabras con un mismo significado como si estuvieran
+Una de las principales limitaciones de \acrshort{bow} es la perdida de
+información contextual de los términos dentro de los documentos. Otro
+inconveniente de \acrshort{bow} es que no captura el significado de las
+palabras y trata todas las palabras como entidades independientes dentro del
+documento. Además, la vectorización mediante \acrshort{bow} genera vectores
+dispersos de alta dimensión cuando se trabaja con \gls{corpus} extensos, lo que
+incrementa la complejidad computacional y los requisitos de memoria.
+\acrshort{bow} no es capaz de gestionar los sinónimos, tratando palabras con un
+mismo significado como si estuvieran
 relacionadas~\cite{hankarComprehensiveOverviewTopic2025}.
 
 \subsection{Representaciones vectoriales}
 
 Debido a las limitaciones encontrados en otras formas de representación de
-texto como BOW, han surgido técnicas que buscan solucionar estos problemas,
-entre las cuales podemos encontrar a los \textit{embeddings}. Los
-\textit{embeddings} son una técnica de procesamiento de lenguaje natural que
+texto como \acrshort{bow}, han surgido técnicas que buscan solucionar estos
+problemas, entre las cuales podemos encontrar a los \gls{embeddings}. Los
+\gls{embeddings} son una técnica de procesamiento de lenguaje natural que
 convierte el lenguaje humano en vectores matemáticos. Estos vectores son una
 representación del significado subyacente de las palabras, lo que permite que
 las computadoras procesen el lenguaje de manera más
 efectiva~\cite{espindolaQueSonEmbeddings2023}.
 
-Los \textit{embeddings} intentan solucionar el problema de la perdida de
-contexto y semántica de BOW considerando el orden y la secuencia de aparición
+Los \gls{embeddings} intentan solucionar el problema de la perdida de contexto
+y semántica de \acrshort{bow} considerando el orden y la secuencia de aparición
 de cada termino. Estos modelos se construyen sobre redes neuronales
-artificiales (del inglés \textit{artificial neural networks}, ANN) y se
-entrenan con grandes cantidades de datos para capturar el significado
-contextual de una unidad léxica en función de las palabras que la rodean, y
-viceversa. Cada palabra en el espacio de \textit{embeddings} se representa como
-un vector de números reales con una dimensión predefinida. En un espacio de
-vectores de palabras, es posible identificar las palabras más similares a un
-término concreto del vocabulario utilizando métodos como la similitud del
-coseno o la distancia euclidiana. Estas técnicas permiten agrupar palabras
+artificiales (\acrshort{ann}, inglés \acrlong{ann}) y se entrenan con grandes
+cantidades de datos para capturar el significado contextual de una unidad
+léxica en función de las palabras que la rodean, y viceversa. Cada palabra en
+el espacio de \gls{embeddings} se representa como un vector de números reales
+con una dimensión predefinida. En un espacio de vectores de palabras, es
+posible identificar las palabras más similares a un término concreto del
+vocabulario utilizando métodos como la \gls{similitud_coseno} o la
+\gls{distancia_euclidiana}. Estas técnicas permiten agrupar palabras
 relacionadas, clasificar textos, categorizar documentos y descubrir temas o
 tópicos latentes dentro del texto~\cite{hankarComprehensiveOverviewTopic2025}.
 
 \section{Modelado de temas}
 
-El modelado de temas (del inglés \textit{Topic Modeling}) es una técnica muy
+El \gls{topic_modeling} (del inglés \textit{Topic Modeling}) es una técnica muy
 utilizada con la cual podemos encontrar temas subyacentes dentro de un grupo de
 documentos que deseemos analizar. Esta sigue un enfoque estadístico y
 proporciona una forma de representar textos de una manera estructurada, lo que
@@ -209,8 +212,8 @@ la hace ideal para analizar grandes conjuntos de datos
 textuales~\cite{bismiTopicModellingUsing2023a}.
 
 Dependiendo del algoritmo utilizado los términos se pueden obtener utilizando
-distintos enfoques como la bolsa de palabras BOW, frecuencia de términos,
-frecuencia inversa de términos o basado en
+distintos enfoques como la bolsa de palabras \acrshort{bow}, frecuencia de
+términos, frecuencia inversa de términos o basado en
 clases~\cite{phdTopicModelingAlgorithms2023}.
 
 Podemos destacar la importancia del modelado de temas en los siguientes
@@ -224,28 +227,28 @@ aspectos~\cite{bismiTopicModellingUsing2023a}:
 	      usuario usuarios
 \end{description}
 
-En este TFG nos centraremos en el uso de los siguiente modelos:
+En este \ACRshort{tfg} nos centraremos en el uso de los siguiente modelos:
 \begin{description}
-	\item[Latent Dirichlet Allocation (LDA)] Es un modelo probabilístico clásico que data
-	      de 2003. Se basa en el enfoque de bolsa de palabras (BoW) y asume que los
+	\item[\ACRfull{lda}] Es un modelo probabilístico clásico que data
+	      de 2003. Se basa en el enfoque de bolsa de palabras (\acrshort{bow}) y asume que los
 	      documentos son una mezcla de temas y los temas una mezcla de palabras.Este es
 	      una referencia fundamental en el modelado de temas~\cite{blei2003lda}. En la
 	      sección~\ref{sec:lda} se profundiza sobre este modelo.
-	\item[Top2Vec] Surge en 2020 como una alternativa que utiliza \textit{embeddings} de
+	\item[Top2Vec] Surge en 2020 como una alternativa que utiliza \gls{embeddings} de
 	      palabras y documentos para encontrar temas. Este crea un espacio semántico
 	      unificado donde los vectores de temas, documentos y palabras coexisten,
 	      permitiendo una búsqueda semántica y la detección automática del número de
 	      temas~\cite{angelovTop2VecDistributedRepresentations2020}. En la
 	      sección~\ref{sec:top2vec} se profundiza sobre este modelo.
 	\item[BERTopic] También de 2020, este modelo aprovecha el poder de los
-	      \textit{embeddings} contextuales de los transformadores (como BERT). Su
-	      arquitectura modular combina la reducción de dimensionalidad con UMAP y el
-	      \textit{clustering} con HDBSCAN para identificar temas semánticamente
-	      coherentes, ofreciendo una gran
+	      \gls{embeddings} contextuales de los transformadores (como \acrshort{bert}). Su
+	      arquitectura modular combina la \gls{reduccion_dimensionalidad} con
+	      \acrshort{umap} y el \gls{clustering} con \acrshort{hdbscan} para identificar
+	      temas semánticamente coherentes, ofreciendo una gran
 	      flexibilidad~\cite{grootendorstBERTopicNeuralTopic2022}. En la
 	      sección~\ref{sec:bertopic} se profundiza sobre este modelo.
 	\item[FASTopic] Es el modelo más reciente, de 2023, y se presenta como una evolución
-	      de los modelos basados en \textit{embeddings}. Introduce un enfoque optimizado
+	      de los modelos basados en \gls{embeddings}. Introduce un enfoque optimizado
 	      para ser más rápido, estable y escalable, manteniendo la alta calidad de los
 	      temas. Está diseñado para funcionar eficientemente en grandes volúmenes de
 	      datos~\cite{2024arXiv240517978W}. En la sección~\ref{sec:fastopic} se
@@ -254,7 +257,7 @@ En este TFG nos centraremos en el uso de los siguiente modelos:
 
 \subsection{Latent Dirichlet Allocation (LDA)}\label{sec:lda}
 
-LDA (del inglés, \textit{Latent Dirichlet Allocation}, LDA) es un modelo
+\acrfull{lda} es un modelo
 probabilístico que usa matrices de factorización basado en la distribución de
 Dirichlet. En este modelo se asume que cada documento expone una serie de temas
 y cada tema se caracteriza por una distribución de palabras basada en la
@@ -263,7 +266,7 @@ el modelo no son deterministas, por lo que se puede obtener un resultado
 distinto en cada ejecución para el mismo
 \textit{dataset}~\cite{phdTopicModelingAlgorithms2023,bismiTopicModellingUsing2023a}.
 
-LDA posee dos parámetros~\cite{bhangaleIntroductionTopicModelling2023} que
+\acrshort{lda} posee dos parámetros~\cite{bhangaleIntroductionTopicModelling2023} que
 debemos ajustar para mejorar los resultados obtenidos:
 \begin{itemize}
 	\item Numero de temas
@@ -273,14 +276,14 @@ debemos ajustar para mejorar los resultados obtenidos:
 
 \subsection{Top2Vec}\label{sec:top2vec}
 
-Top2Vec es un algoritmo de modelado de temas basado en \textit{embeddings},
+Top2Vec es un algoritmo de modelado de temas basado en \gls{embeddings},
 documentos y vectores de palabras. Este algoritmo asume que la semántica
 interna de los documentos es indicativo de que existe una temática
 común~\cite{gTop2vecTopicModeling2022}.
 
-A diferencia de otros métodos como LDA, Top2Vec genera simultáneamente
-\textit{embeddings} de documentos, \textit{embeddings} de palabras y
-\textit{embeddings} de temas, lo que le permite identificar agrupaciones
+A diferencia de otros métodos como \acrshort{lda}, Top2Vec genera
+simultáneamente \gls{embeddings} de documentos, \gls{embeddings} de palabras y
+\gls{embeddings} de temas, lo que le permite identificar agrupaciones
 semánticas de forma más natural y continua. Este enfoque se basa en la idea de
 que los documentos que tratan temas similares deben estar próximos entre sí en
 un espacio vectorial de alta dimensión. Mediante el uso de modelos de lenguaje
@@ -292,28 +295,27 @@ documentos~\cite{angelovTop2VecDistributedRepresentations2020}.
 Ventajas de Top2Vec~\cite{angelovTop2VecDistributedRepresentations2020}:
 \begin{itemize}
 	\item No requiere preprocesamiento, ya que funciona bien sin necesidad de:
-	      eliminación de \textit{stopwords}, realizar lematización, limpiar puntuación,
-	      filtrar términos raros, etc.
+	      eliminación de \gls{stopwords}, realizar \gls{lematizacion}, limpiar
+	      puntuación, filtrar términos raros, etc.
 	\item No requiere elegir el número de temas.
-	\item Produce temas con alta coherencia semántica.
+	\item Produce temas con alta \gls{coherencia} semántica.
 	\item Permite buscar documentos por similitud, identificar documentos mas
 	      representativos de un tema.
 \end{itemize}
 
 \subsection{BERTopic}\label{sec:bertopic}
 
-BERTopic es un método de modelado de temas que combina \textit{embeddings}
-semánticos, reducción de dimensionalidad y \textit{clustering} para identificar
+BERTopic es un método de modelado de temas que combina \gls{embeddings}
+semánticos, \gls{reduccion_dimensionalidad} y \gls{clustering} para identificar
 temas en grandes colecciones de texto de manera automática y
 precisa~\cite{grootendorstBERTopicNeuralTopic2022}
 
-BERTopic se basa en el uso de BERT (del inglés, \textit{Bidirectional Encoder
-	Representations from Transformers}, BERT) para generar representaciones
-vectoriales~\textit{embeddings} de los documentos y temas. El proceso se
-ejecuta fundamentalmente en dos fases: la codificación semántica y la
-extracción de temas. En la primera fase, los documentos se transforman en
-~\textit{embeddings} de alta dimensionalidad mediante BERT. Posteriormente, se
-emplea el algoritmo HDBSCAN para agrupar estos vectores y así identificar
+BERTopic se basa en el uso de \acrfull{bert} para generar representaciones
+vectoriales~\gls{embeddings} de los documentos y temas. El proceso se ejecuta
+fundamentalmente en dos fases: la codificación semántica y la extracción de
+temas. En la primera fase, los documentos se transforman en ~\gls{embeddings}
+de alta dimensionalidad mediante \acrshort{bert}. Posteriormente, se emplea el
+algoritmo \acrshort{hdbscan} para agrupar estos vectores y así identificar
 clústeres en el espacio vectorial, permitiendo la clasificación de los textos
 en distintos temas. A partir de cada grupo, se derivan las palabras clave que
 describen el contenido~\cite{gan2023experimental}.
@@ -321,52 +323,52 @@ describen el contenido~\cite{gan2023experimental}.
 BERTopic combina cuatro componentes principales:
 
 \begin{itemize}
-	\item \textit{Embeddings} (representaciones semánticas)
-	\item Reducción de dimensionalidad (UMAP), una técnica que reduce las dimensiones de
-	      los \textit{embeddings} manteniendo las relaciones importantes.
-	\item \textit{Clustering} basado en densidad (HDBSCAN), es un algoritmo que detecta “grupos naturales” en los datos.
-	\item Representación final de temas (c-TF-IDF), método para identificar las palabras
-	      más representativas de cada tema.
+	\item \gls{embeddings} (representaciones semánticas)
+	\item \gls{reduccion_dimensionalidad} (\acrshort{umap}), una técnica que reduce las
+	      dimensiones de los \gls{embeddings} manteniendo las relaciones importantes.
+	\item \gls{clustering} basado en densidad (\acrshort{hdbscan}), es un algoritmo que detecta “grupos naturales” en los datos.
+	\item Representación final de temas (\acrshort{c-tf-idf}), método para identificar
+	      las palabras más representativas de cada tema.
 \end{itemize}
 
 La principal ventaja de BERTopic es su capacidad para encontrar matices
 semánticos y manejar grandes volúmenes de información textual. Puede
 identificar significados complejos y relaciones contextuales con mayor
 precisión. Además, a diferencia de otros métodos, no es necesario fijar de
-antemano cuántos temas se generarán, ya que el algoritmo de \textit{clustering}
+antemano cuántos temas se generarán, ya que el algoritmo de \gls{clustering}
 determina este número automáticamente~\cite{gan2023experimental}.
 
 \subsection{FASTopic}\label{sec:fastopic}
 
 FASTopic \textit{(Fast, Adaptative, Stable and Transferable topic model)}. Es
-un modelo que sigue el enfoque denominado DSR (Reconstrucción de Relaciones
-Semánticas Dual), este no utiliza redes neuronales y se basa en tres elementos:
-la representación vectorial de los documentos generados por un transformador
-predeterminado, los vectores de temas y de palabras~\cite{2024arXiv240517978W}.
+un modelo que sigue el enfoque denominado \acrfull{dsr}, este no utiliza redes
+neuronales y se basa en tres elementos: la representación vectorial de los
+documentos generados por un transformador predeterminado, los vectores de temas
+y de palabras~\cite{2024arXiv240517978W}.
 
-DSR captura dos tipos de relaciones semánticas: entre documentos y temas, y
+\acrshort{dsr} captura dos tipos de relaciones semánticas: entre documentos y temas, y
 entre temas y palabras, interpretándolas como distribuciones que permiten
 descubrir los temas de manera ordenada y eficiente, eliminando la necesidad de
 estructuras complicadas. Para modelar estas relaciones, se propone además el
-\textit{Embedding Transport Plan} (ETP), un mecanismo novedoso que, en lugar de
+\acrfull{etp}, un mecanismo novedoso que, en lugar de
 emplear funciones \textit{softmax} parametrizadas, regula estas relaciones como
-planes de transporte óptimo entre los \textit{embeddings} de documentos, temas
+planes de transporte óptimo entre los \gls{embeddings} de documentos, temas
 y palabras. Esto reduce el sesgo en las relaciones y permite obtener temas bien
 diferenciados y distribuciones más precisas~\cite{2024arXiv240517978W}.
 
 FASTopic se basa en los siguientes pasos:
 
 \begin{itemize}
-	\item Generación de \textit{Embeddings} (representaciones semánticas).
-	\item Reducción de dimensionalidad.
-	\item \textit{Clustering}, no se limitan a HDBSCAN, sino que permiten el uso de múltiples algoritmos de \textit{clustering} que buscan eficiencia y escalabilidad.
+	\item Generación de \gls{embeddings} (representaciones semánticas).
+	\item \gls{reduccion_dimensionalidad}.
+	\item \gls{clustering}, no se limitan a \acrshort{hdbscan}, sino que permiten el uso de múltiples algoritmos de \gls{clustering} que buscan eficiencia y escalabilidad.
 	\item Extracción de palabras representativas del tema.
 \end{itemize}
 
 FASTopic tiene como principales ventajas la capacidad de manejar documentos de
 gran tamaño si necesidad de utilizar mayor capacidad de procesamiento, no
 requiere limpieza extrema del texto y produce una calidad semantica similar a
-la de BERTopic cuando se usan buenos \textit{embeddings}.
+la de BERTopic cuando se usan buenos \gls{embeddings}.
 
 \section{Evaluación de modelos}
 
@@ -388,15 +390,15 @@ intervención humana, las mas comunes son: perplejidad y coherencia.
 
 \subsubsection{Perplejidad}
 
-Es una medida utilizada en modelos probabilísticos como LDA. Indica que tan
-bien el modelo es capaz de predecir documentos no vistos. Cuanto mas baja mejor
-se considera el desempeño del modelo, implica que el modelo tiene una mayor
-capacidad para anticipar las palabras de textos que no han sido utilizados
-durante el entrenamiento.
+Es una medida utilizada en modelos probabilísticos como \acrshort{lda}. Indica
+que tan bien el modelo es capaz de predecir documentos no vistos. Cuanto mas
+baja mejor se considera el desempeño del modelo, implica que el modelo tiene
+una mayor capacidad para anticipar las palabras de textos que no han sido
+utilizados durante el entrenamiento.
 
 Solo es útil para comparar versiones diferentes del mismo tipo de modelo
-probabilístico (LDA). No es adecuada para modelos basados en
-\textit{embeddings} (BERTopic, Top2Vec, FASTopic).
+probabilístico (\acrshort{lda}). No es adecuada para modelos basados en
+\gls{embeddings} (BERTopic, Top2Vec, FASTopic).
 
 \subsubsection{Coherencia}
 
@@ -405,19 +407,20 @@ palabras mas representativas de un tema. Esta métrica permite identificar
 cuantos temas son adecuados para un conjunto de datos
 determinado~\cite{pedroUnderstandingTopicCoherence2022}.
 
-La coherencia busca medir hasta qué punto las palabras más representativas de
-un tópico tienden a aparecer juntas en el corpus y a mantener relaciones
-semánticas coherentes. Una mayor coherencia indica un tópico más interpretable
-y semánticamente consistente.
+La \gls{coherencia} busca medir hasta qué punto las palabras más
+representativas de un tópico tienden a aparecer juntas en el \gls{corpus} y a
+mantener relaciones semánticas coherentes. Una mayor \gls{coherencia} indica un
+tópico más interpretable y semánticamente consistente.
 
 Los métodos más usados son:
 \begin{itemize}
 	\item \textbf{C\_V}: basada en similitud semántica.
-	\item \textbf{UCI}: mide coocurrencias de palabras en ventanas deslizantes.
-	\item \textbf{UMass}: calcula coocurrencias dentro del propio corpus.
+	\item \textbf{UCI}: mide coocurrencias de palabras en \gls{ventana_deslizante}.
+	\item \textbf{UMass}: calcula coocurrencias dentro del propio \gls{corpus}.
 \end{itemize}
 
-Esta métrica funciona bien tanto en LDA como en BERTopic, Top2Vec o FASTopic.
+Esta métrica funciona bien tanto en \acrshort{lda} como en BERTopic, Top2Vec o
+FASTopic.
 
 \subsection{Evaluación Humana}
 El investigador revisa la lista de términos que componen cada tema y determina
@@ -435,7 +438,7 @@ esencial para obtener resultados óptimos en el análisis temático
 
 \subsection{Hiperparámetros en LDA}
 
-LDA es uno de los modelos más sensibles a su configuración.
+\acrshort{lda} es uno de los modelos más sensibles a su configuración.
 
 \subsubsection{Número de temas (k)}
 
@@ -461,9 +464,9 @@ convergencia a costa de un mayor tiempo de entrenamiento.
 
 \subsection{Hiperparámetros en BERTopic}
 
-BERTopic tiene hiperparámetros en varias etapas: embeddings, reducción
-dimensional (UMAP), clustering (HDBSCAN) y extracción de palabras mediante
-c-TF-IDF.
+BERTopic tiene hiperparámetros en varias etapas: \gls{embeddings},
+\gls{reduccion_dimensionalidad} (\acrshort{umap}), \gls{clustering}
+(\acrshort{hdbscan}) y extracción de palabras mediante \acrshort{c-tf-idf}.
 
 \subsubsection{UMAP}
 
@@ -483,27 +486,27 @@ Los ajustes más influyentes son:
 
 \subsection{Hiperparámetros en Top2Vec}
 
-Top2Vec utiliza hiperparámetros principalmente en el modelo de embeddings
-(Doc2Vec, BERT o USE) y en configuraciones de UMAP y HDBSCAN, compartiendo
-muchos de los ajustes de BERTopic.
+Top2Vec utiliza hiperparámetros principalmente en el modelo de \gls{embeddings}
+(\gls{doc2vec}, \acrshort{bert} o USE) y en configuraciones de \acrshort{umap}
+y \acrshort{hdbscan} compartiendo muchos de los ajustes de BERTopic.
 
 \subsection{Hiperparámetros en Fastopic}
 
 Fastopic está optimizado para grandes volúmenes de datos y permite configurar:
 \begin{itemize}
-	\item tipo de embeddings (BERT, FastText, etc.).
-	\item número de clusters en métodos rápidos como K-Means.
+	\item tipo de embeddings (\acrshort{bert}, \gls{fasttext}, etc.).
+	\item número de clusters en métodos rápidos como \gls{kmeans}.
 	\item número de palabras clave extraídas por tópico.
 \end{itemize}
 
-Tanto la evaluación como la hiperparametrización de modelos de temas son
+Tanto la evaluación como la \gls{hiperparametrizacion} de modelos de temas son
 procesos fundamentales para garantizar la calidad del análisis temático.
 Modelos como LDA requieren ajustes cuidadosos en parámetros probabilísticos,
 mientras que modelos modernos como BERTopic, Top2Vec y Fastopic dependen más de
-configuraciones de embeddings, reducción de dimensionalidad y clustering. La
-combinación de métricas automáticas y evaluación humana proporciona la
-estrategia más robusta para obtener temas coherentes y útiles en contextos como
-el análisis de TFG.
+configuraciones de \gls{embeddings}, \gls{reduccion_dimensionalidad} y
+\gls{clustering}. La combinación de métricas automáticas y evaluación humana
+proporciona la estrategia más robusta para obtener temas coherentes y útiles en
+contextos como el análisis de \acrshort{tfg}.
 
 \subsection{Métodos de búsqueda de hiperparámetros}
 
@@ -511,11 +514,11 @@ Existen diversas estrategias para ajustar hiperparámetros, con distintos
 niveles de complejidad y eficiencia:
 
 \begin{itemize}
-	\item \textbf{Grid Search}: explora todas las combinaciones posibles dentro de un conjunto definido. Sin embargo, resulta poco eficiente cuando el número de hiperparámetros es elevado~\cite{Franceschi_2025}.
+	\item \textbf{\gls{grid_search}}: explora todas las combinaciones posibles dentro de un conjunto definido. Sin embargo, resulta poco eficiente cuando el número de hiperparámetros es elevado~\cite{Franceschi_2025}.
 
-	\item \textbf{Random Search}: selecciona combinaciones aleatorias de hiperparámetros dentro de los rangos definidos. Ha demostrado ser más eficiente que la búsqueda exhaustiva en espacios de gran dimensionalidad~\cite{Franceschi_2025}.
+	\item \textbf{\gls{random_search}}: selecciona combinaciones aleatorias de hiperparámetros dentro de los rangos definidos. Ha demostrado ser más eficiente que la búsqueda exhaustiva en espacios de gran dimensionalidad~\cite{Franceschi_2025}.
 
-	\item \textbf{Optimización Bayesiana}: construye un modelo probabilístico del rendimiento y selecciona nuevas combinaciones basadas en regiones prometedoras del espacio de búsqueda. Es una opción muy eficiente cuando las evaluaciones del modelo son costosas~\cite{snoek2012practicalbayesianoptimizationmachine}.
+	\item \textbf{\gls{optimizacion_bayesiana}}: construye un modelo probabilístico del rendimiento y selecciona nuevas combinaciones basadas en regiones prometedoras del espacio de búsqueda. Es una opción muy eficiente cuando las evaluaciones del modelo son costosas~\cite{snoek2012practicalbayesianoptimizationmachine}.
 \end{itemize}
 
 \Needspace{5\baselineskip}
