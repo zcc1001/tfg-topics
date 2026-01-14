@@ -1,7 +1,109 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+En este capítulo se describen los aspectos más relevantes y representativos del
+desarrollo del proyecto, poniendo el foco en las decisiones técnicas y de
+diseño adoptadas a lo largo de su ciclo de vida.
+\section{Arquitectura y diseño del software}
+
+Durante la fase de análisis y diseño del proyecto se tomaron decisiones clave.
+Debido a la naturaleza de los datos de entrada, documentos y textos que se
+obtienen de Github, provenientes de \textit{issues}, \textit{readmes}, y
+documentos en LaTeX de los distintos \acrshort{tfg}, se decidió implementar un
+proceso específico de limpieza y normalización del texto, desacoplado del resto
+del sistema para facilitar su reutilización y evolución. También debido a la
+necesidad de experimentar con distintos enfoques de modelado de temas, se optó
+por diseñar una interfaz que permitiera la abstracción y asi integrar
+diferentes proveedores de modelos. Estas necesidades influyeron directamente en
+el diseño del sistema, requiriendo una arquitectura flexible que permitiera
+integrar múltiples modelos sin modificar la lógica principal de la aplicación.
+
+Durante la fase de análisis se identificaron claramente tres responsabilidades
+principales, que dieron lugar a la división del sistema en módulos
+independientes:
+
+\begin{itemize}
+      \item Un módulo de \textbf{ingestión}, responsable de la obtención y normalización
+            inicial de los documentos fuente.
+      \item Un módulo de \textbf{procesamiento}, encargado del preprocesado del texto y del
+            modelado de tópicos.
+      \item Un módulo de \textbf{visualización}, orientado a la exploración y análisis de
+            los resultados generados.
+\end{itemize}
+
+Para el diseño del código interno de cada modulo se empleó una arquitectura de
+tipo hexagonal~\cite{HexagonalArchitectureClean2022}. Este enfoque permite
+desacoplar la lógica de negocio de los detalles de infraestructura, como el
+acceso a datos, la ejecución de modelos o la interfaz de usuario
+(\acrfull{ui}). Esta decisión permitió separar claramente la lógica de dominio
+del procesamiento de tópicos de los detalles de infraestructura, como el acceso
+a datos, la ejecución de modelos concretos o la interfaz de usuario.
+
+Además, la arquitectura adoptada mejoró la testabilidad del sistema y
+contribuyó a una organización del código más clara y mantenible, evitando un
+crecimiento desordenado del proyecto a medida que se incorporaban nuevas
+funcionalidades.
+
+\section{Gestión de los datos y almacenamiento de resultados}
+
+Uno de los aspectos relevantes del desarrollo del proyecto fue la elección del
+formato de almacenamiento de los datos intermedios y de los resultados
+generados por los distintos modelos. Para este propósito se optó por utilizar
+el formato \textbf{Parquet}~\cite{ParquetDocumentation}, un formato de
+almacenamiento en columnas ampliamente utilizado en entornos de análisis de
+datos y \textit{big data}.
+
+La elección de Parquet frente a alternativas más simples como \acrfull{csv} o
+formatos binarios genéricos se basó en varios criterios. En primer lugar,
+Parquet ofrece un almacenamiento más eficiente en espacio como en tiempo de
+acceso, gracias a su organización en columnas y a los mecanismos de compresión
+integrados. Este aspecto resulta especialmente relevante en un proyecto que
+genera múltiples ejecuciones de modelos, cada una con diferentes
+configuraciones de hiperparámetros y métricas asociadas.
+
+Desde el punto de vista de la implementación, el formato Parquet se utilizó
+principalmente para almacenar:
+\begin{itemize}
+      \item Los datos sin procesar, incluyendo los textos y cualquier metadato relevante.
+      \item Los resultados de la ejecución de los modelos de temas, incluyendo la
+            información asociada a los temas generados.
+      \item Las métricas de evaluación obtenidas en cada ejecución.
+      \item Los valores de los hiperparámetros utilizados durante los procesos de
+            optimización.
+\end{itemize}
+
+Estos ficheros se organizan siguiendo una estructura de directorios coherente
+con los módulos del sistema, lo que facilita la localización y reutilización de
+los resultados generados. Además, el uso de un formato estándar y ampliamente
+soportado permite que los datos puedan ser consumidos directamente tanto por el
+módulo de visualización como por herramientas externas de análisis, como
+entornos interactivos de experimentación.
+
+\section{Optimización de hiperparámetros y gestión de experimentos}
+
+Uno de los aspectos más relevantes de la implementación fue la integración de
+Optuna para la optimización de hiperparámetros. Frente a herramientas más
+genéricas como \textit{GridSearchCV} de \textit{scikit-learn}, Optuna no impone
+restricciones sobre la estructura del modelo ni sobre el flujo de
+entrenamiento, lo que facilita su integración con bibliotecas heterogéneas como
+LDA, BERTopic, FASTopic o Top2Vec. Esta independencia del \textit{framework}
+resulta clave en un proyecto que combina modelos con paradigmas y requisitos
+muy diferentes.
+
+Los resultados de cada ejecución, junto con los parámetros utilizados y las
+métricas calculadas, se almacenan en formato Parquet. Esta decisión facilita la
+trazabilidad de los experimentos, permite analizar ejecuciones pasadas y evita
+la repetición innecesaria de cálculos costosos desde el punto de vista
+computacional.
+
+\section{Interfaz web y exploración de resultados}
+
+El módulo de visualización se implementó como un frontal web utilizando
+Streamlit. Este componente consume directamente los resultados generados por el
+módulo de procesamiento y almacenados en ficheros Parquet, manteniendo así un
+acoplamiento mínimo entre ambos módulos.
+
+La interfaz permite seleccionar modelos, explorar tópicos generados, visualizar
+métricas y analizar resultados de forma interactiva. Esta decisión sustituye
+salidas estáticas por una herramienta más adecuada para un análisis
+exploratorio y facilita tanto la evaluación del sistema como la comprensión de
+los resultados obtenidos.
