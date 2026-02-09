@@ -2,7 +2,7 @@ pandas==2.2.0
 numpy==1.26.4
 scipy==1.11.4
 requests==2.32.5
-fastparquet==2024.11.0
+pyarrow==22.0.0
 python-dotenv==1.2.1
 bertopic==0.17.4
 fastopic==1.0.1

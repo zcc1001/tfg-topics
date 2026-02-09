@@ -111,6 +111,7 @@ class DataParquetStorageWriter(StoragePort):
                     "dataset": result.dataset,
                     "model_name": result.model_name.lower(),
                     "run_id": run_id,
+                    "dataset_hash": result.dataset_hash,
                     "coherence": result.metrics.get("coherence", None),
                     "num_topics": len(result.topics),
                     "runtime_seconds": result.runtime_seconds,

@@ -107,6 +107,7 @@ class LdaTopicModelAdapter(TopicModelPort):
         dataset: str,
         texts: List[str],
         params: Dict[str, Any],
+        dataset_hash: str,
     ) -> TopicModelResult:
         logger.info("Fitting LDA model to %d documents.", len(texts))
         logger.debug("Using parameters: %s", params)
@@ -142,6 +143,7 @@ class LdaTopicModelAdapter(TopicModelPort):
             params=params,
             topic_coordinates=topic_coordinates,
             runtime_seconds=runtime_seconds,
+            dataset_hash=dataset_hash,
         )
         logger.info("LDA model fitting completed.")
         return result

@@ -5,7 +5,6 @@ from typing import Any, Dict, List
 @dataclass
 class Document:
     text: str
-    source: str
     metadata: Dict[str, Any] | None = None
 
 
@@ -19,6 +18,7 @@ class TopicModelResult:
     params: Dict[str, Any]
     topic_coordinates: list
     runtime_seconds: float
+    dataset_hash: str
 
 
 @dataclass

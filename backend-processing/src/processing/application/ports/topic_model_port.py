@@ -5,16 +5,19 @@ from processing.domain.entities import TopicModelResult
 
 
 class TopicModelPort(ABC):
-    """Create a topic model model ."""
+    """Create a topic model."""
 
     @abstractmethod
-    def fit(self, dataset: str, texts: List[str], params: Dict) -> TopicModelResult:
+    def fit(
+        self, dataset: str, texts: List[str], params: Dict, dataset_hash: str
+    ) -> TopicModelResult:
         """Fit the model to the given texts.
 
         Args:
             dataset (str): Identifier for the data source (e.g., 'issues', 'thesis').
             texts (List[str]): A list of documents to train the model on.
             params (Dict): Hyperparameters for the topic model.
+            dataset_hash (str): Hash of the dataset for consistency verification.
 
         Raises:
             NotImplementedError: This is an abstract method and must be implemented

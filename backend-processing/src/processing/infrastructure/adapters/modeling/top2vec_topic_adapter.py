@@ -104,6 +104,7 @@ class Top2VecModelAdapter(TopicModelPort):
         dataset: str,
         texts: List[str],
         params: Dict[str, Any],
+        dataset_hash: str,
     ) -> TopicModelResult:
 
         logger.info("Fitting Top2Vec model to %d documents.", len(texts))
@@ -155,6 +156,7 @@ class Top2VecModelAdapter(TopicModelPort):
             params=params,
             topic_coordinates=topic_coordinates,
             runtime_seconds=runtime_seconds,
+            dataset_hash=dataset_hash,
         )
 
     @staticmethod

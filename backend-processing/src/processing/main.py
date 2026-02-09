@@ -10,6 +10,9 @@ from processing.application.ports.topic_model_port import TopicModelPort
 from processing.application.services.hyperparam_service import (
     HyperparameterSearchService,
 )
+from processing.application.usecases.ensure_processing_dataset_consistency import (
+    EnsureProcessingDatasetConsistencyUseCase,
+)
 from processing.application.usecases.topic_modeling_usecase import TopicModelingUseCase
 from processing.infrastructure.adapters.data_parquet_storage_writer import (
     DataParquetStorageWriter,
@@ -25,6 +28,9 @@ from processing.infrastructure.adapters.modeling.lda_topic_model_adapter import 
 )
 from processing.infrastructure.adapters.modeling.top2vec_topic_adapter import (
     Top2VecModelAdapter,
+)
+from processing.infrastructure.adapters.parquet_dataset_state_adapter import (
+    ParquetDatasetStateAdapter,
 )
 from processing.infrastructure.adapters.parquet_document_reader import (
     ParquetDocumentRepository,
@@ -63,6 +69,10 @@ def main() -> None:
     ingestion_dir = os.path.join(data_dir, "ingestion")
     processing_dir = os.path.join(data_dir, "processing")
 
+    dataset_state_adapter = ParquetDatasetStateAdapter(
+        ingestion_dir=ingestion_dir,
+        processing_dir=processing_dir,
+    )
     document_repo = ParquetDocumentRepository(ingestion_dir)
     hyperparam_service = HyperparameterSearchService(n_trials=5)
     nltk.download("stopwords")
@@ -83,11 +93,18 @@ def main() -> None:
     writer = DataParquetStorageWriter(
         processing_data_dir=processing_dir, results_filename="results.parquet"
     )
+    dataset_hash = EnsureProcessingDatasetConsistencyUseCase(
+        dataset_state_port=dataset_state_adapter
+    ).execute(
+        dataset=args.dataset,
+        model_name=args.model.lower(),
+    )
     topic_modeling_use_case = TopicModelingUseCase(
         document_repository=document_repo,
         hyperparam_service=hyperparam_service,
         model_adapter=model_adapter,
         writer=writer,
+        dataset_hash=dataset_hash,
     )
 
     topic_modeling_use_case.execute(dataset=args.dataset)
