@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src ./src
 
 # Comando para ejecutar la aplicación
-CMD ["python", "-m", "ingestion.main"]
+ENTRYPOINT ["python", "-m", "ingestion.main"]

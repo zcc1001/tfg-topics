@@ -107,6 +107,7 @@ class GithubRestAdapter(GitHubPort):
                     continue
                 issues.append(
                     IssueData(
+                        thesis_id=-1,
                         repo_name=repo_name,
                         repo_owner=owner,
                         issue_id=int(issue.get("number", 0)),
@@ -135,8 +136,7 @@ class GithubRestAdapter(GitHubPort):
             return None
 
         readme = ReadmeData(
-            repo_name=repo_name,
-            repo_owner=owner,
+            thesis_id=-1,
             download_url=str(json_data.get("download_url", "")),
             content=str(json_data.get("content", "")),
             retrieved_at=datetime.now(timezone.utc),
@@ -174,8 +174,7 @@ class GithubRestAdapter(GitHubPort):
             return None
 
         return ThesisData(
-            repo_name=repo_name,
-            repo_owner=owner,
+            thesis_id=-1,
             texts=list_texts,
             retrieved_at=datetime.now(timezone.utc),
         )

@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from ingestion.domain.entities.entities import RepositoryInfo
+from ingestion.domain.entities.entities import ThesisInfo
 
 
 class RepoListReaderPort(ABC):
     @abstractmethod
-    def fetch_repo_list(self) -> List[RepositoryInfo]:
+    def fetch_repo_list(self) -> List[ThesisInfo]:
         """Fetches the list of all the repositories in the device .
 
         Raises:

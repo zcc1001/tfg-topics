@@ -6,9 +6,15 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from ingestion.application.usecase.data_ingestion_usecase import DataIngestionUsecase
+from ingestion.application.usecase.ensure_dataset_consistency_usecase import (
+    EnsureDatasetConsistencyUseCase,
+)
 from ingestion.infrastructure.adapter.github_rest_adapter import GithubRestAdapter
 from ingestion.infrastructure.adapter.ingestion_parquet_storage import (
     IngestionParquetStorage,
+)
+from ingestion.infrastructure.adapter.parquet_dataset_state_adapter import (
+    ParquetDatasetStateAdapter,
 )
 from ingestion.infrastructure.adapter.repo_list_csv_reader import RepoListCsvReaderPort
 
@@ -71,7 +77,7 @@ def main() -> None:
     data_dir = os.getenv("DATA_DIR", default_data_dir)
     ingestion_output_dir = os.path.join(data_dir, "ingestion")
 
-    repos_csv_file_name = os.getenv("REPOS_CSV_FILE_NAME", "repos.csv")
+    repos_csv_file_name = os.getenv("REPOS_CSV_FILE_NAME", "tfg_list.csv")
     repos_csv_path = os.path.join(data_dir, repos_csv_file_name)
 
     logger.info("Data dir: %s", os.path.abspath(data_dir))
@@ -91,6 +97,13 @@ def main() -> None:
         github_port=github_rest_adapter,
         repo_info_reader=repo_list_csv_reader,
         storage_port=data_parquet_storage,
+    )
+    dataset_state_adapter = ParquetDatasetStateAdapter(
+        ingestion_dir=ingestion_output_dir
+    )
+    logger.info("Ensuring dataset consistency")
+    EnsureDatasetConsistencyUseCase(dataset_state_port=dataset_state_adapter).execute(
+        repos_csv_path
     )
 
     ingest_targets = args.ingest
@@ -114,6 +127,10 @@ def main() -> None:
     except RuntimeError as e:
         logger.error("A critical error occurred:%s", e, exc_info=True)
         raise
+
+    # Persist thesis metadata
+    logger.info("Persisting thesis metadata")
+    ingestor.ingest_thesis_metadata()
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import itertools
-from typing import Callable, List, TypeVar
+from typing import TypeVar
 
 from ingestion.application.ports.github_port import GitHubPort
 from ingestion.application.ports.repo_list_reader import RepoListReaderPort
@@ -21,41 +21,63 @@ class DataIngestionUsecase:
         self.repo_info_reader = repo_info_reader
         self.storage = storage_port
 
-    def _process_repos(self, data_fetcher_func: Callable[[str, str], T]) -> List[T]:
-        repos_info = self.repo_info_reader.fetch_repo_list()
-        all_data = []
-        for repo_info in repos_info:
-            owner, repo_name = repo_info.owner, repo_info.name
-            data = data_fetcher_func(owner, repo_name)
-            all_data.append(data)
-        return all_data
-
     def ingest_issues_data(self) -> None:
         """Pull all issues from the API."""
-        all_repos_issues = self._process_repos(
-            lambda owner, name: self.github_port.get_issues(owner=owner, repo_name=name)
-        )
+        all_repos_issues = []
+        repos_info = self.repo_info_reader.fetch_repo_list()
+        for repo_info in repos_info:
+            owner, repo_name = repo_info.repo_owner, repo_info.repo_name
+            data = self.github_port.get_issues(owner=owner, repo_name=repo_name)
+            for issue in data:
+                issue.thesis_id = repo_info.thesis_id
+            if data:
+                all_repos_issues.append(data)
+
         issue_list = list(itertools.chain.from_iterable(all_repos_issues))
         self.storage.save_issue(issue_list)
 
     def ingest_readme_data(self) -> None:
         """Pull all readmes from the API."""
-        all_repos_readme = self._process_repos(
-            lambda owner, name: self.github_port.get_readme(owner=owner, repo_name=name)
-        )
+        repos_info = self.repo_info_reader.fetch_repo_list()
+        all_repos_readme_data = []
 
-        valid_readmes = [readme for readme in all_repos_readme if readme is not None]
+        for repo_info in repos_info:
+            readme_data = self.github_port.get_readme(
+                owner=repo_info.repo_owner,
+                repo_name=repo_info.repo_name,
+            )
+            if readme_data:
+                readme_data.thesis_id = repo_info.thesis_id
+                all_repos_readme_data.append(readme_data)
+
+        valid_readmes = [
+            readme for readme in all_repos_readme_data if readme is not None
+        ]
         self.storage.save_readme(valid_readmes)
 
     def ingest_thesis_data(self) -> None:
         """Pull all thesis data from the API."""
-        all_repos_thesis_data = self._process_repos(
-            lambda owner, name: self.github_port.get_thesis_data(
-                owner=owner, repo_name=name
+        repos_info = self.repo_info_reader.fetch_repo_list()
+        all_repos_thesis_data = []
+
+        for repo_info in repos_info:
+            thesis = self.github_port.get_thesis_data(
+                owner=repo_info.repo_owner,
+                repo_name=repo_info.repo_name,
             )
-        )
+            if thesis:
+                thesis.thesis_id = repo_info.thesis_id
+                all_repos_thesis_data.append(thesis)
 
         valid_thesis_data = [
             thesis for thesis in all_repos_thesis_data if thesis is not None
         ]
         self.storage.save_thesis_data(valid_thesis_data)
+
+    def ingest_thesis_metadata(self) -> None:
+        """
+        Persist academic thesis metadata extracted from the CSV.
+        This should be executed once per ingestion run.
+        """
+        thesis_infos = self.repo_info_reader.fetch_repo_list()
+        self.storage.save_thesis_metadata(thesis_infos)
