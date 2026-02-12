@@ -10,9 +10,12 @@ def main() -> None:
     default_data_dir = os.path.join(project_root, "data")
     data_dir = os.getenv("DATA_DIR", default_data_dir)
     processing_dir = os.path.join(data_dir, "processing")
+    ingestion_dir = os.path.join(data_dir, "ingestion")
 
     if "processing_dir" not in st.session_state:
         st.session_state["processing_dir"] = processing_dir
+    if "ingestion_dir" not in st.session_state:
+        st.session_state["ingestion_dir"] = ingestion_dir
 
     st.set_page_config(page_title="TFG – Topic Modeling", layout="wide")
 
@@ -28,7 +31,13 @@ def main() -> None:
         icon=":material/compare:",
     )
 
-    pg = st.navigation([analysis_page, comparison_page])
+    documents_page = st.Page(
+        "ui/pages/document_analysis_page.py",
+        title="Análisis académico de documentos",
+        icon=":material/article:",
+    )
+
+    pg = st.navigation([analysis_page, comparison_page, documents_page])
 
     pg.run()
 

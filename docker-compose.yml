@@ -25,3 +25,17 @@ services:
       - DATA_DIR=/data
     volumes:
       - ./data:/data
+
+  frontend:
+    build:
+      context: ./frontend-web
+    image: tfg-topics-frontend
+    container_name: tfg_topics_frontend
+    profiles:
+      - frontend
+    environment:
+      - DATA_DIR=/data
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/data

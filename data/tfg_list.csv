@@ -1,65 +1,65 @@
 title,tutors,students,assignment_date,presentation_date,grade,repository_url
-GII_O_MC_16.N Aplicación para la gestión del sonido en un dispositivo móvil,César Represa,1,02/02/2017,09/02/2018,4,https://github.com/JorgeZamora94/TFG-Jorge-Zamora-2017-18
-GII_O_MC_17.02 Sistema de navegación semiautomático en interiores,"Alejandro Merino Gómez, César García Osorio, José Francisco Díez Pastor",1,09/11/2017,05/06/2018,10,https://github.com/mbm0089/GII_0_17.02_SNSI/
-GII_O_MA_17.01 Desarrollo de una interfaz para planta piloto,"Alejandro Merino Gómez, Daniel Sarabia Ortiz",1,30/10/2018,19/02/2019,8,https://github.com/FranBurgos/TFG
-GII_O_MA_18.01  Simulación de redes con GNS3,"Alejandro Merino Gómez, Daniel Sarabia Ortiz",1,19/09/2018,19/02/2019,6,https://github.com/javi13gg/TFG_GII_O_MA_18.01-Simulacion-de-redes-con-GNS3
-GII_O_MA_18.02 Generación rutas utilizando sistemas empotrados,Alejandro Merino Gómez,1,19/09/2018,19/02/2019,9,https://github.com/alejandrolampreave/GPS
-GII_O_MA_17.0M Secuenciador heurístico,José Manuel Galán Ordax,1,24/09/2018,19/02/2019,7.5,https://github.com/Victoracha/TFG-Reglas-de-prioridad
-GII_O_MC_16.N Aplicación para la gestión del sonido en un dispositivo móvil,Carlos López Nozal ,1,02/02/2017,19/02/2019,6,https://github.com/JorgeZamora94/TFG-Gestor-de-sonido-para-dispositivos-Android
-GII_O_MA_18.08 Retrogaming recommender,"José Manuel Galán Ordax, José Ignacio Santos Martín",1,08/11/2018,12/06/2019,9.5,https://github.com/raulolles/TFG_GII_O_MA_18.08
-GII_O_MC_18.09 Automatización del proceso de delineación a partir de datos de un levantamiento topográfico,Carlos López Nozal César I. García Osorio,1,10/12/2018,12/06/2019,10,https://github.com/EduardoRisco/SurveyingPointCode
-GII_O_MA_19.01Autoevaluación proceso de desarrollo de Trabajo Fin de Grado  en Github,Carlos López Nozal ,1,12/02/2019,12/06/2019,9,https://github.com/rlp0019/Activiti-Api
-GII_O_MA_19.09 UBUGestLab v2,Pedro Renedo Fernández,1,05/12/2019,08/07/2020,9,https://github.com/masantamario/Geslab-2.0
-GII_O_MB_19.0C ExoplanetIA,Carlos López Nozal,1,07/10/2019,08/07/2020,9.5,https://gitlab.com/HP-SCDS/Observatorio/2019-2020/ubu-exoplanetia
-GII_O_MC_19.XX-Fatiga+PR,"José Manuel Galán Ordax, Virginia Ahedo García",1,01/10/2019,08/07/2020,5,https://github.com/ysi0000/-FatigaMasPR
-GII_O_MC_20.02 Sistema domótico inteligente,"Alejandro Merino Gómez Álvar, Arnaiz González",1,06/10/2020,25/01/2021,8.25,https://github.com/davidelinformatico/TFG
-GII_O_MA_19.0B Aplicación de técnicas metaheurísticas para la optimización del reparto de material de una planta de montaje,"José Ignacio Santos Martín, José Manuel Galán Ordax",1,06/11/2020,25/01/2021,5,https://github.com/CarolinaCCZ/LucErik/
-GII_O_MC 20.01 Vulnerabilidades en redes de dependencias de paquetes de software,"Carlos López Nozal, José Ignacio Santos Martín",1,05/06/2020,25/01/2021,10,https://github.com/dsr0018/olivia
-GII_O_MA_20.04 Servicios de adquisición de datos y visualización de dashboards para la web de coyuntura económica,"Carlos López Nozal, Bruno Baruque Zanón, Santiago Porras Alfonso",1,19/10/2020,25/02/2021,6.5,https://github.com/RaquelSancha/GII_O_MA_20.04
-GII_O_MA_19.04 Desarrollo y explotación de un chatbot para la asignatura de Trabajo Fin de Grado,Raúl Marticorena Sánchez,1,19/10/2020,13/07/2021,9,https://github.com/aav0038/UBU-CHATBOT
-GII_O_MB_21.011CarSharing: Servicio Web y APP móvil para compartir vehículo para ir al trabajo,"Bruno Baruque Zanón, Francisco Alonso, (tutor empresa HP SCDS) Patricia Pérez (tutor empresa HP SCDS)",1,19/10/2020,13/07/2021,6.7,https://gitlab.com/HP-SCDS/Observatorio/2020-2021/ubu-carsharing
-GII_O_MA_19.07 Comparador de métricas de evolución en repositorios Software,Carlos López Nozal,1,07/10/2021,16/06/2022,9.5,https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software
-GII_O_MA_21.01 MoodleQA,"Raúl Marticorena Sánchez, Carlos López Nozal",1,01/10/2021,16/06/2022,9,https://github.com/RobertoArastiBlanco/eLearningQA
-GII_O_MA_21.05 Dashboard de visualización del uso y preferencias de los desarrolladores basado en las encuestas anuales de Stack Overflow,"José Ignacio Santos Martín, Virginia Ahedo García",1,30/09/2021,16/06/2022,7,https://github.com/albarrom/GII_O_MA_21.05
-GII_O_MA_21.04 XacoMeter: Observatorio del Camino de Santiago en Redes Sociales,"José Ignacio Santos Martín, Virginia Ahedo GarcíaSilvia Díaz",1,28/09/2021,14/07/2022,9.2,https://github.com/daniel2828/XacoMeter
-GII_O_MC_22.01 UBUExoWork entorno Web,Pedro Renedo Fernández,1,17/05/2022,28/09/2022,8,https://github.com/asl1006/UbuExoWorks
-GII_O_MA_22.12 Visualización de las actividades socioculturales en Castilla y León CULTURALCyL,"José Ignacio Santos Martín, Virginia Ahedo García, Silvia Díaz de la Fuente",1,17/05/2022,24/01/2023,7.7,https://github.com/ylp1001/TFG-Actividades-culturales-CyL
-GII_O_MC_22.02 UBUExoWork cliente móvil,Pedro Renedo Fernández,1,17/05/2022,23/02/2023,8.7,https://github.com/afn1001/UbuExoWorks
-GII_O_MA_22.09 Evaluación de simulaciones de proyectos en Github orientadas a docencia,Carlos López Nozal,1,29/09/2022,20/06/2023,8.5,https://github.com/lfx1001/avrela
-GII_O_MA_22.10 Desarrollo y explotación de un chatbot para la asignatura de Practicum de Formación de Profesores de Lenguas Extranjeras,"Carlos López Nozal, Ismael Ramos Pérez, Raúl Marticorena Sánchez",1,06/10/2022,20/06/2023,9,https://gitlab.com/tfg6300404/chatbob-practicum
-GII_O_MA_22.07 Análisis de datos de temperatura y humedad de suelo procedentes de sensores IoT desplegados en un viñedo,"Alejandro Merino Gómez, Rubén Ruiz González",1,29/09/2022,12/07/2023,6.5,https://github.com/jzx1003/GII_O_MA_22.07
-GII_O_MA_22.13 Aplicación de Gestión de Quirófanos mediante Inteligencia Computacional,"Raúl Marticorena Sánchez, Bruno Baruque Zanón, Daniel Urda Muñoz",1,04/11/2022,12/07/2023,9.4,https://github.com/jesgararm/GestorQuirofanos
-GII_O_MA_22.06 XacoMeter II - Google trends and Google News,"José Ignacio Santos Martín, Virginia Ahedo García, Silvia Díaz de la Fuente",1,30/09/2022,12/07/2023,7.2,https://github.com/map10100/XacoMeter-Google
-GII_O_MC_23.02_IA-IVR,Alejandro Merino Gómez ,1,22/02/2023,12/07/2023,5,https://github.com/andonivianez/ubutfg-ai-callbo
-GII_O_MA_22.11 Lista de comprobación de buenas prácticas de enseñanza en cursos Moodle,"Carlos López Nozal, Raúl Marticorena Sánchez",1,06/10/2022,12/07/2023,6.1,https://github.com/ada1012/eLearningQA
-"GII_O_MA_21.03 Investigación, creación y explotación de modelos para el estudio del COVID-19 en pacientes del servicio cántabro de Salud.","Carlos López Nozal, José Francisco Díez Pastor",1,04/10/2021,12/07/2023,7.1,https://github.com/sgg0008/ml-COVID-19
-GII_O_MA_22.05 Backend en microservicios para aplicación móvil,Pedro Renedo Fernández,1,29/09/2022,24/01/2024,8.5,https://github.com/emur-uy/backend
-GII_O_MA_23.22 MiVoto. Aplicación para realización de votaciones en comunidades de vecinos.,"José Ignacio Santos Martín, Virginia Ahedo García",1,28/09/2023,24/01/2024,9.2,https://bitbucket.org/mivototfg/workspace/overview/
-GII_O_MA_23.24. Desarrollo de un chatbot basado en 'Large Language Model' (LLM) y técnicas de 'Retrieval-augmented Generation' (RAG) para asistente de dudas sobre la realización del TFG en el Grado de Ingeniería Informática,"José Ignacio Santos Martín, Carlos López Nozal",1,15/10/2023,24/01/2024,9.4,https://github.com/jrg1013/chatbot
-GII_O_MA_23.25. Optimización pedidos TETRAPAK,"Ángel Arroyo Puente, Nuño Basurto Hornillos",1,04/10/2023,24/01/2024,8.4,https://github.com/icg0019/TFG
-GII_O_MA_21.02 Migración de Generador de Informes Nutricionales a plataforma Web,"Raúl Marticorena Sánchez, Antonio Jesús Canepa Oneto",1,07/10/2022,27/02/2024,8.1,https://github.com/alvaromanjon/NutriMenu
-GII_O_MA_21.07 Generación de rutas utilizando sistemas empotrados,Alejandro Merino Gómez,1,21/02/2022,27/02/2024,5.2,https://github.com/guillealcuaz/GPS2.0
-GII_O_MC_23.01_Motor de físicas en función del entorno,Alejandro Merino Gómez,1,21/02/2023,27/02/2024,6.1,https://github.com/dmm1005/PhysicsEngine
-GII_O_MA_23.21 Programación de redes definidas por software (SDN) mediante el lenguaje P4,"Alejandro Merino Gómez, Rubén Ruiz González",1,19/09/2023,27/02/2024,7.6,https://github.com/jas1008/TFG_SDN_P4
-GII_O_MA_23.23. Aplicación de análisis de reseñas basado en modelos de lenguaje grandes mediante prompt engineering,"José Ignacio Santos Martín, José Manuel Galán Ordax, Virginia Ahedo García",1,23/10/2023,27/02/2024,8.7,https://github.com/tgs1003/TFG_2023_2024
-GII_O_MA_23.31. Diseño de un sistema IoT de monitorización de invernaderos,"Carlos Cambra Baseca, Alejandro Merino Gómez",1,06/10/2023,27/02/2024,6.6,https://github.com/JLCaballeroMQ/Proyecto_TFG_UBU_23_24
-GII_O_MA_23.32. Generador de cuestionarios y escenarios de test sobre soft skills,Raúl Marticorena Sánchez,1,16/10/2023,18/06/2024,7.1,https://github.com/Daniel-Fernandez-UBU/riskRealUBU
-GII_O_MA_23.33. FAT: Financial Analysis Tool. Herramienta para realizar análisis financiero con Python,"Virginia Ahedo García, José Ignacio Santos Martín",1,23/10/2023,18/06/2024,9.6,https://github.com/rmt0009alu/FAT
-GII_O_MA_23.38. Fusión Sensorial para la Mejora de la Detección de Obstáculos en Conducción Autónoma: Integración de Cámara RGB y LiDAR 3D,"Nuño Basurto Hornillos, Diego Granados López",1,15/01/2024,18/06/2024,8.5,https://github.com/miguelangulismo/LiDAR_and_RGB_Fusion
-GII 23.39 PrimeBot: Robot autónomo y preciso,"Jesús Enrique Sierra García, César Represa Pérez",1,01/01/2023,18/06/2024,7.2,https://github.com/marioAlonso2122/Primebot
-GII_O_MA_24.08. Aplicación para gestión de stocks y caducidades,"Jesús Manuel Maudes Raedo, José Antonio Barbero",1,05/03/2024,18/06/2024,8.8,https://github.com/jsc1013/StayFresh
-GII_O_MA_23.26. Aplicación móvil (FrontEnd) acceso a los microservicios de servicios a usuarios afectados por la Esclerosis Múltiple (EM).,Pedro Renedo Fernández,1,20/02/2024,15/07/2024,6.8,https://github.com/jmc1005/red-ela
-GII_O_MA_23.27. Diaberse: the return of the hypoglycemia,"Pedro Renedo Fernández",1,26/01/2024,15/07/2024,8.3,https://gitlab.com/HP-SCDS/Observatorio/2023-2024/diaberse/ubu-diaberse
-GII_O_MA_23.29. Generador de WEB/APP,José Manuel Aroca Fernández,1,05/10/2023,15/07/2024,6.7,https://github.com/Angel798v/TFG_AngelVega
-GII_O_MA_23.30. Comparador de sistemas de despliegue de software mediante APIs,José Manuel Aroca Fernández,1,05/10/2023,15/07/2024,7.5,https://github.com/mariolopezmatamala/cloud-duo-aws-gcp
-GII_O_MA_23.37. Prototipo de reconocimiento de actividades en base a señales cerebrales,"Bruno Baruque Zanón, Jesús Enrique Sierra García",1,20/02/2024,15/07/2024,7.5,https://github.com/jpg1003/AnalisisEEG
-GII_O_MA_24.01. Gestión de cartera de opciones,José Ignacio Santos Martín,1,12/02/2024,15/07/2024,5.8,https://github.com/cbr1005/TFG.git
-GII_O_MA_24.02. Estudio y Configuración de un sistema ELK,"Jesus Manuel Maudes Raedo, Antonio Jesús Canepa Oneto",1,16/02/2024,15/07/2024,7.3,https://github.com/hds1001/Estudio-y-configuracion-de-un-sistema-ELK
-GII_O_MA_24.03. Herramienta de modelado de Bases de Datos relacionales con Crows Foot,Jesus Manuel Maudes Raedo,1,29/02/2024,15/07/2024,7.6,https://github.com/jrp1004/CrowsFoot_JuanRomera_TFG
-GII_O_MA_24.05. Herramienta de modelado E/R,Jesus Manuel Maudes Raedo,1,21/02/2024,15/07/2024,8.2,https://github.com/rubenmate/draw-entity-relation
+Aplicación para la gestión del sonido en un dispositivo móvil,César Represa,1,02/02/2017,09/02/2018,4,https://github.com/JorgeZamora94/TFG-Jorge-Zamora-2017-18
+Sistema de navegación semiautomático en interiores,"Alejandro Merino Gómez, César García Osorio, José Francisco Díez Pastor",1,09/11/2017,05/06/2018,10,https://github.com/mbm0089/GII_0_17.02_SNSI/
+Desarrollo de una interfaz para planta piloto,"Alejandro Merino Gómez, Daniel Sarabia Ortiz",1,30/10/2018,19/02/2019,8,https://github.com/FranBurgos/TFG
+Simulación de redes con GNS3,"Alejandro Merino Gómez, Daniel Sarabia Ortiz",1,19/09/2018,19/02/2019,6,https://github.com/javi13gg/TFG_GII_O_MA_18.01-Simulacion-de-redes-con-GNS3
+Generación rutas utilizando sistemas empotrados,Alejandro Merino Gómez,1,19/09/2018,19/02/2019,9,https://github.com/alejandrolampreave/GPS
+Secuenciador heurístico,José Manuel Galán Ordax,1,24/09/2018,19/02/2019,7.5,https://github.com/Victoracha/TFG-Reglas-de-prioridad
+Aplicación para la gestión del sonido en un dispositivo móvil,Carlos López Nozal ,1,02/02/2017,19/02/2019,6,https://github.com/JorgeZamora94/TFG-Gestor-de-sonido-para-dispositivos-Android
+Retrogaming recommender,"José Manuel Galán Ordax, José Ignacio Santos Martín",1,08/11/2018,12/06/2019,9.5,https://github.com/raulolles/TFG_GII_O_MA_18.08
+Automatización del proceso de delineación a partir de datos de un levantamiento topográfico,Carlos López Nozal César I. García Osorio,1,10/12/2018,12/06/2019,10,https://github.com/EduardoRisco/SurveyingPointCode
+Autoevaluación proceso de desarrollo de Trabajo Fin de Grado  en Github,Carlos López Nozal ,1,12/02/2019,12/06/2019,9,https://github.com/rlp0019/Activiti-Api
+UBUGestLab v2,Pedro Renedo Fernández,1,05/12/2019,08/07/2020,9,https://github.com/masantamario/Geslab-2.0
+ExoplanetIA,Carlos López Nozal,1,07/10/2019,08/07/2020,9.5,https://gitlab.com/HP-SCDS/Observatorio/2019-2020/ubu-exoplanetia
+Fatiga+PR,"José Manuel Galán Ordax, Virginia Ahedo García",1,01/10/2019,08/07/2020,5,https://github.com/ysi0000/-FatigaMasPR
+Sistema domótico inteligente,"Alejandro Merino Gómez Álvar, Arnaiz González",1,06/10/2020,25/01/2021,8.25,https://github.com/davidelinformatico/TFG
+Aplicación de técnicas metaheurísticas para la optimización del reparto de material de una planta de montaje,"José Ignacio Santos Martín, José Manuel Galán Ordax",1,06/11/2020,25/01/2021,5,https://github.com/CarolinaCCZ/LucErik/
+Vulnerabilidades en redes de dependencias de paquetes de software,"Carlos López Nozal, José Ignacio Santos Martín",1,05/06/2020,25/01/2021,10,https://github.com/dsr0018/olivia
+Servicios de adquisición de datos y visualización de dashboards para la web de coyuntura económica,"Carlos López Nozal, Bruno Baruque Zanón, Santiago Porras Alfonso",1,19/10/2020,25/02/2021,6.5,https://github.com/RaquelSancha/GII_O_MA_20.04
+Desarrollo y explotación de un chatbot para la asignatura de Trabajo Fin de Grado,Raúl Marticorena Sánchez,1,19/10/2020,13/07/2021,9,https://github.com/aav0038/UBU-CHATBOT
+CarSharing: Servicio Web y APP móvil para compartir vehículo para ir al trabajo,"Bruno Baruque Zanón, Francisco Alonso, (tutor empresa HP SCDS) Patricia Pérez (tutor empresa HP SCDS)",1,19/10/2020,13/07/2021,6.7,https://gitlab.com/HP-SCDS/Observatorio/2020-2021/ubu-carsharing
+Comparador de métricas de evolución en repositorios Software,Carlos López Nozal,1,07/10/2021,16/06/2022,9.5,https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software
+MoodleQA,"Raúl Marticorena Sánchez, Carlos López Nozal",1,01/10/2021,16/06/2022,9,https://github.com/RobertoArastiBlanco/eLearningQA
+Dashboard de visualización del uso y preferencias de los desarrolladores basado en las encuestas anuales de Stack Overflow,"José Ignacio Santos Martín, Virginia Ahedo García",1,30/09/2021,16/06/2022,7,https://github.com/albarrom/GII_O_MA_21.05
+XacoMeter: Observatorio del Camino de Santiago en Redes Sociales,"José Ignacio Santos Martín, Virginia Ahedo GarcíaSilvia Díaz",1,28/09/2021,14/07/2022,9.2,https://github.com/daniel2828/XacoMeter
+UBUExoWork entorno Web,Pedro Renedo Fernández,1,17/05/2022,28/09/2022,8,https://github.com/asl1006/UbuExoWorks
+Visualización de las actividades socioculturales en Castilla y León CULTURALCyL,"José Ignacio Santos Martín, Virginia Ahedo García, Silvia Díaz de la Fuente",1,17/05/2022,24/01/2023,7.7,https://github.com/ylp1001/TFG-Actividades-culturales-CyL
+UBUExoWork cliente móvil,Pedro Renedo Fernández,1,17/05/2022,23/02/2023,8.7,https://github.com/afn1001/UbuExoWorks
+Evaluación de simulaciones de proyectos en Github orientadas a docencia,Carlos López Nozal,1,29/09/2022,20/06/2023,8.5,https://github.com/lfx1001/avrela
+Desarrollo y explotación de un chatbot para la asignatura de Practicum de Formación de Profesores de Lenguas Extranjeras,"Carlos López Nozal, Ismael Ramos Pérez, Raúl Marticorena Sánchez",1,06/10/2022,20/06/2023,9,https://gitlab.com/tfg6300404/chatbob-practicum
+Análisis de datos de temperatura y humedad de suelo procedentes de sensores IoT desplegados en un viñedo,"Alejandro Merino Gómez, Rubén Ruiz González",1,29/09/2022,12/07/2023,6.5,https://github.com/jzx1003/GII_O_MA_22.07
+Aplicación de Gestión de Quirófanos mediante Inteligencia Computacional,"Raúl Marticorena Sánchez, Bruno Baruque Zanón, Daniel Urda Muñoz",1,04/11/2022,12/07/2023,9.4,https://github.com/jesgararm/GestorQuirofanos
+XacoMeter II - Google trends and Google News,"José Ignacio Santos Martín, Virginia Ahedo García, Silvia Díaz de la Fuente",1,30/09/2022,12/07/2023,7.2,https://github.com/map10100/XacoMeter-Google
+IA-IVR,Alejandro Merino Gómez ,1,22/02/2023,12/07/2023,5,https://github.com/andonivianez/ubutfg-ai-callbo
+Lista de comprobación de buenas prácticas de enseñanza en cursos Moodle,"Carlos López Nozal, Raúl Marticorena Sánchez",1,06/10/2022,12/07/2023,6.1,https://github.com/ada1012/eLearningQA
+"Investigación, creación y explotación de modelos para el estudio del COVID-19 en pacientes del servicio cántabro de Salud.","Carlos López Nozal, José Francisco Díez Pastor",1,04/10/2021,12/07/2023,7.1,https://github.com/sgg0008/ml-COVID-19
+Backend en microservicios para aplicación móvil,Pedro Renedo Fernández,1,29/09/2022,24/01/2024,8.5,https://github.com/emur-uy/backend
+MiVoto. Aplicación para realización de votaciones en comunidades de vecinos.,"José Ignacio Santos Martín, Virginia Ahedo García",1,28/09/2023,24/01/2024,9.2,https://bitbucket.org/mivototfg/workspace/overview/
+Desarrollo de un chatbot basado en 'Large Language Model' (LLM) y técnicas de 'Retrieval-augmented Generation' (RAG) para asistente de dudas sobre la realización del TFG en el Grado de Ingeniería Informática,"José Ignacio Santos Martín, Carlos López Nozal",1,15/10/2023,24/01/2024,9.4,https://github.com/jrg1013/chatbot
+Optimización pedidos TETRAPAK,"Ángel Arroyo Puente, Nuño Basurto Hornillos",1,04/10/2023,24/01/2024,8.4,https://github.com/icg0019/TFG
+Migración de Generador de Informes Nutricionales a plataforma Web,"Raúl Marticorena Sánchez, Antonio Jesús Canepa Oneto",1,07/10/2022,27/02/2024,8.1,https://github.com/alvaromanjon/NutriMenu
+Generación de rutas utilizando sistemas empotrados,Alejandro Merino Gómez,1,21/02/2022,27/02/2024,5.2,https://github.com/guillealcuaz/GPS2.0
+Motor de físicas en función del entorno,Alejandro Merino Gómez,1,21/02/2023,27/02/2024,6.1,https://github.com/dmm1005/PhysicsEngine
+Programación de redes definidas por software (SDN) mediante el lenguaje P4,"Alejandro Merino Gómez, Rubén Ruiz González",1,19/09/2023,27/02/2024,7.6,https://github.com/jas1008/TFG_SDN_P4
+Aplicación de análisis de reseñas basado en modelos de lenguaje grandes mediante prompt engineering,"José Ignacio Santos Martín, José Manuel Galán Ordax, Virginia Ahedo García",1,23/10/2023,27/02/2024,8.7,https://github.com/tgs1003/TFG_2023_2024
+Diseño de un sistema IoT de monitorización de invernaderos,"Carlos Cambra Baseca, Alejandro Merino Gómez",1,06/10/2023,27/02/2024,6.6,https://github.com/JLCaballeroMQ/Proyecto_TFG_UBU_23_24
+Generador de cuestionarios y escenarios de test sobre soft skills,Raúl Marticorena Sánchez,1,16/10/2023,18/06/2024,7.1,https://github.com/Daniel-Fernandez-UBU/riskRealUBU
+FAT: Financial Analysis Tool. Herramienta para realizar análisis financiero con Python,"Virginia Ahedo García, José Ignacio Santos Martín",1,23/10/2023,18/06/2024,9.6,https://github.com/rmt0009alu/FAT
+Fusión Sensorial para la Mejora de la Detección de Obstáculos en Conducción Autónoma: Integración de Cámara RGB y LiDAR 3D,"Nuño Basurto Hornillos, Diego Granados López",1,15/01/2024,18/06/2024,8.5,https://github.com/miguelangulismo/LiDAR_and_RGB_Fusion
+PrimeBot: Robot autónomo y preciso,"Jesús Enrique Sierra García, César Represa Pérez",1,01/01/2023,18/06/2024,7.2,https://github.com/marioAlonso2122/Primebot
+Aplicación para gestión de stocks y caducidades,"Jesús Manuel Maudes Raedo, José Antonio Barbero",1,05/03/2024,18/06/2024,8.8,https://github.com/jsc1013/StayFresh
+Aplicación móvil (FrontEnd) acceso a los microservicios de servicios a usuarios afectados por la Esclerosis Múltiple (EM).,Pedro Renedo Fernández,1,20/02/2024,15/07/2024,6.8,https://github.com/jmc1005/red-ela
+Diaberse: the return of the hypoglycemia,"Pedro Renedo Fernández",1,26/01/2024,15/07/2024,8.3,https://gitlab.com/HP-SCDS/Observatorio/2023-2024/diaberse/ubu-diaberse
+Generador de WEB/APP,José Manuel Aroca Fernández,1,05/10/2023,15/07/2024,6.7,https://github.com/Angel798v/TFG_AngelVega
+Comparador de sistemas de despliegue de software mediante APIs,José Manuel Aroca Fernández,1,05/10/2023,15/07/2024,7.5,https://github.com/mariolopezmatamala/cloud-duo-aws-gcp
+Prototipo de reconocimiento de actividades en base a señales cerebrales,"Bruno Baruque Zanón, Jesús Enrique Sierra García",1,20/02/2024,15/07/2024,7.5,https://github.com/jpg1003/AnalisisEEG
+Gestión de cartera de opciones,José Ignacio Santos Martín,1,12/02/2024,15/07/2024,5.8,https://github.com/cbr1005/TFG.git
+Estudio y Configuración de un sistema ELK,"Jesus Manuel Maudes Raedo, Antonio Jesús Canepa Oneto",1,16/02/2024,15/07/2024,7.3,https://github.com/hds1001/Estudio-y-configuracion-de-un-sistema-ELK
+Herramienta de modelado de Bases de Datos relacionales con Crows Foot,Jesus Manuel Maudes Raedo,1,29/02/2024,15/07/2024,7.6,https://github.com/jrp1004/CrowsFoot_JuanRomera_TFG
+Herramienta de modelado E/R,Jesus Manuel Maudes Raedo,1,21/02/2024,15/07/2024,8.2,https://github.com/rubenmate/draw-entity-relation
 GII_O_MA_24.06. Inteligencia Artificial para seguridad IoT,"Rubén Ruiz González, Alejandro Merino Gómez",1,22/02/2024,15/07/2024,7.2,https://github.com/eddddddp/AI-for-IoT-security
-GII_O_MA_24.07. IA para detección temprana de incidentes de ciberseguridad con Telegram como fuente de datos,César Ignacio García Osorio,1,26/02/2024,15/07/2024,9.1,https://github.com/iraty/AI-for-early-detection-in-cybersecurity
-GII_O_MC_24.10. Implementación de una Prueba de Concepto (PoC) de Manage Engine PAM para la Gestión Eficiente de Acceso Privilegiado en Organizaciones,"Luis Antonio Antolín Sánchez, Livan Rodriguez Regueria",1,09/04/2024,15/07/2024,5.4,https://github.com/avs1002/TFG-PoC-de-PAM-Alejandro-Villar-Solla
+IA para detección temprana de incidentes de ciberseguridad con Telegram como fuente de datos,César Ignacio García Osorio,1,26/02/2024,15/07/2024,9.1,https://github.com/iraty/AI-for-early-detection-in-cybersecurity
+Implementación de una Prueba de Concepto (PoC) de Manage Engine PAM para la Gestión Eficiente de Acceso Privilegiado en Organizaciones,"Luis Antonio Antolín Sánchez, Livan Rodriguez Regueria",1,09/04/2024,15/07/2024,5.4,https://github.com/avs1002/TFG-PoC-de-PAM-Alejandro-Villar-Solla
 Sistema de extracción y gestión automatizada de requisitos desde documentos PDF para proyectos de ingeniería,"José Ignacio Santos Martín, José Manuel Galán Ordax",1,15/07/2024,27/02/2025,7.2,https://github.com/Esti-D/TFG-GestionRequisitosIngenieria
 SatelDataReport. Desarrollo de una aplicación para la realización de informes de ingeniería,"José Ignacio Santos Martín, José Manuel Galán Ordax",1,15/07/2024,27/02/2025,7,https://github.com/SergioOsuna/SatelDataReport
 Eco City Tours. Aplicación móvil para la generación de rutas turísticas sostenibles propuestas por modelos de lenguaje de gran escala,Carlos López Nozal ,1,15/07/2024,27/02/2025,9.2,https://github.com/fps1001/TFGII_FPisot
