@@ -7,15 +7,57 @@ from webapp.application.usecases.load_model_results_usecase import (
 from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
-from webapp.ui.components.best_params_summary import render_best_params_summary
-from webapp.ui.components.doc_topic_distribution import render_doc_topic_distribution
-from webapp.ui.components.param_vs_score import render_param_vs_score
 from webapp.ui.components.render_intertopic_distance_map import (
     render_intertopic_distance_map,
 )
 from webapp.ui.components.render_topic_summary_table import render_topic_summary_table
-from webapp.ui.components.trial_score_evolution import render_trial_score_evolution
 from webapp.ui.components.wordcloud import render_wordcloud
+
+
+def _count_detected_topics(topics_df: pd.DataFrame) -> int:
+    """Count detected topics from topic rows, excluding outlier topic -1."""
+    if topics_df.empty or "topic_id" not in topics_df.columns:
+        return 0
+
+    topic_ids = pd.to_numeric(topics_df["topic_id"], errors="coerce").dropna()
+    return int(topic_ids[topic_ids >= 0].nunique())
+
+
+def _count_analyzed_documents(document_topics_df: pd.DataFrame) -> int:
+    """Count unique analyzed documents, excluding missing document ids."""
+    if document_topics_df.empty or "document_id" not in document_topics_df.columns:
+        return 0
+
+    return int(document_topics_df["document_id"].nunique(dropna=True))
+
+
+def _compute_dominant_topic(
+    document_topics_df: pd.DataFrame,
+) -> tuple[int, float] | None:
+    """Return dominant topic id and its share based on probability mass."""
+    if document_topics_df.empty or "topic_id" not in document_topics_df.columns:
+        return None
+
+    df = document_topics_df.copy()
+    df["topic_id"] = pd.to_numeric(df["topic_id"], errors="coerce")
+    df = df[df["topic_id"].notna() & (df["topic_id"] >= 0)]
+    if df.empty:
+        return None
+
+    if "probability" in df.columns:
+        df["probability"] = pd.to_numeric(df["probability"], errors="coerce")
+        weight_by_topic = df.groupby("topic_id")["probability"].sum(min_count=1)
+    else:
+        weight_by_topic = df.groupby("topic_id").size().astype(float)
+
+    weight_by_topic = weight_by_topic.dropna()
+    if weight_by_topic.empty:
+        return None
+
+    top_topic = int(weight_by_topic.idxmax())
+    total_weight = float(weight_by_topic.sum())
+    dominance_share = float(weight_by_topic.loc[top_topic] / total_weight)
+    return top_topic, dominance_share
 
 
 def render_model_analysis(base_dir: str) -> None:
@@ -58,33 +100,46 @@ def render_model_analysis(base_dir: str) -> None:
                 f"en el dataset '{dataset}'."
             )
             return
-        render_wordcloud(data["topics"], max_topics_to_render=6)
 
-        render_topic_summary_table(
-            data["topics"],
-            max_words=10,
+        st.subheader("📊 Resumen ejecutivo")
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        col1.metric("Tópicos detectados", _count_detected_topics(data["topics"]))
+        col2.metric(
+            "Documentos analizados",
+            _count_analyzed_documents(data["document_topics"]),
         )
-        render_doc_topic_distribution(data["document_topics"])
+        col3.metric("Coherencia", round(data["best_params"]["best_score"], 3))
+
+        dominant_topic = _compute_dominant_topic(data["document_topics"])
+        if dominant_topic is not None:
+            top_topic, dominance_share = dominant_topic
+            if dominance_share >= 0.35:
+                st.success(
+                    f"El tópico más dominante del modelo es **T{top_topic}** "
+                    f"({dominance_share:.1%} del peso temático)."
+                )
+            else:
+                st.info(
+                    f"El tópico con mayor peso es **T{top_topic}** "
+                    f"({dominance_share:.1%}), con distribución temática equilibrada."
+                )
+
+        st.subheader("🧠 Exploración de tópicos")
+
+        tab1, tab2 = st.tabs(["📋 Tabla de tópicos", "☁️ Wordcloud"])
+
+        with tab1:
+            render_topic_summary_table(
+                data["topics"],
+                max_words=10,
+            )
+
+        with tab2:
+            render_wordcloud(data["topics"], max_topics_to_render=6)
+
         render_intertopic_distance_map(data["topic_coordinates"])
-        st.divider()
-        _render_hyperparameter_section(
-            trials_df=data["trials"],
-            best_params_df=data["best_params"],
-        )
-
-
-def _render_hyperparameter_section(
-    trials_df: pd.DataFrame,
-    best_params_df: pd.DataFrame,
-) -> None:
-    st.title("Hiperparametrización del modelo")
-    st.caption(
-        "Análisis del proceso de búsqueda de hiperparámetros "
-        "y su impacto en la calidad del modelo."
-    )
-    render_trial_score_evolution(trials_df)
-    render_param_vs_score(trials_df)
-    render_best_params_summary(best_params_df)
 
 
 if __name__ == "__main__":

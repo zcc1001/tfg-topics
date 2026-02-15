@@ -116,6 +116,9 @@ class LatexTextProcessor:
             "nuevo",
             "continua",
             "center",
+            "fig",
+            "objetivo",
+            "enlace",
         ]
     )
     _ACADEMIC_WORDS = re.compile(r"\b(" + _ACADEMIC_WORDS_NAMES + r")\b", re.IGNORECASE)

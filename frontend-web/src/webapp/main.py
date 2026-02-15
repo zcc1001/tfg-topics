@@ -25,6 +25,12 @@ def main() -> None:
         icon=":material/analytics:",
     )
 
+    hyperparam_analysis_page = st.Page(
+        "ui/pages/hyperparameter_analysis_page.py",
+        title="Hiperparametrización",
+        icon=":material/data_thresholding:",
+    )
+
     comparison_page = st.Page(
         "ui/pages/comparison_page.py",
         title="Comparativa de modelos",
@@ -37,7 +43,9 @@ def main() -> None:
         icon=":material/article:",
     )
 
-    pg = st.navigation([analysis_page, comparison_page, documents_page])
+    pg = st.navigation(
+        [analysis_page, hyperparam_analysis_page, comparison_page, documents_page]
+    )
 
     pg.run()
 

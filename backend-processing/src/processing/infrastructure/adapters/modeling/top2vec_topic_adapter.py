@@ -179,20 +179,16 @@ class Top2VecModelAdapter(TopicModelPort):
         model: Top2Vec,
     ) -> List[Dict[str, Any]]:
 
-        doc_topics, doc_scores, _, doc_ids = model.get_documents_topics(
-            doc_ids=list(range(model.document_vectors.shape[0]))
+        requested_doc_ids = list(range(model.document_vectors.shape[0]))
+        doc_topics, doc_scores, _, _ = model.get_documents_topics(
+            doc_ids=requested_doc_ids
         )
 
         results: List[Dict[str, Any]] = []
         for i in range(len(doc_topics)):
             topics = doc_topics[i]
             scores = doc_scores[i]
-            doc_id = doc_ids[i]
-
-            if isinstance(doc_id, (np.ndarray, list)):
-                doc_id = int(doc_id[0])
-            else:
-                doc_id = int(doc_id)
+            doc_id = int(requested_doc_ids[i])
 
             if not isinstance(topics, (list, np.ndarray)):
                 topics = [topics]
