@@ -7,21 +7,20 @@ from processing.application.services.hyperparam_service import (
     HyperparameterSearchService,
 )
 from processing.application.usecases.topic_modeling_usecase import TopicModelingUseCase
-from processing.domain.entities import HyperparameterSearchResult, TopicModelResult
-
-
-class _DummyDoc:
-    def __init__(self, text: str) -> None:
-        self.text = text
+from processing.domain.entities import (
+    Document,
+    HyperparameterSearchResult,
+    TopicModelResult,
+)
 
 
 class _DummyDocumentRepository(DocumentRepository):
     def __init__(self) -> None:
         self.requested_name: str | None = None
 
-    def load_documents(self, doc_name: str) -> List[_DummyDoc]:  # type: ignore
+    def load_documents(self, doc_name: str) -> List[Document]:
         self.requested_name = doc_name
-        return [_DummyDoc("doc a"), _DummyDoc("doc b")]
+        return [Document(text="doc a"), Document(text="doc b")]
 
 
 class _DummyHyperparamService(HyperparameterSearchService):
@@ -44,12 +43,17 @@ class _DummyModelAdapter(TopicModelPort):
         self.fit_called_with: Dict[str, Any] | None = None
 
     def fit(
-        self, dataset: str, texts: List[str], params: Dict[str, Any]
+        self,
+        dataset: str,
+        texts: List[str],
+        params: Dict[str, Any],
+        dataset_hash: str,
     ) -> TopicModelResult:
         self.fit_called_with = {
             "dataset": dataset,
             "texts": texts,
             "params": params,
+            "dataset_hash": dataset_hash,
         }
         return self.topic_result
 
@@ -99,6 +103,7 @@ def test_execute_runs_search_and_training_and_writes_results() -> None:
         params={"k": 3},
         topic_coordinates=[],
         runtime_seconds=1.0,
+        dataset_hash="hash-123",
     )
 
     repo = _DummyDocumentRepository()
@@ -115,6 +120,7 @@ def test_execute_runs_search_and_training_and_writes_results() -> None:
         hyperparam_service=hyper_service,
         model_adapter=model_adapter,
         writer=writer,
+        dataset_hash="hash-123",
     )
     # run
     usecase.execute(dataset="issues")
@@ -132,6 +138,7 @@ def test_execute_runs_search_and_training_and_writes_results() -> None:
     assert model_adapter.fit_called_with is not None
     assert model_adapter.fit_called_with["dataset"] == "issues"
     assert model_adapter.fit_called_with["params"] == {"k": 3}
+    assert model_adapter.fit_called_with["dataset_hash"] == "hash-123"
 
     # writer should have been called for both search and final result
     assert writer.hyper_written is hyper_result

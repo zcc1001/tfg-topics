@@ -13,7 +13,7 @@ from ingestion.infrastructure.adapter.ingestion_parquet_storage import (
 def test_save_issue_calls_to_parquet(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    """Ensure save_issue invokes pandas to_parquet; handle append behavior."""
+    """Ensure save_issue invokes pandas to_parquet once for non-empty input."""
     calls: list = []
 
     def stub_to_parquet(
@@ -25,19 +25,40 @@ def test_save_issue_calls_to_parquet(
 
     monkeypatch.setattr(pd.DataFrame, "to_parquet", stub_to_parquet)
 
-    storage = IngestionParquetStorage(base_dir=str(tmp_path), buffer_size=2)
+    storage = IngestionParquetStorage(base_dir=str(tmp_path))
     issues = [
-        IssueData("owner", "repo", 1, "t1", "d1", datetime.now(timezone.utc)),
-        IssueData("owner", "repo", 2, "t2", "d2", datetime.now(timezone.utc)),
-        IssueData("owner", "repo", 3, "t3", "d3", datetime.now(timezone.utc)),
+        IssueData(
+            thesis_id=1,
+            repo_owner="owner",
+            repo_name="repo",
+            issue_id=1,
+            title="t1",
+            description="d1",
+            retrieved_at=datetime.now(timezone.utc),
+        ),
+        IssueData(
+            thesis_id=2,
+            repo_owner="owner",
+            repo_name="repo",
+            issue_id=2,
+            title="t2",
+            description="d2",
+            retrieved_at=datetime.now(timezone.utc),
+        ),
+        IssueData(
+            thesis_id=3,
+            repo_owner="owner",
+            repo_name="repo",
+            issue_id=3,
+            title="t3",
+            description="d3",
+            retrieved_at=datetime.now(timezone.utc),
+        ),
     ]
     storage.save_issue(issues)
 
-    assert len(calls) >= 1
-
-    if len(calls) >= 2:
-        assert not calls[0][1].get("append")
-        assert calls[1][1].get("append") is True
+    assert len(calls) == 1
+    assert not calls[0][1].get("append")
 
     assert Path(storage.issues_path).exists()
 

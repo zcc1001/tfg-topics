@@ -1,3 +1,4 @@
+from datetime import datetime
 from unittest.mock import MagicMock, patch
 
 import requests
@@ -103,10 +104,10 @@ def test_get_readme_success(mock_get: MagicMock) -> None:
     readme = adapter.get_readme("owner", "repo")
 
     assert isinstance(readme, ReadmeData)
-    assert readme.repo_name == "repo"
-    assert readme.repo_owner == "owner"
+    assert readme.thesis_id == -1
     assert readme.download_url == "http://example.com/README.md"
     assert readme.content == "bW9jayBjb250ZW50"
+    assert isinstance(readme.retrieved_at, datetime)
 
 
 @patch("ingestion.infrastructure.adapter.github_rest_adapter.requests.get")

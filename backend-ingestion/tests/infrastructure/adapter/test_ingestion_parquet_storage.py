@@ -25,6 +25,7 @@ def issue_data_factory() -> Callable[[int], list[IssueData]]:
     def _factory(count: int = 1) -> list[IssueData]:
         return [
             IssueData(
+                thesis_id=i,
                 repo_name=f"repo{i}",
                 repo_owner="owner",
                 issue_id=i,
@@ -42,11 +43,10 @@ def issue_data_factory() -> Callable[[int], list[IssueData]]:
 def readme_data_factory() -> Callable[[int], list[ReadmeData]]:
     """Fixture that returns a factory for creating ReadmeData objects."""
 
-    def _factory(count: int = 1) -> list[ReadmeData]:  # type: ignore
+    def _factory(count: int = 1) -> list[ReadmeData]:
         return [
             ReadmeData(
-                repo_name=f"repo{i}",
-                repo_owner="owner",
+                thesis_id=i,
                 download_url=f"http://example.com/{i}",
                 content=f"content {i}",
                 retrieved_at=datetime.now(timezone.utc),
@@ -64,8 +64,7 @@ def thesis_data_factory() -> Callable[[int], list[ThesisData]]:
     def _factory(count: int = 1) -> list[ThesisData]:
         return [
             ThesisData(
-                repo_name=f"repo{i}",
-                repo_owner="owner",
+                thesis_id=i,
                 texts=[TextData(contents=f"text {i}", section=f"section {i}")],
                 retrieved_at=datetime.now(timezone.utc),
             )
@@ -92,8 +91,8 @@ def test_save_issue(
 def test_save_issue_append(
     tmp_path: Path, issue_data_factory: Callable[[int], list[IssueData]]
 ) -> None:
-    """Append new issues and ensure the file contains both entries."""
-    storage = IngestionParquetStorage(base_dir=str(tmp_path), buffer_size=1)
+    """A second save_issue call rewrites parquet with the latest payload."""
+    storage = IngestionParquetStorage(base_dir=str(tmp_path))
     issues1 = issue_data_factory(1)
     storage.save_issue(issues1)
 
@@ -104,8 +103,8 @@ def test_save_issue_append(
     storage.save_issue(issues2)
 
     df2 = pd.read_parquet(storage.issues_path)
-    assert len(df2) == 2
-    assert df2["issue_id"].tolist() == [0, 1]
+    assert len(df2) == 1
+    assert df2["issue_id"].tolist() == [1]
 
 
 def test_save_readme(
@@ -119,7 +118,7 @@ def test_save_readme(
 
     df = pd.read_parquet(storage.readmes_path)
     assert len(df) == 2
-    assert df["repo_name"].tolist() == ["repo0", "repo1"]
+    assert df["thesis_id"].tolist() == [0, 1]
 
 
 def test_save_thesis_data(
@@ -133,7 +132,7 @@ def test_save_thesis_data(
 
     df = pd.read_parquet(storage.thesis_path)
     assert len(df) == 2
-    assert df["repo_name"].tolist() == ["repo0", "repo1"]
+    assert df["thesis_id"].tolist() == [0, 1]
 
     texts = df["texts"][0]
     if isinstance(texts, str):
