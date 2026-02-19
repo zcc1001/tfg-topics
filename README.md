@@ -4,6 +4,7 @@
 [![Wiki](https://img.shields.io/badge/wiki-available-brightgreen)](https://github.com/zcc1001/tfg-topics/wiki)
 ![GitHub Release](https://img.shields.io/github/v/release/zcc1001/tfg-topics?label=Release)
 [![Zube](https://img.shields.io/badge/zube-managed-blue?logo=zube)](https://zube.io/)
+[![CI](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml/badge.svg)](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml)
 
 ## 📜 Description
 
