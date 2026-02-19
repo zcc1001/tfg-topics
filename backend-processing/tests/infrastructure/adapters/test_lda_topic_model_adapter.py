@@ -47,6 +47,17 @@ class _FakeModel:
         self.doc_topic_ = doc_topic
 
 
+class _FakeStopwords:
+    @staticmethod
+    def words(_lang: str) -> set[str]:
+        return set()
+
+
+@pytest.fixture(autouse=True)
+def _patch_nltk_stopwords(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(mod, "stopwords", _FakeStopwords)
+
+
 def test_extract_topics_sorts_by_weight() -> None:
     """_extract_topics returns top feature names ordered by weight indices."""
     # Two topics, three features
@@ -88,12 +99,8 @@ def test_compute_coherence_uses_coherence_model(
     assert pytest.approx(score, rel=1e-6) == 0.77
 
 
-def test_preprocess_caches_and_removes_stopwords(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
+def test_preprocess_caches_and_removes_stopwords() -> None:
     """_preprocess tokenizes, removes stopwords and caches results."""
-    monkeypatch.setattr(mod.stopwords, "words", lambda _lang: set())
-
     adapter = LdaTopicModelAdapter(random_seed=0)
     docs = ["This is a test document.".lower(), "Another doc.".lower()]
 

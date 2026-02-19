@@ -40,6 +40,17 @@ class _FakeModel:
         self.topic_embeddings = embeddings
 
 
+class _FakeStopwords:
+    @staticmethod
+    def words(_lang: str) -> set[str]:
+        return set()
+
+
+@pytest.fixture(autouse=True)
+def _patch_nltk_stopwords(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(mod, "stopwords", _FakeStopwords)
+
+
 def test_extract_topics_parses_top_words() -> None:
     """_extract_topics splits top_words and ignores entries with <2 words."""
 
@@ -98,10 +109,8 @@ def test_compute_coherence_penalty_and_value(monkeypatch: pytest.MonkeyPatch) ->
     assert pytest.approx(score, rel=1e-6) == 0.123
 
 
-def test_preprocess_caches_and_filters(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_preprocess_caches_and_filters() -> None:
     """_preprocess removes STOPWORDS and caches the tokenization result."""
-    # Ensure stopwords.words doesn't try to access NLTK data
-    monkeypatch.setattr(mod.stopwords, "words", lambda _lang: set())
 
     class T(FastTopicModelAdapter):
         pass

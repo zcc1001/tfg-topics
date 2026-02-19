@@ -43,6 +43,17 @@ class _FakeModel:
         return self._topics_map.get(topic_id)
 
 
+class _FakeStopwords:
+    @staticmethod
+    def words(_lang: str) -> set[str]:
+        return set()
+
+
+@pytest.fixture(autouse=True)
+def _patch_nltk_stopwords(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(mod, "stopwords", _FakeStopwords)
+
+
 def test_extract_topics_filters_and_formats() -> None:
     """_extract_topics returns only valid topic words and skips invalid entries."""
     # topic_sizes includes an int key and an invalid (non-Integral) key
@@ -115,10 +126,8 @@ def test_compute_coherence_penalty_and_value(monkeypatch: pytest.MonkeyPatch) ->
     assert pytest.approx(score2, rel=1e-6) == 0.42
 
 
-def test_preprocess_caches_and_filters(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_preprocess_caches_and_filters() -> None:
     """_preprocess removes stopwords and caches the tokenization result."""
-    # Avoid NLTK lookup by forcing stopwords.words to return empty set
-    monkeypatch.setattr(mod.stopwords, "words", lambda _lang: set())
 
     class T(BerTopicModelAdapter):
         pass

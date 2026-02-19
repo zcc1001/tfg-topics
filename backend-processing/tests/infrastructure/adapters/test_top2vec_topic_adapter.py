@@ -68,6 +68,17 @@ class _FakeTop2VecModel:
         return self._doc_topics, self._doc_scores, None, doc_ids_out
 
 
+class _FakeStopwords:
+    @staticmethod
+    def words(_lang: str) -> set[str]:
+        return set()
+
+
+@pytest.fixture(autouse=True)
+def _patch_nltk_stopwords(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(mod, "stopwords", _FakeStopwords)
+
+
 def test_extract_topics_returns_mapping() -> None:
     """_extract_topics converts Top2Vec get_topics output into id->words mapping."""
     model = _FakeTop2VecModel()
@@ -123,9 +134,8 @@ def test_compute_coherence_penalty_and_value(monkeypatch: pytest.MonkeyPatch) ->
     assert pytest.approx(score, rel=1e-6) == 0.33
 
 
-def test_preprocess_caches_and_filters(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_preprocess_caches_and_filters() -> None:
     """_preprocess tokenizes, filters STOPWORDS and caches results."""
-    monkeypatch.setattr(mod.stopwords, "words", lambda _lang: set())
 
     class T(Top2VecModelAdapter):
         pass
