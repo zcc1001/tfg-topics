@@ -1,0 +1,35 @@
+name: Release - TFG Project
+
+on:
+  release:
+    types: [created, published]
+
+jobs:
+  validate-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate docker-compose file
+        run: |
+          docker compose version
+          docker compose config
+
+  build-images:
+    runs-on: ubuntu-latest
+    needs: validate-compose
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build ingestion image
+        run: docker build ./backend-ingestion -t tfg-topics-ingestion
+
+      - name: Build processing image
+        run: docker build ./backend-processing -t tfg-topics-processing
+
+      - name: Build frontend image
+        run: docker build ./frontend-web -t tfg-topics-frontend
