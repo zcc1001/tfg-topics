@@ -68,9 +68,27 @@ The project is organized into several key directories:
    pre-commit install
    ```
 
-4. **Install project dependencies:**
+4. **Install project dependencies (per module):**
    ```shell
-   pip install -r ingestion/requirements.txt
-   pip install -r processing/requirements.txt
+   pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
+   pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt
+   pip install -r frontend-web/requirement.txt
    ```
+
+### GitHub Codespaces Setup
+
+This repository includes a devcontainer config at `.devcontainer/devcontainer.json`.
+When opened in Codespaces it provisions Python 3.10, development tools, and configures
+`PYTHONPATH` for the `src/` modules.
+
+After the container is created, install dependencies only for the module(s) you are
+working on:
+
+```bash
+pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
+pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt
+pip install -r frontend-web/requirement.txt
+```
+
+
 

@@ -112,6 +112,23 @@ export GITHUB_TOKEN=ghp_xxx
 export DATA_DIR=/data
 ```
 
+## Installation
+
+From this directory (`/backend-ingestion`) install dependencies with:
+
+```shell
+pip install -r requirements.txt -r requirements-dev.txt
+```
+
+## GitHub Codespaces
+
+The repository devcontainer already configures Python 3.10 and `PYTHONPATH` for the
+`src/` layout. In Codespaces, install ingestion dependencies from the repository root:
+
+```bash
+pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
+```
+
 ## Running module
 
 ### Local python execution (optional)
@@ -129,7 +146,7 @@ python -m venv .venv
 # source .venv/bin/activate
 
 # install python packages
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-dev.txt
 
 # run app
 python src/ingestion/main.py

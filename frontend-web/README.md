@@ -33,6 +33,16 @@ The module follows a hexagonal (ports and adapters) architecture with a
 pip install -r requirement.txt
 ```
 
+## GitHub Codespaces
+
+The repository devcontainer configures Python 3.10 and `PYTHONPATH` for all
+`src/` modules. In Codespaces, install frontend dependencies from the repository
+root:
+
+```bash
+pip install -r frontend-web/requirement.txt
+```
+
 ## Running the Module
 
 ### Local Python execution
@@ -43,7 +53,7 @@ From this directory (`/frontend-web`) run:
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirement.txt
-PYTHONPATH=src streamlit run src/webapp/main.py
+streamlit run src/webapp/main.py
 ```
 
 The UI will be available at `http://localhost:8501`.
@@ -115,7 +125,7 @@ directory (`/`):
 docker compose --profile frontend build
 
 # Run the frontend container
-docker compose --profile frontend up frontend
+docker compose --profile frontend run --rm frontend
 ```
 
 The container exposes Streamlit on port `8501`.

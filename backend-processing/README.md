@@ -26,8 +26,18 @@ The module is designed to be flexible, supporting different data sources and top
 2.  Install the required dependencies using pip:
 
     ```bash
-    pip install -r requirements.txt
+    pip install -r requirements.txt -r requirements-dev.txt
     ```
+
+## GitHub Codespaces
+
+The repository devcontainer configures Python 3.10 and `PYTHONPATH` for the
+`src/` layout. In Codespaces, install processing dependencies from the repository
+root:
+
+```bash
+pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt
+```
 
 ## Usage
 
