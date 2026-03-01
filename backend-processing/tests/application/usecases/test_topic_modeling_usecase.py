@@ -144,3 +144,51 @@ def test_execute_runs_search_and_training_and_writes_results() -> None:
     assert writer.hyper_written is hyper_result
     assert writer.topic_written is topic_result
     assert writer.run_id == "dummy_run_id"
+
+
+def test_execute_with_abstracts_uses_abstracts_parquet() -> None:
+    hyper_result = HyperparameterSearchResult(
+        model_name="dummy",
+        dataset="abstracts",
+        best_params={"k": 2},
+        best_score=0.7,
+        trials=[],
+    )
+
+    topic_result = TopicModelResult(
+        dataset="abstracts",
+        model_name="dummy",
+        topics={0: ["abstract", "topic"]},
+        document_topics=[{"document_id": 0, "topic_id": 0, "probability": 0.9}],
+        metrics={"coherence": 0.4},
+        params={"k": 2},
+        topic_coordinates=[],
+        runtime_seconds=1.0,
+        dataset_hash="hash-456",
+    )
+
+    repo = _DummyDocumentRepository()
+    hyper_service = _DummyHyperparamService(result=hyper_result)
+    model_adapter = _DummyModelAdapter(topic_result=topic_result)
+    writer = _DummyWriter()
+
+    class _TestableTopicModelingUseCase(TopicModelingUseCase):
+        def _generate_run_id(self, model_name: str, strategy: str) -> str:
+            return "dummy_run_id"
+
+    usecase = _TestableTopicModelingUseCase(
+        document_repository=repo,
+        hyperparam_service=hyper_service,
+        model_adapter=model_adapter,
+        writer=writer,
+        dataset_hash="hash-456",
+    )
+
+    usecase.execute(dataset="abstracts")
+
+    assert repo.requested_name == "abstracts.parquet"
+    assert hyper_service.called_with is not None
+    assert hyper_service.called_with["dataset"] == "abstracts"
+    assert model_adapter.fit_called_with is not None
+    assert model_adapter.fit_called_with["dataset"] == "abstracts"
+    assert writer.topic_written is topic_result

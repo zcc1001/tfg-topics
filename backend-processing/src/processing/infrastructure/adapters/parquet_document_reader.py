@@ -29,6 +29,8 @@ class ParquetDocumentRepository(DocumentRepository):
             documents = self._load_issues(df)
         elif doc_name == "thesis.parquet":
             documents = self._load_thesis(df)
+        elif doc_name == "abstracts.parquet":
+            documents = self._load_abstracts(df)
         else:
             logger.error("Unknown document name: %s", doc_name)
 
@@ -65,18 +67,33 @@ class ParquetDocumentRepository(DocumentRepository):
             if not text:
                 continue
 
-            repo_owner = row.get("repo_owner")
-            repo_name = row.get("repo_name")
-            source_url = None
-            if isinstance(repo_owner, str) and isinstance(repo_name, str):
-                source_url = f"https://github.com/{repo_owner}/{repo_name}"
-
             metadata = self._build_metadata(
                 row,
                 dataset="issues",
-                source_url=source_url,
+                source_url=self._build_source_url(row),
             )
             documents.append(Document(text=text, metadata=metadata))
+
+        return documents
+
+    def _load_abstracts(self, df: pd.DataFrame) -> List[Document]:
+        documents: List[Document] = []
+
+        for _, row in df.iterrows():
+            content = row.get("content")
+            if not isinstance(content, str) or not content.strip():
+                continue
+
+            source_url = self._build_source_url(row)
+            source_path = row.get("source_path")
+            path = source_path if isinstance(source_path, str) else None
+            metadata = self._build_metadata(
+                row,
+                dataset="abstracts",
+                source_url=source_url,
+                path=path,
+            )
+            documents.append(Document(text=content.strip(), metadata=metadata))
 
         return documents
 
@@ -108,6 +125,13 @@ class ParquetDocumentRepository(DocumentRepository):
                 documents.append(Document(text=contents, metadata=metadata))
 
         return documents
+
+    def _build_source_url(self, row: pd.Series) -> Optional[str]:
+        repo_owner = row.get("repo_owner")
+        repo_name = row.get("repo_name")
+        if isinstance(repo_owner, str) and isinstance(repo_name, str):
+            return f"https://github.com/{repo_owner}/{repo_name}"
+        return None
 
     def _decode_base64(self, value: str) -> Optional[str]:
         try:

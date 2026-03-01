@@ -58,7 +58,7 @@ def main() -> None:
         "--dataset",
         required=True,
         help="Data source to be used",
-        choices=["readmes", "issues", "thesis"],
+        choices=["readmes", "issues", "thesis", "abstracts"],
     )
     args = parser.parse_args()
 

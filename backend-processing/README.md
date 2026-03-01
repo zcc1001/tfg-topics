@@ -16,7 +16,7 @@ The module is designed to be flexible, supporting different data sources and top
 -   **Hyperparameter Optimization**: Uses `Optuna` to perform hyperparameter search and find the best parameters for the topic models.
 -   **Data Handling**:
     -   Reads data from Parquet files provided by the ingestion module.
-    -   Supports different data sources (`readmes`, `issues`, `thesis`).
+    -   Supports different data sources (`readmes`, `issues`, `thesis`, `abstracts`).
     -   Saves all modeling results, including topics, metrics, and hyperparameters, to Parquet files.
 -   **Text Processing**: Includes specialized text cleaning and normalization utilities, such as the `LatexTextProcessor` for academic documents.
 
@@ -44,7 +44,7 @@ pip install -r backend-processing/requirements.txt -r backend-processing/require
 The main entry point for the module is `src/processing/main.py`. It can be executed from the command line with the following arguments:
 
 -   `--model`: The topic modeling algorithm to use. (Required, e.g., `bertopic`, `lda`)
--   `--dataset`: The data source to process. (Required, e.g., `readmes`, `issues`, `thesis`)
+-   `--dataset`: The data source to process. (Required, e.g., `readmes`, `issues`, `thesis`, `abstracts`)
 
 ### Examples
 
