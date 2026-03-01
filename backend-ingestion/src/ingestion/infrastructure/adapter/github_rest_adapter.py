@@ -1,4 +1,5 @@
 import logging
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union, cast
@@ -7,6 +8,7 @@ import requests
 
 from ingestion.application.ports.github_port import GitHubPort
 from ingestion.domain.entities.entities import (
+    AbstractData,
     IssueData,
     ReadmeData,
     TextData,
@@ -23,10 +25,18 @@ class GithubRestAdapter(GitHubPort):
         "tex/2_Objetivos_del_proyecto.tex",
         "tex/3_Conceptos_teoricos.tex",
         "tex/4_Tecnicas_y_herramientas.tex",
-        "text/5_Aspectos_relevantes_del_desarrollo_del_proyecto.tex"
-        "text/6_Trabajos_relacionados.tex"
+        "tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto.tex"
+        "tex/6_Trabajos_relacionados.tex"
         "tex/7_Conclusiones_Lineas_de_trabajo_futuras.tex",
     ]
+    MEMORIA_SUFFIX = "memoria.tex"
+    ABSTRACT_BLOCK_PATTERN = re.compile(
+        r"\\begin\{abstract\}(?P<content>.*?)\\end\{abstract\}",
+        flags=re.DOTALL,
+    )
+    ABSTRACT_NAME_PATTERN = re.compile(
+        r"\\renewcommand\*\\abstractname\{(?P<label>[^}]*)\}",
+    )
 
     def __init__(self, token: Optional[str] = None, timeout: float = 10.0):
         self.headers = {
@@ -179,6 +189,57 @@ class GithubRestAdapter(GitHubPort):
             retrieved_at=datetime.now(timezone.utc),
         )
 
+    def get_abstracts_data(self, owner: str, repo_name: str) -> Optional[AbstractData]:
+        logger.info("Getting abstract data for repository: %s/%s", owner, repo_name)
+        branch = self._get_default_branch(owner, repo_name)
+        tree_paths = self._get_repo_tree(owner, repo_name, branch)
+
+        memoria_path = self._find_file_by_suffix(
+            tree_paths=tree_paths,
+            target_suffix=self.MEMORIA_SUFFIX,
+        )
+        if memoria_path is None:
+            logger.warning(
+                "No memoria file found at path ending with '%s' for repository: %s/%s",
+                self.MEMORIA_SUFFIX,
+                owner,
+                repo_name,
+            )
+            return None
+
+        memoria_content = self._download_raw_file(
+            owner=owner,
+            repo=repo_name,
+            branch=branch,
+            path=memoria_path,
+        )
+        if not memoria_content:
+            logger.warning(
+                "Could not download memoria file for repository: %s/%s",
+                owner,
+                repo_name,
+            )
+            return None
+
+        abstract_content = self._extract_latex_abstract(memoria_content)
+        if abstract_content is None:
+            logger.warning(
+                "No LaTeX abstract block found in %s for repository: %s/%s",
+                memoria_path,
+                owner,
+                repo_name,
+            )
+            return None
+
+        return AbstractData(
+            thesis_id=-1,
+            repo_owner=owner,
+            repo_name=repo_name,
+            source_path=memoria_path,
+            content=abstract_content,
+            retrieved_at=datetime.now(timezone.utc),
+        )
+
     def _get_default_branch(self, owner: str, repo: str) -> str:
         url = f"https://api.github.com/repos/{owner}/{repo}"
         response = requests.get(url, headers=self.headers, timeout=self.timeout)
@@ -234,3 +295,45 @@ class GithubRestAdapter(GitHubPort):
                     found[suffix] = real_path
 
         return found
+
+    @staticmethod
+    def _find_file_by_suffix(tree_paths: list[str], target_suffix: str) -> str | None:
+        normalized_suffix = target_suffix.replace("\\", "/").lower()
+        for path in tree_paths:
+            normalized_path = path.replace("\\", "/").lower()
+            if normalized_path.endswith(normalized_suffix):
+                return path
+        return None
+
+    def _extract_latex_abstract(self, memoria_content: str) -> str | None:
+        matches = list(self.ABSTRACT_BLOCK_PATTERN.finditer(memoria_content))
+        if not matches:
+            return None
+
+        for match in matches:
+            label = self._extract_latest_abstract_label(
+                memoria_content=memoria_content,
+                block_start=match.start(),
+            )
+            if self._is_keywords_label(label):
+                continue
+            abstract_content = match.group("content").strip()
+            if abstract_content:
+                return abstract_content
+
+        return None
+
+    def _extract_latest_abstract_label(
+        self, memoria_content: str, block_start: int
+    ) -> str | None:
+        prefix = memoria_content[:block_start]
+        labels = list(self.ABSTRACT_NAME_PATTERN.finditer(prefix))
+        if not labels:
+            return None
+        return labels[-1].group("label").strip().lower()
+
+    @staticmethod
+    def _is_keywords_label(label: str | None) -> bool:
+        if label is None:
+            return False
+        return "keyword" in label or "palabras clave" in label

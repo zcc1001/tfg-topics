@@ -5,6 +5,7 @@ from ingestion.application.ports.repo_list_reader import RepoListReaderPort
 from ingestion.application.ports.storage_port import StoragePort
 from ingestion.application.usecase.data_ingestion_usecase import DataIngestionUsecase
 from ingestion.domain.entities.entities import (
+    AbstractData,
     IssueData,
     ReadmeData,
     TextData,
@@ -27,10 +28,12 @@ class DummyGitHubPort(GitHubPort):
         issues_map: dict[tuple[str, str], list[IssueData]] | None = None,
         readme_map: dict[tuple[str, str], ReadmeData | None] | None = None,
         thesis_map: dict[tuple[str, str], ThesisData | None] | None = None,
+        abstracts_map: dict[tuple[str, str], AbstractData | None] | None = None,
     ) -> None:
         self.issues_map = issues_map or {}
         self.readme_map = readme_map or {}
         self.thesis_map = thesis_map or {}
+        self.abstracts_map = abstracts_map or {}
 
     def get_issues(self, owner: str, repo_name: str) -> list[IssueData]:
         return self.issues_map.get((owner, repo_name), [])
@@ -41,12 +44,16 @@ class DummyGitHubPort(GitHubPort):
     def get_thesis_data(self, owner: str, repo_name: str) -> ThesisData | None:
         return self.thesis_map.get((owner, repo_name))
 
+    def get_abstracts_data(self, owner: str, repo_name: str) -> AbstractData | None:
+        return self.abstracts_map.get((owner, repo_name))
+
 
 class DummyStorage(StoragePort):
     def __init__(self) -> None:
         self.saved_issues: list | None = None
         self.saved_readmes: list | None = None
         self.saved_thesis: list | None = None
+        self.saved_abstracts: list | None = None
         self.saved_metadata: list | None = None
 
     def save_issue(self, issue_data: list[IssueData]) -> None:
@@ -60,6 +67,9 @@ class DummyStorage(StoragePort):
 
     def save_thesis_metadata(self, thesis_metadata: list[ThesisInfo]) -> None:
         self.saved_metadata = thesis_metadata
+
+    def save_abstracts_data(self, abstracts_data: list[AbstractData]) -> None:
+        self.saved_abstracts = abstracts_data
 
 
 def _make_thesis_info(repo_name: str, repo_owner: str, thesis_id: int) -> ThesisInfo:
@@ -104,10 +114,14 @@ def test_ingest_issues_data_flattens_and_saves() -> None:
     storage = DummyStorage()
 
     u = DataIngestionUsecase(github, reader, storage)
-    u.ingest_issues_data()
+    summary = u.ingest_issues_data()
 
     assert storage.saved_issues is not None
     assert len(storage.saved_issues) == 3
+    assert summary.data_type == "issues"
+    assert summary.with_data_count == 2
+    assert summary.without_data_count == 0
+    assert summary.repo_record_counts == {"o1/r1": 1, "o2/r2": 2}
 
 
 def test_ingest_readme_data_filters_none_and_saves() -> None:
@@ -128,11 +142,17 @@ def test_ingest_readme_data_filters_none_and_saves() -> None:
     storage = DummyStorage()
 
     u = DataIngestionUsecase(github, reader, storage)
-    u.ingest_readme_data()
+    summary = u.ingest_readme_data()
 
     assert storage.saved_readmes is not None
     assert len(storage.saved_readmes) == 1
     assert storage.saved_readmes[0].thesis_id == 1
+    assert summary.data_type == "readmes"
+    assert summary.with_data_count == 1
+    assert summary.without_data_count == 1
+    assert summary.repos_with_data == ["o1/r1"]
+    assert summary.repos_without_data == ["o2/r2"]
+    assert summary.repo_record_counts == {"o1/r1": 1}
 
 
 def test_ingest_thesis_data_filters_none_and_saves() -> None:
@@ -153,8 +173,46 @@ def test_ingest_thesis_data_filters_none_and_saves() -> None:
     storage = DummyStorage()
 
     u = DataIngestionUsecase(github, reader, storage)
-    u.ingest_thesis_data()
+    summary = u.ingest_thesis_data()
 
     assert storage.saved_thesis is not None
     assert len(storage.saved_thesis) == 1
     assert storage.saved_thesis[0].thesis_id == 1
+    assert summary.data_type == "thesis"
+    assert summary.with_data_count == 1
+    assert summary.without_data_count == 1
+    assert summary.repo_record_counts == {"o1/r1": 1}
+
+
+def test_ingest_abstracts_data_filters_none_and_saves() -> None:
+    repos = [
+        _make_thesis_info(repo_name="r1", repo_owner="o1", thesis_id=1),
+        _make_thesis_info(repo_name="r2", repo_owner="o2", thesis_id=2),
+    ]
+
+    abstracts_map = {
+        ("o1", "r1"): AbstractData(
+            thesis_id=-1,
+            repo_owner="o1",
+            repo_name="r1",
+            source_path="docs/memoria.tex",
+            content="abstract text",
+            retrieved_at=datetime.now(timezone.utc),
+        ),
+        ("o2", "r2"): None,
+    }
+
+    github = DummyGitHubPort(abstracts_map=abstracts_map)
+    reader = DummyRepoReader(repos)
+    storage = DummyStorage()
+
+    u = DataIngestionUsecase(github, reader, storage)
+    summary = u.ingest_abstracts_data()
+
+    assert storage.saved_abstracts is not None
+    assert len(storage.saved_abstracts) == 1
+    assert storage.saved_abstracts[0].thesis_id == 1
+    assert summary.data_type == "abstracts"
+    assert summary.with_data_count == 1
+    assert summary.without_data_count == 1
+    assert summary.repo_record_counts == {"o1/r1": 1}

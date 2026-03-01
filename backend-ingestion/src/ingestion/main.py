@@ -1,6 +1,8 @@
 import argparse
 import logging
 import os
+import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -8,6 +10,11 @@ from dotenv import load_dotenv
 from ingestion.application.usecase.data_ingestion_usecase import DataIngestionUsecase
 from ingestion.application.usecase.ensure_dataset_consistency_usecase import (
     EnsureDatasetConsistencyUseCase,
+)
+from ingestion.domain.entities.execution_report import ExecutionReport
+from ingestion.domain.entities.ingestion_summary import IngestionSummary
+from ingestion.infrastructure.adapter.execution_report_parquet_json_adapter import (
+    ExecutionReportParquetJsonAdapter,
 )
 from ingestion.infrastructure.adapter.github_rest_adapter import GithubRestAdapter
 from ingestion.infrastructure.adapter.ingestion_parquet_storage import (
@@ -27,6 +34,35 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+
+def _log_ingestion_summary(summary: IngestionSummary) -> None:
+    repos_with_data_list = (
+        summary.repos_with_data if isinstance(summary.repos_with_data, list) else []
+    )
+    repos_without_data_list = (
+        summary.repos_without_data
+        if isinstance(summary.repos_without_data, list)
+        else []
+    )
+    logger.info(
+        "Ingestion summary (%s): with_data=%s without_data=%s",
+        summary.data_type,
+        summary.with_data_count,
+        summary.without_data_count,
+    )
+    repos_with_data = ", ".join(repos_with_data_list)
+    repos_without_data = ", ".join(repos_without_data_list)
+    logger.info(
+        "Repositories with data (%s): %s",
+        summary.data_type,
+        repos_with_data if repos_with_data else "None",
+    )
+    logger.info(
+        "Repositories without data (%s): %s",
+        summary.data_type,
+        repos_without_data if repos_without_data else "None",
+    )
 
 
 def main() -> None:
@@ -54,10 +90,10 @@ def main() -> None:
     parser.add_argument(
         "--ingest",
         nargs="+",
-        choices=["issues", "readmes", "thesis", "all"],
+        choices=["issues", "readmes", "thesis", "abstracts", "all"],
         default=["all"],
         help="Specify which data to ingest. Use 'all' to ingest all data types. "
-        "Can be one or more of: issues, readmes, thesis.",
+        "Can be one or more of: issues, readmes, thesis, abstracts.",
     )
     args = parser.parse_args()
 
@@ -93,6 +129,9 @@ def main() -> None:
     repo_list_csv_reader = RepoListCsvReaderPort(file_path=repos_csv_path)
     github_rest_adapter = GithubRestAdapter(token=github_token)
     data_parquet_storage = IngestionParquetStorage(base_dir=ingestion_output_dir)
+    execution_report_storage = ExecutionReportParquetJsonAdapter(
+        base_dir=ingestion_output_dir
+    )
     ingestor = DataIngestionUsecase(
         github_port=github_rest_adapter,
         repo_info_reader=repo_list_csv_reader,
@@ -109,28 +148,65 @@ def main() -> None:
     ingest_targets = args.ingest
     logger.info("Ingestion targets: %s", ingest_targets)
 
+    run_id = (
+        f"{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-"
+        f"{uuid.uuid4().hex[:8]}"
+    )
+    run_started_at = datetime.now(timezone.utc)
+    execution_status = "success"
+    execution_error_message = None
+    dataset_summaries: list[IngestionSummary] = []
+
     try:
         if "all" in ingest_targets or "issues" in ingest_targets:
             logger.info("Ingesting issue data")
-            ingestor.ingest_issues_data()
+            issue_summary = ingestor.ingest_issues_data()
+            _log_ingestion_summary(issue_summary)
+            dataset_summaries.append(issue_summary)
             logger.info("Ingestion issues Completed")
 
         if "all" in ingest_targets or "readmes" in ingest_targets:
             logger.info("Ingesting Readme data")
-            ingestor.ingest_readme_data()
+            readme_summary = ingestor.ingest_readme_data()
+            _log_ingestion_summary(readme_summary)
+            dataset_summaries.append(readme_summary)
             logger.info("Ingestion Readme Completed")
 
         if "all" in ingest_targets or "thesis" in ingest_targets:
             logger.info("Ingesting Thesis data")
-            ingestor.ingest_thesis_data()
+            thesis_summary = ingestor.ingest_thesis_data()
+            _log_ingestion_summary(thesis_summary)
+            dataset_summaries.append(thesis_summary)
             logger.info("Ingestion Thesis Completed")
-    except RuntimeError as e:
-        logger.error("A critical error occurred:%s", e, exc_info=True)
-        raise
 
-    # Persist thesis metadata
-    logger.info("Persisting thesis metadata")
-    ingestor.ingest_thesis_metadata()
+        if "all" in ingest_targets or "abstracts" in ingest_targets:
+            logger.info("Ingesting abstracts data")
+            abstracts_summary = ingestor.ingest_abstracts_data()
+            _log_ingestion_summary(abstracts_summary)
+            dataset_summaries.append(abstracts_summary)
+            logger.info("Ingestion abstracts Completed")
+
+        # Persist thesis metadata
+        logger.info("Persisting thesis metadata")
+        ingestor.ingest_thesis_metadata()
+    except Exception as exc:
+        execution_status = "failed"
+        execution_error_message = str(exc)
+        logger.error("A critical error occurred:%s", exc, exc_info=True)
+        raise
+    finally:
+        run_finished_at = datetime.now(timezone.utc)
+        report = ExecutionReport(
+            run_id=run_id,
+            started_at=run_started_at,
+            finished_at=run_finished_at,
+            status=execution_status,
+            selected_targets=ingest_targets,
+            dataset_summaries=dataset_summaries,
+            error_message=execution_error_message,
+        )
+        execution_report_storage.save_execution_report(report)
+        logger.info("Execution report persisted for run_id=%s", run_id)
 
 
 if __name__ == "__main__":

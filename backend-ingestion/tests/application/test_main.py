@@ -27,11 +27,13 @@ def mock_env() -> Iterator[None]:
 @patch("ingestion.main.RepoListCsvReaderPort")
 @patch("ingestion.main.GithubRestAdapter")
 @patch("ingestion.main.IngestionParquetStorage")
+@patch("ingestion.main.ExecutionReportParquetJsonAdapter")
 @patch("ingestion.main.EnsureDatasetConsistencyUseCase")
 @patch("ingestion.main.DataIngestionUsecase")
 def test_main_ingest_all(
     mock_data_ingestion_usecase: MagicMock,
     mock_ensure_dataset_consistency_use_case: MagicMock,
+    mock_execution_report_adapter: MagicMock,
     mock_ingestion_parquet_storage: MagicMock,
     mock_github_rest_adapter: MagicMock,
     mock_repo_list_csv_reader: MagicMock,
@@ -59,18 +61,23 @@ def test_main_ingest_all(
     mock_usecase_instance.ingest_issues_data.assert_called_once()
     mock_usecase_instance.ingest_readme_data.assert_called_once()
     mock_usecase_instance.ingest_thesis_data.assert_called_once()
+    mock_usecase_instance.ingest_abstracts_data.assert_called_once()
     mock_usecase_instance.ingest_thesis_metadata.assert_called_once()
+    adapter = mock_execution_report_adapter.return_value
+    adapter.save_execution_report.assert_called_once()
     mock_ensure_dataset_consistency_use_case.return_value.execute.assert_called_once()
 
 
 @patch("ingestion.main.argparse.ArgumentParser")
 @patch("ingestion.main.os.path.exists")
 @patch("ingestion.main.os.makedirs")
+@patch("ingestion.main.ExecutionReportParquetJsonAdapter")
 @patch("ingestion.main.EnsureDatasetConsistencyUseCase")
 @patch("ingestion.main.DataIngestionUsecase")
 def test_main_ingest_issues(
     mock_data_ingestion_usecase: MagicMock,
     mock_ensure_dataset_consistency_use_case: MagicMock,
+    mock_execution_report_adapter: MagicMock,
     mock_makedirs: MagicMock,
     mock_exists: MagicMock,
     mock_argparse: MagicMock,
@@ -90,17 +97,21 @@ def test_main_ingest_issues(
     mock_usecase_instance.ingest_readme_data.assert_not_called()
     mock_usecase_instance.ingest_thesis_data.assert_not_called()
     mock_usecase_instance.ingest_thesis_metadata.assert_called_once()
+    adapter = mock_execution_report_adapter.return_value
+    adapter.save_execution_report.assert_called_once()
     mock_ensure_dataset_consistency_use_case.return_value.execute.assert_called_once()
 
 
 @patch("ingestion.main.argparse.ArgumentParser")
 @patch("ingestion.main.os.path.exists")
 @patch("ingestion.main.os.makedirs")
+@patch("ingestion.main.ExecutionReportParquetJsonAdapter")
 @patch("ingestion.main.EnsureDatasetConsistencyUseCase")
 @patch("ingestion.main.DataIngestionUsecase")
 def test_main_ingest_readmes(
     mock_data_ingestion_usecase: MagicMock,
     mock_ensure_dataset_consistency_use_case: MagicMock,
+    mock_execution_report_adapter: MagicMock,
     mock_makedirs: MagicMock,
     mock_exists: MagicMock,
     mock_argparse: MagicMock,
@@ -120,17 +131,21 @@ def test_main_ingest_readmes(
     mock_usecase_instance.ingest_readme_data.assert_called_once()
     mock_usecase_instance.ingest_thesis_data.assert_not_called()
     mock_usecase_instance.ingest_thesis_metadata.assert_called_once()
+    adapter = mock_execution_report_adapter.return_value
+    adapter.save_execution_report.assert_called_once()
     mock_ensure_dataset_consistency_use_case.return_value.execute.assert_called_once()
 
 
 @patch("ingestion.main.argparse.ArgumentParser")
 @patch("ingestion.main.os.path.exists")
 @patch("ingestion.main.os.makedirs")
+@patch("ingestion.main.ExecutionReportParquetJsonAdapter")
 @patch("ingestion.main.EnsureDatasetConsistencyUseCase")
 @patch("ingestion.main.DataIngestionUsecase")
 def test_main_ingest_thesis(
     mock_data_ingestion_usecase: MagicMock,
     mock_ensure_dataset_consistency_use_case: MagicMock,
+    mock_execution_report_adapter: MagicMock,
     mock_makedirs: MagicMock,
     mock_exists: MagicMock,
     mock_argparse: MagicMock,
@@ -150,6 +165,43 @@ def test_main_ingest_thesis(
     mock_usecase_instance.ingest_readme_data.assert_not_called()
     mock_usecase_instance.ingest_thesis_data.assert_called_once()
     mock_usecase_instance.ingest_thesis_metadata.assert_called_once()
+    adapter = mock_execution_report_adapter.return_value
+    adapter.save_execution_report.assert_called_once()
+    mock_ensure_dataset_consistency_use_case.return_value.execute.assert_called_once()
+
+
+@patch("ingestion.main.argparse.ArgumentParser")
+@patch("ingestion.main.os.path.exists")
+@patch("ingestion.main.os.makedirs")
+@patch("ingestion.main.ExecutionReportParquetJsonAdapter")
+@patch("ingestion.main.EnsureDatasetConsistencyUseCase")
+@patch("ingestion.main.DataIngestionUsecase")
+def test_main_ingest_abstracts(
+    mock_data_ingestion_usecase: MagicMock,
+    mock_ensure_dataset_consistency_use_case: MagicMock,
+    mock_execution_report_adapter: MagicMock,
+    mock_makedirs: MagicMock,
+    mock_exists: MagicMock,
+    mock_argparse: MagicMock,
+    mock_env: Iterator[None],
+) -> None:
+    """Test main function with 'abstracts' ingest target."""
+    mock_args = MagicMock()
+    mock_args.ingest = ["abstracts"]
+    mock_argparse.return_value.parse_args.return_value = mock_args
+    mock_exists.return_value = True
+
+    mock_usecase_instance = mock_data_ingestion_usecase.return_value
+
+    main()
+
+    mock_usecase_instance.ingest_issues_data.assert_not_called()
+    mock_usecase_instance.ingest_readme_data.assert_not_called()
+    mock_usecase_instance.ingest_thesis_data.assert_not_called()
+    mock_usecase_instance.ingest_abstracts_data.assert_called_once()
+    mock_usecase_instance.ingest_thesis_metadata.assert_called_once()
+    adapter = mock_execution_report_adapter.return_value
+    adapter.save_execution_report.assert_called_once()
     mock_ensure_dataset_consistency_use_case.return_value.execute.assert_called_once()
 
 

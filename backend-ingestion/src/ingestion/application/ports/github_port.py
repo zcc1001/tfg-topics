@@ -1,7 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-from ingestion.domain.entities.entities import IssueData, ReadmeData, ThesisData
+from ingestion.domain.entities.entities import (
+    AbstractData,
+    IssueData,
+    ReadmeData,
+    ThesisData,
+)
 
 
 class GitHubPort(ABC):
@@ -50,5 +55,21 @@ class GitHubPort(ABC):
 
         Returns:
             ThesisData: thesis data object
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_abstracts_data(self, owner: str, repo_name: str) -> Optional[AbstractData]:
+        """Get thesis abstract data for the repository.
+
+        Args:
+            owner (str): owner of the repository
+            repo_name (str): repository name
+
+        Raises:
+            NotImplementedError: not implemented error
+
+        Returns:
+            Optional[AbstractData]: abstract data object
         """
         raise NotImplementedError

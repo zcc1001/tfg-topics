@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List
 
 from ingestion.domain.entities.entities import (
+    AbstractData,
     IssueData,
     ReadmeData,
     ThesisData,
@@ -49,6 +50,18 @@ class StoragePort(ABC):
         """Save the thesis info data to the file .
         Args:
             thesis_info: ThesisInfo object
+        Raises:
+            NotImplementedError: not implemented error
+        """
+        raise NotImplementedError
+
+    @abstractmethod
+    def save_abstracts_data(self, abstracts_data: List[AbstractData]) -> None:
+        """Save abstracts data to the file.
+
+        Args:
+            abstracts_data (List[AbstractData]): list of abstract data objects
+
         Raises:
             NotImplementedError: not implemented error
         """

@@ -35,6 +35,16 @@ class ThesisData:
     retrieved_at: datetime
 
 
+@dataclass
+class AbstractData:
+    thesis_id: int
+    repo_owner: str
+    repo_name: str
+    source_path: str
+    content: str
+    retrieved_at: datetime
+
+
 @dataclass(frozen=True)
 class ThesisInfo:
     thesis_id: int

@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, patch
 import requests
 
 from ingestion.domain.entities.entities import (
+    AbstractData,
     IssueData,
     ReadmeData,
     TextData,
@@ -211,3 +212,85 @@ def test_download_raw_file(mock_get: MagicMock) -> None:
 
     content = adapter._download_raw_file("owner", "repo", "main", "src/main.py")
     assert content == "file content"
+
+
+@patch.object(GithubRestAdapter, "_get_default_branch", return_value="main")
+@patch.object(
+    GithubRestAdapter,
+    "_get_repo_tree",
+    return_value=["nested/path/docs/memoria.tex"],
+)
+@patch.object(
+    GithubRestAdapter,
+    "_download_raw_file",
+    return_value=(
+        "prefix\\n\\begin{abstract}  This is the abstract.  \\end{abstract}\\nsuffix"
+    ),
+)
+def test_get_abstracts_data_success(
+    mock_download: MagicMock, mock_tree: MagicMock, mock_branch: MagicMock
+) -> None:
+    adapter = GithubRestAdapter()
+    data = adapter.get_abstracts_data("owner", "repo")
+
+    assert isinstance(data, AbstractData)
+    assert data.thesis_id == -1
+    assert data.repo_owner == "owner"
+    assert data.repo_name == "repo"
+    assert data.source_path == "nested/path/docs/memoria.tex"
+    assert data.content == "This is the abstract."
+    mock_branch.assert_called_once_with("owner", "repo")
+    mock_tree.assert_called_once_with("owner", "repo", "main")
+    mock_download.assert_called_once_with(
+        owner="owner",
+        repo="repo",
+        branch="main",
+        path="nested/path/docs/memoria.tex",
+    )
+
+
+@patch.object(GithubRestAdapter, "_get_default_branch", return_value="main")
+@patch.object(
+    GithubRestAdapter,
+    "_get_repo_tree",
+    return_value=["docs/memoria.tex"],
+)
+@patch.object(
+    GithubRestAdapter,
+    "_download_raw_file",
+    return_value="No abstract here",
+)
+def test_get_abstracts_data_without_abstract_block_returns_none(
+    mock_download: MagicMock, mock_tree: MagicMock, mock_branch: MagicMock
+) -> None:
+    adapter = GithubRestAdapter()
+    data = adapter.get_abstracts_data("owner", "repo")
+
+    assert data is None
+    mock_branch.assert_called_once_with("owner", "repo")
+    mock_tree.assert_called_once_with("owner", "repo", "main")
+    mock_download.assert_called_once_with(
+        owner="owner",
+        repo="repo",
+        branch="main",
+        path="docs/memoria.tex",
+    )
+
+
+def test_extract_latex_abstract_ignores_keywords_block() -> None:
+    adapter = GithubRestAdapter()
+    memoria_content = (
+        "% Abstract en ingles\n"
+        "\\renewcommand*\\abstractname{Abstract}\n"
+        "\\begin{abstract}\n"
+        "This is the project abstract.\n"
+        "\\end{abstract}\n"
+        "\\renewcommand*\\abstractname{Keywords}\n"
+        "\\begin{abstract}\n"
+        "keyword one, keyword two\n"
+        "\\end{abstract}\n"
+    )
+
+    extracted = adapter._extract_latex_abstract(memoria_content)
+
+    assert extracted == "This is the project abstract."

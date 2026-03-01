@@ -11,34 +11,42 @@ All extracted data is stored in `Apache Parquet format` in following path:
 
 ```
 /data/ingestion
+├── abstracts.parquet
+├── execution_history.parquet
 ├── issues.parquet
+├── metadata.parquet
 ├── readmes.parquet
-└── thesis.parquet
+├── thesis.parquet
+└── executions/
+    └── <run_id>/
+        └── manifest.json
 ```
 
 ## Input and Output
 
 ### Input
 
-This module requires a repository list file defined in `repos.csv`
+This module requires a repository list file (default: `tfg_list.csv`) with at least:
 
-| columm | Type   | Description     |
-|--------|--------|-----------------|
-| owner  | string | github username |
-| name   | string | repository name |
+| column          | Type   | Description                                     |
+|-----------------|--------|-------------------------------------------------|
+| repository_url  | string | GitHub URL used to infer `repo_owner/repo_name` |
 
-Example:
+Optional metadata columns (used for `metadata.parquet`):
+- `title`, `tutors`, `students`, `presentation_date`, `assignment_date`, `grade`
+
+Minimal example:
 
 ```csv
-owner,name
-apache,spark
-pallets,flask
-scikit-learn,scikit-learn
+repository_url
+https://github.com/apache/spark
+https://github.com/pallets/flask
+https://github.com/scikit-learn/scikit-learn
 ```
 
 ### Output
 
-The ingestion module produces three independent datasets, one for GitHub issues, one for README documents, and one for thesis documents.
+The ingestion module produces four independent datasets: GitHub issues, README documents, thesis sections, and thesis abstracts.
 All outputs are stored in Apache Parquet format to ensure efficient downstream processing.
 
 Generate files:
@@ -46,6 +54,8 @@ Generate files:
 - issues.parquet
 - readmes.parquet
 - thesis.parquet
+- abstracts.parquet
+- metadata.parquet
 
 ### Issues dataset
 
@@ -88,6 +98,38 @@ Generate files:
 | text[].contents | string    | Raw text from the LaTeX file                     |
 | text[].section  | string    | The name of the section (e.g., `1_Introduccion`) |
 | retrieved_at    | timestamp | Extraction timestamp                             |
+
+### Abstracts dataset
+
+- Each row corresponds to one extracted abstract from `memoria.tex`.
+- The parser ignores abstract blocks labeled as keywords.
+
+| columm       | type      | description                           |
+|--------------|-----------|---------------------------------------|
+| thesis_id    | int       | Internal thesis identifier            |
+| repo_owner   | string    | Repository owner                      |
+| repo_name    | string    | Repository name                       |
+| source_path  | string    | Path of the `memoria.tex` file        |
+| content      | string    | Extracted abstract text               |
+| retrieved_at | timestamp | Extraction timestamp                  |
+
+### Execution reporting output
+
+Each ingestion run persists execution metadata:
+
+- `executions/<run_id>/manifest.json`: run status, selected datasets, counts, and repo lists with and without data.
+- `execution_history.parquet`: append-only history with one row per `run_id + dataset + repo`.
+
+`execution_history.parquet` columns:
+- `run_id`
+- `dataset`
+- `repo_owner`
+- `repo_name`
+- `has_data`
+- `records_count`
+- `executed_at`
+- `status`
+- `error_message`
 
 ## Configuration
 
@@ -170,7 +212,7 @@ docker compose --profile ingestion build
 docker compose --profile ingestion run --rm ingestion
 ```
 
-By default, this will ingest all data types (`issues`, `readmes`, and `thesis`). You can specify which data to ingest by overriding the entrypoint:
+By default, this will ingest all data types (`issues`, `readmes`, `thesis`, and `abstracts`). You can specify which data to ingest by overriding the entrypoint:
 
 ```shell
 docker compose --profile ingestion run --rm ingestion --ingest issues 

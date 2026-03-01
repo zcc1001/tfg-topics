@@ -8,6 +8,7 @@ import pandas as pd
 
 from ingestion.application.ports.storage_port import StoragePort
 from ingestion.domain.entities.entities import (
+    AbstractData,
     IssueData,
     ReadmeData,
     ThesisData,
@@ -28,6 +29,7 @@ class IngestionParquetStorage(StoragePort):
         issues_filename: str = "issues.parquet",
         readmes_filename: str = "readmes.parquet",
         thesis_filename: str = "thesis.parquet",
+        abstracts_filename: str = "abstracts.parquet",
         thesis_metadata_filename: str = "metadata.parquet",
         engine: str = "pyarrow",
         compression: str = "snappy",
@@ -37,6 +39,7 @@ class IngestionParquetStorage(StoragePort):
         self.issues_path = os.path.join(base_dir, issues_filename)
         self.readmes_path = os.path.join(base_dir, readmes_filename)
         self.thesis_path = os.path.join(base_dir, thesis_filename)
+        self.abstracts_path = os.path.join(base_dir, abstracts_filename)
         self.thesis_metadata_path = os.path.join(base_dir, thesis_metadata_filename)
         self.engine = engine
         self.compression = compression
@@ -60,6 +63,13 @@ class IngestionParquetStorage(StoragePort):
             data=thesis_data,
             path=self.thesis_path,
             entity_name="thesis",
+        )
+
+    def save_abstracts_data(self, abstracts_data: List[AbstractData]) -> None:
+        self._save_entities(
+            data=abstracts_data,
+            path=self.abstracts_path,
+            entity_name="abstracts",
         )
 
     def save_thesis_metadata(self, theses: List[ThesisInfo]) -> None:

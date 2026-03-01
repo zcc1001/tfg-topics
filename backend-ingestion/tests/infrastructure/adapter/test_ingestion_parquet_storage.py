@@ -8,6 +8,7 @@ import pandas as pd
 import pytest
 
 from ingestion.domain.entities.entities import (
+    AbstractData,
     IssueData,
     ReadmeData,
     TextData,
@@ -66,6 +67,26 @@ def thesis_data_factory() -> Callable[[int], list[ThesisData]]:
             ThesisData(
                 thesis_id=i,
                 texts=[TextData(contents=f"text {i}", section=f"section {i}")],
+                retrieved_at=datetime.now(timezone.utc),
+            )
+            for i in range(count)
+        ]
+
+    return _factory
+
+
+@pytest.fixture
+def abstract_data_factory() -> Callable[[int], list[AbstractData]]:
+    """Fixture that returns a factory for creating AbstractData objects."""
+
+    def _factory(count: int = 1) -> list[AbstractData]:
+        return [
+            AbstractData(
+                thesis_id=i,
+                repo_owner="owner",
+                repo_name=f"repo{i}",
+                source_path="docs/memoria.tex",
+                content=f"abstract {i}",
                 retrieved_at=datetime.now(timezone.utc),
             )
             for i in range(count)
@@ -140,13 +161,30 @@ def test_save_thesis_data(
     assert len(texts) == 1
 
 
+def test_save_abstracts_data(
+    tmp_path: Path, abstract_data_factory: Callable[[int], list[AbstractData]]
+) -> None:
+    """Persist abstract data and validate structure in parquet."""
+    storage = IngestionParquetStorage(base_dir=str(tmp_path))
+    abstracts_data = abstract_data_factory(2)
+
+    storage.save_abstracts_data(abstracts_data)
+
+    df = pd.read_parquet(storage.abstracts_path)
+    assert len(df) == 2
+    assert df["thesis_id"].tolist() == [0, 1]
+    assert df["source_path"].tolist() == ["docs/memoria.tex", "docs/memoria.tex"]
+
+
 def test_save_empty_lists(tmp_path: Path) -> None:
     """Saving empty lists should not create output files."""
     storage = IngestionParquetStorage(base_dir=str(tmp_path))
     storage.save_issue([])
     storage.save_readme([])
     storage.save_thesis_data([])
+    storage.save_abstracts_data([])
 
     assert not os.path.exists(storage.issues_path)
     assert not os.path.exists(storage.readmes_path)
     assert not os.path.exists(storage.thesis_path)
+    assert not os.path.exists(storage.abstracts_path)
