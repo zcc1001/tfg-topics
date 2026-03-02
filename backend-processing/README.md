@@ -62,6 +62,31 @@ python src/processing/main.py --model lda --dataset issues
 
 The script will read the corresponding data from the ingestion output directory, run the topic modeling pipeline, and save the results in the processing output directory.
 
+### Run All Models and Datasets in One Shot
+
+From the repository root, run:
+
+```bash
+make processing-all
+```
+
+This executes all combinations of:
+
+- Models: `lda`, `bertopic`, `top2vec`, `fastopic`
+- Datasets: `readmes`, `issues`, `thesis`, `abstracts`
+
+To run inside Docker instead:
+
+```bash
+make processing-all-docker
+```
+
+You can also limit the execution scope by overriding variables:
+
+```bash
+make processing-all MODELS="bertopic lda" DATASETS="readmes thesis"
+```
+
 ## Configuration
 
 - **Data Directories**: The input (`ingestion`) and output (`processing`) data directories can be configured via the `DATA_DIR` environment variable. If not set, it defaults to the `data/` directory in the project root.

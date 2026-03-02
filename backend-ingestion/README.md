@@ -28,9 +28,9 @@ All extracted data is stored in `Apache Parquet format` in following path:
 
 This module requires a repository list file (default: `tfg_list.csv`) with at least:
 
-| column          | Type   | Description                                     |
-|-----------------|--------|-------------------------------------------------|
-| repository_url  | string | GitHub URL used to infer `repo_owner/repo_name` |
+| column         | Type   | Description                                     |
+|----------------|--------|-------------------------------------------------|
+| repository_url | string | GitHub URL used to infer `repo_owner/repo_name` |
 
 Optional metadata columns (used for `metadata.parquet`):
 - `title`, `tutors`, `students`, `presentation_date`, `assignment_date`, `grade`
@@ -104,14 +104,14 @@ Generate files:
 - Each row corresponds to one extracted abstract from `memoria.tex`.
 - The parser ignores abstract blocks labeled as keywords.
 
-| columm       | type      | description                           |
-|--------------|-----------|---------------------------------------|
-| thesis_id    | int       | Internal thesis identifier            |
-| repo_owner   | string    | Repository owner                      |
-| repo_name    | string    | Repository name                       |
-| source_path  | string    | Path of the `memoria.tex` file        |
-| content      | string    | Extracted abstract text               |
-| retrieved_at | timestamp | Extraction timestamp                  |
+| columm       | type      | description                    |
+|--------------|-----------|--------------------------------|
+| thesis_id    | int       | Internal thesis identifier     |
+| repo_owner   | string    | Repository owner               |
+| repo_name    | string    | Repository name                |
+| source_path  | string    | Path of the `memoria.tex` file |
+| content      | string    | Extracted abstract text        |
+| retrieved_at | timestamp | Extraction timestamp           |
 
 ### Execution reporting output
 
@@ -207,13 +207,10 @@ From the root directory of the project (`/`) execute:
 ```shell
 # Build the ingestion image
 docker compose --profile ingestion build
-
-# Run the ingestion container
-docker compose --profile ingestion run --rm ingestion
 ```
 
 By default, this will ingest all data types (`issues`, `readmes`, `thesis`, and `abstracts`). You can specify which data to ingest by overriding the entrypoint:
 
 ```shell
-docker compose --profile ingestion run --rm ingestion --ingest issues 
+docker compose --profile ingestion run --rm ingestion --ingest all 
 ```
