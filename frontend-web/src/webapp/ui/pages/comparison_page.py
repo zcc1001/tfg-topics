@@ -18,7 +18,9 @@ def render_comparison(base_dir: str) -> None:
     st.divider()
     st.header("Comparativa de modelos")
 
-    dataset = st.selectbox("Selecciona un dataset", ["issues", "readmes", "thesis"])
+    dataset = st.selectbox(
+        "Selecciona un dataset", ["issues", "readmes", "thesis", "abstracts"]
+    )
 
     models = st.multiselect(
         "Selecciona modelos a comparar",

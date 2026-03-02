@@ -100,6 +100,7 @@ Supported datasets:
 - `issues`
 - `readmes`
 - `thesis`
+- `abstracts`
 
 Supported models:
 

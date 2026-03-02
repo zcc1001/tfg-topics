@@ -30,7 +30,7 @@ def render_hyperparameter_analysis(base_dir: str) -> None:
 
         dataset = left.selectbox(
             "Dataset",
-            ["issues", "readmes", "thesis"],
+            ["issues", "readmes", "thesis", "abstracts"],
         )
 
         model_name = middle.selectbox(

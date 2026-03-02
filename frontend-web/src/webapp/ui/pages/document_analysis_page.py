@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
@@ -102,8 +103,6 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
     )
 
     # ------------------------------------------------------------
-    # TEMAS MÁS FRECUENTES
-    # ------------------------------------------------------------
 
     st.subheader("📊 Temas más frecuentes")
 
@@ -123,35 +122,19 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
         )
 
     # ------------------------------------------------------------
-
-    st.subheader("🏆 Temas según calificación")
-
-    grade_focus = st.selectbox(
-        "Selecciona una categoría de nota",
-        sorted(docs["grade_category"].unique()),
+    st.subheader("👨‍🏫 Ranking académico de tutores")
+    docs["grade_numeric"] = pd.to_numeric(docs["grade"], errors="coerce")
+    tutor_stats = (
+        docs.groupby("tutor_group")
+        .agg(
+            tfg_dirigidos=("thesis_id", "nunique"),
+            nota_media=("grade_numeric", "mean"),
+            temas_distintos=("tópico_principal", "nunique"),
+        )
+        .sort_values("tfg_dirigidos", ascending=False)
     )
 
-    grade_data = docs[docs["grade_category"] == grade_focus]
-
-    if not grade_data.empty:
-
-        grade_chart = (
-            grade_data.groupby("tópico_principal")["thesis_id"]
-            .count()
-            .rename(index=lambda tid: topic_label_map.get(tid, f"Tema {tid}"))
-            .sort_values(ascending=False)
-        )
-
-        st.bar_chart(grade_chart)
-
-        if not grade_chart.empty:
-            st.info(
-                f"En la categoría {grade_focus}, el tema dominante es "
-                f"**{grade_chart.index[0]}**."
-            )
-    else:
-        st.info("No hay datos disponibles en esta categoría.")
-
+    st.dataframe(tutor_stats)
     # ------------------------------------------------------------
 
     st.subheader("🧠 Temas detectados")
@@ -184,58 +167,32 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
     # ------------------------------------------------------------
 
     st.divider()
-    st.header("👨‍🏫 Perfil académico del tutor")
+    st.subheader("🎯 Especialización temática (Top 3 tutores)")
 
-    tutores_disponibles = sorted(docs["tutor_group"].unique())
+    top_tutors = tutor_stats.head(3).index
 
-    tutor_selected = st.selectbox(
-        "Selecciona un tutor",
-        [""] + tutores_disponibles,
-    )
+    for tutor in top_tutors:
 
-    if tutor_selected:
+        st.markdown(f"### {tutor}")
 
-        tutor_docs = docs[docs["tutor_group"] == tutor_selected]
-
-        col1, col2, col3 = st.columns(3)
-
-        col1.metric("TFG dirigidos", len(tutor_docs))
-        col2.metric(
-            "Temas distintos",
-            tutor_docs["tópico_principal"].nunique(),
-        )
-        col3.metric(
-            "Nota media",
-            round(
-                pd.to_numeric(
-                    results["documents_raw"].query("tutor_group == @tutor_selected")[
-                        "grade"
-                    ],
-                    errors="coerce",
-                ).mean(),
-                2,
-            ),
-        )
-
-        st.subheader("🎯 Especialización temática")
+        tutor_docs = docs[docs["tutor_group"] == tutor]
 
         tutor_topics = (
             tutor_docs.groupby("tópico_principal")["thesis_id"]
             .count()
             .rename(index=lambda tid: topic_label_map.get(tid, f"Tema {tid}"))
-            .sort_values(ascending=False)
+            .sort_values(ascending=True)
         )
 
-        st.bar_chart(tutor_topics)
+        fig, ax = plt.subplots()
+        tutor_topics.plot(kind="barh", ax=ax)
+        st.pyplot(fig)
 
         if not tutor_topics.empty:
-            st.success(f"La línea dominante es **{tutor_topics.index[0]}**.")
+            dominant = tutor_topics.idxmax()
+            st.info(f"Línea dominante: **{dominant}**")
 
-        st.subheader("📈 Evolución en el tiempo")
-
-        evolution = tutor_docs.groupby("year_group")["thesis_id"].count().sort_index()
-
-        st.line_chart(evolution)
+        st.divider()
 
 
 if __name__ == "__main__":

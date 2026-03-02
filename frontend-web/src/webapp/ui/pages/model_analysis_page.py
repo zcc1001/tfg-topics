@@ -79,7 +79,7 @@ def render_model_analysis(base_dir: str) -> None:
         left, middle, right = st.columns(3, vertical_alignment="bottom")
         dataset = left.selectbox(
             "Selecciona un dataset",
-            ["issues", "readmes", "thesis"],
+            ["issues", "readmes", "thesis", "abstracts"],
             placeholder="Selecciona un origen...",
         )
         model_name = middle.selectbox(

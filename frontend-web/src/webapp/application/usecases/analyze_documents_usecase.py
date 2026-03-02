@@ -129,21 +129,26 @@ class AnalyzeDocumentsUseCase:
         return df
 
     def _build_document_summary(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df[
-            [
-                "thesis_id",
-                "title",
-                "tutor_group",
-                "year_group",
-                "grade_category",
-                "topic_id",
-                "probability",
+        grade_series = pd.to_numeric(df.get("grade"), errors="coerce")
+        return (
+            df[
+                [
+                    "thesis_id",
+                    "title",
+                    "tutor_group",
+                    "year_group",
+                    "grade_category",
+                    "topic_id",
+                    "probability",
+                ]
             ]
-        ].rename(
-            columns={
-                "topic_id": "tópico_principal",
-                "probability": "peso_del_tópico",
-            }
+            .assign(grade=grade_series)
+            .rename(
+                columns={
+                    "topic_id": "tópico_principal",
+                    "probability": "peso_del_tópico",
+                }
+            )
         )
 
     def _build_topic_distribution(self, df: pd.DataFrame) -> pd.DataFrame:
