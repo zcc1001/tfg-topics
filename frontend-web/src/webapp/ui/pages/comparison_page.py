@@ -6,9 +6,10 @@ from webapp.application.usecases.compare_models_usecase import CompareModelsUseC
 from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
+from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 
 
-def render_comparison(base_dir: str) -> None:
+def render_comparison(base_dir: str, selected_section: str | None = None) -> None:
     """Render the model comparison page.
     Args:
         base_dir (str): directory where the model results are stored.
@@ -51,8 +52,23 @@ def render_comparison(base_dir: str) -> None:
             st.info("No hay modelos disponibles para este dataset.")
             return
 
+        section_anchors = {
+            "Resumen comparativo": "comparison-resumen",
+            "Ranking global": "comparison-ranking",
+            "Comparación de métricas": "comparison-metricas",
+        }
+
+        render_section_anchor(section_anchors["Resumen comparativo"])
         _render_summary(summary_df)
+
+        render_section_anchor(section_anchors["Ranking global"])
+        _render_ranking(summary_df)
+
+        render_section_anchor(section_anchors["Comparación de métricas"])
         _render_metrics(summary_df)
+
+        if selected_section:
+            scroll_to_section(section_anchors.get(selected_section))
 
 
 def _render_summary(summary_df: pd.DataFrame) -> None:
@@ -73,6 +89,8 @@ def _render_summary(summary_df: pd.DataFrame) -> None:
         f"(score = {best['final_score']:.2f})"
     )
 
+
+def _render_ranking(summary_df: pd.DataFrame) -> None:
     st.subheader("Ranking global")
     st.caption(
         "Ranking relativo entre los modelos seleccionados para el dataset actual."

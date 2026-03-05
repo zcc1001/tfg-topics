@@ -11,6 +11,7 @@ from webapp.ui.components.render_intertopic_distance_map import (
     render_intertopic_distance_map,
 )
 from webapp.ui.components.render_topic_summary_table import render_topic_summary_table
+from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 from webapp.ui.components.wordcloud import render_wordcloud
 
 
@@ -60,7 +61,7 @@ def _compute_dominant_topic(
     return top_topic, dominance_share
 
 
-def render_model_analysis(base_dir: str) -> None:
+def render_model_analysis(base_dir: str, selected_section: str | None = None) -> None:
     """Render the topic model .
 
     Args:
@@ -101,9 +102,16 @@ def render_model_analysis(base_dir: str) -> None:
             )
             return
 
+        section_anchors = {
+            "Resumen ejecutivo": "model-resumen-ejecutivo",
+            "Exploración de tópicos": "model-exploracion-topicos",
+            "Mapa intertópico": "model-mapa-intertopico",
+        }
+
+        render_section_anchor(section_anchors["Resumen ejecutivo"])
         st.subheader("📊 Resumen ejecutivo")
 
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3, _ = st.columns(4)
 
         col1.metric("Tópicos detectados", _count_detected_topics(data["topics"]))
         col2.metric(
@@ -123,9 +131,11 @@ def render_model_analysis(base_dir: str) -> None:
             else:
                 st.info(
                     f"El tópico con mayor peso es **T{top_topic}** "
-                    f"({dominance_share:.1%}), con distribución temática equilibrada."
+                    f"({dominance_share:.1%}), con distribución temática "
+                    "equilibrada."
                 )
 
+        render_section_anchor(section_anchors["Exploración de tópicos"])
         st.subheader("🧠 Exploración de tópicos")
 
         tab1, tab2 = st.tabs(["📋 Tabla de tópicos", "☁️ Wordcloud"])
@@ -139,7 +149,12 @@ def render_model_analysis(base_dir: str) -> None:
         with tab2:
             render_wordcloud(data["topics"], max_topics_to_render=6)
 
+        render_section_anchor(section_anchors["Mapa intertópico"])
+        st.subheader("🗺️ Distancia intertópica")
         render_intertopic_distance_map(data["topic_coordinates"])
+
+        if selected_section:
+            scroll_to_section(section_anchors.get(selected_section))
 
 
 if __name__ == "__main__":

@@ -11,9 +11,14 @@ from webapp.infrastructure.adapters.metadata_parquet_repository import (
 from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
+from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 
 
-def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
+def render_document_analysis(
+    processing_dir: str,
+    ingestion_dir: str,
+    selected_section: str | None = None,
+) -> None:
     st.set_page_config(
         page_title="Análisis académico de documentos",
         layout="wide",
@@ -79,7 +84,15 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
         st.warning("No se encontraron TFG con los filtros seleccionados.")
         return
 
-    # ------------------------------------------------------------
+    section_anchors = {
+        "Resumen general": "document-resumen",
+        "Temas más frecuentes": "document-temas-frecuentes",
+        "Ranking académico de tutores": "document-ranking-tutores",
+        "Temas detectados": "document-temas-detectados",
+        "Especialización temática": "document-especializacion",
+    }
+
+    render_section_anchor(section_anchors["Resumen general"])
     st.subheader("🔢 Resumen general")
 
     col1, col2, col3 = st.columns(3)
@@ -104,6 +117,7 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
 
     # ------------------------------------------------------------
 
+    render_section_anchor(section_anchors["Temas más frecuentes"])
     st.subheader("📊 Temas más frecuentes")
 
     chart_data = (
@@ -121,7 +135,7 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
             f"presente en {chart_data.iloc[0]} TFG."
         )
 
-    # ------------------------------------------------------------
+    render_section_anchor(section_anchors["Ranking académico de tutores"])
     st.subheader("👨‍🏫 Ranking académico de tutores")
     docs["grade_numeric"] = pd.to_numeric(docs["grade"], errors="coerce")
     tutor_stats = (
@@ -135,8 +149,8 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
     )
 
     st.dataframe(tutor_stats)
-    # ------------------------------------------------------------
 
+    render_section_anchor(section_anchors["Temas detectados"])
     st.subheader("🧠 Temas detectados")
 
     topic_counts = (
@@ -164,8 +178,7 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
                 )
                 st.divider()
 
-    # ------------------------------------------------------------
-
+    render_section_anchor(section_anchors["Especialización temática"])
     st.divider()
     st.subheader("🎯 Especialización temática (Top 3 tutores)")
 
@@ -193,6 +206,9 @@ def render_document_analysis(processing_dir: str, ingestion_dir: str) -> None:
             st.info(f"Línea dominante: **{dominant}**")
 
         st.divider()
+
+    if selected_section:
+        scroll_to_section(section_anchors.get(selected_section))
 
 
 if __name__ == "__main__":
