@@ -91,4 +91,118 @@ pip install -r backend-processing/requirements.txt -r backend-processing/require
 pip install -r frontend-web/requirement.txt
 ```
 
+## 🛠️ Makefile Usage
 
+The repository includes a `Makefile` to run ingestion, processing, the frontend, and
+the Docker workflow with consistent commands.
+
+To list the available targets and examples:
+
+```bash
+make help
+```
+
+### Default Variables
+
+The `Makefile` exposes these variables, which can be overridden from the command line:
+
+- `INGEST=all`
+- `MODEL=bertopic`
+- `DATASET=abstracts`
+- `MODELS="lda bertopic top2vec fastopic"`
+- `DATASETS="readmes issues thesis abstracts"`
+- `PYTHON=python`
+- `STREAMLIT=streamlit`
+- `DOCKER_COMPOSE="docker compose"`
+
+Example:
+
+```bash
+make processing MODEL=lda DATASET=thesis
+```
+
+### Local Execution
+
+These targets run the services directly from the local Python environment:
+
+- Run data ingestion:
+  ```bash
+  make ingestion
+  make ingestion INGEST="issues readmes"
+  make ingestion INGEST="all"
+  ```
+
+- Run processing for one model and one dataset:
+  ```bash
+  make processing
+  make processing MODEL=bertopic DATASET=thesis
+  ```
+
+- Run one model across all datasets:
+  ```bash
+  make processing-model MODEL=lda
+  make processing-model MODEL=fastopic DATASETS="readmes abstracts"
+  ```
+
+- Run all models for one dataset:
+  ```bash
+  make processing-dataset DATASET=issues
+  make processing-dataset DATASET=thesis MODELS="lda bertopic"
+  ```
+
+- Run multiple models across multiple datasets:
+  ```bash
+  make processing-all
+  make processing-all MODELS="lda bertopic" DATASETS="readmes thesis"
+  ```
+
+- Launch the web application:
+  ```bash
+  make frontend
+  ```
+
+### Docker Execution
+
+These targets use `docker compose` profiles defined by the project:
+
+- Run ingestion in Docker:
+  ```bash
+  make ingestion-docker
+  make ingestion-docker INGEST="all"
+  ```
+
+- Run processing in Docker:
+  ```bash
+  make processing-docker MODEL=top2vec DATASET=readmes
+  ```
+
+- Run one model across several datasets in Docker:
+  ```bash
+  make processing-model-docker MODEL=bertopic
+  ```
+
+- Run all models for one dataset in Docker:
+  ```bash
+  make processing-dataset-docker DATASET=abstracts
+  ```
+
+- Run all configured combinations in Docker:
+  ```bash
+  make processing-all-docker
+  ```
+
+- Launch the frontend in Docker:
+  ```bash
+  make frontend-docker
+  ```
+
+### Docker Lifecycle
+
+Use these targets to build and manage the full containerized environment:
+
+```bash
+make docker-build
+make docker-build-ingestion
+make docker-build-processing
+make docker-build-frontend
+```
