@@ -2,7 +2,11 @@ name: Release - TFG Project
 
 on:
   release:
-    types: [created, published]
+    types: [published]
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   validate-compose:
@@ -17,7 +21,7 @@ jobs:
           docker compose version
           docker compose config
 
-  build-images:
+  build-and-push-images:
     runs-on: ubuntu-latest
     needs: validate-compose
 
@@ -25,11 +29,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build ingestion image
-        run: docker build ./backend-ingestion -t tfg-topics-ingestion
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Build processing image
-        run: docker build ./backend-processing -t tfg-topics-processing
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build frontend image
-        run: docker build ./frontend-web -t tfg-topics-frontend
+      - name: Build and push ingestion image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend-ingestion
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/tfg-topics-ingestion:${{ github.event.release.tag_name }}
+            ghcr.io/${{ github.repository_owner }}/tfg-topics-ingestion:latest
+
+      - name: Build and push processing image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend-processing
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/tfg-topics-processing:${{ github.event.release.tag_name }}
+            ghcr.io/${{ github.repository_owner }}/tfg-topics-processing:latest
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend-web
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:${{ github.event.release.tag_name }}
+            ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:latest
