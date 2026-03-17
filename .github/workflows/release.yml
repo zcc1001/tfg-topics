@@ -44,24 +44,60 @@ jobs:
         with:
           context: ./backend-ingestion
           push: true
+          load: true
           tags: |
+            tfg-topics-ingestion:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-ingestion:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-ingestion:latest
+
+      - name: Export ingestion image
+        run: |
+          docker save tfg-topics-ingestion:${{ github.event.release.tag_name }} | gzip \
+            > tfg-topics-ingestion-${{ github.event.release.tag_name }}.tar.gz
+
+      - name: Upload ingestion asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: tfg-topics-ingestion-${{ github.event.release.tag_name }}.tar.gz
 
       - name: Build and push processing image
         uses: docker/build-push-action@v6
         with:
           context: ./backend-processing
           push: true
+          load: true
           tags: |
+            tfg-topics-processing:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-processing:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-processing:latest
+
+      - name: Export processing image
+        run: |
+          docker save tfg-topics-processing:${{ github.event.release.tag_name }} | gzip \
+            > tfg-topics-processing-${{ github.event.release.tag_name }}.tar.gz
+
+      - name: Upload processing asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: tfg-topics-processing-${{ github.event.release.tag_name }}.tar.gz
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
         with:
           context: ./frontend-web
           push: true
+          load: true
           tags: |
+            tfg-topics-frontend:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:latest
+
+      - name: Export frontend image
+        run: |
+          docker save tfg-topics-frontend:${{ github.event.release.tag_name }} | gzip \
+            > tfg-topics-frontend-${{ github.event.release.tag_name }}.tar.gz
+
+      - name: Upload frontend asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: tfg-topics-frontend-${{ github.event.release.tag_name }}.tar.gz
