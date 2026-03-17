@@ -1,10 +1,13 @@
 # TFG: Qualitative Thematic Analysis of Final Degree Projects
+
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub issues](https://img.shields.io/github/issues-closed/zcc1001/tfg-topics)](https://github.com/zcc1001/tfg-topics/issues)
 [![Wiki](https://img.shields.io/badge/wiki-available-brightgreen)](https://github.com/zcc1001/tfg-topics/wiki)
 ![GitHub Release](https://img.shields.io/github/v/release/zcc1001/tfg-topics?label=Release)
 [![Zube](https://img.shields.io/badge/zube-managed-blue?logo=zube)](https://zube.io/)
 [![CI](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml/badge.svg)](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=zcc1001_tfg-topics&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=zcc1001_tfg-topics)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-light.svg)](https://sonarcloud.io/summary/new_code?id=zcc1001_tfg-topics)
 
 ## 📜 Description
 
@@ -52,24 +55,28 @@ The project is organized into several key directories:
 ### Local Development Setup
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/zcc1001/tfg-topics
    cd tfg-topics
    ```
 
 2. **Create and activate the Conda environment:**
+
    ```shell
    conda env create -f environment.yml
    conda activate tfg-topics
    ```
 
 3. **Install development tools:**
+
    ```shell
    pip install black isort flake8 mypy pre-commit
    pre-commit install
    ```
 
 4. **Install project dependencies (per module):**
+
    ```shell
    pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
    pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt
@@ -126,6 +133,7 @@ make processing MODEL=lda DATASET=thesis
 These targets run the services directly from the local Python environment:
 
 - Run data ingestion:
+
   ```bash
   make ingestion
   make ingestion INGEST="issues readmes"
@@ -133,30 +141,35 @@ These targets run the services directly from the local Python environment:
   ```
 
 - Run processing for one model and one dataset:
+
   ```bash
   make processing
   make processing MODEL=bertopic DATASET=thesis
   ```
 
 - Run one model across all datasets:
+
   ```bash
   make processing-model MODEL=lda
   make processing-model MODEL=fastopic DATASETS="readmes abstracts"
   ```
 
 - Run all models for one dataset:
+
   ```bash
   make processing-dataset DATASET=issues
   make processing-dataset DATASET=thesis MODELS="lda bertopic"
   ```
 
 - Run multiple models across multiple datasets:
+
   ```bash
   make processing-all
   make processing-all MODELS="lda bertopic" DATASETS="readmes thesis"
   ```
 
 - Launch the web application:
+
   ```bash
   make frontend
   ```
@@ -166,32 +179,38 @@ These targets run the services directly from the local Python environment:
 These targets use `docker compose` profiles defined by the project:
 
 - Run ingestion in Docker:
+
   ```bash
   make ingestion-docker
   make ingestion-docker INGEST="all"
   ```
 
 - Run processing in Docker:
+
   ```bash
   make processing-docker MODEL=top2vec DATASET=readmes
   ```
 
 - Run one model across several datasets in Docker:
+
   ```bash
   make processing-model-docker MODEL=bertopic
   ```
 
 - Run all models for one dataset in Docker:
+
   ```bash
   make processing-dataset-docker DATASET=abstracts
   ```
 
 - Run all configured combinations in Docker:
+
   ```bash
   make processing-all-docker
   ```
 
 - Launch the frontend in Docker:
+
   ```bash
   make frontend-docker
   ```
