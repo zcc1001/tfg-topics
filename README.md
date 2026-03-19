@@ -86,17 +86,9 @@ The project is organized into several key directories:
 ### GitHub Codespaces Setup
 
 This repository includes a devcontainer config at `.devcontainer/devcontainer.json`.
-When opened in Codespaces it provisions Python 3.10, development tools, and configures
-`PYTHONPATH` for the `src/` modules.
-
-After the container is created, install dependencies only for the module(s) you are
-working on:
-
-```bash
-pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
-pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt
-pip install -r frontend-web/requirement.txt
-```
+When opened in Codespaces it provisions Python 3.10, development tools, configures
+`PYTHONPATH` for the `src/` modules, and installs the dependencies for ingestion,
+processing, and frontend automatically during `postCreateCommand`.
 
 ## 🛠️ Makefile Usage
 

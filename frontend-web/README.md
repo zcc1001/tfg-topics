@@ -35,13 +35,9 @@ pip install -r requirement.txt
 
 ## GitHub Codespaces
 
-The repository devcontainer configures Python 3.10 and `PYTHONPATH` for all
-`src/` modules. In Codespaces, install frontend dependencies from the repository
-root:
-
-```bash
-pip install -r frontend-web/requirement.txt
-```
+The repository devcontainer configures Python 3.10, `PYTHONPATH` for all
+`src/` modules, and installs frontend dependencies automatically during
+Codespaces creation.
 
 ## Running the Module
 
@@ -130,4 +126,3 @@ docker compose --profile frontend run --rm frontend
 ```
 
 The container exposes Streamlit on port `8501`.
-

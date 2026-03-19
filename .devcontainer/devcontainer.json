@@ -29,10 +29,8 @@
   "containerEnv": {
     "PYTHONPATH": "/workspaces/${localWorkspaceFolderBasename}/backend-ingestion/src:/workspaces/${localWorkspaceFolderBasename}/backend-processing/src:/workspaces/${localWorkspaceFolderBasename}/frontend-web/src"
   },
-  "postCreateCommand": "python -m pip install --upgrade pip && pip install black isort flake8 mypy pre-commit pytest pytest-cov pytest-mock && pre-commit install",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "postAttachCommand": {
-    "install-ingestion-deps": "echo \"Install ingestion deps with: pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt\"",
-    "install-processing-deps": "echo \"Install processing deps with: pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt\"",
-    "install-frontend-deps": "echo \"Install frontend deps with: pip install -r frontend-web/requirement.txt\""
+    "codespace-ready": "echo \"Codespace dependencies are already installed by .devcontainer/post-create.sh\""
   }
 }

@@ -31,13 +31,9 @@ The module is designed to be flexible, supporting different data sources and top
 
 ## GitHub Codespaces
 
-The repository devcontainer configures Python 3.10 and `PYTHONPATH` for the
-`src/` layout. In Codespaces, install processing dependencies from the repository
-root:
-
-```bash
-pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt
-```
+The repository devcontainer configures Python 3.10, `PYTHONPATH` for the
+`src/` layout, and installs processing dependencies automatically during
+Codespaces creation.
 
 ## Usage
 

@@ -164,12 +164,9 @@ pip install -r requirements.txt -r requirements-dev.txt
 
 ## GitHub Codespaces
 
-The repository devcontainer already configures Python 3.10 and `PYTHONPATH` for the
-`src/` layout. In Codespaces, install ingestion dependencies from the repository root:
-
-```bash
-pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
-```
+The repository devcontainer already configures Python 3.10, `PYTHONPATH` for the
+`src/` layout, and installs ingestion dependencies automatically during
+Codespaces creation.
 
 ## Running module
 
