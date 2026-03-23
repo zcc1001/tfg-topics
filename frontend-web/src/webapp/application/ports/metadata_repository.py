@@ -7,13 +7,12 @@ import pandas as pd
 class MetadataRepository(ABC):
 
     @abstractmethod
-    def load_thesis_metadata(
-        self,
-    ) -> Optional[pd.DataFrame]:
+    def load_dataset_metadata(self, dataset: str) -> Optional[pd.DataFrame]:
         """
-        Load the metadata for the theses, including fields like tutor, year, etc.
+        Load metadata for a dataset, including optional enrichment fields such as
+        title, tutor, year or grade when available.
 
         Returns:
-            A pandas DataFrame with the hyperparameter trials.
+            A pandas DataFrame with dataset metadata.
         """
         raise NotImplementedError

@@ -18,7 +18,9 @@ class MetadataParquetRepository(MetadataRepository):
             return None
         return pd.read_parquet(path)
 
-    def load_thesis_metadata(
-        self,
-    ) -> Optional[pd.DataFrame]:
-        return self._safe_read(self._path("metadata"))
+    def load_dataset_metadata(self, dataset: str) -> Optional[pd.DataFrame]:
+        metadata = self._safe_read(self._path("metadata"))
+        if metadata is not None and not metadata.empty:
+            return metadata
+
+        return self._safe_read(self._path(dataset))

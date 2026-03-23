@@ -24,13 +24,17 @@ def render_document_analysis(
         layout="wide",
     )
 
-    st.title("📚 Análisis académico de documentos")
+    st.title("📚 Análisis de documentos")
     st.caption(
-        "Explora líneas temáticas de los TFG y su relación con"
-        "tutores y rendimiento académico."
+        "Explora líneas temáticas de los distintos datasets y su relación con "
+        "los metadatos disponibles."
     )
 
-    dataset = "thesis"
+    dataset = st.selectbox(
+        "Dataset",
+        ["issues", "readmes", "thesis", "abstracts"],
+        index=2,
+    )
 
     # ------------------------------------------------------------
 
@@ -63,49 +67,62 @@ def render_document_analysis(
             metadata_repo=MetadataParquetRepository(ingestion_dir),
         )
 
-        st.session_state["results"] = use_case.execute(
+        st.session_state["document_analysis_results"] = use_case.execute(
             dataset=dataset,
             model_name=model,
             tutor=tutor_input if tutor_input else None,
             year=year if year else None,
             grade_range=grade_range,
         )
+        st.session_state["document_analysis_dataset"] = dataset
 
-    if "results" not in st.session_state:
+    if "document_analysis_results" not in st.session_state:
         return
 
-    results = st.session_state["results"]
+    if st.session_state.get("document_analysis_dataset") != dataset:
+        st.info("Pulsa `Analizar` para cargar resultados del dataset seleccionado.")
+        return
+
+    results = st.session_state["document_analysis_results"]
 
     docs = results["documents_summary"]
     dist = results["topic_distribution"]
     topics = results["topics"]
+    raw_docs = results["documents_raw"]
 
     if docs.empty:
-        st.warning("No se encontraron TFG con los filtros seleccionados.")
+        st.warning("No se encontraron documentos con los filtros seleccionados.")
         return
+
+    has_tutor_data = docs["tutor_group"].ne("Sin tutor").any()
+    has_grade_data = docs["grade"].notna().any()
+    has_year_data = docs["year_group"].ne("Sin año").any()
 
     section_anchors = {
         "Resumen general": "document-resumen",
         "Temas más frecuentes": "document-temas-frecuentes",
-        "Ranking académico de tutores": "document-ranking-tutores",
         "Temas detectados": "document-temas-detectados",
-        "Especialización temática": "document-especializacion",
     }
+    if has_tutor_data:
+        section_anchors["Ranking académico de tutores"] = "document-ranking-tutores"
+        section_anchors["Especialización temática"] = "document-especializacion"
 
     render_section_anchor(section_anchors["Resumen general"])
     st.subheader("🔢 Resumen general")
 
-    col1, col2, col3 = st.columns(3)
+    metrics = st.columns(4 if has_grade_data else 3)
 
-    col1.metric("TFG analizados", len(docs))
-    col2.metric("Temas detectados", dist["topic_id"].nunique())
-    col3.metric(
-        "Nota media",
-        round(
-            pd.to_numeric(results["documents_raw"]["grade"], errors="coerce").mean(),
-            2,
-        ),
-    )
+    metrics[0].metric("Documentos analizados", len(docs))
+    metrics[1].metric("Temas detectados", dist["topic_id"].nunique())
+    if has_year_data:
+        metrics[2].metric("Años detectados", docs["year_group"].nunique())
+    else:
+        metrics[2].metric("Grupos temáticos", dist["topic_id"].nunique())
+    if has_grade_data:
+        metrics[3].metric(
+            "Nota media",
+            round(pd.to_numeric(raw_docs["grade"], errors="coerce").mean(), 2),
+        )
 
     # ------------------------------------------------------------
 
@@ -132,29 +149,32 @@ def render_document_analysis(
     if not chart_data.empty:
         st.success(
             f"El tema más frecuente es **{chart_data.index[0]}**, "
-            f"presente en {chart_data.iloc[0]} TFG."
+            f"presente en {chart_data.iloc[0]} documentos."
         )
 
-    render_section_anchor(section_anchors["Ranking académico de tutores"])
-    st.subheader("👨‍🏫 Ranking académico de tutores")
-    docs["grade_numeric"] = pd.to_numeric(docs["grade"], errors="coerce")
-    tutor_stats = (
-        docs.groupby("tutor_group")
-        .agg(
-            tfg_dirigidos=("thesis_id", "nunique"),
-            nota_media=("grade_numeric", "mean"),
-            temas_distintos=("tópico_principal", "nunique"),
+    tutor_stats = pd.DataFrame()
+    if has_tutor_data:
+        render_section_anchor(section_anchors["Ranking académico de tutores"])
+        st.subheader("👨‍🏫 Ranking académico de tutores")
+        docs["grade_numeric"] = pd.to_numeric(docs["grade"], errors="coerce")
+        tutor_stats = (
+            docs[docs["tutor_group"] != "Sin tutor"]
+            .groupby("tutor_group")
+            .agg(
+                documentos=("document_id", "nunique"),
+                nota_media=("grade_numeric", "mean"),
+                temas_distintos=("tópico_principal", "nunique"),
+            )
+            .sort_values("documentos", ascending=False)
         )
-        .sort_values("tfg_dirigidos", ascending=False)
-    )
 
-    st.dataframe(tutor_stats)
+        st.dataframe(tutor_stats)
 
     render_section_anchor(section_anchors["Temas detectados"])
     st.subheader("🧠 Temas detectados")
 
     topic_counts = (
-        docs.groupby("tópico_principal")["thesis_id"]
+        docs.groupby("tópico_principal")["document_id"]
         .count()
         .sort_values(ascending=False)
     )
@@ -163,49 +183,50 @@ def render_document_analysis(
 
         label = topic_label_map.get(topic_id, f"Tema {topic_id}")
 
-        with st.expander(f"{label} — {count} TFG"):
+        with st.expander(f"{label} — {count} documentos"):
 
             topic_docs = docs[docs["tópico_principal"] == topic_id]
 
             for _, row in topic_docs.iterrows():
+                title = row["title"] if pd.notna(row["title"]) else row["document_id"]
                 st.markdown(
-                    f"""
-                    **{row['title']}**<br>
-                    Tutor: {row['tutor_group']}<br>
-                    Año: {row['year_group']}<br>
-                    Nota: {row['grade_category']}
-                    """
+                    f"**{title}**  \n"
+                    f"ID: {row['document_id']}  \n"
+                    f"Tutor: {row['tutor_group']}  \n"
+                    f"Año: {row['year_group']}  \n"
+                    f"Nota: {row['grade_category']}"
                 )
                 st.divider()
 
-    render_section_anchor(section_anchors["Especialización temática"])
-    st.divider()
-    st.subheader("🎯 Especialización temática (Top 3 tutores)")
-
-    top_tutors = tutor_stats.head(3).index
-
-    for tutor in top_tutors:
-
-        st.markdown(f"### {tutor}")
-
-        tutor_docs = docs[docs["tutor_group"] == tutor]
-
-        tutor_topics = (
-            tutor_docs.groupby("tópico_principal")["thesis_id"]
-            .count()
-            .rename(index=lambda tid: topic_label_map.get(tid, f"Tema {tid}"))
-            .sort_values(ascending=True)
-        )
-
-        fig, ax = plt.subplots()
-        tutor_topics.plot(kind="barh", ax=ax)
-        st.pyplot(fig)
-
-        if not tutor_topics.empty:
-            dominant = tutor_topics.idxmax()
-            st.info(f"Línea dominante: **{dominant}**")
-
+    if has_tutor_data and not tutor_stats.empty:
+        render_section_anchor(section_anchors["Especialización temática"])
         st.divider()
+        st.subheader("🎯 Especialización temática (Top 3 tutores)")
+
+        top_tutors = tutor_stats.head(3).index
+
+        for tutor in top_tutors:
+
+            st.markdown(f"### {tutor}")
+
+            tutor_docs = docs[docs["tutor_group"] == tutor]
+
+            tutor_topics = (
+                tutor_docs.groupby("tópico_principal")["document_id"]
+                .count()
+                .rename(index=lambda tid: topic_label_map.get(tid, f"Tema {tid}"))
+                .sort_values(ascending=True)
+            )
+
+            fig, ax = plt.subplots()
+            tutor_topics.plot(kind="barh", ax=ax)
+            st.pyplot(fig)
+
+            if not tutor_topics.empty:
+                dominant = tutor_topics.idxmax()
+                st.info(f"Línea dominante: **{dominant}**")
+
+            st.divider()
 
     if selected_section:
         scroll_to_section(section_anchors.get(selected_section))

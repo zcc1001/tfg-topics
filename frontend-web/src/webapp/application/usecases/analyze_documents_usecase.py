@@ -29,21 +29,17 @@ class AnalyzeDocumentsUseCase:
         year: Optional[int] = None,
         grade_range: Optional[Tuple[float, float]] = None,
     ) -> Dict[str, pd.DataFrame]:
-
         docs = self.topic_repo.load_document_topics(
             dataset=dataset, model_name=model_name
         )
         if docs is None or docs.empty:
             raise ValueError("Documents not found")
 
-        if "meta_thesis_id" in docs.columns and "thesis_id" not in docs.columns:
-            docs = docs.rename(columns={"meta_thesis_id": "thesis_id"})
-
-        metadata = self.metadata_repo.load_thesis_metadata()
-        if metadata is None or metadata.empty:
-            raise ValueError("Metadata not found")
-
-        df = docs.merge(metadata, on="thesis_id", how="left")
+        docs = self._normalize_document_identifiers(docs)
+        metadata = self.metadata_repo.load_dataset_metadata(dataset)
+        metadata = self._normalize_metadata(metadata)
+        df = self._merge_documents_with_metadata(docs, metadata)
+        df = self._ensure_optional_columns(df)
 
         df = self._add_grade_category(df)
         df = self._prepare_grouping_fields(df)
@@ -51,7 +47,7 @@ class AnalyzeDocumentsUseCase:
         df = self._apply_filters(df, tutor, year, grade_range)
 
         df = df.sort_values("probability", ascending=False)
-        df = df.groupby("thesis_id").head(1)
+        df = df.groupby("document_id").head(1)
 
         documents_summary = self._build_document_summary(df)
         topic_distribution = self._build_topic_distribution(df)
@@ -70,6 +66,107 @@ class AnalyzeDocumentsUseCase:
             "top_topics_by_grade": top_topics_by_grade,
         }
 
+    def _normalize_document_identifiers(self, docs: pd.DataFrame) -> pd.DataFrame:
+        df = docs.copy()
+
+        # Topic modeling stores an internal row index as document_id for some
+        # datasets. We promote meta_thesis_id to the canonical ID so frontend
+        # joins use the academic thesis identifier that matches metadata.parquet.
+        if "meta_thesis_id" in df.columns:
+            if "document_id" in df.columns:
+                df = df.rename(columns={"document_id": "topic_document_id"})
+            df = df.rename(columns={"meta_thesis_id": "document_id"})
+
+        rename_map = {
+            "thesis_id": "document_id",
+            "doc_id": "document_id",
+        }
+
+        for source, target in rename_map.items():
+            if source in df.columns and target not in df.columns:
+                df = df.rename(columns={source: target})
+
+        if "document_id" not in df.columns:
+            raise ValueError("Document id not found in document topics")
+
+        return df
+
+    def _normalize_metadata(self, metadata: Optional[pd.DataFrame]) -> pd.DataFrame:
+        if metadata is None or metadata.empty:
+            return pd.DataFrame()
+
+        df = metadata.copy()
+        rename_map = {
+            "thesis_id": "document_id",
+            "doc_id": "document_id",
+            "name": "title",
+        }
+
+        applicable_renames = {
+            source: target
+            for source, target in rename_map.items()
+            if source in df.columns and target not in df.columns
+        }
+        if applicable_renames:
+            df = df.rename(columns=applicable_renames)
+
+        return df
+
+    def _merge_documents_with_metadata(
+        self, docs: pd.DataFrame, metadata: pd.DataFrame
+    ) -> pd.DataFrame:
+        # Document analysis depends on academic metadata such as title, tutor,
+        # year, and grade. If that metadata is missing, the analysis would show
+        # incomplete results, so we fail fast instead of silently degrading.
+        if metadata.empty or "document_id" not in metadata.columns:
+            raise ValueError("Metadata not found for document analysis")
+
+        # Only keep documents that have a real metadata match. This enforces the
+        # business rule that every analyzed document must be traceable to a
+        # canonical metadata record.
+        merged = docs.merge(
+            metadata,
+            on="document_id",
+            how="inner",
+        )
+
+        dropped_documents = (
+            docs["document_id"].nunique() - merged["document_id"].nunique()
+        )
+        if dropped_documents > 0:
+            logger.warning(
+                "Dropped %s documents without matching metadata",
+                dropped_documents,
+            )
+
+        return merged
+
+    def _ensure_optional_columns(self, df: pd.DataFrame) -> pd.DataFrame:
+        normalized = df.copy()
+        fallback_columns: dict[str, list[str]] = {
+            "title": ["document", "text", "content", "body"],
+            "tutor": [],
+            "year": [],
+            "grade": [],
+        }
+
+        for target, candidates in fallback_columns.items():
+            if target in normalized.columns:
+                continue
+
+            fallback_series = None
+            for candidate in candidates:
+                if candidate in normalized.columns:
+                    fallback_series = normalized[candidate]
+                    break
+
+            if fallback_series is None:
+                fallback_series = pd.Series([pd.NA] * len(normalized))
+
+            normalized[target] = fallback_series
+
+        return normalized
+
     def _apply_filters(
         self,
         df: pd.DataFrame,
@@ -80,7 +177,7 @@ class AnalyzeDocumentsUseCase:
 
         df = df.copy()
 
-        if tutor and tutor != "Todos":
+        if tutor and tutor != "Todos" and "tutor" in df.columns:
             tutor_clean = tutor.strip().lower()
             df = df[
                 df["tutor"]
@@ -89,10 +186,10 @@ class AnalyzeDocumentsUseCase:
                 .str.contains(tutor_clean, regex=False)
             ]
 
-        if year and year != "Todos":
+        if year and year != "Todos" and "year" in df.columns:
             df = df[df["year"] == year]
 
-        if grade_range and grade_range != (0.0, 10.0):
+        if grade_range and grade_range != (0.0, 10.0) and "grade" in df.columns:
             min_grade, max_grade = grade_range
             df["grade"] = pd.to_numeric(df["grade"], errors="coerce")
             df = df[(df["grade"] >= min_grade) & (df["grade"] <= max_grade)]
@@ -124,7 +221,8 @@ class AnalyzeDocumentsUseCase:
     def _prepare_grouping_fields(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()
         df["tutor_group"] = df["tutor"].fillna("Sin tutor").astype(str)
-        df["year_group"] = df["year"].astype("Int64").astype(str)
+        df["year_group"] = pd.to_numeric(df["year"], errors="coerce").astype("Int64")
+        df["year_group"] = df["year_group"].astype(str)
         df.loc[df["year_group"] == "<NA>", "year_group"] = "Sin año"
         return df
 
@@ -133,7 +231,7 @@ class AnalyzeDocumentsUseCase:
         return (
             df[
                 [
-                    "thesis_id",
+                    "document_id",
                     "title",
                     "tutor_group",
                     "year_group",
@@ -158,7 +256,7 @@ class AnalyzeDocumentsUseCase:
                 dropna=False,
             )
             .agg(
-                documentos=("thesis_id", "nunique"),
+                documentos=("document_id", "nunique"),
                 peso_total=("probability", "sum"),
             )
             .reset_index()
@@ -239,7 +337,7 @@ class AnalyzeDocumentsUseCase:
         return (
             df.groupby(["grade_category", "topic_id"])
             .agg(
-                documentos=("thesis_id", "nunique"),
+                documentos=("document_id", "nunique"),
                 peso_total=("probability", "sum"),
             )
             .reset_index()
