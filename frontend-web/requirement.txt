@@ -1,5 +1,5 @@
 streamlit==1.52.2
-pandas==2.3.3
+pandas==2.2.0
 pyarrow==22.0.0
 plotly==6.5.0
 wordcloud==1.9.4
