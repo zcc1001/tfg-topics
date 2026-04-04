@@ -11,6 +11,7 @@ from webapp.infrastructure.adapters.metadata_parquet_repository import (
 from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
+from webapp.ui.components.page_header import render_page_header
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 
 
@@ -24,10 +25,12 @@ def render_document_analysis(
         layout="wide",
     )
 
-    st.title("📚 Análisis de documentos")
-    st.caption(
-        "Explora líneas temáticas de los distintos datasets y su relación con "
-        "los metadatos disponibles."
+    render_page_header(
+        page_title="Análisis académico de documentos",
+        description=(
+            "Explora líneas temáticas de los distintos datasets y su relación con "
+            "los metadatos disponibles."
+        ),
     )
 
     dataset = st.selectbox(

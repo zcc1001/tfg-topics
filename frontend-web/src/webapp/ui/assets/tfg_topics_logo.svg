@@ -1,0 +1,14 @@
+<svg width="300" height="80" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icono académico: libro abstracto -->
+  <path d="M30 20 L50 15 L50 55 L30 60 Z" fill="none" stroke="#1F2937" stroke-width="2"/>
+  <path d="M50 15 L70 20 L70 60 L50 55 Z" fill="none" stroke="#1F2937" stroke-width="2"/>
+  <line x1="50" y1="15" x2="50" y2="55" stroke="#1F2937" stroke-width="1"/>
+
+  <!-- Texto -->
+  <text x="90" y="40" font-family="Georgia, serif" font-size="28" fill="#111827" font-weight="bold">
+    TFG
+  </text>
+  <text x="90" y="62" font-family="Georgia, serif" font-size="22" fill="#374151">
+    Topics
+  </text>
+</svg>

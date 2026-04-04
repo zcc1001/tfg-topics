@@ -7,6 +7,7 @@ from webapp.application.usecases.load_model_results_usecase import (
 from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
+from webapp.ui.components.page_header import render_page_header
 from webapp.ui.components.render_intertopic_distance_map import (
     render_intertopic_distance_map,
 )
@@ -68,13 +69,12 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
         base_dir (str): directory where the model results are stored.
     """
     st.set_page_config(page_title="TFG – Analisis de modelos", layout="wide")
-    st.title("TFG Topics")
-    st.divider()
-    st.header("Análisis por modelo")
-
-    st.caption(
-        "Selecciona el conjunto de documentos y el modelo de tópicos para analizar "
-        "sus resultados precomputados."
+    render_page_header(
+        page_title="Análisis por modelo",
+        description=(
+            "Selecciona el conjunto de documentos y el modelo de tópicos para analizar "
+            "sus resultados precomputados."
+        ),
     )
     with st.form("model_source_form"):
         left, middle, right = st.columns(3, vertical_alignment="bottom")

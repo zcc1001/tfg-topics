@@ -6,6 +6,7 @@ from webapp.application.usecases.compare_models_usecase import CompareModelsUseC
 from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
+from webapp.ui.components.page_header import render_page_header
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 
 
@@ -15,9 +16,7 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
         base_dir (str): directory where the model results are stored.
     """
     st.set_page_config(page_title="TFG – Comparación de modelos", layout="wide")
-    st.title("TFG Topics")
-    st.divider()
-    st.header("Comparativa de modelos")
+    render_page_header(page_title="Comparativa de modelos")
 
     dataset = st.selectbox(
         "Selecciona un dataset", ["issues", "readmes", "thesis", "abstracts"]

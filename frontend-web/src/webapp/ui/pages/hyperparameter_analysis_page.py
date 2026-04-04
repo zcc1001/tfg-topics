@@ -8,6 +8,7 @@ from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
 from webapp.ui.components.best_params_summary import render_best_params_summary
+from webapp.ui.components.page_header import render_page_header
 from webapp.ui.components.param_vs_score import render_param_vs_score
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 from webapp.ui.components.trial_score_evolution import render_trial_score_evolution
@@ -22,10 +23,12 @@ def render_hyperparameter_analysis(
         layout="wide",
     )
 
-    st.title("⚙️ Hiperparametrización del modelo")
-    st.caption(
-        "Explora el proceso de búsqueda de hiperparámetros "
-        "y su impacto en la calidad del modelo."
+    render_page_header(
+        page_title="Hiperparametrización del modelo",
+        description=(
+            "Explora el proceso de búsqueda de hiperparámetros "
+            "y su impacto en la calidad del modelo."
+        ),
     )
 
     left, middle = st.columns(2, vertical_alignment="bottom")

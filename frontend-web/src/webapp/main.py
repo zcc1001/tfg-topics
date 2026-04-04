@@ -3,6 +3,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from webapp.ui.components.app_footer import render_app_footer
+
 
 def main() -> None:
     # in/out paths from environment variables
@@ -18,6 +20,47 @@ def main() -> None:
         st.session_state["ingestion_dir"] = ingestion_dir
 
     st.set_page_config(page_title="TFG – Topic Modeling", layout="wide")
+
+    logo_dir = Path(__file__).resolve().parent / "ui" / "assets"
+    st.markdown(
+        """
+        <style>
+            section[data-testid="stSidebar"] [data-testid="stSidebarHeader"] {
+                padding-top: 1rem;
+            }
+
+            section[data-testid="stSidebar"]
+            [data-testid="stSidebarHeader"] img {
+                height: 4.25rem !important;
+                max-height: 4.25rem !important;
+                width: auto !important;
+                max-width: 14rem !important;
+                object-fit: contain !important;
+            }
+
+            section[data-testid="stSidebar"]
+            [data-testid="stSidebarHeader"] button + div img,
+            section[data-testid="stSidebar"]
+            [data-testid="stSidebarHeader"] div + button + div img {
+                height: 4.25rem !important;
+                max-height: 4.25rem !important;
+            }
+
+            [data-testid="stSidebarCollapsedControl"] + div img,
+            header img[src*="tfg_topics_icon.svg"] {
+                height: 2.5rem !important;
+                max-height: 2.5rem !important;
+                width: 2.5rem !important;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.logo(
+        image=str(logo_dir / "tfg_topics_logo.svg"),
+        icon_image=str(logo_dir / "tfg_topics_icon.svg"),
+        size="large",
+    )
 
     pg = st.navigation(
         {
@@ -79,10 +122,12 @@ def main() -> None:
                     icon=":material/article:",
                 ),
             ],
-        }
+        },
+        position="sidebar",
     )
 
     pg.run()
+    render_app_footer()
 
 
 if __name__ == "__main__":
