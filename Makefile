@@ -13,6 +13,7 @@ SHELL := /bin/bash
 PYTHON ?= python
 STREAMLIT ?= streamlit
 DOCKER_COMPOSE ?= docker compose
+FRONTEND_DIR ?= frontend-web
 
 INGEST ?= all
 MODEL ?= bertopic
@@ -110,7 +111,7 @@ processing-all-docker:
 	exit $$fail
 
 frontend:
-	PYTHONPATH=frontend-web/src $(STREAMLIT) run frontend-web/src/webapp/main.py
+	cd $(FRONTEND_DIR) && PYTHONPATH=src $(STREAMLIT) run src/webapp/main.py
 
 frontend-docker:
 	$(DOCKER_COMPOSE) --profile frontend run --rm frontend
@@ -126,4 +127,3 @@ docker-build-processing:
 
 docker-build-frontend:
 	$(DOCKER_COMPOSE) --profile frontend build
-
