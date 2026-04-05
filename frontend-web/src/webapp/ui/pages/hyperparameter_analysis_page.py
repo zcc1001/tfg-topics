@@ -17,12 +17,6 @@ from webapp.ui.components.trial_score_evolution import render_trial_score_evolut
 def render_hyperparameter_analysis(
     base_dir: str, selected_section: str | None = None
 ) -> None:
-
-    st.set_page_config(
-        page_title="TFG – Hiperparametrización",
-        layout="wide",
-    )
-
     render_page_header(
         page_title="Hiperparametrización del modelo",
         description=(
@@ -83,5 +77,9 @@ def render_hyperparameter_analysis(
 
 
 if __name__ == "__main__":
+    st.set_page_config(
+        page_title="TFG – Hiperparametrización",
+        layout="wide",
+    )
     processing_dir = st.session_state.processing_dir
     render_hyperparameter_analysis(processing_dir)

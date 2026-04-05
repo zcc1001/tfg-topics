@@ -20,11 +20,6 @@ def render_document_analysis(
     ingestion_dir: str,
     selected_section: str | None = None,
 ) -> None:
-    st.set_page_config(
-        page_title="Análisis académico de documentos",
-        layout="wide",
-    )
-
     render_page_header(
         page_title="Análisis académico de documentos",
         description=(
@@ -236,6 +231,10 @@ def render_document_analysis(
 
 
 if __name__ == "__main__":
+    st.set_page_config(
+        page_title="Análisis académico de documentos",
+        layout="wide",
+    )
     render_document_analysis(
         st.session_state.processing_dir,
         st.session_state.ingestion_dir,

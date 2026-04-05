@@ -68,7 +68,6 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
     Args:
         base_dir (str): directory where the model results are stored.
     """
-    st.set_page_config(page_title="TFG – Analisis de modelos", layout="wide")
     render_page_header(
         page_title="Análisis por modelo",
         description=(
@@ -158,5 +157,6 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
 
 
 if __name__ == "__main__":
+    st.set_page_config(page_title="TFG – Analisis de modelos", layout="wide")
     processing_dir = st.session_state.processing_dir
     render_model_analysis(processing_dir)
