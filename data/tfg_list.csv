@@ -1,76 +1,373 @@
 title,tutors,students,assignment_date,presentation_date,grade,repository_url
-Aplicación para la gestión del sonido en un dispositivo móvil,César Represa,1,02/02/2017,09/02/2018,4,https://github.com/JorgeZamora94/TFG-Jorge-Zamora-2017-18
-Sistema de navegación semiautomático en interiores,"Alejandro Merino Gómez, César García Osorio, José Francisco Díez Pastor",1,09/11/2017,05/06/2018,10,https://github.com/mbm0089/GII_0_17.02_SNSI/
-Desarrollo de una interfaz para planta piloto,"Alejandro Merino Gómez, Daniel Sarabia Ortiz",1,30/10/2018,19/02/2019,8,https://github.com/FranBurgos/TFG
-Simulación de redes con GNS3,"Alejandro Merino Gómez, Daniel Sarabia Ortiz",1,19/09/2018,19/02/2019,6,https://github.com/javi13gg/TFG_GII_O_MA_18.01-Simulacion-de-redes-con-GNS3
-Generación rutas utilizando sistemas empotrados,Alejandro Merino Gómez,1,19/09/2018,19/02/2019,9,https://github.com/alejandrolampreave/GPS
-Secuenciador heurístico,José Manuel Galán Ordax,1,24/09/2018,19/02/2019,7.5,https://github.com/Victoracha/TFG-Reglas-de-prioridad
-Aplicación para la gestión del sonido en un dispositivo móvil,Carlos López Nozal ,1,02/02/2017,19/02/2019,6,https://github.com/JorgeZamora94/TFG-Gestor-de-sonido-para-dispositivos-Android
-Retrogaming recommender,"José Manuel Galán Ordax, José Ignacio Santos Martín",1,08/11/2018,12/06/2019,9.5,https://github.com/raulolles/TFG_GII_O_MA_18.08
-Automatización del proceso de delineación a partir de datos de un levantamiento topográfico,Carlos López Nozal César I. García Osorio,1,10/12/2018,12/06/2019,10,https://github.com/EduardoRisco/SurveyingPointCode
-Autoevaluación proceso de desarrollo de Trabajo Fin de Grado  en Github,Carlos López Nozal ,1,12/02/2019,12/06/2019,9,https://github.com/rlp0019/Activiti-Api
-UBUGestLab v2,Pedro Renedo Fernández,1,05/12/2019,08/07/2020,9,https://github.com/masantamario/Geslab-2.0
-ExoplanetIA,Carlos López Nozal,1,07/10/2019,08/07/2020,9.5,https://gitlab.com/HP-SCDS/Observatorio/2019-2020/ubu-exoplanetia
-Fatiga+PR,"José Manuel Galán Ordax, Virginia Ahedo García",1,01/10/2019,08/07/2020,5,https://github.com/ysi0000/-FatigaMasPR
-Sistema domótico inteligente,"Alejandro Merino Gómez Álvar, Arnaiz González",1,06/10/2020,25/01/2021,8.25,https://github.com/davidelinformatico/TFG
-Aplicación de técnicas metaheurísticas para la optimización del reparto de material de una planta de montaje,"José Ignacio Santos Martín, José Manuel Galán Ordax",1,06/11/2020,25/01/2021,5,https://github.com/CarolinaCCZ/LucErik/
-Vulnerabilidades en redes de dependencias de paquetes de software,"Carlos López Nozal, José Ignacio Santos Martín",1,05/06/2020,25/01/2021,10,https://github.com/dsr0018/olivia
-Servicios de adquisición de datos y visualización de dashboards para la web de coyuntura económica,"Carlos López Nozal, Bruno Baruque Zanón, Santiago Porras Alfonso",1,19/10/2020,25/02/2021,6.5,https://github.com/RaquelSancha/GII_O_MA_20.04
-Desarrollo y explotación de un chatbot para la asignatura de Trabajo Fin de Grado,Raúl Marticorena Sánchez,1,19/10/2020,13/07/2021,9,https://github.com/aav0038/UBU-CHATBOT
-CarSharing: Servicio Web y APP móvil para compartir vehículo para ir al trabajo,"Bruno Baruque Zanón, Francisco Alonso, (tutor empresa HP SCDS) Patricia Pérez (tutor empresa HP SCDS)",1,19/10/2020,13/07/2021,6.7,https://gitlab.com/HP-SCDS/Observatorio/2020-2021/ubu-carsharing
-Comparador de métricas de evolución en repositorios Software,Carlos López Nozal,1,07/10/2021,16/06/2022,9.5,https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software
-MoodleQA,"Raúl Marticorena Sánchez, Carlos López Nozal",1,01/10/2021,16/06/2022,9,https://github.com/RobertoArastiBlanco/eLearningQA
-Dashboard de visualización del uso y preferencias de los desarrolladores basado en las encuestas anuales de Stack Overflow,"José Ignacio Santos Martín, Virginia Ahedo García",1,30/09/2021,16/06/2022,7,https://github.com/albarrom/GII_O_MA_21.05
-XacoMeter: Observatorio del Camino de Santiago en Redes Sociales,"José Ignacio Santos Martín, Virginia Ahedo GarcíaSilvia Díaz",1,28/09/2021,14/07/2022,9.2,https://github.com/daniel2828/XacoMeter
-UBUExoWork entorno Web,Pedro Renedo Fernández,1,17/05/2022,28/09/2022,8,https://github.com/asl1006/UbuExoWorks
-Visualización de las actividades socioculturales en Castilla y León CULTURALCyL,"José Ignacio Santos Martín, Virginia Ahedo García, Silvia Díaz de la Fuente",1,17/05/2022,24/01/2023,7.7,https://github.com/ylp1001/TFG-Actividades-culturales-CyL
-UBUExoWork cliente móvil,Pedro Renedo Fernández,1,17/05/2022,23/02/2023,8.7,https://github.com/afn1001/UbuExoWorks
-Evaluación de simulaciones de proyectos en Github orientadas a docencia,Carlos López Nozal,1,29/09/2022,20/06/2023,8.5,https://github.com/lfx1001/avrela
-Desarrollo y explotación de un chatbot para la asignatura de Practicum de Formación de Profesores de Lenguas Extranjeras,"Carlos López Nozal, Ismael Ramos Pérez, Raúl Marticorena Sánchez",1,06/10/2022,20/06/2023,9,https://gitlab.com/tfg6300404/chatbob-practicum
-Análisis de datos de temperatura y humedad de suelo procedentes de sensores IoT desplegados en un viñedo,"Alejandro Merino Gómez, Rubén Ruiz González",1,29/09/2022,12/07/2023,6.5,https://github.com/jzx1003/GII_O_MA_22.07
-Aplicación de Gestión de Quirófanos mediante Inteligencia Computacional,"Raúl Marticorena Sánchez, Bruno Baruque Zanón, Daniel Urda Muñoz",1,04/11/2022,12/07/2023,9.4,https://github.com/jesgararm/GestorQuirofanos
-XacoMeter II - Google trends and Google News,"José Ignacio Santos Martín, Virginia Ahedo García, Silvia Díaz de la Fuente",1,30/09/2022,12/07/2023,7.2,https://github.com/map10100/XacoMeter-Google
-IA-IVR,Alejandro Merino Gómez ,1,22/02/2023,12/07/2023,5,https://github.com/andonivianez/ubutfg-ai-callbo
-Lista de comprobación de buenas prácticas de enseñanza en cursos Moodle,"Carlos López Nozal, Raúl Marticorena Sánchez",1,06/10/2022,12/07/2023,6.1,https://github.com/ada1012/eLearningQA
-"Investigación, creación y explotación de modelos para el estudio del COVID-19 en pacientes del servicio cántabro de Salud.","Carlos López Nozal, José Francisco Díez Pastor",1,04/10/2021,12/07/2023,7.1,https://github.com/sgg0008/ml-COVID-19
-Backend en microservicios para aplicación móvil,Pedro Renedo Fernández,1,29/09/2022,24/01/2024,8.5,https://github.com/emur-uy/backend
-MiVoto. Aplicación para realización de votaciones en comunidades de vecinos.,"José Ignacio Santos Martín, Virginia Ahedo García",1,28/09/2023,24/01/2024,9.2,https://bitbucket.org/mivototfg/workspace/overview/
-Desarrollo de un chatbot basado en 'Large Language Model' (LLM) y técnicas de 'Retrieval-augmented Generation' (RAG) para asistente de dudas sobre la realización del TFG en el Grado de Ingeniería Informática,"José Ignacio Santos Martín, Carlos López Nozal",1,15/10/2023,24/01/2024,9.4,https://github.com/jrg1013/chatbot
-Optimización pedidos TETRAPAK,"Ángel Arroyo Puente, Nuño Basurto Hornillos",1,04/10/2023,24/01/2024,8.4,https://github.com/icg0019/TFG
-Migración de Generador de Informes Nutricionales a plataforma Web,"Raúl Marticorena Sánchez, Antonio Jesús Canepa Oneto",1,07/10/2022,27/02/2024,8.1,https://github.com/alvaromanjon/NutriMenu
-Generación de rutas utilizando sistemas empotrados,Alejandro Merino Gómez,1,21/02/2022,27/02/2024,5.2,https://github.com/guillealcuaz/GPS2.0
-Motor de físicas en función del entorno,Alejandro Merino Gómez,1,21/02/2023,27/02/2024,6.1,https://github.com/dmm1005/PhysicsEngine
-Programación de redes definidas por software (SDN) mediante el lenguaje P4,"Alejandro Merino Gómez, Rubén Ruiz González",1,19/09/2023,27/02/2024,7.6,https://github.com/jas1008/TFG_SDN_P4
-Aplicación de análisis de reseñas basado en modelos de lenguaje grandes mediante prompt engineering,"José Ignacio Santos Martín, José Manuel Galán Ordax, Virginia Ahedo García",1,23/10/2023,27/02/2024,8.7,https://github.com/tgs1003/TFG_2023_2024
-Diseño de un sistema IoT de monitorización de invernaderos,"Carlos Cambra Baseca, Alejandro Merino Gómez",1,06/10/2023,27/02/2024,6.6,https://github.com/JLCaballeroMQ/Proyecto_TFG_UBU_23_24
-Generador de cuestionarios y escenarios de test sobre soft skills,Raúl Marticorena Sánchez,1,16/10/2023,18/06/2024,7.1,https://github.com/Daniel-Fernandez-UBU/riskRealUBU
-FAT: Financial Analysis Tool. Herramienta para realizar análisis financiero con Python,"Virginia Ahedo García, José Ignacio Santos Martín",1,23/10/2023,18/06/2024,9.6,https://github.com/rmt0009alu/FAT
-Fusión Sensorial para la Mejora de la Detección de Obstáculos en Conducción Autónoma: Integración de Cámara RGB y LiDAR 3D,"Nuño Basurto Hornillos, Diego Granados López",1,15/01/2024,18/06/2024,8.5,https://github.com/miguelangulismo/LiDAR_and_RGB_Fusion
-PrimeBot: Robot autónomo y preciso,"Jesús Enrique Sierra García, César Represa Pérez",1,01/01/2023,18/06/2024,7.2,https://github.com/marioAlonso2122/Primebot
-Aplicación para gestión de stocks y caducidades,"Jesús Manuel Maudes Raedo, José Antonio Barbero",1,05/03/2024,18/06/2024,8.8,https://github.com/jsc1013/StayFresh
-Aplicación móvil (FrontEnd) acceso a los microservicios de servicios a usuarios afectados por la Esclerosis Múltiple (EM).,Pedro Renedo Fernández,1,20/02/2024,15/07/2024,6.8,https://github.com/jmc1005/red-ela
-Diaberse: the return of the hypoglycemia,"Pedro Renedo Fernández",1,26/01/2024,15/07/2024,8.3,https://gitlab.com/HP-SCDS/Observatorio/2023-2024/diaberse/ubu-diaberse
-Generador de WEB/APP,José Manuel Aroca Fernández,1,05/10/2023,15/07/2024,6.7,https://github.com/Angel798v/TFG_AngelVega
-Comparador de sistemas de despliegue de software mediante APIs,José Manuel Aroca Fernández,1,05/10/2023,15/07/2024,7.5,https://github.com/mariolopezmatamala/cloud-duo-aws-gcp
-Prototipo de reconocimiento de actividades en base a señales cerebrales,"Bruno Baruque Zanón, Jesús Enrique Sierra García",1,20/02/2024,15/07/2024,7.5,https://github.com/jpg1003/AnalisisEEG
-Gestión de cartera de opciones,José Ignacio Santos Martín,1,12/02/2024,15/07/2024,5.8,https://github.com/cbr1005/TFG.git
-Estudio y Configuración de un sistema ELK,"Jesus Manuel Maudes Raedo, Antonio Jesús Canepa Oneto",1,16/02/2024,15/07/2024,7.3,https://github.com/hds1001/Estudio-y-configuracion-de-un-sistema-ELK
-Herramienta de modelado de Bases de Datos relacionales con Crows Foot,Jesus Manuel Maudes Raedo,1,29/02/2024,15/07/2024,7.6,https://github.com/jrp1004/CrowsFoot_JuanRomera_TFG
-Herramienta de modelado E/R,Jesus Manuel Maudes Raedo,1,21/02/2024,15/07/2024,8.2,https://github.com/rubenmate/draw-entity-relation
-GII_O_MA_24.06. Inteligencia Artificial para seguridad IoT,"Rubén Ruiz González, Alejandro Merino Gómez",1,22/02/2024,15/07/2024,7.2,https://github.com/eddddddp/AI-for-IoT-security
-IA para detección temprana de incidentes de ciberseguridad con Telegram como fuente de datos,César Ignacio García Osorio,1,26/02/2024,15/07/2024,9.1,https://github.com/iraty/AI-for-early-detection-in-cybersecurity
-Implementación de una Prueba de Concepto (PoC) de Manage Engine PAM para la Gestión Eficiente de Acceso Privilegiado en Organizaciones,"Luis Antonio Antolín Sánchez, Livan Rodriguez Regueria",1,09/04/2024,15/07/2024,5.4,https://github.com/avs1002/TFG-PoC-de-PAM-Alejandro-Villar-Solla
-Sistema de extracción y gestión automatizada de requisitos desde documentos PDF para proyectos de ingeniería,"José Ignacio Santos Martín, José Manuel Galán Ordax",1,15/07/2024,27/02/2025,7.2,https://github.com/Esti-D/TFG-GestionRequisitosIngenieria
-SatelDataReport. Desarrollo de una aplicación para la realización de informes de ingeniería,"José Ignacio Santos Martín, José Manuel Galán Ordax",1,15/07/2024,27/02/2025,7,https://github.com/SergioOsuna/SatelDataReport
-Eco City Tours. Aplicación móvil para la generación de rutas turísticas sostenibles propuestas por modelos de lenguaje de gran escala,Carlos López Nozal ,1,15/07/2024,27/02/2025,9.2,https://github.com/fps1001/TFGII_FPisot
-Gestión de formación,José Ignacio Santos Martín,1,15/07/2024,27/02/2025,8.4,https://github.com/VictorVaqueroUBU/TFG
-Herramienta para la evaluación automática de entregas de programación con rúbricas y LLMScore,Raúl Marticorena Sánchez,1,27/02/2025,15/06/2025,8.6,https://github.com/PaacDev/IAGScore
-Generación automática de mapas de obstaáculos para robots,"Jesús Enrique Sierra García, Bruno Baruque Zanón",1,27/02/2025,15/06/2025,7.2,https://github.com/juanpe316/TFG_Generacion_de_mapas
-VRLearTobot Laboratorio Virtual de programación y robótica,Carlos López Nozal,1,27/02/2025,15/06/2025,8,https://github.com/LuisIgnaciodeLunaGomez/VRLearnTOBOT
-Herramienta para trabajar de manera sincronizada en GraphQL y base de daotos relacional,Pedro Renedo Fernández,1,27/02/2025,15/06/2025,7.6,https://github.com/sufacerlabs/graphqlstore
-F1nalLap,César Represa Pérez,1,27/02/2025,15/06/2025,7.2,https://github.com/Ixo22/F1nalLap
-GCA. Agente para la Gestión Centralizada de la Configuración de Red en las aulas.,Pedro Renedo Fernández,1,27/02/2025,15/06/2025,8.4,https://github.com/rmg1008/GCA
-Modelo cinemático inverso de un robot GoFa mediante redes neuronales,"Bruno Baruque Zanón, Jesús Enrique Sierra García",1,27/03/2025,15/07/2025,4.3,https://github.com/2024-25-tfgii-online-jun/TFG_MCI_GoFa
-PertubNet. Herramienta para  la simulación de perturbaciones de comunicaciones en redes informáticas,"Bruno Baruque Zanón, Jesús Enrique Sierra García",1,27/03/2025,15/07/2025,4.5,https://github.com/amm1076/TFG-DisturbNet
-Imágenes de Docker genéricas y securizadas en un entorno de CI/CD,José Manuel Galán Ordax,1,27/03/2025,15/07/2025,8.3,https://github.com/2024-25-tfgii-online-may/UBU-AIBusinessONO
-Herramienta de anotación para entrenamiento de modelos de inteligencia artificial de detección de objetos,Bruno Baruque Zanón,1,27/03/2025,15/07/2025,4.5,https://github.com/jsg1010/JorgeSevillaTFG
+Aplicación para la gestión del sonido en un dispositivo móvil,CRP,1,02/02/2017,09/02/2018,4,https://github.com/JorgeZamora94/TFG-Jorge-Zamora-2017-18
+Sistema de navegación semiautomático en interiores,"AMG, CGO, JDP",1,09/11/2017,05/06/2018,10,https://github.com/mbm0089/GII_0_17.02_SNSI/
+Desarrollo de una interfaz para planta piloto,"AMG, DSO",1,30/10/2018,19/02/2019,8,https://github.com/FranBurgos/TFG
+Simulación de redes con GNS3,"AMG, DSO",1,19/09/2018,19/02/2019,6,https://github.com/javi13gg/TFG_GII_O_MA_18.01-Simulacion-de-redes-con-GNS3
+Generación rutas utilizando sistemas empotrados,AMG,1,19/09/2018,19/02/2019,9,https://github.com/alejandrolampreave/GPS
+Secuenciador heurístico,JGO,1,24/09/2018,19/02/2019,7.5,https://github.com/Victoracha/TFG-Reglas-de-prioridad
+Aplicación para la gestión del sonido en un dispositivo móvil,CLN ,1,02/02/2017,19/02/2019,6,https://github.com/JorgeZamora94/TFG-Gestor-de-sonido-para-dispositivos-Android
+Retrogaming recommender,"JGO, JSM",1,08/11/2018,12/06/2019,9.5,https://github.com/raulolles/TFG_GII_O_MA_18.08
+Automatización del proceso de delineación a partir de datos de un levantamiento topográfico,CLN CGO,1,10/12/2018,12/06/2019,10,https://github.com/EduardoRisco/SurveyingPointCode
+Autoevaluación proceso de desarrollo de Trabajo Fin de Grado  en Github,CLN ,1,12/02/2019,12/06/2019,9,https://github.com/rlp0019/Activiti-Api
+UBUGestLab v2,PRF,1,05/12/2019,08/07/2020,9,https://github.com/masantamario/Geslab-2.0
+ExoplanetIA,CLN,1,07/10/2019,08/07/2020,9.5,https://gitlab.com/HP-SCDS/Observatorio/2019-2020/ubu-exoplanetia
+Fatiga+PR,"JGO, VAG",1,01/10/2019,08/07/2020,5,https://github.com/ysi0000/-FatigaMasPR
+Sistema domótico inteligente,"AMG,  ",1,06/10/2020,25/01/2021,8.25,https://github.com/davidelinformatico/TFG
+Aplicación de técnicas metaheurísticas para la optimización del reparto de material de una planta de montaje,"JSM, JGO",1,06/11/2020,25/01/2021,5,https://github.com/CarolinaCCZ/LucErik/
+Vulnerabilidades en redes de dependencias de paquetes de software,"CLN, JSM",1,05/06/2020,25/01/2021,10,https://github.com/dsr0018/olivia
+Servicios de adquisición de datos y visualización de dashboards para la web de coyuntura económica,"CLN, BBZ",1,19/10/2020,25/02/2021,6.5,https://github.com/RaquelSancha/GII_O_MA_20.04
+Desarrollo y explotación de un chatbot para la asignatura de Trabajo Fin de Grado,RMS,1,19/10/2020,13/07/2021,9,https://github.com/aav0038/UBU-CHATBOT
+CarSharing: Servicio Web y APP móvil para compartir vehículo para ir al trabajo,BBZ,1,19/10/2020,13/07/2021,6.7,https://gitlab.com/HP-SCDS/Observatorio/2020-2021/ubu-carsharing
+Comparador de métricas de evolución en repositorios Software,CLN,1,07/10/2021,16/06/2022,9.5,https://github.com/Joaquin-GM/GII_O_MA_19.07-Comparador-de-metricas-de-evolucion-en-repositorios-Software
+MoodleQA,"RMS, CLN",1,01/10/2021,16/06/2022,9,https://github.com/RobertoArastiBlanco/eLearningQA
+Dashboard de visualización del uso y preferencias de los desarrolladores basado en las encuestas anuales de Stack Overflow,"JSM, VAG",1,30/09/2021,16/06/2022,7,https://github.com/albarrom/GII_O_MA_21.05
+XacoMeter: Observatorio del Camino de Santiago en Redes Sociales,"JSM, VAG; SDF",1,28/09/2021,14/07/2022,9.2,https://github.com/daniel2828/XacoMeter
+UBUExoWork entorno Web,PRF,1,17/05/2022,28/09/2022,8,https://github.com/asl1006/UbuExoWorks
+Visualización de las actividades socioculturales en Castilla y León CULTURALCyL,"JSM, VAG, SDF",1,17/05/2022,24/01/2023,7.7,https://github.com/ylp1001/TFG-Actividades-culturales-CyL
+UBUExoWork cliente móvil,PRF,1,17/05/2022,23/02/2023,8.7,https://github.com/afn1001/UbuExoWorks
+Evaluación de simulaciones de proyectos en Github orientadas a docencia,CLN,1,29/09/2022,20/06/2023,8.5,https://github.com/lfx1001/avrela
+Desarrollo y explotación de un chatbot para la asignatura de Practicum de Formación de Profesores de Lenguas Extranjeras,"CLN, IRP RMS",1,06/10/2022,20/06/2023,9,https://gitlab.com/tfg6300404/chatbob-practicum
+Análisis de datos de temperatura y humedad de suelo procedentes de sensores IoT desplegados en un viñedo,"AMG, RRG",1,29/09/2022,12/07/2023,6.5,https://github.com/jzx1003/GII_O_MA_22.07
+Aplicación de Gestión de Quirófanos mediante Inteligencia Computacional,"RMS, BBZ, DUM",1,04/11/2022,12/07/2023,9.4,https://github.com/jesgararm/GestorQuirofanos
+XacoMeter II - Google trends and Google News,"JSM, VAG, SDF",1,30/09/2022,12/07/2023,7.2,https://github.com/map10100/XacoMeter-Google
+IA-IVR,AMG ,1,22/02/2023,12/07/2023,5,https://github.com/andonivianez/ubutfg-ai-callbo
+Lista de comprobación de buenas prácticas de enseñanza en cursos Moodle,"CLN, RMS",1,06/10/2022,12/07/2023,6.1,https://github.com/ada1012/eLearningQA
+"Investigación, CRPeación y explotación de modelos para el estudio del COVID-19 en pacientes del servicio cántabro de Salud.","CLN, JDP",1,04/10/2021,12/07/2023,7.1,https://github.com/sgg0008/ml-COVID-19
+Backend en miCRPoservicios para aplicación móvil,PRF,1,29/09/2022,24/01/2024,8.5,https://github.com/emur-uy/backend
+MiVoto. Aplicación para realización de votaciones en comunidades de vecinos.,"JSM, VAG",1,28/09/2023,24/01/2024,9.2,https://bitbucket.org/mivototfg/workspace/overview/
+Desarrollo de un chatbot basado en 'Large Language Model' (LLM) y técnicas de 'Retrieval-augmented Generation' (RAG) para asistente de dudas sobre la realización del TFG en el Grado de Ingeniería Informática,"JSM, CLN",1,15/10/2023,24/01/2024,9.4,https://github.com/jrg1013/chatbot
+Optimización pedidos TETRAPAK,"AAP, NBH",1,04/10/2023,24/01/2024,8.4,https://github.com/icg0019/TFG
+Migración de Generador de Informes Nutricionales a plataforma Web,"RMS, ACO",1,07/10/2022,27/02/2024,8.1,https://github.com/alvaromanjon/NutriMenu
+Generación de rutas utilizando sistemas empotrados,AMG,1,21/02/2022,27/02/2024,5.2,https://github.com/guillealcuaz/GPS2.0
+Motor de físicas en función del entorno,AMG,1,21/02/2023,27/02/2024,6.1,https://github.com/dmm1005/PhysicsEngine
+Programación de redes definidas por software (SDN) mediante el lenguaje P4,"AMG, RRG",1,19/09/2023,27/02/2024,7.6,https://github.com/jas1008/TFG_SDN_P4
+Aplicación de análisis de reseñas basado en modelos de lenguaje grandes mediante prompt engineering,"JSM, JGO, VAG",1,23/10/2023,27/02/2024,8.7,https://github.com/tgs1003/TFG_2023_2024
+Diseño de un sistema IoT de monitorización de invernaderos,"CCB, AMG",1,06/10/2023,27/02/2024,6.6,https://github.com/JLCaballeroMQ/Proyecto_TFG_UBU_23_24
+Generador de cuestionarios y escenarios de test sobre soft skills,RMS,1,16/10/2023,18/06/2024,7.1,https://github.com/Daniel-Fernandez-UBU/riskRealUBU
+FAT: Financial Analysis Tool. Herramienta para realizar análisis financiero con Python,"VAG, JSM",1,23/10/2023,18/06/2024,9.6,https://github.com/rmt0009alu/FAT
+Fusión Sensorial para la Mejora de la Detección de Obstáculos en Conducción Autónoma: Integración de Cámara RGB y LiDAR 3D,"NBH, DGL",1,15/01/2024,18/06/2024,8.5,https://github.com/miguelangulismo/LiDAR_and_RGB_Fusion
+PrimeBot: Robot autónomo y preciso,"JSG, CRP",1,01/01/2023,18/06/2024,7.2,https://github.com/marioAlonso2122/Primebot
+Aplicación para gestión de stocks y caducidades,"JMR, JBA",1,05/03/2024,18/06/2024,8.8,https://github.com/jsc1013/StayFresh
+Aplicación móvil (FrontEnd) acceso a los miCRPoservicios de servicios a usuarios afectados por la Esclerosis Múltiple (EM).,PRF,1,20/02/2024,15/07/2024,6.8,https://github.com/jmc1005/red-ela
+Diaberse: the return of the hypoglycemia,PRF,1,26/01/2024,15/07/2024,8.3,https://gitlab.com/HP-SCDS/Observatorio/2023-2024/diaberse/ubu-diaberse
+Generador de WEB/APP,JAF,1,05/10/2023,15/07/2024,6.7,https://github.com/Angel798v/TFG_AngelVega
+Comparador de sistemas de despliegue de software mediante APIs,JAF,1,05/10/2023,15/07/2024,7.5,https://github.com/mariolopezmatamala/cloud-duo-aws-gcp
+Prototipo de reconocimiento de actividades en base a señales cerebrales,"BBZ, JSG",1,20/02/2024,15/07/2024,7.5,https://github.com/jpg1003/AnalisisEEG
+Gestión de cartera de opciones,JSM,1,12/02/2024,15/07/2024,5.8,https://github.com/cbr1005/TFG.git
+Estudio y Configuración de un sistema ELK,"JMR, ACO",1,16/02/2024,15/07/2024,7.3,https://github.com/hds1001/Estudio-y-configuracion-de-un-sistema-ELK
+Herramienta de modelado de Bases de Datos relacionales con CRPows Foot,JMR,1,29/02/2024,15/07/2024,7.6,https://github.com/jrp1004/CRPowsFoot_JuanRomera_TFG
+Herramienta de modelado E/R,JMR,1,21/02/2024,15/07/2024,8.2,https://github.com/rubenmate/draw-entity-relation
+GII_O_MA_24.06. Inteligencia Artificial para seguridad IoT,"RRG, AMG",1,22/02/2024,15/07/2024,7.2,https://github.com/eddddddp/AI-for-IoT-security
+IA para detección temprana de incidentes de ciberseguridad con Telegram como fuente de datos,CGO,1,26/02/2024,15/07/2024,9.1,https://github.com/iraty/AI-for-early-detection-in-cybersecurity
+Implementación de una Prueba de Concepto (PoC) de Manage Engine PAM para la Gestión Eficiente de Acceso Privilegiado en Organizaciones,LAS,1,09/04/2024,15/07/2024,5.4,https://github.com/avs1002/TFG-PoC-de-PAM-Alejandro-Villar-Solla
+Sistema de extracción y gestión automatizada de requisitos desde documentos PDF para proyectos de ingeniería,"JSM, JGO",1,15/07/2024,27/02/2025,7.2,https://github.com/Esti-D/TFG-GestionRequisitosIngenieria
+SatelDataReport. Desarrollo de una aplicación para la realización de informes de ingeniería,"JSM, JGO",1,15/07/2024,27/02/2025,7,https://github.com/SergioOsuna/SatelDataReport
+Eco City Tours. Aplicación móvil para la generación de rutas turísticas sostenibles propuestas por modelos de lenguaje de gran escala,CLN ,1,15/07/2024,27/02/2025,9.2,https://github.com/fps1001/TFGII_FPisot
+Gestión de formación,JSM,1,15/07/2024,27/02/2025,8.4,https://github.com/VictorVaqueroUBU/TFG
+Herramienta para la evaluación automática de entregas de programación con rúbricas y LLMScore,RMS,1,27/02/2025,15/06/2025,8.6,https://github.com/PaacDev/IAGScore
+Generación automática de mapas de obstaáculos para robots,"JSG, BBZ",1,27/02/2025,15/06/2025,7.2,https://github.com/juanpe316/TFG_Generacion_de_mapas
+VRLearTobot Laboratorio Virtual de programación y robótica,CLN,1,27/02/2025,15/06/2025,8,https://github.com/LuisIgnaciodeLunaGomez/VRLearnTOBOT
+Herramienta para trabajar de manera sinCRPonizada en GraphQL y base de daotos relacional,PRF,1,27/02/2025,15/06/2025,7.6,https://github.com/sufacerlabs/graphqlstore
+F1nalLap,CRP,1,27/02/2025,15/06/2025,7.2,https://github.com/Ixo22/F1nalLap
+GCA. Agente para la Gestión Centralizada de la Configuración de Red en las aulas.,PRF,1,27/02/2025,15/06/2025,8.4,https://github.com/rmg1008/GCA
+Modelo cinemático inverso de un robot GoFa mediante redes neuronales,"BBZ, JSG",1,27/03/2025,15/07/2025,4.3,https://github.com/2024-25-tfgii-online-jun/TFG_MCI_GoFa
+PertubNet. Herramienta para  la simulación de perturbaciones de comunicaciones en redes informáticas,"BBZ, JSG",1,27/03/2025,15/07/2025,4.5,https://github.com/amm1076/TFG-DisturbNet
+Imágenes de Docker genéricas y securizadas en un entorno de CI/CD,JGO,1,27/03/2025,15/07/2025,8.3,https://github.com/2024-25-tfgii-online-may/UBU-AIBusinessONO
+Herramienta de anotación para entrenamiento de modelos de inteligencia artificial de detección de objetos,BBZ,1,27/03/2025,15/07/2025,4.5,https://github.com/jsg1010/JorgeSevillaTFG
+Generación de cuestionarios para la docencia on-line de procesadores de lenguajes y sus algoritmos,"CGO, JDP",1,16/12/2013,24/07/2014,9,https://github.com/RobertoIA/PLQuiz
+Migración de aplicación móvil para la visualización de guiones sociales con HTML5,RMS,1,21/12/2013,24/07/2014,9,https://github.com/davidmdlf/Socio-RutaWeb
+Estudio de herramientas de reconocimiento de imagenes con aplicación prototipo,"JDP, CGO",1,01/02/2015,01/07/2015,"9,2",https://github.com/garfio1/Proyecto-Fin-de-Grado
+Extensión de Lógica Difusa para NetLogo,LIM,1,17/09/2014,01/07/2015,"8,1",https://github.com/MarcAlmen/NetLogo-FuzzyLogic-Extension/commits/master
+Generación de cuestionarios para la docencia on-line de grafos y sus algoritmos,"JRD, CLN",1,28/11/2014,01/07/2015,5,https://github.com/jam0101/TFGII-Quiz-Grafos
+SWAAP-Aplicación para gestionar cambios de turno,LIM,1,16/01/2014,01/07/2015,"8,5",https://github.com/dieprane/SWAPP
+B Juegos de economía experimental multiplataforma,"JGO, JSM",1,24/09/2015,28/01/2016,9,https://github.com/smarquina/misBeans
+ Aplicación de control de diabetes en dispositivos móviles,"RMS, CPA",1,26/09/2015,11/02/2016,"7,75", https://github.com/mlj0004/tfg_gii14b/
+Aplicación de la Kinect al envejecimiento activo,"PSO, CRP",1,17/09/2015,13/02/2016,"8,5",https://github.com/dls0010/DavidKinectTFG2016
+Servicio Web para la Auto-Corrección de Prácticas en Java,BBZ,1,28/09/2015,15/02/2016,9,https://github.com/avg0043/TFG_Autocorrecc_Java 
+Monitor multiplataforma de la actividad de un proyecto,CLN,1,03/02/2015,16/02/2016,"7,75",https://github.com/dba0010/Activiti-Api
+UBUGRAPH 4.0,JGO,1,26/01/2016,06/06/2016,"7,4",https://github.com/asl0044/UBUGraph4.0 
+Análisis paleontológico de piezas dentales.,"RMS, JDP",1,11/01/2016,14/07/2016,"9,5",https://github.com/scc0031/perikymata 
+Herramienta web para algoritmos de lenguajes regulares,"CGO, AAG",1,11/01/2016,14/07/2016,"9,8",https://bitbucket.org/Isma_R/thoth/ 
+Herramienta para la generación de cuestionarios Moodle sobre análisis sintáctico,"CGO, AAG",1,28/12/2015,14/07/2016,"7,5",https://github.com/vrt0004/ 
+Despertador Android con lectura de eventos,CRP,1,12/01/2016,14/07/2016,8,https://github.com/apd0025/AlarmaHablada
+Aplicación para la CRPeación personalizada y resolución automática de supuestos contables,"LIM, JSM",1,26/12/2015,14/07/2016,9,https://github.com/noeliamansog/TFG-GII.15.I 
+Combinaciones de clasificadores en XGBoost,JRD,1,24/11/2015,22/09/2016,"8,4",https://github.com/aex0022/xgboost/ 
+ Generación de cuestionarios para la docencia on-line de métodos de programación dinámica ,"JRD, CLN",1,24/02/2015,22/09/2016,"6,3",https://github.com/aam0093/Proyecto-Quiz-Prog.-Dinamica 
+ Monitorización del estado de una colmena mediante un smartphone,"RMS, JDP",1,30/09/2016,15/02/2017,10,https://github.com/davidmigloz/go-bees/
+Herramienta para el análisis hemeroteca,"JDP, CGO",1,31/01/2017,07/07/2017,"9,8",https://github.com/mrr0088/Gestor-de-Hemeroteca
+Asistente Virtual,PRF,1,01/02/2017,07/07/2017,"9,7",https://github.com/DanielSantidrian/UBUassistant
+Creación de un método de recuento de estrías de dieta en los dientes. ,"JDP, AAG",1,08/09/2016,19/01/2017,"9,5",https://github.com/Itg0001/TFG_DietaPorDientes
+ Bot conversacional para recomendaciones turísticas,BBZ,1,15/12/2016,05/07/2017,"9,5",https://github.com/jaswellnitz/tourist-chatbot
+Interfaces Hombre máquina basados en hardware libre,"PSO, JCN",1,25/11/2015,15/02/2017,"9,4",https://bitbucket.org/JRCUEVAS/control_de_transito
+Creación de un videojuego y un bot inteligente para el mismo,"JDP, CGO",1,31/01/2017,05/07/2017,"9,4",https://github.com/PabloAlejos/Machine-Learning-GameDev
+Aplicación híbrida para preguntas tipo test en entornos móviles,"LIM, VAG",1,01/02/2017,07/07/2017,"9,4",https://github.com/Fernan-Ramos/Test-Manager
+Herramienta docente de algoritmos de búsqueda de rutas,"JDP, CGO",1,24/02/2015,07/07/2017,"9,4",https://github.com/vpe0001/Algoritmos_de_busqueda_3D-Unity
+Plataforma de torneos para juegos 2x2,"JSM, VAG",1,17/09/2016,19/01/2017,"9,3",https://github.com/jba0040/PlataformaTorneos2x2 
+Aplicación de análisis paleontológico. Perikymata 2.0,"RMS, JDP",1,31/01/2017,05/07/2017,"9,2",https://github.com/amtBurgos/Perikymata2017
+Diseño de una autorradio con pantalla táctil mediante Rasberry Pi,CRP,1,26/11/2016,15/06/2017,9,https://github.com/Plata17/TouchCarPI
+SWAPP MULTIPLATAFORMA,"LIM, VAG",1,04/10/2016,05/07/2017,9,https://github.com/aag0121/barterAPP
+Sistema de reconocimiento automático en arqueobotánica,"AAG, JDP, VAG",1,31/01/2017,07/07/2017,9,https://github.com/jasag/Phytoliths-recognition-system
+ Reconocimiento de señales de tráfico mediante Raspberry Pi,CRP,1,24/11/2016,21/09/2017,9,https://gitlab.com/amt0001/rpi_traffic_signs 
+Framework web de uso de sistemas machine learning,"JDP, CGO",1,01/02/2017,21/09/2017,9,https://github.com/Jazriel/WhatAClass
+ Visor 3D para la docencia de alumnos de antropología,"AAG, JDP",1,12/11/2016,05/07/2017,"8,5",https://github.com/Alberto-Vivar/3D-Viewer
+Simulador de apuestas deportivas,"AAG, CRP",1,04/10/2016,19/01/2017,8,https://github.com/nunobasurto/apuestas_deportivas
+UBUGRAPH 5.0,"JGO, VAG",1,10/10/2016,15/02/2017,8,https://github.com/dvr0006/UBUGRAPH-5.0
+Gestión de actividades y estadísticas deportiva,RMS,1,15/03/2017,05/07/2017,8,https://github.com/BorjaG90/threeplusone
+Aplicación web para la visualización y búsqueda de datos almacenados en dispositivo con linux embebido,JSG,1,02/02/2017,07/07/2017,8,https://github.com/rmb0033/
+ Gestión de trabajos fin de grado v2.0.,CLN,1,25/09/2015,15/02/2017,"7,9",https://github.com/jfb0019/Gestor-TFG-2016
+Herramienta de extracción y visualización de calficaciones para Moodle,RMS,1,07/10/2016,15/02/2017,"7,6",https://github.com/claumartinezh/TFG_UBUGrades
+ Aplicación para el Acceso a Plataformas de ELearning desde Dispositivos Móviles,BBZ,1,02/02/2017,05/07/2017,"7,5",https://github.com/danielpuente-dpg/GII14.K.QUICKTEST
+UBUnurse,PSO,1,22/12/2016,15/06/2017,"7,25",https://github.com/aps0047/UbuNurse
+Conversión de la aplicación docente Thoth a JavaSCRPipt,"AAG, CGO",1,31/01/2017,07/07/2017,7,https://github.com/javierParamo94/Thoth-in-JavaSCRPipt
+" Herramienta web dinámica para la captación, tratamiento y presentación de datos relacionados con la coyuntura económica de Burgos","BBZ, AAP",1,02/02/2017,05/07/2017,"6,5",https://github.com/NelsonParamo/GI16.M_ProyectoCoyuntura
+Mercapro,"JGO, JSM",1,24/11/2015,15/02/2017,"6,4",https://github.com/rubenbarrios/mercapro-2
+ AGVsim. Aplicabilidad de Gazebo en la simulación de vehículos autónomos,JSG,1,02/02/2017,21/09/2017,5,https://github.com/carmelobasconcillos/GII16.L-Simulacion-AGV
+AGVsim. Aplicabilidad de Gazebo en la simulación de vehículos autónomos,JSG,1,02/02/2017,07/07/2017,4,https://github.com/carmelobasconcillos/GII16.L-Simulacion-AGV
+ Aplicación web para la CRPeación de reconocedores de imágenes personalizados,"JDP, CGO",1,01/02/2017,05/07/2017,0,https://github.com/Jazriel/WhatAClass
+Aplicación móvil para la ayuda en el reconocimiento de setas.,"JDP, RMS",1,25/09/2017,19/01/2018,"9,5",https://github.com/AdrianAntonGarcia/-TFG-UBUSetas
+UBUGrades 2.0 ,RMS,1,29/09/2017,19/01/2018,"9,5",https://github.com/huco95/UBUGrades/
+" Aplicación Web para la recopilación, tratamiento y visualización de datos públicos.","JMR, JDP",1,25/09/2017,06/06/2018,"9,5",https://github.com/IvanArjona/TFG-Datos-publicos
+ Juego de realidad virtual sobre recogida de setas.,"JDP, RMS",1,25/09/2017,09/07/2018,"9,5",https://github.com/Kiszaner/2017_SetasVR_TFG
+ Seguimiento de líneas basado en openCV para AGVs,JSG,1,25/09/2017,09/07/2018,"9,5",https://github.com/ama0114/TFG-OpenCV/
+ 3D Viewer v2,"AAG, JDP",1,18/09/2017,20/02/2018,"9,2",https://github.com/jmg0137/3D-Viewer-v2.0
+ Sistema automático de reconocimiento de secuencias de imágenes.,"CRP, PSO",1,09/10/2017,20/02/2018,9,https://github.com/RobertoOrtegaOrtega/UBU_object_detection
+ Sistema de recomendación de asignaturas optativas,"JSM, VAG",1,30/10/2017,06/06/2018,9,https://github.com/ClaraPalacios/TFG-Sistema_de_recomendacion_Asignaturas_Optativas
+ UBUDiabetes 2.0,RMS,1,19/03/2018,09/07/2018,9,https://github.com/luismiguel17/Documentation_UBUDiabetes2.0_GII17.0J
+ Diseño de un sistema de identificación de personas,CRP,1,05/12/2017,09/07/2018,9,https://github.com/victorcas04/TFG-FacialRecognition
+ Visor de espectros,"CGO, JDP",1,06/10/2017,09/07/2018,"8,5",https://github.com/IvanBeke/TFG-Visor-de-espectros/
+UBUassistant para Android,PRF,1,14/03/2018,09/07/2018,"8,5",https://github.com/cgc0045/TFG-UBUassistant
+ Geolocalización dentro de edificios,CLN,1,29/03/2017,19/01/2018,8,https://github.com/jppasvit/geo-indoor
+Retail Antenna Analytics,"JGO, VAG",1,19/03/2018,06/06/2018,8,https://github.com/SergioBarberoBascones/AntennasStats
+ Gestión desde Android de un simulador de control domótico con Raspberry Pi,CRP,1,18/09/2017,06/06/2018,8,https://github.com/MJ0T4/Simulador_Domotica_Raspberry
+POODLE Planificación  de carga académica,CLN,1,06/10/2017,21/09/2018,8,https://github.com/Sonia95LG/POODLEapp
+ Reconocimiento de fitolitos v2.0,"AAG, JDP",1,06/10/2017,21/09/2018,"7,5",https://github.com/mmb0093/TFG_Fitolitos
+UBULog 1.0-Seguimiento de actividad en UBUVirtual,RMS,1,05/10/2017,19/01/2018,7,https://github.com/trona85/GII-17.1B-UBULog-1.0
+ Clasificadores multi-label en Scikit Learn,"AAG, JRD",1,06/10/2017,20/02/2018,"6,5",https://github.com/Tulmot/Sklearn-Multilabel
+ PrawnVIEW,"JDP, AAG",1,25/09/2017,09/07/2018,"6,5",https://github.com/apj0007/PrawnView
+BlocklyToChapinToCFacil v2,CPA,1,24/02/2017,20/02/2018,"5,5",https://github.com/RosanaAV/BlocklyToChapinToCFacil
+Can-bus reverse engeniering toolkit,"CRP, AAG",1,05/09/2018,20/02/2019,"9,8",https://github.com/amb0070/CRPET
+ Uso de biomarcadores extraídos de la voz para la detección de la enfermedad del Parkinson,"JDP, CGO",1,05/09/2018,01/07/2019,"9,8",https://github.com/AdrianArnaiz/TFG-Neurodegenerative-Disease-Detection 
+ Asistente Virtual para la Comunicación,"CRP, JDP",1,05/09/2018,01/07/2019,"9,8",https://github.com/Josemi/AVC-TFG 
+ Minería de datos aplicada a la detección de CRPisis epilépticas y aplicación movil,"AAG, JDP",1,05/09/2018,01/07/2019,"9,7",https://github.com/aog0036/TFG-SmartBeds 
+ Análisis de software malicioso mediante IA,AAG,1,01/10/2024,14/07/2025,"9,7",https://github.com/2024-25-TFG-jul/tfg_24_25
+ UBUMonitor,"RMS, CPA",1,05/09/2018,01/07/2019,"9,6",https://github.com/yjx0003/UBUMonitor
+Detección de ataques en un entorno de red de dispositivos IoT,DUM,1,14/01/2025,18/06/2025,"9,5",https://github.com/2024-25-TFG-jun/iot_attack_detection
+ App ¿Qué cocino hoy?,ASM,1,28/02/2025,18/06/2025,"9,5",https://github.com/2024-25-TFG-jun/recipEat
+ Aplicación móvil ayuda a la respiración Breathbank,"ASM, AAO",1,03/02/2025,14/07/2025,"9,5",https://github.com/2024-25-TFG-jul/BreathBank-TFG2025
+El Mundo en tus Gafas,"AAG, PSO",1,05/09/2018,01/07/2019,"9,3",https://github.com/Heber94/TFG-ElMundoEnTusGafas
+ Minería de datos aplicada a la detección de Crisis epilépticas y aplicación web,"AAG, JDP",1,05/09/2018,01/07/2019,"9,1",https://github.com/jlgarridol/TFG-SmartBeds 
+Gestión de Crisis y emergencias en una planta química,CRP,1,05/09/2018,19/09/2019,9,https://github.com/carhf95/gestionCRPisisYEmergenciasAdisseo
+ Evaluación de la actividad de un proyecto software,CLN,1,18/09/2018,19/09/2019,9,https://gitlab.com/mlb0029/comparador-de-metricas-de-evolucion-en-repositorios-software
+Desarrollo de un sistema de análisis químico en tiempo real mediante el procesamiento de imágenes hiperespectrales,"DUM, CCB",1,18/10/2024,18/06/2025,9,https://github.com/2024-25-TFG-jun/Desarrollo-de-un-sistema-de-analisis-quimico-mediante-el-procesamiento-de-imagenes-hiperespectrales
+Automatización de Tareas en Firewalls mediante API e Interfaz Personalizada,RMS,1,27/02/2025,18/06/2025,9,https://github.com/2024-25-TFG-jun/FortiAutomationAPI
+Reconocimiento de Lenguaje de Signos ASL mediante IA: Implementación y Comparativa de Rendimiento en Raspberry Pi,DUM,1,19/12/2024,14/07/2025,9,https://github.com/2024-25-TFG-jul/HandSignDetectionProject
+Asistente de prácticas ágiles para repositorios en GitHub,CLN,1,28/02/2025,18/06/2025,"8,8",https://github.com/2024-25-TFG-jun/GII-TFG-Asistente-de-practicas-agiles-para-repositorios-en-GitHub
+Securización de red con detección de amenazas en tiempo real,JAF,1,05/05/2025,14/07/2025,"8,8",https://github.com/2024-25-TFG-jul/TFG-JorgeFernandez 
+Sistema de información de apoyo a GreenMetrics,"JGO, VAG",1,08/11/2024,18/06/2025,"8,7",https://github.com/2024-25-TFG-jun/GreenMetrics
+Monitor en tiempo real y control de acceso a recursos de un sistema de fabricación aditiva multi-puesto.,CRP,1,05/09/2018,20/02/2019,"8,5",https://github.com/AbadiaTecnologica/Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint
+NoisyNER - Named entity recognition in social media,BBZ,1,05/09/2018,01/07/2019,"8,5",https://github.com/maltejanssen/NoisyNER---named-entity-recognition-in-social-media
+Generador de Informes Nutricionales,"RMS,ACO",1,05/09/2018,01/07/2019,"8,5",https://github.com/jhm0025/TFG-GII18.09-Generador-de-informes-nutricionales/ 
+"Aplicación Web para la recopilación, tratamiento y visualización de datos públicos 2","JDP, JMR",1,05/09/2018,01/07/2019,"8,5",https://github.com/SergioLopez92/TFG-Datos-publicos 
+Plataforma para la predicción de potencia eléctrica generada en parques eólicos usando técnicas de machine learning,"RRG, DSO",1,07/10/2024,18/06/2025,"8,5",https://github.com/2024-25-TFG-jun/TFG-Plataforma-para-la-prediccion-de-potencia-electrica-generada-en-parques-eolicos
+" Aplicación de técnicas de Deep Learning en conjuntos de datos IoT, para la detección de intrusión","NBH, RRG",1,22/10/2024,14/07/2025,"8,5",https://github.com/2024-25-TFG-jul/TFG-GII-Transformer-Series-Temporales-Trafico-IoT
+Ububooknet,"JGO, LIM",1,05/09/2018,01/07/2019,"8,3",https://github.com/lca0037/GII18.0U-Ububooknet/
+Aplicación para la gestión de contenido audiovisual,ASM,1,28/02/2025,18/06/2025,"8,2",https://github.com/2024-25-TFG-jun/FlixFinderTV
+Extracción y procesamiento de datos de Amazon para su utilización en un estudio de marketing,"JDP, CGO",1,05/09/2018,01/07/2019,"8,1",https://github.com/daniarnaizg/TFG-Amazon-SCRPaper 
+CVN,"CGO, JRD",1,05/09/2018,20/02/2019,8,https://github.com/rpp0041/PCVN.git
+ Sistema de Recomendación basado en Aprendizaje Profundo,BBZ,1,05/09/2018,01/07/2019,8,https://github.com/rnc0011/SistemaRecomendacionTFG
+Aplicación de recomendación nutricional - HEALTHAPP,ACO,1,05/09/2018,01/07/2019,8,https://github.com/jct0024/HealthApp
+ Implementación del algoritmo TRA-CLUS Mejorado para el análisis de tráfico,"BBZ, HCA",1,19/02/2024,21/01/2025,8,https://github.com/2024-25-TFG-ene/TFG_TRACLUS
+FindMyBuddy,CLN,1,15/10/2024,18/06/2025,8,https://gitlab.com/HP-SCDS/Observatorio/2024-2025/findmybuddy/ubu-findmybuddy
+JIZT. Servicio de Resumen de Textos con AI en la Nube.,"CLN, JDP",1,26/10/2020,22/02/2021,10,https://github.com/dmlls/jizt
+Sistema de autenticación biométrica gestual sobre dispositivo móvil,"AHC, DUM",1,15/02/2021,16/07/2021,"9,7",https://github.com/iturrientes-UBU/SignAir
+ Integración de repositorios en ARIADNE,CLN,1,28/02/2020,24/07/2020,"9,5",https://github.com/gcm1001/TFG-CeniehAriadne
+Análisis comercial urbano utilizando series temporales de compras de tarjetas de Crédito,"JGO, VAG",1,24/10/2019,20/02/2020,"9,3",https://github.com/SergioBueno27/TFG_GII_Analisis_Comercial_Urbano
+Herramienta de clustering a partir de datos extraídos de Moodle,RMS,1,21/01/2020,24/07/2020,"9,3",https://github.com/xjx1001/UBUMonitor
+ UBUEstelas,"RMS, ABI",1,05/09/2019,06/07/2020,"9,25",https://github.com/mpc0082/UBUEstelas
+Aplicación Web para Gestión de Datos Genómicos de Cáncer de Pulmón,"JDP, JMR",1,03/03/2021,16/07/2021,"9,2",https://github.com/2020-21-TFG-jul/TFG_HUBU
+NetExtractor,"JGO, VAG",1,09/10/2019,20/02/2020,"9,1",https://github.com/jorgenavarroglez/NetExtractor
+ CRPeador automático de mapas de movilidad,"AAG, CGO",1,24/10/2019,06/07/2020,9,https://github.com/gpm0009/TFG_MetrominutoWeb
+ Sentinel,"JGO, VAG",1,30/09/2019,06/07/2020,9,https://github.com/ZoeCalvo/Sentinel
+Asistente de voz para Moodle - UBUVoiceAssistant 2.0,RMS,1,27/01/2021,16/07/2021,9,https://github.com/2020-21-TFG-jul/UBUVoiceAssistant
+ Sibling Rewiring,"JGO, VAG",1,21/10/2020,16/07/2021,"8,7",https://github.com/2020-21-TFG-jul/Sibling-Rewiring
+ BC4Authentication2,JMR,1,16/10/2020,24/09/2021,"8,6",https://gitlab.com/HP-SCDS/Observatorio/2020-2021/ubu-bc4authentication2
+ Desarrollo de aplicación con asistente de voz para Moodle,RMS,1,10/02/2020,06/07/2020,"8,5",https://github.com/adp1002/UBUVoiceAssistant
+ Discovery2: Calendario para la utilización de recursos e impresoras,RMS,1,09/10/2019,24/07/2020,"8,5",https://gitlab.com/HP-SCDS/Observatorio/2019-2020/ubu-discovery2
+ LogScope,"VAG, JGO",1,10/10/2019,06/07/2020,"8,25",https://github.com/apm1005/TFG
+ Gestión de aulas de informática (versión Java),JMR,1,14/10/2019,24/07/2020,"8,2",https://github.com/lcs1001/gestion-aulas-informatica
+"Selección y optimización de un modelo de ""Deep Learning"" de detección de defectos, con aplicación industrial","PLC, JDP",1,28/10/2020,21/06/2021,"8,1",https://github.com/fyi0000/TFG-GII-20.04
+Arquitectura de validación sobre Blockchain,AHC,1,14/10/2019,20/02/2020,8,https://github.com/jrb0043/TFG-BigchainDB
+Programación de robot móvil para superación de pruebas en competición robótica,JSG,1,04/10/2019,20/02/2020,8,https://github.com/MarcosMillanTFG/GII-19.20--ASTI-CHALLENGE
+Free Connect: Toolkit de ayuda para la interconexión de sensores inalambricos.,CRP,1,02/12/2019,06/07/2020,8,https://github.com/turbolargoo/Free-Connect
+Predicción de llegada de medusas a la costa usando Aprendizaje Automático,"JDP, AAG",1,29/01/2020,06/07/2020,8,https://github.com/psnti/Jellyfish_Forecast
+Gestión de aulas de informática (versión Python),JMR,1,16/01/2019,24/07/2020,8,https://github.com/jgo0038/TFG-Reserva-aulas-informatica
+ Videojuego de plataformas con mecánicas de manipulación del tiempo,JAA,1,28/10/2020,21/06/2021,8,https://github.com/ubutfgm/mri1001-tfg
+Fastastic roads,JAA,1,16/10/2020,16/07/2021,8,https://github.com/Kencho/fastastic-roads
+ Flutter games,"JDP, CGO",1,26/02/2020,24/07/2020,"7,8",https://github.com/scc0034/flutter_serpiente
+ Herramienta web repositorios de TFGII,"AAG, CLN",1,20/10/2020,16/07/2021,"7,8",https://github.com/2020-21-TFG-jul/Gestor-TFG-2021
+ Desarrollo de un servicio de vídeo en streaming multicámara,CRP,1,12/03/2021,24/09/2021,"7,7",https://github.com/ubutfgm/DomoCamera
+ Detección de defectos en piezas metálicas a partir de imágenes de radiografía,"JDP, PLC",1,30/09/2019,24/07/2020,"7,5",https://github.com/nuf1001/XRayDetector
+ Sistema de reconocimiento de personas mediante el iris.,JDP,1,01/06/2020,02/10/2020,"7,5",https://github.com/jaa0124/iris_classifier
+Asistente remoto en realidad aumentada y mixta con Hololens 2,"AAP, NBH",1,08/10/2020,21/06/2021,"7,5",https://github.com/mmv1001/TFG-Asistencia-remota-con-Hololens-2
+Sistema Altamente Inmersivo de Visión Remota Estereoscópica y Dinámica ,"AHC, NBH",1,08/10/2020,21/06/2021,"7,3",https://github.com/psf1002/Sistema-de-visi-n-estereosc-pica-inmersiva-
+ BC4Distribution: Aplicar tecnología Blockchain en una cadena de distribución de productos,AAP,1,16/10/2018,24/01/2020,7,https://github.com/ers0026/ProyectoFinal
+Planificación de Rutas Turísticas Personalizadas con Ventanas de Tiempo,BBZ,1,05/04/2019,20/02/2020,7,https://github.com/jCRP0069/TourPlanner-FrontEnd-Cliente
+Realidad Virtual: Desarrollo en Entorno Abiertos. Laureados,"PSO, AAG",1,10/10/2019,24/07/2020,7,https://github.com/smi0010/TFG_Herramientas_Realidad_Aumentada
+MultiAPI,AAP,1,16/10/2018,01/10/2020,7,https://gitlab.com/HP-SCDS/Observatorio/2018-2019/ubu-multiapi
+ Herramienta para la selección de trayectos de viaje,JMR,1,02/03/2021,16/07/2021,7,https://github.com/2020-21-TFG-jul/TFGViajes
+Aplicación de métodos de super resolución en secuencias de vídeo para su mejora de calidad/restauración,"PLC, CGO",1,03/11/2020,16/07/2021,7,https://github.com/2020-21-TFG-jul/TFG_EDVR
+ Plataforma de monitorización de flujos de datos IoT,BBZ,1,03/11/2020,24/09/2021,7,https://github.com/ubutfgm/TFG-Monitorizacion-IOT
+ Árboles Singulares de la UBU (ARBUBU),"PRF,ACO",1,28/02/2019,24/01/2020,"6,5",https://github.com/fma0043/TFG_ARBUBU
+ Plataforma de análisis del metajuego Magic The Gathering,"JSM, JGO",1,31/10/2019,24/07/2020,6,https://github.com/Ebl0010/Medidor-estadistico-metajuego-Magic-The-Gathering
+Estudio e implementación de una herramienta LOW CODE para una aplicación web,"JGO, VAG",1,08/10/2020,27/01/2021,6,https://github.com/MstrOfMithril/TFG_GII_20.15 
+Plataforma de experimentación de text mining sobre repositorios de código abierto GitLab,"JAA, CLN",1,29/10/2019,01/10/2020,"5,5",https://github.com/wgm1001/Trabajo-de-Fin-de-Grado-Plataforma-de-text-mining-sobre-repositorios
+Asistente de programación en lenguaje C,CPA,1,10/02/2020,06/07/2020,5,https://github.com/RubenMarcosUBU/TFG
+Recomendador de zonas de negocio basado en redes complejas,"JGO, JSM",1,30/09/2019,28/01/2021,5,https://github.com/dcs0028/Recomendador-de-Zonas-de-Negocio
+ misCompras,CPA,1,03/03/2021,16/07/2021,"4,9",https://github.com/2020-21-TFG-jul/misCompras
+Desarrollo completo de un videojuego 3D,JMR,1,15/01/2022,14/07/2022,10,https://github.com/alberto-fuente/TheOnlyOne
+Ampliaciones de las funcionalidades de Spotify mediante su API pública,BBZ,1,18/10/2021,14/07/2022,10,https://github.com/2020-21-TFG-jul/SpotMyFM
+Estudio de técnicas de aprendizaje semisupervisado,AAG,1,22/10/2021,21/06/2022,"9,5",https://github.com/2021-22-TFG-jun/Semisupervised-learning-and-instance-selection-methods
+Juego para máquinas de azar,AAG,1,13/09/2021,22/02/2022,"9,3",https://github.com/javi-b/ICCyL-slot-game
+ Asistente para la identificación de personas conocidas.,CRP,1,19/10/2021,21/06/2022,"9,2",https://github.com/2021-22-TFG-jun/IdCo
+Visión artificial para evaluación de ejercicios de rehabilitación,"JDP, JRS, JGL",1,17/02/2022,14/07/2022,"9,2",https://github.com/2021-22-TFG-jul/TFG-Evaluacion-Ejercicios-Rehabilitacion
+State of the Art Review of Applied Optimization Algorithms for a Flexible Modular Production System,BBZ,1,19/10/2021,27/01/2022,9,https://github.com/2021-22-TFG-ene/matrix-optimization
+ Plataforma de experimentación de text mining sobre repositorios de código abierto Github,"JAA, CLN",1,12/03/2021,27/01/2022,9,https://github.com/2021-22-TFG-ene/github-text-mining-tfg
+ Implementación de Visión Artificial: control de calidad en tejidos de automóvil,PLC,1,11/02/2022,21/06/2022,9,https://github.com/xgg1003/VisionArtificial
+ X-Teeth,"CGO, JRS",1,02/02/2022,14/07/2022,"8,8",https://github.com/2021-22-TFG-jul/TFG_X-Teeth
+ Control Robótico mediante Tecnologías Inmersivas,CCB,1,07/03/2022,21/06/2022,"8,5",https://github.com/2021-22-TFG-jun/Control-Robotico-TFG-2022
+ Conectividad Wifi con sistemas embebidos,"DSO, AMG",1,13/10/2021,14/07/2022,"8,5",https://github.com/eod1001/TFG_CONEXION_FRDMK64F
+ Plataforma de Autocorrección de Ejercicios en Python,"BBZ, RCV",1,09/02/2022,14/07/2022,"8,5",https://github.com/2021-22-TFG-jul/autograder-python
+Mejora y nuevas funcionalidades de comunicación de una interfaz para planta piloto,"DSO, AMG",1,09/02/2022,14/07/2022,"8,2",https://github.com/2021-22-TFG-jul/TFG-1
+Migración de Generador de Informes Nutricionales a plataforma Web,"RMS,ACO",1,07/05/2021,22/02/2022,8,https://github.com/2021-22-TFG-feb/NutritionalGenerator
+Asistente para visitar museos mediante geolocalización de usuarios en entornos indoor,CRP,1,29/01/2022,21/06/2022,8,https://github.com/2021-22-TFG-jun/tfg-ing-informatica
+ Servicio web para la generación de ejercicios de análisis sintáctico,"CGO, AAG",1,24/02/2022,21/06/2022,8,https://github.com/Alvaro9rc/TFG-Web-Analisis-Sintactico
+ Aplicación web para estimar diferencias y composición de la dieta de vertebrados herbívoros,"LIM, JGO",1,02/11/2021,29/09/2022,8,https://github.com/2022-23-TFG-sep/Mixing_models
+ Modern Data Stack para analizar la situación epidemilógica,"JGO, JSM",1,02/03/2022,14/07/2022,"7,8",https://github.com/2021-22-TFG-jul/Modern-Data-Stack-para-analizar-la-situaci-n-epidemeologica-
+ Modelo de Propagación de Malware basado en Deep Learning,"BBZ, RCV",1,09/02/2022,29/09/2022,"7,8",https://github.com/2022-23-TFG-sep/TFG-RL-malware
+ Sistema de recomendación de tecnologías para desarrolladores basado en la encuesta de Stack Overflow,"JSM, VAG",1,27/12/2021,21/06/2022,"7,6",https://github.com/2021-22-TFG-jun/TFG-Sistema-de-recomendaci-n-de-tecnolog-as-para-desarrolladores-basado-en-la-encuesta-de-Stack-Over
+Plataforma segura para la gestión y uso de videos como herramienta de ayuda al diagnóstico en el ámbito sanitario,"DUM, CCB",1,01/12/2021,21/06/2022,"7,5",https://github.com/oag1001/tfg
+ Prototipo de Edge Computing para Visión Artificial,BBZ,1,16/03/2021,29/09/2022,"7,5",https://github.com/2022-23-TFG-sep/TF_Keras_TFG
+Control de un molino eólico usando Aprendizaje por refuerzo profundo,"DSO, RCV",1,10/02/2022,29/09/2022,"7,5",https://github.com/2022-23-TFG-sep/Control-de-un-molino-eolico-usando-Aprendizaje-por-refuerzo-profundo
+Servicios RESTful de acceso a datos agregados con miCRPoservicios,RMS,1,29/09/2021,14/07/2022,7,https://github.com/RodManCel/TFG
+NetExtractor 2.0,"JGO, VAG",1,23/02/2022,14/07/2022,7,https://github.com/2021-22-TFG-jul/NetExtractor-2.0
+ Sniffer para CRPeación de conjunto de datos – IV – CRPeación de Protocolos,JSD,1,21/03/2022,29/09/2022,7,https://github.com/2022-23-TFG-sep/Sniffer_TFG
+Identificación de Parkinson mediante visión artificial,"AAG, AAO",1,13/10/2021,21/06/2022,"6,7",https://github.com/2021-22-TFG-jun/TFG_Deteccion_Parkinson
+"Lecturapp - Aplicación para fomentar la lectura en niños, mostrando clips de realidad aumentada sobre la portada de un libro",PSO,1,20/10/2021,14/07/2022,6,https://gitlab.com/HP-SCDS/Observatorio/2021-2022/lecturapp/ubu-lecturapp
+ CRPeación de Dashboard proactivo para la detección de ineficiencias del tipo Missing Index,JGO,1,19/04/2022,14/07/2022,"5,3",https://github.com/lah1002/TFG_LuisMiguelAguero_2022
+ Visión Artificial para Detección de Bajas de Aves,"CCB, RCV",1,14/02/2022,14/07/2022,5,https://github.com/2021-22-TFG-jul/Deteccion_bajas_aves_TFG
+ Aplicación de aprendizaje semi-supervisado a seguridad,AAG,1,01/09/2022,20/06/2023,10,https://github.com/2022-23-TFG-jun/semisupervised-learning-in-cibersecurity
+ Aplicación web para la docencia de métodos de aprendizaje semi-supervisado,"AAG, CGO",1,01/09/2022,20/06/2023,"9,6",https://github.com/2022-23-TFG-jun/TFG-SemiSupervisado
+ Análisis y predicción de datos obtenidos del funcionamiento de un AGV,"BBZ, JSG",1,10/10/2022,13/07/2023,"9,5",https://github.com/2022-23-TFG-jul/TFG_AGV
+The Impact Factor Oracle,"AAG, VAG",1,01/09/2022,20/06/2023,"9,2",https://github.com/2022-23-TFG-jun/JCRP_Impact_Factor
+ Urban Street Mapping,"VAG, JMR",1,01/10/2022,26/09/2023,"9,2",https://github.com/2023-24-TFG-sep/TFG-Urban-Street-Mapping-Transfer
+ X-Teeth2.0,"CGO, AAO, JRS",1,07/10/2022,26/09/2023,"9,1",https://github.com/2023-24-TFG-sep/TFG_2023_VisionArtificial
+ Robótica-Denavit-Hartenberg,"JSD, RMS",1,16/09/2021,26/01/2023,9,https://github.com/2022-23-TFG-ene/Robotic-Proyects-
+ XacoMeter II - Elementos patrimoniales del Camino de Santiago en Twitter,"VAG, SDF, JSM",1,04/10/2022,28/02/2023,9,https://github.com/2022-23-TFG-feb/XacoMeterII-Twitter
+ Identificación de Parkinson porvisión artificial,"AAG, AAO, JRS",1,01/09/2022,20/06/2023,9,https://github.com/2022-23-TFG-jun/tfg-paddel
+ AlertsBot,RMS,1,04/10/2022,20/06/2023,9,https://gitlab.com/HP-SCDS/Observatorio/2022-2023/alertsbot/ubu-grado-alertsbot
+" Aplicación web para realizar análisis de componentes principales, de clustering y de detección de outliers DETECCIÓN DE OUTLIERS ","LIM, JGO",1,01/03/2023,20/06/2023,9,https://github.com/2022-23-TFG-jun/ADCO
+Inventario del inmovilizado mediante identificación por radiofrecuencia (RFID),RMS,1,01/03/2023,20/06/2023,9,https://github.com/2022-23-TFG-jun/tfg_RFID
+ Framework para la generación automática de APIs,JAF,1,04/10/2022,20/06/2023,9,https://github.com/2022-23-TFG-jun/DockerHandler
+ Diseño e implementación de una App Android para el diagnóstico del grado de retinopatía diabética,"DUM, NBH",1,10/10/2022,13/07/2023,9,https://github.com/2022-23-TFG-jul/Retinopatia-diabetica
+ Aplicación de gestión del PDI de un área de la UBU,"AAG, CPA, JGL",1,22/02/2023,13/07/2023,9,https://github.com/2022-23-TFG-jul/Aplicacion-de-gestion-del-PDI-de-un-area-de-la-UBU
+ Aplicación para invernadero automatizado IOT: Green in House,"RMS, ACO",1,27/09/2022,13/07/2023,9,https://github.com/2022-23-TFG-jul/GreenInHouse_PlantPot
+ Interfaz gráfica para la gestión de chatbots en la plataforma DialogFlow,RMS,1,20/10/2022,13/07/2023,"8,8",https://github.com/2022-23-TFG-jul/ChatSCRPiptor
+ CRPyptoCards - CRPeación de un juego de cartas basado en blockchain Ethereum y NFTs,JMR,1,18/10/2021,26/01/2023,"8,5",https://gitlab.com/HP-SCDS/Observatorio/2021-2022/CRPyptocards/ubu-CRPyptocards
+Aplicación para captura de datos Open Data en Smart Cities,"HCA, BBZ",1,29/11/2022,20/06/2023,"8,5",https://github.com/2022-23-TFG-jun/PROYECTO_TFG
+"Seguimiento de requerimientos para gestionar, medir, evaluar y mejorar",PSO,1,06/10/2022,13/07/2023,"8,5",https://github.com/2022-23-TFG-jul/tfg2223
+SecondHandChain,"JMR, SRA",1,11/10/2022,13/07/2023,"8,5",https://github.com/2022-23-TFG-jul/second-hand-chain
+Aplicación de gestión de TFGs,"ASM, AAG",1,04/10/2022,28/02/2023,8,https://github.com/2022-23-TFG-feb/Gestor-TFG-2022
+R-ECO,"JGO, HCA",1,17/10/2022,20/06/2023,8,https://github.com/2022-23-TFG-jun/R-ECO
+AI music,"CGO, AAO",1,01/09/2022,13/07/2023,8,https://github.com/2022-23-TFG-jul/AI-Music
+Web del Servicio de Oncología del HUBU,"JMR, ASM",1,01/09/2022,13/07/2023,8,https://github.com/2022-23-TFG-jul/TFG_ONCOLOGIA_HUBU
+ Aplicación web para el contexto de la empresa,"SRA, CPA",1,25/10/2022,20/06/2023,"7,8",https://github.com/2022-23-TFG-jun/CSACVM
+ Implementación de herramienta de Gestión de Proyectos IT en Antolin,AAP,1,06/03/2023,20/06/2023,"7,8",https://github.com/2022-23-TFG-jun/PMO-GestionDeProyectos-JIRA
+Vulnerabilidad de redes de paquetes software,"CLN, JSM",1,22/11/2022,13/07/2023,"7,8",https://github.com/2022-23-TFG-jul/olivia-finder
+Aplicación móvil de información nutricional por reconocimiento de imágenes,BBZ,1,10/04/2023,13/07/2023,"7,8",https://github.com/2022-23-TFG-jul/ReconocimientoNutricional
+" CRPeación de demos técnica y documentación asociada, para la detección/clasificación de materiales, utilizando un sensor radar a 60GHz","JDP, PLC",1,15/04/2020,26/01/2023,"7,5",https://github.com/2022-23-TFG-ene/TFG_RADAR_60GHZ
+ NetExtractor 3.0,"JGO, VAG",1,20/10/2022,20/06/2023,"7,5",https://github.com/2022-23-TFG-jun/NetExtractor-3.0
+Análisis de datos de temperatura y humedad de suelo procedentes de sensores IoT desplegados en un viñedo,"RRG, AMG",1,30/09/2022,13/07/2023,"7,5",https://github.com/2022-23-TFG-jul/TFG22-23
+Xaconews,"JGO, SDF",1,28/04/2023,13/07/2023,"7,5",https://github.com/2022-23-TFG-jul/xaconews
+Generación de cuestinarios sobre reglas de asociación,JRD,1,03/11/2022,28/02/2023,7,https://github.com/2022-23-TFG-feb/TFG-22.11
+ Herramienta web de gestión de experiencias en actividades docentes,"VAG, JGO",1,10/02/2023,20/06/2023,7,https://github.com/2022-23-TFG-jun/Juegos-docentes
+Generador automático de problemas de control de proyectos,"JGO, VAG",1,04/11/2022,13/07/2023,7,https://github.com/2022-23-TFG-jul/MQGenerator
+Generación de cuestinarios sobre clasificadores basados en árboles y reglas,JRD,1,18/10/2022,13/07/2023,"6,5",https://github.com/2022-23-TFG-jul/TFG-Generacion_Arboles_y_Reglas
+ Optimización de las curvas de producción de frío en compresores de tornillo mediante técnicas de IA,"NBH, AAP",1,04/11/2022,20/06/2023,6,https://github.com/2022-23-TFG-jun/TFG-1
+Programación de redes definidas por software (SDN) mediante el lenguaje P4,"RRG, AMG",1,07/10/2022,13/07/2023,6,https://github.com/2022-23-TFG-jul/TFG-Programacion-de-redes-definidas-por-software-SDN-mediante-el-lenguaje-P4
+ Ejecución eficiente de grandes modelos de lenguaje,JAF,1,01/12/2023,16/07/2024,"9,5",https://github.com/AdrianEncinas-itcl/sw-ITCL-chatbot
+ Sistema de visión artificial para detección de personas en entornos naturales a partir de video tomado desde un dron,"CCB, DUM",1,04/03/2024,16/07/2024,"9,4",https://github.com/2023-24-TFG-jul/TFG_Search-Rescue
+ Ampliación de web para la docencia de métodos de aprendizaje semi-supervisado,AAG,1,29/09/2023,16/07/2024,"9,3",https://github.com/2023-24-TFG-jul/TFG-Semi-Supervised-Learning
+ Web de libros y sistema de clasificación,"ASM, JBA",1,22/11/2023,17/06/2024,9,https://github.com/2023-24-TFG-jun/TFG_GII_23.23
+ Simulador para la enseñanza de algoritmos basados en árboles de decisión,CLN,1,06/03/2024,17/06/2024,9,https://github.com/2023-24-TFG-jun/TFG-decision-trees-sim
+ LLM Science Watchdog - Vigilante científico LLM,PLC,1,26/02/2024,16/07/2024,9,https://github.com/2023-24-TFG-jul/LLM-Science-Watchdog
+ Orquestador de ordenes de trabajo y gestión de turnos rotativos.,JAF,1,05/10/2023,16/07/2024,9,https://github.com/2023-24-TFG-jul/TFG_RPU_2024
+ ContractMe – Aplicación basada en blockchain que simplifica la contratación y la verificación,SRA,1,04/10/2023,16/07/2024,9,https://gitlab.com/HP-SCDS/Observatorio/2023-2024/contractme/ubu-contractme
+Generador de WEB Apps,JAF,1,05/10/2023,16/07/2024,9,https://github.com/tfgsergiogonzalezmartinez
+ Diseño y Desarrollo de un juego de 5 rodillos,JGO,1,20/09/2023,19/02/2024,"8,8",https://github.com/2023-24-TFG-feb/TFG_Ana_Salces
+Extracción de datos de dispositivo IoT en pacientes con Parkinson,"AAG, AAO",1,29/09/2023,17/06/2024,"8,8",https://github.com/2023-24-TFG-jun/TFG_TremorTrack
+Aplicación de transformaciones invariantes a la iluminación para mejora de la segmentación en imágenes. Aplicación a piezas metálicas.,"PLC, CLN",1,04/03/2024,16/07/2024,"8,8",https://github.com/2023-24-TFG-jul/TFG-Invariantes-de-iluminacion-en-piezas-metalicas
+Aplicación web para realizar seguimiento a pacientes con Parkinson,"AAG, AAO",1,29/09/2023,16/07/2024,"8,6",https://github.com/2023-24-TFG-sep/PDAIvolution
+Módulo de proCRPastinación en Moodle para su integración en la herramienta UBUMonitor,RMS,1,23/10/2023,17/06/2024,"8,5",https://github.com/2023-24-TFG-jun/UBUMonitor
+ Desarrollo de una Aplicación Web de la NBA,JGO,1,17/01/2024,17/06/2024,"8,4",https://github.com/2023-24-TFG-jun/StatsGlowMind
+ Procesamiento de imágenes para detección de pequeños animales,CCB,1,01/11/2023,17/06/2024,"8,3",https://github.com/2023-24-TFG-jun/Deteccion_Insectos_TFG
+Generación procedimental de mapas en videojuegos,"JGO, JAA",1,21/09/2021,16/07/2024,"8,3",https://github.com/2023-24-TFG-jul/algoritmosYmazmorras
+Aplicación web full stack para gestionar datos clínicos,"JMR, SRA",1,08/01/2024,16/07/2024,"8,3",https://github.com/2023-24-TFG-jul/TFG_FullStack_Medical_Database
+ DesperdicioCero: del frigo a la mesa,CRP,1,23/01/2024,25/09/2024,"8,3",https://github.com/2024-25-TFG-sep/DesperdicioCero
+Te interesa: aplicación web para recolección y publicación de ofertas públicas de empleo en universidades,"ASM, CGO",1,29/09/2023,17/06/2024,"8,1",https://github.com/2023-24-TFG-jun/DeltaOffers
+ AbuseGame – Videojuego en línea para hacer scoring de riesgo de abuso infantil y bullying,SRA,1,04/10/2023,17/06/2024,8,https://gitlab.com/HP-SCDS/Observatorio/2023-2024/abusegame/ubu-abusegame
+ Aplicación multiplataforma para la compraventa de productos de manera directa y/o mediante subasta,"SRA, JBA",1,20/01/2024,16/07/2024,8,https://github.com/RodrigoPerezUbierna/TFG_RPU_2024
+Gestión web de programas de doctorado,"CGO, JGO",1,25/11/2021,16/07/2024,8,https://github.com/2023-24-TFG-jul/WebSCRPapingTFG
+Sibling Rewiring 2.0,"JGO, VAG",1,10/10/2023,16/07/2024,"7,7",https://github.com/2023-24-TFG-jul/Sibling-Rewiring
+Evaluación inteligente y en tiempo real de la deposición de pesticidas en viñedo mediante procesamiento de imágenes,"CCB, AHC",1,19/10/2022,17/06/2024,"7,6",https://github.com/2023-24-TFG-jun/app
+Herramienta de Digitalización de Partituras Antiguas,JGO,1,15/02/2024,16/07/2024,"7,6",https://github.com/2023-24-TFG-jul/Digitalizacion-Partituras
+Integración de nuevas técnicas de clustering sobre datos educacionales en Moodle - UBUMonitor Clustering 2.0,RMS,1,11/03/2024,16/07/2024,"7,5",https://github.com/2023-24-TFG-jul/UBUMonitor
+" Tratamiento, análisis y visualización de datos obtenidos del funcionamiento de un AGV","BBZ, JSG",1,28/02/2024,16/07/2024,"7,5",https://github.com/2023-24-TFG-jul/TFG-GII
+Programación de aplicación para análisis de datos,"CCB, AAP",1,16/02/2024,16/07/2024,"7,1",https://github.com/2023-24-TFG-jul/Programaci-n-de-aplicaci-n-para-analisis-de-datos
+Análisis de imágenes Hiperespectrales en viñedo,CCB,1,01/02/2024,16/07/2024,"7,1",https://github.com/2023-24-TFG-jul/TFG
+Detección de nubes a través de aprendizaje automático supervisado,"DGL, NBH",1,21/02/2024,17/06/2024,7,https://github.com/2023-24-TFG-jun/TFG_Sky_Classification
+ Generación de cuestionarios sobre algoritmos de ordenación,JRD,1,08/02/2024,17/06/2024,7,https://github.com/2023-24-TFG-jun/TFG-Sorting-Algorithm-Quiz-Generation
+Aplicación interacción medicamentos,JAF,1,08/01/2024,17/06/2024,7,https://github.com/2023-24-TFG-jun/TFG-Medicamentos
+MoodleQA,"RMS, CLN",1,03/10/2023,17/06/2024,7,https://github.com/2023-24-TFG-jun/eLearningQA
+Detección de ejercicios en vídeos de rehabilitación,"JDP, JGL, JRS",1,01/12/2023,16/07/2024,7,https://github.com/2023-24-TFG-jul/Deteccion-de-ejercicios-en-videos-de-rehabilitacion
+Espacio de trabajo colaborativo programado en Flask y despliegue de su arquitectura en la nube,RRG,1,21/02/2024,16/07/2024,7,https://github.com/2023-24-TFG-jul/TFG-Plataforma-web-colaborativa
+ Aplicación para captura de datos Open Data en Smart Cities,"BBZ, HCA",1,18/01/2024,16/07/2024,7,https://github.com/2023-24-TFG-jul/TFG_AAL
+ FutboStats: análisis y estadísticas de fútbol,CRP,1,23/02/2024,17/06/2024,"6,5",https://github.com/2023-24-TFG-jun/TFG
+Aprendizaje por refuerzo (Reinforcement Learning) en redes ópticas pasivas,RRG,1,05/10/2023,16/07/2024,6,https://github.com/2023-24-TFG-jul/TFG-GII-Aprendizaje-por-refuerzo-Reinforcement-Learning-en-redes-opticas-pasivas
+Aplicación móvil Breathbank,"ASM, DGG",1,22/11/2023,16/07/2024,6,https://github.com/2023-24-TFG-jul/BreathBank
+Desarrollo de un bot de trading,"JGO, VAG",1,01/09/2023,17/06/2024,5,https://github.com/2023-24-TFG-jun/TFG-BOT-TRADING
+ Generador de cuestionarios y escenarios de test sobre soft skills,RMS,1,15/02/2024,16/07/2024,5,https://github.com/2023-24-TFG-jul/TFG-RiskReal
+Servicio web para gestionar e informar de vulnerabilidades,CRP,1,06/02/2025,18/06/2025,8,https://github.com/DesarrolloEQ0079/cve-sentinel
+Web de la Liga de baloncesto de empresas de Burgos,CRP,1,12/02/2025,18/06/2025,8,https://github.com/2024-25-TFG-jun/tfg
+ Analisis de imagenes hiperespectrales para deteccion de cobre en viñedo (proyecto Dig4Vitis v2),CCB,1,05/03/2025,14/07/2025,8,https://github.com/2024-25-TFG-jul/TFG_Dig4Vitis_V2
+Integración de telemetría mediante .NET Aspire y el uso de modelos de IA para el análisis de logs en GNOSS Semantic AI Platform,JGO,1,10/10/2024,14/07/2025,8,https://github.com/equipognoss/Gnoss.Web.Monitoring 
+Digitalización del Boletín de Turismo del Observatorio de la Provincia de Burgos,BBZ,1,26/02/2025,14/07/2025,8,https://github.com/2024-25-TFG-jul/TFG-DigitalizacionBoletinTurismo 
+Simulador para la optimización del tráfico en redes XGSPON,"RRG,AMN",1,03/12/2024,14/07/2025,"7,8",https://github.com/2024-25-TFG-jul/TFG_GII_DRL_Redes_GS-PON 
+Sistema de Visión Artificial para el Mantenimiento de Carreteras,BBZ,1,30/04/2025,14/07/2025,"7,8",https://github.com/2024-25-TFG-jul/TFG-App-IA-IncidenciasViales 
+ Herramienta para medir la eficiencia de código en Python,JSG,1,05/09/2018,01/07/2019,"7,7",https://github.com/Guillecal/TFG-Herramienta_para_medir_la_eficiencia_de_codigo_python/
+Trayectorias Semánticas,BBZ,1,05/09/2018,01/07/2019,"7,7",https://github.com/hca0004/GII17.0T_Trayectorias_Semanticas_1819
+SmartFiller,JRD,1,05/09/2018,01/07/2019,"7,5",https://gitlab.com/HP-SCDS/Observatorio/2018-2019/ubu-smartfiller
+Identificación de la efectividad de contramedidas en dispositivos IoT mediante técnicas de reinforcement learning,"RRG, NBH",1,09/10/2024,18/06/2025,"7,5",https://github.com/2024-25-TFG-jun/GII-24.19-contramedidas-IoT-mediante-reinforcement-learning
+nvestigación y desarrollo de herramientas para la anonimización de individuos en vídeo.,"JRS, JGL",1,15/10/2024,18/06/2025,"7,5",https://github.com/2024-25-TFG-jun/Trabajo-de-Fin-de-Grado
+Gestor de tareas de Moodle,RMS,1,05/02/2025,14/07/2025,"7,5",https://github.com/2024-25-TFG-jul/TFG-GestorTareasMoodle
+IG-Study,"JGO, JSM",1,05/09/2018,01/07/2019,"7,3",https://github.com/mpl0045/UBU-TFG-IG-Study
+ Cartera blockchain sobre Hyperledger Fabric,AHC,1,05/09/2018,01/07/2019,"7,3",https://github.com/amm0131/TFG-HyperledgerFabric
+Aproximación hacia la identificación automática de lesión de ictus en TC CRPaneal,"AAG, JDP",1,05/09/2018,01/07/2019,"7,3",https://github.com/bsc0001/TFG_Stroke-Lesion-Segmentation-Approach-using-CT 
+ Qualificajocs,"JGO, LIM",1,05/09/2018,01/07/2019,"7,2",https://github.com/ElvisDSO/Qualificajocs
+Detección de palets mediante LIDAR,JSG,1,05/09/2018,01/07/2019,"7,2",https://github.com/mfe0007/TFG-Deteccion_de_pallets_mediante_LIDAR
+ ReactVR,AAP,1,05/09/2018,01/07/2019,7,https://gitlab.com/HP-SCDS/Observatorio/2018-2019/ubu-reactvr
+ Seguimiento de la actividad mediante pulseras cuantificadoras,"JDP, CGO",1,05/09/2018,19/09/2019,7,https://github.com/dsm0028/TFG-1819
+ Control de acceso a edificios de vehículos mediante visión artificial,"JGO, JSM",1,13/03/2025,18/06/2025,7,https://github.com/2024-25-TFG-jun/VehicleDetection
+ GreenInHouse 2.0 Aplicación móvil para maceta educativa,RMS,1,16/09/2024,18/06/2025,7,https://github.com/2024-25-TFG-jun/GreenInHouse2_APP
+ Sistema de Información sobre Matriculación,CPA,1,05/09/2018,01/07/2019,"6,7",https://github.com/mdi0007/Sistema-Informacion-sobre-Matriculacion 
+Simulador de fuerza gravitacional para apoyo en la docencia,CRP,1,11/10/2023,18/06/2025,"6,5",https://github.com/2024-25-TFG-jun/Gravity-Simulator
+ Estrategias de seguridad para dispositivos Internet de las cosas Industriales (IioT),CCB,1,09/01/2025,14/07/2025,"6,5",https://github.com/2024-25-TFG-jul/IoT_data_gestion 
+Detección de objetos con láser de seguridad,JSG,1,05/09/2017,25/01/2019,6,https://github.com/arp0054/TFG_ObjDetectorViaLaser/
+ Cliente-Servidor para administración de BBDD on-line de energía,"JMR, AAG",1,23/09/2018,20/02/2019,6,https://github.com/fransaiz95/Weblectric2018
+ Calculadora de huella de carbono,AAG,1,30/01/2025,14/07/2025,6,https://github.com/2024-25-TFG-jul/TFG_UBU_CalculadoraHuelladeCarbono
+ Desarrollo de una aplicación informática para el registro e interpretación de una Escala de análisis funcional en edades 0-6 años,RMS,1,05/09/2018,20/02/2019,"5,1",https://github.com/mni0000/TFG_InterpretacionEscalas_UBU
+App para el diagnóstico de fallos en fresadoras,"RMS, ABI",1,27/11/2017,20/02/2019,5,https://github.com/jubecu/DiagnosticoFresadoras
+ Voice-Assisted Computer Accessibility (VACA),PSO,1,01/04/2025,18/06/2025,5,https://github.com/2024-25-TFG-jun/TFGGII_VACA
+Sistema de comunicación entre sistema de vídeo llamadas (Jitsi) y gestor de flujos de datos (Apache Kafka),"JGL, JRS",1,14/03/2025,14/07/2025,4,https://github.com/2024-25-TFG-jul/TFG-SISTEMA-PROCESAMIENTO-VIDEO
+ Segmentación y composición 3d con técnicas de procesado de imágenes para fenotipado de plantas.,"CCB, JCN",1,21/04/2025,14/07/2025,3,https://github.com/2024-25-TFG-jul/TFG-OrtegaMoradillo
+Investigación y desarrollo en extracción de poses (2D/3D) de individuos en vídeo 2D,"JRS, JGL",1,06/03/2025,14/07/2025,0,https://github.com/2024-25-TFG-jul/TFG
+ Plataforma de viajes colaborativos,SRA,1,06/03/2025,23/09/2025,9,https://github.com/2025-26-TFG-sep/TFG-ViajesColaborativos
