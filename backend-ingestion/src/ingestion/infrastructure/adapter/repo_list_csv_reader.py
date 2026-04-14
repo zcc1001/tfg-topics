@@ -1,3 +1,4 @@
+import logging
 import re
 from typing import Any, List, Optional, Tuple
 from urllib.parse import urlparse
@@ -6,6 +7,8 @@ import pandas as pd
 
 from ingestion.application.ports.repo_list_reader import RepoListReaderPort
 from ingestion.domain.entities.entities import ThesisInfo
+
+logger = logging.getLogger(__name__)
 
 
 class RepoListCsvReaderPort(RepoListReaderPort):
@@ -27,9 +30,11 @@ class RepoListCsvReaderPort(RepoListReaderPort):
             owner_repo = self._extract_owner_repo(repo_url)
 
             if not owner_repo:
-                raise ValueError(
-                    f"Invalid or unsupported GitHub repository URL: '{repo_url}'"
+                logger.warning(
+                    "Skipping row with invalid or unsupported GitHub repository URL: '%s'",
+                    repo_url,
                 )
+                continue
 
             owner, repo = owner_repo
 
