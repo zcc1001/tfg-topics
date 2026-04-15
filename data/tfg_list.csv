@@ -56,7 +56,7 @@ GII_O_MA_24.06. Inteligencia Artificial para seguridad IoT,"RRG, AMG",1,22/02/20
 IA para detección temprana de incidentes de ciberseguridad con Telegram como fuente de datos,CGO,1,26/02/2024,15/07/2024,9.1,https://github.com/iraty/AI-for-early-detection-in-cybersecurity
 Implementación de una Prueba de Concepto (PoC) de Manage Engine PAM para la Gestión Eficiente de Acceso Privilegiado en Organizaciones,LAS,1,09/04/2024,15/07/2024,5.4,https://github.com/avs1002/TFG-PoC-de-PAM-Alejandro-Villar-Solla
 Sistema de extracción y gestión automatizada de requisitos desde documentos PDF para proyectos de ingeniería,"JSM, JGO",1,15/07/2024,27/02/2025,7.2,https://github.com/Esti-D/TFG-GestionRequisitosIngenieria
-SatelDataReport. Desarrollo de una aplicación para la realización de informes de ingeniería,"JSM, JGO",1,15/07/2024,27/02/2025,7,https://github.com/SergioOsuna/SatelDataReport
+SatelDataReport. Desarrollo de una aplicación para la realización de informes de ingeniería,"JSM, JGO",1,15/07/2024,27/02/2025,7,https://github.com/Osuna/SatelDataReport
 Eco City Tours. Aplicación móvil para la generación de rutas turísticas sostenibles propuestas por modelos de lenguaje de gran escala,CLN ,1,15/07/2024,27/02/2025,9.2,https://github.com/fps1001/TFGII_FPisot
 Gestión de formación,JSM,1,15/07/2024,27/02/2025,8.4,https://github.com/VictorVaqueroUBU/TFG
 Herramienta para la evaluación automática de entregas de programación con rúbricas y LLMScore,RMS,1,27/02/2025,15/06/2025,8.6,https://github.com/PaacDev/IAGScore
@@ -129,7 +129,7 @@ UBUGrades 2.0 ,RMS,1,29/09/2017,19/01/2018,"9,5",https://github.com/huco95/UBUGr
  Visor de espectros,"CGO, JDP",1,06/10/2017,09/07/2018,"8,5",https://github.com/IvanBeke/TFG-Visor-de-espectros/
 UBUassistant para Android,PRF,1,14/03/2018,09/07/2018,"8,5",https://github.com/cgc0045/TFG-UBUassistant
  Geolocalización dentro de edificios,CLN,1,29/03/2017,19/01/2018,8,https://github.com/jppasvit/geo-indoor
-Retail Antenna Analytics,"JGO, VAG",1,19/03/2018,06/06/2018,8,https://github.com/SergioBarberoBascones/AntennasStats
+Retail Antenna Analytics,"JGO, VAG",1,19/03/2018,06/06/2018,8,https://github.com/BarberoBascones/AntennasStats
  Gestión desde Android de un simulador de control domótico con Raspberry Pi,CRP,1,18/09/2017,06/06/2018,8,https://github.com/MJ0T4/Simulador_Domotica_Raspberry
 POODLE Planificación  de carga académica,CLN,1,06/10/2017,21/09/2018,8,https://github.com/Sonia95LG/POODLEapp
  Reconocimiento de fitolitos v2.0,"AAG, JDP",1,06/10/2017,21/09/2018,"7,5",https://github.com/mmb0093/TFG_Fitolitos
@@ -158,7 +158,7 @@ Sistema de información de apoyo a GreenMetrics,"JGO, VAG",1,08/11/2024,18/06/20
 Monitor en tiempo real y control de acceso a recursos de un sistema de fabricación aditiva multi-puesto.,CRP,1,05/09/2018,20/02/2019,"8,5",https://github.com/AbadiaTecnologica/Monitor-en-tiempo-real-de-un-sistema-de-fabricacion-aditiva-para-Octoprint
 NoisyNER - Named entity recognition in social media,BBZ,1,05/09/2018,01/07/2019,"8,5",https://github.com/maltejanssen/NoisyNER---named-entity-recognition-in-social-media
 Generador de Informes Nutricionales,"RMS,ACO",1,05/09/2018,01/07/2019,"8,5",https://github.com/jhm0025/TFG-GII18.09-Generador-de-informes-nutricionales/ 
-"Aplicación Web para la recopilación, tratamiento y visualización de datos públicos 2","JDP, JMR",1,05/09/2018,01/07/2019,"8,5",https://github.com/SergioLopez92/TFG-Datos-publicos 
+"Aplicación Web para la recopilación, tratamiento y visualización de datos públicos 2","JDP, JMR",1,05/09/2018,01/07/2019,"8,5",https://github.com/Lopez92/TFG-Datos-publicos 
 Plataforma para la predicción de potencia eléctrica generada en parques eólicos usando técnicas de machine learning,"RRG, DSO",1,07/10/2024,18/06/2025,"8,5",https://github.com/2024-25-TFG-jun/TFG-Plataforma-para-la-prediccion-de-potencia-electrica-generada-en-parques-eolicos
 " Aplicación de técnicas de Deep Learning en conjuntos de datos IoT, para la detección de intrusión","NBH, RRG",1,22/10/2024,14/07/2025,"8,5",https://github.com/2024-25-TFG-jul/TFG-GII-Transformer-Series-Temporales-Trafico-IoT
 Ububooknet,"JGO, LIM",1,05/09/2018,01/07/2019,"8,3",https://github.com/lca0037/GII18.0U-Ububooknet/
@@ -171,7 +171,7 @@ Aplicación de recomendación nutricional - HEALTHAPP,ACO,1,05/09/2018,01/07/201
 JIZT. Servicio de Resumen de Textos con AI en la Nube.,"CLN, JDP",1,26/10/2020,22/02/2021,10,https://github.com/dmlls/jizt
 Sistema de autenticación biométrica gestual sobre dispositivo móvil,"AHC, DUM",1,15/02/2021,16/07/2021,"9,7",https://github.com/iturrientes-UBU/SignAir
  Integración de repositorios en ARIADNE,CLN,1,28/02/2020,24/07/2020,"9,5",https://github.com/gcm1001/TFG-CeniehAriadne
-Análisis comercial urbano utilizando series temporales de compras de tarjetas de Crédito,"JGO, VAG",1,24/10/2019,20/02/2020,"9,3",https://github.com/SergioBueno27/TFG_GII_Analisis_Comercial_Urbano
+Análisis comercial urbano utilizando series temporales de compras de tarjetas de Crédito,"JGO, VAG",1,24/10/2019,20/02/2020,"9,3",https://github.com/Bueno27/TFG_GII_Analisis_Comercial_Urbano
 Herramienta de clustering a partir de datos extraídos de Moodle,RMS,1,21/01/2020,24/07/2020,"9,3",https://github.com/xjx1001/UBUMonitor
  UBUEstelas,"RMS, ABI",1,05/09/2019,06/07/2020,"9,25",https://github.com/mpc0082/UBUEstelas
 Aplicación Web para Gestión de Datos Genómicos de Cáncer de Pulmón,"JDP, JMR",1,03/03/2021,16/07/2021,"9,2",https://github.com/2020-21-TFG-jul/TFG_HUBU
@@ -284,7 +284,7 @@ Programación de redes definidas por software (SDN) mediante el lenguaje P4,"RRG
  Simulador para la enseñanza de algoritmos basados en árboles de decisión,CLN,1,06/03/2024,17/06/2024,9,https://github.com/2023-24-TFG-jun/TFG-decision-trees-sim
  LLM Science Watchdog - Vigilante científico LLM,PLC,1,26/02/2024,16/07/2024,9,https://github.com/2023-24-TFG-jul/LLM-Science-Watchdog
  Orquestador de ordenes de trabajo y gestión de turnos rotativos.,JAF,1,05/10/2023,16/07/2024,9,https://github.com/2023-24-TFG-jul/TFG_RPU_2024
-Generador de WEB Apps,JAF,1,05/10/2023,16/07/2024,9,https://github.com/tfgsergiogonzalezmartinez
+Generador de WEB Apps,JAF,1,05/10/2023,16/07/2024,9,https://github.com/tfgsergiogonzalezmartinez/tfg_frontend
  Diseño y Desarrollo de un juego de 5 rodillos,JGO,1,20/09/2023,19/02/2024,"8,8",https://github.com/2023-24-TFG-feb/TFG_Ana_Salces
 Extracción de datos de dispositivo IoT en pacientes con Parkinson,"AAG, AAO",1,29/09/2023,17/06/2024,"8,8",https://github.com/2023-24-TFG-jun/TFG_TremorTrack
 Aplicación de transformaciones invariantes a la iluminación para mejora de la segmentación en imágenes. Aplicación a piezas metálicas.,"PLC, CLN",1,04/03/2024,16/07/2024,"8,8",https://github.com/2023-24-TFG-jul/TFG-Invariantes-de-iluminacion-en-piezas-metalicas
