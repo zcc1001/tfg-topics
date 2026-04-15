@@ -31,7 +31,6 @@ IA-IVR,AMG ,1,22/02/2023,12/07/2023,5,https://github.com/andonivianez/ubutfg-ai-
 Lista de comprobación de buenas prácticas de enseñanza en cursos Moodle,"CLN, RMS",1,06/10/2022,12/07/2023,6.1,https://github.com/ada1012/eLearningQA
 "Investigación, CRPeación y explotación de modelos para el estudio del COVID-19 en pacientes del servicio cántabro de Salud.","CLN, JDP",1,04/10/2021,12/07/2023,7.1,https://github.com/sgg0008/ml-COVID-19
 Backend en miCRPoservicios para aplicación móvil,PRF,1,29/09/2022,24/01/2024,8.5,https://github.com/emur-uy/backend
-MiVoto. Aplicación para realización de votaciones en comunidades de vecinos.,"JSM, VAG",1,28/09/2023,24/01/2024,9.2,https://bitbucket.org/mivototfg/workspace/overview/
 Desarrollo de un chatbot basado en 'Large Language Model' (LLM) y técnicas de 'Retrieval-augmented Generation' (RAG) para asistente de dudas sobre la realización del TFG en el Grado de Ingeniería Informática,"JSM, CLN",1,15/10/2023,24/01/2024,9.4,https://github.com/jrg1013/chatbot
 Optimización pedidos TETRAPAK,"AAP, NBH",1,04/10/2023,24/01/2024,8.4,https://github.com/icg0019/TFG
 Migración de Generador de Informes Nutricionales a plataforma Web,"RMS, ACO",1,07/10/2022,27/02/2024,8.1,https://github.com/alvaromanjon/NutriMenu
@@ -83,7 +82,6 @@ Servicio Web para la Auto-Corrección de Prácticas en Java,BBZ,1,28/09/2015,15/
 Monitor multiplataforma de la actividad de un proyecto,CLN,1,03/02/2015,16/02/2016,"7,75",https://github.com/dba0010/Activiti-Api
 UBUGRAPH 4.0,JGO,1,26/01/2016,06/06/2016,"7,4",https://github.com/asl0044/UBUGraph4.0 
 Análisis paleontológico de piezas dentales.,"RMS, JDP",1,11/01/2016,14/07/2016,"9,5",https://github.com/scc0031/perikymata 
-Herramienta web para algoritmos de lenguajes regulares,"CGO, AAG",1,11/01/2016,14/07/2016,"9,8",https://bitbucket.org/Isma_R/thoth/ 
 Herramienta para la generación de cuestionarios Moodle sobre análisis sintáctico,"CGO, AAG",1,28/12/2015,14/07/2016,"7,5",https://github.com/vrt0004/Trabajo
 Despertador Android con lectura de eventos,CRP,1,12/01/2016,14/07/2016,8,https://github.com/apd0025/AlarmaHablada
 Aplicación para la CRPeación personalizada y resolución automática de supuestos contables,"LIM, JSM",1,26/12/2015,14/07/2016,9,https://github.com/noeliamansog/TFG-GII.15.I 
@@ -93,8 +91,7 @@ Combinaciones de clasificadores en XGBoost,JRD,1,24/11/2015,22/09/2016,"8,4",htt
 Herramienta para el análisis hemeroteca,"JDP, CGO",1,31/01/2017,07/07/2017,"9,8",https://github.com/mrr0088/Gestor-de-Hemeroteca
 Asistente Virtual,PRF,1,01/02/2017,07/07/2017,"9,7",https://github.com/DanielSantidrian/UBUassistant
 Creación de un método de recuento de estrías de dieta en los dientes. ,"JDP, AAG",1,08/09/2016,19/01/2017,"9,5",https://github.com/Itg0001/TFG_DietaPorDientes
- Bot conversacional para recomendaciones turísticas,BBZ,1,15/12/2016,05/07/2017,"9,5",https://github.com/jaswellnitz/tourist-chatbot
-Interfaces Hombre máquina basados en hardware libre,"PSO, JCN",1,25/11/2015,15/02/2017,"9,4",https://bitbucket.org/JRCUEVAS/control_de_transito
+Bot conversacional para recomendaciones turísticas,BBZ,1,15/12/2016,05/07/2017,"9,5",https://github.com/jaswellnitz/tourist-chatbot
 Creación de un videojuego y un bot inteligente para el mismo,"JDP, CGO",1,31/01/2017,05/07/2017,"9,4",https://github.com/PabloAlejos/Machine-Learning-GameDev
 Aplicación híbrida para preguntas tipo test en entornos móviles,"LIM, VAG",1,01/02/2017,07/07/2017,"9,4",https://github.com/Fernan-Ramos/Test-Manager
 Herramienta docente de algoritmos de búsqueda de rutas,"JDP, CGO",1,24/02/2015,07/07/2017,"9,4",https://github.com/vpe0001/Algoritmos_de_busqueda_3D-Unity
@@ -108,7 +105,7 @@ Framework web de uso de sistemas machine learning,"JDP, CGO",1,01/02/2017,21/09/
 Simulador de apuestas deportivas,"AAG, CRP",1,04/10/2016,19/01/2017,8,https://github.com/nunobasurto/apuestas_deportivas
 UBUGRAPH 5.0,"JGO, VAG",1,10/10/2016,15/02/2017,8,https://github.com/dvr0006/UBUGRAPH-5.0
 Gestión de actividades y estadísticas deportiva,RMS,1,15/03/2017,05/07/2017,8,https://github.com/BorjaG90/threeplusone
-Aplicación web para la visualización y búsqueda de datos almacenados en dispositivo con linux embebido,JSG,1,02/02/2017,07/07/2017,8,https://github.com/rmb0033/
+Aplicación web para la visualización y búsqueda de datos almacenados en dispositivo con linux embebido,JSG,1,02/02/2017,07/07/2017,8,https://github.com/rmb0033/proyecto2017
  Gestión de trabajos fin de grado v2.0.,CLN,1,25/09/2015,15/02/2017,"7,9",https://github.com/jfb0019/Gestor-TFG-2016
 Herramienta de extracción y visualización de calficaciones para Moodle,RMS,1,07/10/2016,15/02/2017,"7,6",https://github.com/claumartinezh/TFG_UBUGrades
  Aplicación para el Acceso a Plataformas de ELearning desde Dispositivos Móviles,BBZ,1,02/02/2017,05/07/2017,"7,5",https://github.com/danielpuente-dpg/GII14.K.QUICKTEST
