@@ -46,13 +46,12 @@ jobs:
           push: true
           load: true
           tags: |
-            tfg-topics-ingestion:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-ingestion:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-ingestion:latest
 
       - name: Export ingestion image
         run: |
-          docker save tfg-topics-ingestion:${{ github.event.release.tag_name }} | gzip \
+          docker save ghcr.io/${{ github.repository_owner }}/tfg-topics-ingestion:${{ github.event.release.tag_name }} | gzip \
             > tfg-topics-ingestion-${{ github.event.release.tag_name }}.tar.gz
 
       - name: Upload ingestion asset
@@ -67,13 +66,12 @@ jobs:
           push: true
           load: true
           tags: |
-            tfg-topics-processing:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-processing:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-processing:latest
 
       - name: Export processing image
         run: |
-          docker save tfg-topics-processing:${{ github.event.release.tag_name }} | gzip \
+          docker save ghcr.io/${{ github.repository_owner }}/tfg-topics-processing:${{ github.event.release.tag_name }} | gzip \
             > tfg-topics-processing-${{ github.event.release.tag_name }}.tar.gz
 
       - name: Upload processing asset
@@ -88,13 +86,12 @@ jobs:
           push: true
           load: true
           tags: |
-            tfg-topics-frontend:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:latest
 
       - name: Export frontend image
         run: |
-          docker save tfg-topics-frontend:${{ github.event.release.tag_name }} | gzip \
+          docker save ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:${{ github.event.release.tag_name }} | gzip \
             > tfg-topics-frontend-${{ github.event.release.tag_name }}.tar.gz
 
       - name: Upload frontend asset
