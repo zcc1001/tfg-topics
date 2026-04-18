@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub issues](https://img.shields.io/github/issues-closed/zcc1001/tfg-topics)](https://github.com/zcc1001/tfg-topics/issues)
 [![Wiki](https://img.shields.io/badge/wiki-available-brightgreen)](https://github.com/zcc1001/tfg-topics/wiki)
-![GitHub Release](https://img.shields.io/github/v/release/zcc1001/tfg-topics?label=Release)
+[![GitHub Release](https://img.shields.io/github/v/release/zcc1001/tfg-topics?label=Release)](https://github.com/zcc1001/tfg-topics/releases)
 [![Zube](https://img.shields.io/badge/zube-managed-blue?logo=zube)](https://zube.io/)
 [![CI](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml/badge.svg)](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=zcc1001_tfg-topics&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=zcc1001_tfg-topics)
