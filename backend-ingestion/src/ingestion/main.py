@@ -24,14 +24,9 @@ from ingestion.infrastructure.adapter.parquet_dataset_state_adapter import (
     ParquetDatasetStateAdapter,
 )
 from ingestion.infrastructure.adapter.repo_list_csv_reader import RepoListCsvReaderPort
+from ingestion.logging_config import configure_application_logging
 
 load_dotenv()
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
 
 logger = logging.getLogger(__name__)
 
@@ -112,6 +107,7 @@ def main() -> None:
     default_data_dir = os.path.join(project_root, "data")
     data_dir = os.getenv("DATA_DIR", default_data_dir)
     ingestion_output_dir = os.path.join(data_dir, "ingestion")
+    configure_application_logging(data_dir=data_dir, application_name="ingestion")
 
     repos_csv_file_name = os.getenv("REPOS_CSV_FILE_NAME", "tfg_list.csv")
     repos_csv_path = os.path.join(data_dir, repos_csv_file_name)

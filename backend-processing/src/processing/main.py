@@ -35,14 +35,9 @@ from processing.infrastructure.adapters.parquet_dataset_state_adapter import (
 from processing.infrastructure.adapters.parquet_document_reader import (
     ParquetDocumentRepository,
 )
+from processing.logging_config import configure_application_logging
 
 load_dotenv()
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
 
 logger = logging.getLogger(__name__)
 
@@ -68,6 +63,7 @@ def main() -> None:
     data_dir = os.getenv("DATA_DIR", default_data_dir)
     ingestion_dir = os.path.join(data_dir, "ingestion")
     processing_dir = os.path.join(data_dir, "processing")
+    configure_application_logging(data_dir=data_dir, application_name="processing")
 
     dataset_state_adapter = ParquetDatasetStateAdapter(
         ingestion_dir=ingestion_dir,

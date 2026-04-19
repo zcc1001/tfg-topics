@@ -1,13 +1,17 @@
+import logging
 import os
 from pathlib import Path
 
 import streamlit as st
 
+from webapp.logging_config import configure_application_logging
 from webapp.ui.components.app_footer import render_app_footer
 from webapp.ui.pages.comparison_page import render_comparison
 from webapp.ui.pages.document_analysis_page import render_document_analysis
 from webapp.ui.pages.hyperparameter_analysis_page import render_hyperparameter_analysis
 from webapp.ui.pages.model_analysis_page import render_model_analysis
+
+logger = logging.getLogger(__name__)
 
 
 def _render_model_summary_page() -> None:
@@ -87,6 +91,8 @@ def main() -> None:
     data_dir = os.getenv("DATA_DIR", default_data_dir)
     processing_dir = os.path.join(data_dir, "processing")
     ingestion_dir = os.path.join(data_dir, "ingestion")
+    configure_application_logging(data_dir=data_dir, application_name="frontend")
+    logger.info("Frontend started")
 
     if "processing_dir" not in st.session_state:
         st.session_state["processing_dir"] = processing_dir
