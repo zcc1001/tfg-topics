@@ -1,27 +1,15 @@
 import argparse
 import logging
 import os
-import uuid
-from datetime import datetime, timezone
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 from ingestion.application.usecase.data_ingestion_usecase import DataIngestionUsecase
-from ingestion.application.usecase.ensure_dataset_consistency_usecase import (
-    EnsureDatasetConsistencyUseCase,
-)
-from ingestion.domain.entities.execution_report import ExecutionReport
 from ingestion.domain.entities.ingestion_summary import IngestionSummary
-from ingestion.infrastructure.adapter.execution_report_parquet_json_adapter import (
-    ExecutionReportParquetJsonAdapter,
-)
 from ingestion.infrastructure.adapter.github_rest_adapter import GithubRestAdapter
 from ingestion.infrastructure.adapter.ingestion_parquet_storage import (
     IngestionParquetStorage,
-)
-from ingestion.infrastructure.adapter.parquet_dataset_state_adapter import (
-    ParquetDatasetStateAdapter,
 )
 from ingestion.infrastructure.adapter.repo_list_csv_reader import RepoListCsvReaderPort
 from ingestion.logging_config import configure_application_logging
@@ -125,84 +113,45 @@ def main() -> None:
     repo_list_csv_reader = RepoListCsvReaderPort(file_path=repos_csv_path)
     github_rest_adapter = GithubRestAdapter(token=github_token)
     data_parquet_storage = IngestionParquetStorage(base_dir=ingestion_output_dir)
-    execution_report_storage = ExecutionReportParquetJsonAdapter(
-        base_dir=ingestion_output_dir
-    )
     ingestor = DataIngestionUsecase(
         github_port=github_rest_adapter,
         repo_info_reader=repo_list_csv_reader,
         storage_port=data_parquet_storage,
     )
-    dataset_state_adapter = ParquetDatasetStateAdapter(
-        ingestion_dir=ingestion_output_dir
-    )
-    logger.info("Ensuring dataset consistency")
-    EnsureDatasetConsistencyUseCase(dataset_state_port=dataset_state_adapter).execute(
-        repos_csv_path
-    )
-
     ingest_targets = args.ingest
     logger.info("Ingestion targets: %s", ingest_targets)
-
-    run_id = (
-        f"{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-"
-        f"{uuid.uuid4().hex[:8]}"
-    )
-    run_started_at = datetime.now(timezone.utc)
-    execution_status = "success"
-    execution_error_message = None
-    dataset_summaries: list[IngestionSummary] = []
 
     try:
         if "all" in ingest_targets or "issues" in ingest_targets:
             logger.info("Ingesting issue data")
             issue_summary = ingestor.ingest_issues_data()
             _log_ingestion_summary(issue_summary)
-            dataset_summaries.append(issue_summary)
             logger.info("Ingestion issues Completed")
 
         if "all" in ingest_targets or "readmes" in ingest_targets:
             logger.info("Ingesting Readme data")
             readme_summary = ingestor.ingest_readme_data()
             _log_ingestion_summary(readme_summary)
-            dataset_summaries.append(readme_summary)
             logger.info("Ingestion Readme Completed")
 
         if "all" in ingest_targets or "thesis" in ingest_targets:
             logger.info("Ingesting Thesis data")
             thesis_summary = ingestor.ingest_thesis_data()
             _log_ingestion_summary(thesis_summary)
-            dataset_summaries.append(thesis_summary)
             logger.info("Ingestion Thesis Completed")
 
         if "all" in ingest_targets or "abstracts" in ingest_targets:
             logger.info("Ingesting abstracts data")
             abstracts_summary = ingestor.ingest_abstracts_data()
             _log_ingestion_summary(abstracts_summary)
-            dataset_summaries.append(abstracts_summary)
             logger.info("Ingestion abstracts Completed")
 
         # Persist thesis metadata
         logger.info("Persisting thesis metadata")
         ingestor.ingest_thesis_metadata()
     except Exception as exc:
-        execution_status = "failed"
-        execution_error_message = str(exc)
         logger.error("A critical error occurred:%s", exc, exc_info=True)
         raise
-    finally:
-        run_finished_at = datetime.now(timezone.utc)
-        report = ExecutionReport(
-            run_id=run_id,
-            started_at=run_started_at,
-            finished_at=run_finished_at,
-            status=execution_status,
-            selected_targets=ingest_targets,
-            dataset_summaries=dataset_summaries,
-            error_message=execution_error_message,
-        )
-        execution_report_storage.save_execution_report(report)
-        logger.info("Execution report persisted for run_id=%s", run_id)
 
 
 if __name__ == "__main__":

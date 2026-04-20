@@ -1,3 +1,4 @@
+import hashlib
 import logging
 import os
 
@@ -11,14 +12,19 @@ logger = logging.getLogger(__name__)
 class ParquetDatasetStateAdapter(DatasetStatePort):
 
     def __init__(self, ingestion_dir: str, processing_dir: str):
-        self._dataset_hash_path = os.path.join(ingestion_dir, "dataset_version.txt")
+        self._ingestion_dir = ingestion_dir
         self._processing_dir = processing_dir
 
-    def read_dataset_hash(self) -> str | None:
-        if not os.path.exists(self._dataset_hash_path):
-            return None
-        with open(self._dataset_hash_path, "r", encoding="utf-8") as f:
-            return f.read().strip()
+    def read_current_dataset_hash(self, dataset: str) -> str:
+        dataset_path = os.path.join(self._ingestion_dir, f"{dataset}.parquet")
+        if not os.path.exists(dataset_path):
+            raise FileNotFoundError(f"Dataset parquet not found at {dataset_path}")
+
+        hasher = hashlib.sha256()
+        with open(dataset_path, "rb") as dataset_file:
+            for chunk in iter(lambda: dataset_file.read(8192), b""):
+                hasher.update(chunk)
+        return hasher.hexdigest()
 
     def read_last_processed_hash(self, dataset: str, model_name: str) -> str | None:
         model_dir = os.path.join(self._processing_dir, model_name)

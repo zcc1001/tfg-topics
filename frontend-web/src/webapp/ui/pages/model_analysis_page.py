@@ -8,12 +8,16 @@ from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
 from webapp.ui.components.page_header import render_page_header
+from webapp.ui.components.persistent_widgets import persistent_selectbox
 from webapp.ui.components.render_intertopic_distance_map import (
     render_intertopic_distance_map,
 )
 from webapp.ui.components.render_topic_summary_table import render_topic_summary_table
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 from webapp.ui.components.wordcloud import render_wordcloud
+
+DEFAULT_DATASETS = ["issues", "readmes", "thesis", "abstracts"]
+DEFAULT_MODELS = ["lda", "bertopic", "fastopic", "top2vec"]
 
 
 def _count_detected_topics(topics_df: pd.DataFrame) -> int:
@@ -75,24 +79,33 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
             "sus resultados precomputados."
         ),
     )
-    with st.form("model_source_form"):
-        left, middle, right = st.columns(3, vertical_alignment="bottom")
-        dataset = left.selectbox(
-            "Selecciona un dataset",
-            ["issues", "readmes", "thesis", "abstracts"],
+    repository = TopicModelParquetRepository(base_path=base_dir)
+    datasets = repository.available_datasets() or DEFAULT_DATASETS
+    section_key = (selected_section or "default").lower().replace(" ", "_")
+
+    left, middle = st.columns(2, vertical_alignment="bottom")
+    with left:
+        dataset = persistent_selectbox(
+            label="Selecciona un dataset",
+            options=datasets,
+            state_key="model_analysis_selected_dataset",
+            widget_key=f"model_analysis_dataset_widget_{section_key}",
             placeholder="Selecciona un origen...",
         )
-        model_name = middle.selectbox(
-            "Selecciona un modelo",
-            ["lda", "bertopic", "fastopic", "top2vec"],
+
+    available_models = repository.available_models_for_dataset(dataset)
+    model_options = available_models or repository.available_models() or DEFAULT_MODELS
+    with middle:
+        model_name = persistent_selectbox(
+            label="Selecciona un modelo",
+            options=model_options,
+            state_key="model_analysis_selected_model",
+            widget_key=f"model_analysis_model_widget_{section_key}",
             placeholder="Selecciona un modelo...",
         )
-        right.form_submit_button("Cargar resultados")
 
     if dataset and model_name:
-        use_case = LoadModelResultsUseCase(
-            repository=TopicModelParquetRepository(base_path=base_dir)
-        )
+        use_case = LoadModelResultsUseCase(repository=repository)
         data = use_case.execute(dataset=dataset, model_name=model_name)
         if data is None or data.get("topics") is None:
             st.warning(

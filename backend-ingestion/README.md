@@ -12,14 +12,10 @@ All extracted data is stored in `Apache Parquet format` in following path:
 ```
 /data/ingestion
 ├── abstracts.parquet
-├── execution_history.parquet
 ├── issues.parquet
 ├── metadata.parquet
 ├── readmes.parquet
-├── thesis.parquet
-└── executions/
-    └── <run_id>/
-        └── manifest.json
+└── thesis.parquet
 ```
 
 ## Input and Output
@@ -112,24 +108,6 @@ Generate files:
 | source_path  | string    | Path of the `memoria.tex` file |
 | content      | string    | Extracted abstract text        |
 | retrieved_at | timestamp | Extraction timestamp           |
-
-### Execution reporting output
-
-Each ingestion run persists execution metadata:
-
-- `executions/<run_id>/manifest.json`: run status, selected datasets, counts, and repo lists with and without data.
-- `execution_history.parquet`: append-only history with one row per `run_id + dataset + repo`.
-
-`execution_history.parquet` columns:
-- `run_id`
-- `dataset`
-- `repo_owner`
-- `repo_name`
-- `has_data`
-- `records_count`
-- `executed_at`
-- `status`
-- `error_message`
 
 ## Configuration
 

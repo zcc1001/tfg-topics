@@ -12,7 +12,11 @@ from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
 from webapp.ui.components.page_header import render_page_header
+from webapp.ui.components.persistent_widgets import persistent_selectbox
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
+
+DEFAULT_DATASETS = ["issues", "readmes", "thesis", "abstracts"]
+DEFAULT_MODELS = ["lda", "bertopic", "fastopic", "top2vec"]
 
 
 def render_document_analysis(
@@ -28,26 +32,42 @@ def render_document_analysis(
         ),
     )
 
-    dataset = st.selectbox(
-        "Dataset",
-        ["issues", "readmes", "thesis", "abstracts"],
-        index=2,
+    topic_repository = TopicModelParquetRepository(processing_dir)
+    datasets = topic_repository.available_datasets() or DEFAULT_DATASETS
+    section_key = (selected_section or "default").lower().replace(" ", "_")
+
+    dataset = persistent_selectbox(
+        label="Dataset",
+        options=datasets,
+        state_key="document_analysis_selected_dataset",
+        widget_key=f"document_analysis_dataset_widget_{section_key}",
     )
 
     # ------------------------------------------------------------
 
-    model = st.selectbox(
-        "Modelo de análisis temático",
-        ["lda", "bertopic", "fastopic", "top2vec"],
+    model_options = (
+        topic_repository.available_models_for_dataset(dataset)
+        or topic_repository.available_models()
+        or DEFAULT_MODELS
+    )
+    model = persistent_selectbox(
+        label="Modelo de análisis temático",
+        options=model_options,
+        state_key="document_analysis_selected_model",
+        widget_key=f"document_analysis_model_widget_{section_key}",
     )
 
-    tutor_input = st.text_input("Filtrar por tutor (opcional)")
+    tutor_input = st.text_input(
+        "Filtrar por tutor (opcional)",
+        key="document_analysis_tutor",
+    )
     year = st.number_input(
         "Año de presentación",
         min_value=2000,
         max_value=2030,
         step=1,
         value=None,
+        key="document_analysis_year",
     )
 
     grade_range = st.slider(
@@ -56,12 +76,13 @@ def render_document_analysis(
         max_value=10.0,
         value=(0.0, 10.0),
         step=0.1,
+        key="document_analysis_grade_range",
     )
 
     if st.button("Analizar"):
 
         use_case = AnalyzeDocumentsUseCase(
-            topic_repo=TopicModelParquetRepository(processing_dir),
+            topic_repo=topic_repository,
             metadata_repo=MetadataParquetRepository(ingestion_dir),
         )
 

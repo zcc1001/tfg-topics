@@ -14,11 +14,7 @@ class EnsureProcessingDatasetConsistencyUseCase:
         Returns the dataset_hash that MUST be used for this processing run.
         """
 
-        current_hash = self._state.read_dataset_hash()
-        if current_hash is None:
-            raise RuntimeError(
-                "Dataset hash not found. Ingestion must be executed first."
-            )
+        current_hash = self._state.read_current_dataset_hash(dataset)
 
         self._state.invalidate_mismatched_results(
             dataset=dataset,

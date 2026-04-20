@@ -19,7 +19,6 @@ The datasets are generated from the textual information of TFG reports available
 ## ✨ Features
 
 - **Data Ingestion**: Automatically fetches TFG report data from GitHub repositories.
-- **Execution Traceability**: Persists per-run ingestion manifests and historical execution records.
 - **Text Preprocessing**: Cleans and prepares the text for analysis.
 - **Topic Modeling**: Implements multiple algorithms to identify underlying themes.
 - **Hyperparameter Optimization**: Automatically finds the best parameters for each model.

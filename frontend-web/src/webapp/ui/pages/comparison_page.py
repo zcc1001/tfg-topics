@@ -7,7 +7,14 @@ from webapp.infrastructure.adapters.topic_model_parquet_repository import (
     TopicModelParquetRepository,
 )
 from webapp.ui.components.page_header import render_page_header
+from webapp.ui.components.persistent_widgets import (
+    persistent_multiselect,
+    persistent_selectbox,
+)
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
+
+DEFAULT_DATASETS = ["issues", "readmes", "thesis", "abstracts"]
+DEFAULT_MODELS = ["lda", "bertopic", "fastopic", "top2vec"]
 
 
 def render_comparison(base_dir: str, selected_section: str | None = None) -> None:
@@ -17,14 +24,23 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
     """
     render_page_header(page_title="Comparativa de modelos")
 
-    dataset = st.selectbox(
-        "Selecciona un dataset", ["issues", "readmes", "thesis", "abstracts"]
+    repository = TopicModelParquetRepository(base_path=base_dir)
+    datasets = repository.available_datasets() or DEFAULT_DATASETS
+    section_key = (selected_section or "default").lower().replace(" ", "_")
+    dataset = persistent_selectbox(
+        label="Selecciona un dataset",
+        options=datasets,
+        state_key="comparison_selected_dataset",
+        widget_key=f"comparison_dataset_widget_{section_key}",
     )
 
-    models = st.multiselect(
-        "Selecciona modelos a comparar",
-        ["lda", "bertopic", "fastopic", "top2vec"],
-        default=["lda", "bertopic", "fastopic", "top2vec"],
+    available_models = repository.available_models_for_dataset(dataset)
+    model_options = available_models or repository.available_models() or DEFAULT_MODELS
+    models = persistent_multiselect(
+        label="Selecciona modelos a comparar",
+        options=model_options,
+        state_key="comparison_selected_models",
+        widget_key=f"comparison_models_widget_{section_key}",
     )
 
     if not models:
@@ -36,7 +52,7 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
     with st.spinner("Cargando modelos..."):
         use_case = CompareModelsUseCase(
             service=ModelComparisonService(),
-            repository=TopicModelParquetRepository(base_path=base_dir),
+            repository=repository,
         )
 
         results = use_case.execute(runs)
@@ -63,7 +79,7 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
         _render_ranking(summary_df)
 
         render_section_anchor(section_anchors["Comparación de métricas"])
-        _render_metrics(summary_df)
+        _render_metrics(summary_df, section_key=section_key)
 
         if selected_section:
             scroll_to_section(section_anchors.get(selected_section))
@@ -100,15 +116,17 @@ def _render_ranking(summary_df: pd.DataFrame) -> None:
     )
 
 
-def _render_metrics(summary_df: pd.DataFrame) -> None:
+def _render_metrics(summary_df: pd.DataFrame, section_key: str = "default") -> None:
     st.subheader("Comparación de métricas")
 
-    metric = st.selectbox(
-        "Métrica",
-        [
+    metric = persistent_selectbox(
+        label="Métrica",
+        options=[
             "coherence",
             "runtime_seconds",
         ],
+        state_key="comparison_selected_metric",
+        widget_key=f"comparison_metric_widget_{section_key}",
     )
 
     st.bar_chart(summary_df.set_index("model_name")[metric])

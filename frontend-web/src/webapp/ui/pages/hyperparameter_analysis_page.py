@@ -10,8 +10,12 @@ from webapp.infrastructure.adapters.topic_model_parquet_repository import (
 from webapp.ui.components.best_params_summary import render_best_params_summary
 from webapp.ui.components.page_header import render_page_header
 from webapp.ui.components.param_vs_score import render_param_vs_score
+from webapp.ui.components.persistent_widgets import persistent_selectbox
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 from webapp.ui.components.trial_score_evolution import render_trial_score_evolution
+
+DEFAULT_DATASETS = ["issues", "readmes", "thesis", "abstracts"]
+DEFAULT_MODELS = ["lda", "bertopic", "fastopic", "top2vec"]
 
 
 def render_hyperparameter_analysis(
@@ -25,21 +29,34 @@ def render_hyperparameter_analysis(
         ),
     )
 
+    repository = TopicModelParquetRepository(base_path=base_dir)
+    datasets = repository.available_datasets() or DEFAULT_DATASETS
+    section_key = (selected_section or "default").lower().replace(" ", "_")
+
     left, middle = st.columns(2, vertical_alignment="bottom")
 
-    dataset = left.selectbox(
-        "Dataset",
-        ["issues", "readmes", "thesis", "abstracts"],
-    )
+    with left:
+        dataset = persistent_selectbox(
+            label="Dataset",
+            options=datasets,
+            state_key="hyper_selected_dataset",
+            widget_key=f"hyper_dataset_widget_{section_key}",
+        )
 
-    model_name = middle.selectbox(
-        "Modelo",
-        ["lda", "bertopic", "fastopic", "top2vec"],
+    model_options = (
+        repository.available_models_for_dataset(dataset)
+        or repository.available_models()
+        or DEFAULT_MODELS
     )
+    with middle:
+        model_name = persistent_selectbox(
+            label="Modelo",
+            options=model_options,
+            state_key="hyper_selected_model",
+            widget_key=f"hyper_model_widget_{section_key}",
+        )
 
-    use_case = LoadModelResultsUseCase(
-        repository=TopicModelParquetRepository(base_path=base_dir)
-    )
+    use_case = LoadModelResultsUseCase(repository=repository)
 
     data = use_case.execute(dataset=dataset, model_name=model_name)
 

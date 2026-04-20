@@ -149,16 +149,19 @@ def main() -> None:
                     _render_model_summary_page,
                     title="Resumen ejecutivo",
                     icon=":material/dashboard:",
+                    url_path="modelo-resumen",
                 ),
                 st.Page(
                     _render_model_topics_page,
                     title="Exploración de tópicos",
                     icon=":material/tag:",
+                    url_path="modelo-topicos",
                 ),
                 st.Page(
                     _render_model_map_page,
                     title="Mapa intertópico",
                     icon=":material/map:",
+                    url_path="modelo-mapa",
                 ),
             ],
             "Hiperparametrización": [
@@ -166,16 +169,19 @@ def main() -> None:
                     _render_hyper_evolution_page,
                     title="Evolución del score",
                     icon=":material/show_chart:",
+                    url_path="hiper-evolucion",
                 ),
                 st.Page(
                     _render_hyper_param_vs_score_page,
                     title="Parámetros vs rendimiento",
                     icon=":material/tune:",
+                    url_path="hiper-parametros",
                 ),
                 st.Page(
                     _render_hyper_best_params_page,
                     title="Mejores hiperparámetros",
                     icon=":material/emoji_events:",
+                    url_path="hiper-mejores-parametros",
                 ),
             ],
             "Comparativa de modelos": [
@@ -183,16 +189,19 @@ def main() -> None:
                     _render_comparison_summary_page,
                     title="Resumen comparativo",
                     icon=":material/table_chart:",
+                    url_path="comparativa-resumen",
                 ),
                 st.Page(
                     _render_comparison_ranking_page,
                     title="Ranking global",
                     icon=":material/leaderboard:",
+                    url_path="comparativa-ranking",
                 ),
                 st.Page(
                     _render_comparison_metrics_page,
                     title="Comparación de métricas",
                     icon=":material/bar_chart:",
+                    url_path="comparativa-metricas",
                 ),
             ],
             "Análisis académico de documentos": [
@@ -200,6 +209,7 @@ def main() -> None:
                     _render_document_analysis_page,
                     title="Análisis académico de documentos",
                     icon=":material/article:",
+                    url_path="documentos",
                 ),
             ],
         },

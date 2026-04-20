@@ -2,20 +2,11 @@ from abc import ABC, abstractmethod
 
 
 class DatasetStatePort(ABC):
-    """Abstract port for reading and writing dataset state.
-
-    The port exposes a minimal contract required by the ingestion
-    application to detect dataset changes and invalidate cached or derived
-    artifacts when the dataset contents change.
-    """
+    """Abstract port for reading processing dataset state."""
 
     @abstractmethod
-    def read_dataset_hash(self) -> str | None:
-        """Return the previously stored dataset hash.
-
-        Returns:
-            The dataset hash as a string if present, otherwise ``None``.
-        """
+    def read_current_dataset_hash(self, dataset: str) -> str:
+        """Return the current content hash for the requested dataset."""
         raise NotImplementedError
 
     @abstractmethod

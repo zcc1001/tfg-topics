@@ -21,6 +21,31 @@ class TopicModelParquetRepository(TopicModelRepository):
             return None
         return pd.read_parquet(path)
 
+    def available_models(self) -> list[str]:
+        if not os.path.isdir(self.base_path):
+            return []
+        return sorted(
+            entry
+            for entry in os.listdir(self.base_path)
+            if os.path.isdir(os.path.join(self.base_path, entry))
+        )
+
+    def available_datasets(self) -> list[str]:
+        datasets: set[str] = set()
+        for model_name in self.available_models():
+            model_dir = self._data_dir(model_name)
+            for filename in os.listdir(model_dir):
+                if filename.endswith("_model_summary.parquet"):
+                    datasets.add(filename.removesuffix("_model_summary.parquet"))
+        return sorted(datasets)
+
+    def available_models_for_dataset(self, dataset: str) -> list[str]:
+        return [
+            model_name
+            for model_name in self.available_models()
+            if self.exists(model_name=model_name, dataset=dataset)
+        ]
+
     def exists(self, model_name: str, dataset: str) -> bool:
         """
         A model is considered available if the minimal required files exist.
