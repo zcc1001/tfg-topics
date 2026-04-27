@@ -75,10 +75,8 @@ jobs:
           script: |
             const tag = context.payload.release.tag_name;
             const owner = context.repo.owner;
+            const repo = context.repo.repo;
             const releaseId = context.payload.release.id;
-            const ownerType = context.payload.repository.owner.type === 'Organization' ? 'orgs' : 'users';
-
-            const packagePageBase = `https://github.com/${ownerType}/${owner}/packages/container`;
             const imageRefs = [
               {
                 name: 'ingestion',
@@ -97,11 +95,42 @@ jobs:
               },
             ];
 
+            const packageVersions = await Promise.all(
+              imageRefs.map(async ({ package: packageName }) => {
+                const response = context.payload.repository.owner.type === 'Organization'
+                  ? await github.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
+                      org: owner,
+                      package_type: 'container',
+                      package_name: packageName,
+                      per_page: 100,
+                    })
+                  : await github.rest.packages.getAllPackageVersionsForPackageOwnedByUser({
+                      username: owner,
+                      package_type: 'container',
+                      package_name: packageName,
+                      per_page: 100,
+                    });
+
+                const version = response.data.find(
+                  (item) => item.metadata?.container?.tags?.includes(tag),
+                );
+
+                return {
+                  packageName,
+                  versionId: version?.id,
+                };
+              }),
+            );
+
             const links = imageRefs
-              .map(
-                ({ name, package: packageName, image }) =>
-                  `- [${name}](${packagePageBase}/${packageName}) - \`${image}\``,
-              )
+              .map(({ name, package: packageName, image }) => {
+                const versionId = packageVersions.find((item) => item.packageName === packageName)?.versionId;
+                const packageUrl = versionId
+                  ? `https://github.com/${owner}/${repo}/pkgs/container/${packageName}/${versionId}?tag=${tag}`
+                  : `https://github.com/${owner}/${repo}/pkgs/container/${packageName}`;
+
+                return `- [${name}](${packageUrl}) - \`${image}\``;
+              })
               .join('\n');
 
             const startMarker = '<!-- ghcr-image-links:start -->';
