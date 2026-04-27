@@ -68,3 +68,62 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:${{ github.event.release.tag_name }}
             ghcr.io/${{ github.repository_owner }}/tfg-topics-frontend:latest
+
+      - name: Add image links to release notes
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = context.payload.release.tag_name;
+            const owner = context.repo.owner;
+            const releaseId = context.payload.release.id;
+            const ownerType = context.payload.repository.owner.type === 'Organization' ? 'orgs' : 'users';
+
+            const packagePageBase = `https://github.com/${ownerType}/${owner}/packages/container`;
+            const imageRefs = [
+              {
+                name: 'ingestion',
+                package: 'tfg-topics-ingestion',
+                image: `ghcr.io/${owner}/tfg-topics-ingestion:${tag}`,
+              },
+              {
+                name: 'processing',
+                package: 'tfg-topics-processing',
+                image: `ghcr.io/${owner}/tfg-topics-processing:${tag}`,
+              },
+              {
+                name: 'frontend',
+                package: 'tfg-topics-frontend',
+                image: `ghcr.io/${owner}/tfg-topics-frontend:${tag}`,
+              },
+            ];
+
+            const links = imageRefs
+              .map(
+                ({ name, package: packageName, image }) =>
+                  `- [${name}](${packagePageBase}/${packageName}) - \`${image}\``,
+              )
+              .join('\n');
+
+            const startMarker = '<!-- ghcr-image-links:start -->';
+            const endMarker = '<!-- ghcr-image-links:end -->';
+            const section = `\n\n${startMarker}\n## Docker images\n\n${links}\n${endMarker}`;
+
+            const release = await github.rest.repos.getRelease({
+              owner,
+              repo: context.repo.repo,
+              release_id: releaseId,
+            });
+
+            const currentBody = release.data.body ?? '';
+            const cleanedBody = currentBody.replace(
+              new RegExp(`\\n\\n${startMarker}[\\s\\S]*?${endMarker}`),
+              '',
+            );
+            const body = `${cleanedBody}${section}`;
+
+            await github.rest.repos.updateRelease({
+              owner,
+              repo: context.repo.repo,
+              release_id: releaseId,
+              body,
+            });
