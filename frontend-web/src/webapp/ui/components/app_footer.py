@@ -210,6 +210,19 @@ def render_app_footer() -> None:
                             </a>
                         </span>
                     </div>
+                    <div class="app-footer__meta-row">
+                        <span class="app-footer__label">Wiki</span>
+                        <span class="app-footer__value">
+                            <a
+                                class="app-footer__link"
+                                href="https://github.com/zcc1001/tfg-topics/wiki"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Documentación (Wiki)
+                            </a>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
