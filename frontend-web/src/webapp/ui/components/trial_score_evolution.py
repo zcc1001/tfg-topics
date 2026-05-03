@@ -25,14 +25,6 @@ def render_trial_score_evolution(trials_df: pd.DataFrame) -> None:
         },
     )
 
-    fig.add_scatter(
-        x=trials_df["trial_id"],
-        y=trials_df["score"],
-        mode="lines",
-        line=dict(color="lightgray", dash="dot"),
-        showlegend=False,
-    )
-
     # Marcar mejor trial
     fig.add_scatter(
         x=[best_trial_id],
