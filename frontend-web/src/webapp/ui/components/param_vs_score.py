@@ -42,14 +42,6 @@ def render_param_vs_score(trials_df: pd.DataFrame) -> None:
     )
 
     fig.add_scatter(
-        x=df[x_col],
-        y=df["score"],
-        mode="lines",
-        line=dict(color="lightgray", dash="dot"),
-        showlegend=False,
-    )
-
-    fig.add_scatter(
         x=[best_row[x_col]],
         y=[best_row["score"]],
         mode="markers+text",
