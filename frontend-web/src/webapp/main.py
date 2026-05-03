@@ -142,8 +142,25 @@ def main() -> None:
         size="large",
     )
 
-    pg = st.navigation(
-        {
+    modo = st.sidebar.radio(
+        "Perfil de usuario:",
+        ["🎓 Estadísticas Académicas (TFG)", "🛠️ Análisis Técnico"],
+        index=0,
+    )
+
+    if modo == "🎓 Estadísticas Académicas (TFG)":
+        pages = {
+            "Exploración de Temáticas": [
+                st.Page(
+                    _render_document_analysis_page,
+                    title="Análisis de documentos",
+                    icon=":material/school:",
+                    url_path="documentos",
+                ),
+            ],
+        }
+    else:
+        pages = {
             "Análisis por modelo": [
                 st.Page(
                     _render_model_summary_page,
@@ -204,17 +221,9 @@ def main() -> None:
                     url_path="comparativa-metricas",
                 ),
             ],
-            "Análisis académico de documentos": [
-                st.Page(
-                    _render_document_analysis_page,
-                    title="Análisis académico de documentos",
-                    icon=":material/article:",
-                    url_path="documentos",
-                ),
-            ],
-        },
-        position="sidebar",
-    )
+        }
+
+    pg = st.navigation(pages, position="sidebar")
 
     pg.run()
     render_app_footer()
