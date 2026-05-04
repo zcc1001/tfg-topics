@@ -15,6 +15,7 @@ from webapp.ui.components.render_intertopic_distance_map import (
 from webapp.ui.components.render_topic_summary_table import render_topic_summary_table
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
 from webapp.ui.components.wordcloud import render_wordcloud
+from webapp.ui.i18n import _
 
 DEFAULT_DATASETS = ["issues", "readmes", "thesis", "abstracts"]
 DEFAULT_MODELS = ["lda", "bertopic", "fastopic", "top2vec"]
@@ -73,11 +74,8 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
         base_dir (str): directory where the model results are stored.
     """
     render_page_header(
-        page_title="Análisis por modelo",
-        description=(
-            "Selecciona el conjunto de documentos y el modelo de tópicos para analizar "
-            "sus resultados precomputados."
-        ),
+        page_title=_("model.title"),
+        description=_("model.desc"),
     )
     repository = TopicModelParquetRepository(base_path=base_dir)
     datasets = repository.available_datasets() or DEFAULT_DATASETS
@@ -86,22 +84,22 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
     left, middle = st.columns(2, vertical_alignment="bottom")
     with left:
         dataset = persistent_selectbox(
-            label="Selecciona un dataset",
+            label=_("common.select_dataset"),
             options=datasets,
             state_key="model_analysis_selected_dataset",
             widget_key=f"model_analysis_dataset_widget_{section_key}",
-            placeholder="Selecciona un origen...",
+            placeholder=_("common.select_origin"),
         )
 
     available_models = repository.available_models_for_dataset(dataset)
     model_options = available_models or repository.available_models() or DEFAULT_MODELS
     with middle:
         model_name = persistent_selectbox(
-            label="Selecciona un modelo",
+            label=_("common.select_model"),
             options=model_options,
             state_key="model_analysis_selected_model",
             widget_key=f"model_analysis_model_widget_{section_key}",
-            placeholder="Selecciona un modelo...",
+            placeholder=_("common.select_model_placeholder"),
         )
 
     if dataset and model_name:
@@ -109,48 +107,50 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
         data = use_case.execute(dataset=dataset, model_name=model_name)
         if data is None or data.get("topics") is None:
             st.warning(
-                f"No hay resultados disponibles para el modelo '{model_name}' "
-                f"en el dataset '{dataset}'."
+                _("common.no_results_model").format(
+                    model_name=model_name, dataset=dataset
+                )
             )
             return
 
         section_anchors = {
-            "Resumen ejecutivo": "model-resumen-ejecutivo",
-            "Exploración de tópicos": "model-exploracion-topicos",
-            "Mapa intertópico": "model-mapa-intertopico",
+            str(_("model.summary")): "model-resumen-ejecutivo",
+            str(_("model.exploration")): "model-exploracion-topicos",
+            str(_("model.map")): "model-mapa-intertopico",
         }
 
-        render_section_anchor(section_anchors["Resumen ejecutivo"])
-        st.subheader("📊 Resumen ejecutivo")
+        render_section_anchor(section_anchors[str(_("model.summary"))])
+        st.subheader(f"📊 {_('model.summary')}")
 
-        col1, col2, col3, _ = st.columns(4)
+        col1, col2, col3, _dummy = st.columns(4)
 
-        col1.metric("Tópicos detectados", _count_detected_topics(data["topics"]))
+        col1.metric(_("model.detected_topics"), _count_detected_topics(data["topics"]))
         col2.metric(
-            "Documentos analizados",
+            _("model.analyzed_docs"),
             _count_analyzed_documents(data["document_topics"]),
         )
-        col3.metric("Coherencia", round(data["best_params"]["best_score"], 3))
+        col3.metric(_("model.coherence"), round(data["best_params"]["best_score"], 3))
 
         dominant_topic = _compute_dominant_topic(data["document_topics"])
         if dominant_topic is not None:
             top_topic, dominance_share = dominant_topic
             if dominance_share >= 0.35:
                 st.success(
-                    f"El tópico más dominante del modelo es **T{top_topic}** "
-                    f"({dominance_share:.1%} del peso temático)."
+                    _("model.dominant_topic").format(
+                        topic=top_topic, share=f"{dominance_share:.1%}"
+                    )
                 )
             else:
                 st.info(
-                    f"El tópico con mayor peso es **T{top_topic}** "
-                    f"({dominance_share:.1%}), con distribución temática "
-                    "equilibrada."
+                    _("model.balanced_topic").format(
+                        topic=top_topic, share=f"{dominance_share:.1%}"
+                    )
                 )
 
-        render_section_anchor(section_anchors["Exploración de tópicos"])
-        st.subheader("🧠 Exploración de tópicos")
+        render_section_anchor(section_anchors[str(_("model.exploration"))])
+        st.subheader(f"🧠 {_('model.exploration')}")
 
-        tab1, tab2 = st.tabs(["📋 Tabla de tópicos", "☁️ Wordcloud"])
+        tab1, tab2 = st.tabs([f"📋 {_('model.table')}", f"☁️ {_('model.wordcloud')}"])
 
         with tab1:
             render_topic_summary_table(
@@ -161,8 +161,8 @@ def render_model_analysis(base_dir: str, selected_section: str | None = None) ->
         with tab2:
             render_wordcloud(data["topics"], max_topics_to_render=6)
 
-        render_section_anchor(section_anchors["Mapa intertópico"])
-        st.subheader("🗺️ Distancia intertópica")
+        render_section_anchor(section_anchors[str(_("model.map"))])
+        st.subheader(f"🗺️ {_('model.map')}")
         render_intertopic_distance_map(data["topic_coordinates"])
 
         if selected_section:

@@ -6,6 +6,7 @@ import streamlit as st
 
 from webapp.logging_config import configure_application_logging
 from webapp.ui.components.app_footer import render_app_footer
+from webapp.ui.i18n import _, language_selector
 from webapp.ui.pages.comparison_page import render_comparison
 from webapp.ui.pages.document_analysis_page import render_document_analysis
 from webapp.ui.pages.hyperparameter_analysis_page import render_hyperparameter_analysis
@@ -17,63 +18,63 @@ logger = logging.getLogger(__name__)
 def _render_model_summary_page() -> None:
     render_model_analysis(
         base_dir=st.session_state.processing_dir,
-        selected_section="Resumen ejecutivo",
+        selected_section=str(_("model.summary")),
     )
 
 
 def _render_model_topics_page() -> None:
     render_model_analysis(
         base_dir=st.session_state.processing_dir,
-        selected_section="Exploración de tópicos",
+        selected_section=str(_("model.exploration")),
     )
 
 
 def _render_model_map_page() -> None:
     render_model_analysis(
         base_dir=st.session_state.processing_dir,
-        selected_section="Mapa intertópico",
+        selected_section=str(_("model.map")),
     )
 
 
 def _render_hyper_evolution_page() -> None:
     render_hyperparameter_analysis(
         base_dir=st.session_state.processing_dir,
-        selected_section="Evolución del score",
+        selected_section=str(_("hyper.score_evo")),
     )
 
 
 def _render_hyper_param_vs_score_page() -> None:
     render_hyperparameter_analysis(
         base_dir=st.session_state.processing_dir,
-        selected_section="Parámetros vs rendimiento",
+        selected_section=str(_("hyper.param_vs_score")),
     )
 
 
 def _render_hyper_best_params_page() -> None:
     render_hyperparameter_analysis(
         base_dir=st.session_state.processing_dir,
-        selected_section="Mejores hiperparámetros",
+        selected_section=str(_("hyper.best_params")),
     )
 
 
 def _render_comparison_summary_page() -> None:
     render_comparison(
         base_dir=st.session_state.processing_dir,
-        selected_section="Resumen comparativo",
+        selected_section=str(_("comparison.summary")),
     )
 
 
 def _render_comparison_ranking_page() -> None:
     render_comparison(
         base_dir=st.session_state.processing_dir,
-        selected_section="Ranking global",
+        selected_section=str(_("comparison.ranking")),
     )
 
 
 def _render_comparison_metrics_page() -> None:
     render_comparison(
         base_dir=st.session_state.processing_dir,
-        selected_section="Comparación de métricas",
+        selected_section=str(_("comparison.metrics")),
     )
 
 
@@ -142,18 +143,21 @@ def main() -> None:
         size="large",
     )
 
+    language_selector()
+
+    modo_options = [_("menu.academic_mode"), _("menu.technical_mode")]
     modo = st.sidebar.radio(
-        "Perfil de usuario:",
-        ["🎓 Estadísticas Académicas (TFG)", "🛠️ Análisis Técnico"],
+        _("menu.profile_selector"),
+        modo_options,
         index=0,
     )
 
-    if modo == "🎓 Estadísticas Académicas (TFG)":
+    if modo == modo_options[0]:
         pages = {
-            "Exploración de Temáticas": [
+            _("menu.group_exploration"): [
                 st.Page(
                     _render_document_analysis_page,
-                    title="Análisis de documentos",
+                    title=_("pages.document_analysis"),
                     icon=":material/school:",
                     url_path="documentos",
                 ),
@@ -161,62 +165,62 @@ def main() -> None:
         }
     else:
         pages = {
-            "Análisis por modelo": [
+            _("menu.group_models"): [
                 st.Page(
                     _render_model_summary_page,
-                    title="Resumen ejecutivo",
+                    title=_("pages.model_summary"),
                     icon=":material/dashboard:",
                     url_path="modelo-resumen",
                 ),
                 st.Page(
                     _render_model_topics_page,
-                    title="Exploración de tópicos",
+                    title=_("pages.model_topics"),
                     icon=":material/tag:",
                     url_path="modelo-topicos",
                 ),
                 st.Page(
                     _render_model_map_page,
-                    title="Mapa intertópico",
+                    title=_("pages.model_map"),
                     icon=":material/map:",
                     url_path="modelo-mapa",
                 ),
             ],
-            "Hiperparametrización": [
+            _("menu.group_hyper"): [
                 st.Page(
                     _render_hyper_evolution_page,
-                    title="Evolución del score",
+                    title=_("pages.hyper_evolution"),
                     icon=":material/show_chart:",
                     url_path="hiper-evolucion",
                 ),
                 st.Page(
                     _render_hyper_param_vs_score_page,
-                    title="Parámetros vs rendimiento",
+                    title=_("pages.hyper_params"),
                     icon=":material/tune:",
                     url_path="hiper-parametros",
                 ),
                 st.Page(
                     _render_hyper_best_params_page,
-                    title="Mejores hiperparámetros",
+                    title=_("pages.hyper_best"),
                     icon=":material/emoji_events:",
                     url_path="hiper-mejores-parametros",
                 ),
             ],
-            "Comparativa de modelos": [
+            _("menu.group_comparison"): [
                 st.Page(
                     _render_comparison_summary_page,
-                    title="Resumen comparativo",
+                    title=_("pages.comp_summary"),
                     icon=":material/table_chart:",
                     url_path="comparativa-resumen",
                 ),
                 st.Page(
                     _render_comparison_ranking_page,
-                    title="Ranking global",
+                    title=_("pages.comp_ranking"),
                     icon=":material/leaderboard:",
                     url_path="comparativa-ranking",
                 ),
                 st.Page(
                     _render_comparison_metrics_page,
-                    title="Comparación de métricas",
+                    title=_("pages.comp_metrics"),
                     icon=":material/bar_chart:",
                     url_path="comparativa-metricas",
                 ),

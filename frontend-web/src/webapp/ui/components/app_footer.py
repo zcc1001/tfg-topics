@@ -1,9 +1,10 @@
 import streamlit as st
 
+from webapp.ui.i18n import _
+
 
 def render_app_footer() -> None:
-    st.markdown(
-        """
+    css = """
         <style>
             [data-testid="stAppViewContainer"] {
                 --app-sidebar-width: 0rem;
@@ -162,43 +163,45 @@ def render_app_footer() -> None:
                 }
             }
         </style>
+        """
+
+    html = f"""
         <div class="app-footer">
             <div class="app-footer__inner">
                 <div class="app-footer__lead">
-                    <p class="app-footer__eyebrow">TFG de Ingeniería Informática</p>
+                    <p class="app-footer__eyebrow">{_("footer.eyebrow")}</p>
                     <p class="app-footer__title">
-                        TFG Topics · Análisis temático y exploración de documentos
-                        académicos
+                        {_("footer.title")}
                     </p>
                     <p class="app-footer__description">
-                        Plataforma orientada al estudio de corpus académicos mediante
-                        técnicas de topic modeling, comparación de modelos y
-                        visualización de resultados para apoyar el análisis
-                        exploratorio.
+                        {_("footer.description")}
                     </p>
                 </div>
                 <div class="app-footer__panel">
-                    <p class="app-footer__panel-title">Información académica</p>
+                    <p class="app-footer__panel-title">{_("footer.panel_title")}</p>
                     <div class="app-footer__meta-row">
-                        <span class="app-footer__label">Autor</span>
+                        <span class="app-footer__label">
+                                {_("footer.author_label")}</span>
                         <span class="app-footer__value">
                             Zeldan Javier Campos Cordero
                         </span>
                     </div>
                     <div class="app-footer__meta-row">
-                        <span class="app-footer__label">Tutor</span>
+                        <span class="app-footer__label">{_("footer.tutor_label")}</span>
                         <span class="app-footer__value">Carlos López Nozal</span>
                     </div>
                     <div class="app-footer__meta-row">
-                        <span class="app-footer__label">Centro</span>
+                        <span class="app-footer__label">
+                                    {_("footer.center_label")}</span>
                         <span class="app-footer__value">Universidad de Burgos</span>
                     </div>
                     <div class="app-footer__meta-row">
-                        <span class="app-footer__label">Curso</span>
+                        <span class="app-footer__label">
+                                    {_("footer.course_label")}</span>
                         <span class="app-footer__value">2025/2026</span>
                     </div>
                     <div class="app-footer__meta-row">
-                        <span class="app-footer__label">Repositorio</span>
+                        <span class="app-footer__label">{_("footer.repo_label")}</span>
                         <span class="app-footer__value">
                             <a
                                 class="app-footer__link"
@@ -211,7 +214,7 @@ def render_app_footer() -> None:
                         </span>
                     </div>
                     <div class="app-footer__meta-row">
-                        <span class="app-footer__label">Wiki</span>
+                        <span class="app-footer__label">{_("footer.wiki_label")}</span>
                         <span class="app-footer__value">
                             <a
                                 class="app-footer__link"
@@ -219,13 +222,12 @@ def render_app_footer() -> None:
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Documentación (Wiki)
+                                {_("footer.wiki_link")}
                             </a>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        """
+    st.markdown(css + html, unsafe_allow_html=True)

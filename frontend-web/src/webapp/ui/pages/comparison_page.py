@@ -12,6 +12,7 @@ from webapp.ui.components.persistent_widgets import (
     persistent_selectbox,
 )
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
+from webapp.ui.i18n import _
 
 DEFAULT_DATASETS = ["issues", "readmes", "thesis", "abstracts"]
 DEFAULT_MODELS = ["lda", "bertopic", "fastopic", "top2vec"]
@@ -22,13 +23,13 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
     Args:
         base_dir (str): directory where the model results are stored.
     """
-    render_page_header(page_title="Comparativa de modelos")
+    render_page_header(page_title=_("comparison.title"))
 
     repository = TopicModelParquetRepository(base_path=base_dir)
     datasets = repository.available_datasets() or DEFAULT_DATASETS
     section_key = (selected_section or "default").lower().replace(" ", "_")
     dataset = persistent_selectbox(
-        label="Selecciona un dataset",
+        label=_("common.select_dataset"),
         options=datasets,
         state_key="comparison_selected_dataset",
         widget_key=f"comparison_dataset_widget_{section_key}",
@@ -37,19 +38,19 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
     available_models = repository.available_models_for_dataset(dataset)
     model_options = available_models or repository.available_models() or DEFAULT_MODELS
     models = persistent_multiselect(
-        label="Selecciona modelos a comparar",
+        label=_("common.models_to_compare"),
         options=model_options,
         state_key="comparison_selected_models",
         widget_key=f"comparison_models_widget_{section_key}",
     )
 
     if not models:
-        st.info("Selecciona al menos un modelo.")
+        st.info(_("common.select_at_least_one"))
         return
 
     runs = [{"dataset": dataset, "model_name": model} for model in models]
 
-    with st.spinner("Cargando modelos..."):
+    with st.spinner(_("common.loading_models")):
         use_case = CompareModelsUseCase(
             service=ModelComparisonService(),
             repository=repository,
@@ -58,27 +59,29 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
         results = use_case.execute(runs)
         skipped = results["skipped"]["model_name"].tolist()
         if skipped:
-            st.warning(f"No hay resultados disponibles para: {', '.join(skipped)}")
+            st.warning(
+                _("common.no_results_skipped").format(skipped=", ".join(skipped))
+            )
 
         summary_df = results["summary"]
 
         if summary_df.empty:
-            st.info("No hay modelos disponibles para este dataset.")
+            st.info(_("common.no_models_available"))
             return
 
         section_anchors = {
-            "Resumen comparativo": "comparison-resumen",
-            "Ranking global": "comparison-ranking",
-            "Comparación de métricas": "comparison-metricas",
+            str(_("comparison.summary")): "comparison-resumen",
+            str(_("comparison.ranking")): "comparison-ranking",
+            str(_("comparison.metrics")): "comparison-metricas",
         }
 
-        render_section_anchor(section_anchors["Resumen comparativo"])
+        render_section_anchor(section_anchors[str(_("comparison.summary"))])
         _render_summary(summary_df)
 
-        render_section_anchor(section_anchors["Ranking global"])
+        render_section_anchor(section_anchors[str(_("comparison.ranking"))])
         _render_ranking(summary_df)
 
-        render_section_anchor(section_anchors["Comparación de métricas"])
+        render_section_anchor(section_anchors[str(_("comparison.metrics"))])
         _render_metrics(summary_df, section_key=section_key)
 
         if selected_section:
@@ -86,29 +89,25 @@ def render_comparison(base_dir: str, selected_section: str | None = None) -> Non
 
 
 def _render_summary(summary_df: pd.DataFrame) -> None:
-    st.subheader("Resumen comparativo")
+    st.subheader(_("comparison.summary"))
 
     st.dataframe(
         summary_df.sort_values("final_score", ascending=False), use_container_width=True
     )
 
-    st.caption(
-        "El score final combina coherencia, tiempo de ejecución "
-        ", normalizados entre modelos disponibles."
-    )
+    st.caption(_("comparison.caption_score"))
 
     best = summary_df.sort_values("final_score", ascending=False).iloc[0]
     st.success(
-        f"Modelo recomendado: **{best['model_name']}** "
-        f"(score = {best['final_score']:.2f})"
+        _("comparison.recommended").format(
+            model=best["model_name"], score=f"{best['final_score']:.2f}"
+        )
     )
 
 
 def _render_ranking(summary_df: pd.DataFrame) -> None:
-    st.subheader("Ranking global")
-    st.caption(
-        "Ranking relativo entre los modelos seleccionados para el dataset actual."
-    )
+    st.subheader(_("comparison.ranking"))
+    st.caption(_("comparison.caption_ranking"))
     st.bar_chart(
         summary_df.sort_values("final_score", ascending=False).set_index("model_name")[
             "final_score"
@@ -117,10 +116,10 @@ def _render_ranking(summary_df: pd.DataFrame) -> None:
 
 
 def _render_metrics(summary_df: pd.DataFrame, section_key: str = "default") -> None:
-    st.subheader("Comparación de métricas")
+    st.subheader(_("comparison.metrics"))
 
     metric = persistent_selectbox(
-        label="Métrica",
+        label=_("common.metric"),
         options=[
             "coherence",
             "runtime_seconds",

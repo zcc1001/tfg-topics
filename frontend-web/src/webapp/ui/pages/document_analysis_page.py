@@ -14,6 +14,7 @@ from webapp.infrastructure.adapters.topic_model_parquet_repository import (
 from webapp.ui.components.page_header import render_page_header
 from webapp.ui.components.persistent_widgets import persistent_selectbox
 from webapp.ui.components.section_scroll import render_section_anchor, scroll_to_section
+from webapp.ui.i18n import _
 
 DEFAULT_DATASETS = ["issues", "readmes", "thesis", "abstracts"]
 DEFAULT_MODELS = ["lda", "bertopic", "fastopic", "top2vec"]
@@ -25,11 +26,8 @@ def render_document_analysis(
     selected_section: str | None = None,
 ) -> None:
     render_page_header(
-        page_title="Análisis académico de documentos",
-        description=(
-            "Explora líneas temáticas de los distintos datasets y su relación con "
-            "los metadatos disponibles."
-        ),
+        page_title=_("document.title"),
+        description=_("document.desc"),
     )
 
     topic_repository = TopicModelParquetRepository(processing_dir)
@@ -37,7 +35,7 @@ def render_document_analysis(
     section_key = (selected_section or "default").lower().replace(" ", "_")
 
     dataset = persistent_selectbox(
-        label="Dataset",
+        label=_("common.dataset"),
         options=datasets,
         state_key="document_analysis_selected_dataset",
         widget_key=f"document_analysis_dataset_widget_{section_key}",
@@ -51,18 +49,18 @@ def render_document_analysis(
         or DEFAULT_MODELS
     )
     model = persistent_selectbox(
-        label="Modelo de análisis temático",
+        label=_("common.model"),
         options=model_options,
         state_key="document_analysis_selected_model",
         widget_key=f"document_analysis_model_widget_{section_key}",
     )
 
     tutor_input = st.text_input(
-        "Filtrar por tutor (opcional)",
+        _("document.filter_tutor"),
         key="document_analysis_tutor",
     )
     year = st.number_input(
-        "Año de presentación",
+        _("document.year"),
         min_value=2000,
         max_value=2030,
         step=1,
@@ -71,7 +69,7 @@ def render_document_analysis(
     )
 
     grade_range = st.slider(
-        "Rango de nota",
+        _("document.grade_range"),
         min_value=0.0,
         max_value=10.0,
         value=(0.0, 10.0),
@@ -79,7 +77,7 @@ def render_document_analysis(
         key="document_analysis_grade_range",
     )
 
-    if st.button("Analizar"):
+    if st.button(_("common.analyze")):
 
         use_case = AnalyzeDocumentsUseCase(
             topic_repo=topic_repository,
@@ -99,7 +97,7 @@ def render_document_analysis(
         return
 
     if st.session_state.get("document_analysis_dataset") != dataset:
-        st.info("Pulsa `Analizar` para cargar resultados del dataset seleccionado.")
+        st.info(_("document.press_analyze"))
         return
 
     results = st.session_state["document_analysis_results"]
@@ -110,7 +108,7 @@ def render_document_analysis(
     raw_docs = results["documents_raw"]
 
     if docs.empty:
-        st.warning("No se encontraron documentos con los filtros seleccionados.")
+        st.warning(_("document.no_docs"))
         return
 
     has_tutor_data = docs["tutor_group"].ne("Sin tutor").any()
@@ -118,28 +116,28 @@ def render_document_analysis(
     has_year_data = docs["year_group"].ne("Sin año").any()
 
     section_anchors = {
-        "Resumen general": "document-resumen",
-        "Temas más frecuentes": "document-temas-frecuentes",
-        "Temas detectados": "document-temas-detectados",
+        str(_("document.summary")): "document-resumen",
+        str(_("document.freq_topics")): "document-temas-frecuentes",
+        str(_("document.detected_topics")): "document-temas-detectados",
     }
     if has_tutor_data:
-        section_anchors["Ranking académico de tutores"] = "document-ranking-tutores"
-        section_anchors["Especialización temática"] = "document-especializacion"
+        section_anchors[str(_("document.tutor_ranking"))] = "document-ranking-tutores"
+        section_anchors[str(_("document.thematic_spec"))] = "document-especializacion"
 
-    render_section_anchor(section_anchors["Resumen general"])
-    st.subheader("🔢 Resumen general")
+    render_section_anchor(section_anchors[str(_("document.summary"))])
+    st.subheader(f"🔢 {_('document.summary')}")
 
     metrics = st.columns(4 if has_grade_data else 3)
 
-    metrics[0].metric("Documentos analizados", len(docs))
-    metrics[1].metric("Temas detectados", dist["topic_id"].nunique())
+    metrics[0].metric(_("document.analyzed_docs"), len(docs))
+    metrics[1].metric(_("document.topics_detected"), dist["topic_id"].nunique())
     if has_year_data:
-        metrics[2].metric("Años detectados", docs["year_group"].nunique())
+        metrics[2].metric(_("document.years_detected"), docs["year_group"].nunique())
     else:
-        metrics[2].metric("Grupos temáticos", dist["topic_id"].nunique())
+        metrics[2].metric(_("document.thematic_groups"), dist["topic_id"].nunique())
     if has_grade_data:
         metrics[3].metric(
-            "Nota media",
+            _("document.avg_grade"),
             round(pd.to_numeric(raw_docs["grade"], errors="coerce").mean(), 2),
         )
 
@@ -153,13 +151,17 @@ def render_document_analysis(
 
     # ------------------------------------------------------------
 
-    render_section_anchor(section_anchors["Temas más frecuentes"])
-    st.subheader("📊 Temas más frecuentes")
+    render_section_anchor(section_anchors[str(_("document.freq_topics"))])
+    st.subheader(f"📊 {_('document.freq_topics')}")
 
     chart_data = (
         dist.groupby("topic_id")["documentos"]
         .sum()
-        .rename(index=lambda tid: topic_label_map.get(tid, f"Tema {tid}"))
+        .rename(
+            index=lambda tid: topic_label_map.get(
+                tid, f"{_('document.theme_prefix')} {tid}"
+            )
+        )
         .sort_values(ascending=False)
     )
 
@@ -167,14 +169,15 @@ def render_document_analysis(
 
     if not chart_data.empty:
         st.success(
-            f"El tema más frecuente es **{chart_data.index[0]}**, "
-            f"presente en {chart_data.iloc[0]} documentos."
+            _("document.most_freq_topic").format(
+                topic=chart_data.index[0], docs=chart_data.iloc[0]
+            )
         )
 
     tutor_stats = pd.DataFrame()
     if has_tutor_data:
-        render_section_anchor(section_anchors["Ranking académico de tutores"])
-        st.subheader("👨‍🏫 Ranking académico de tutores")
+        render_section_anchor(section_anchors[str(_("document.tutor_ranking"))])
+        st.subheader(f"👨‍🏫 {_('document.tutor_ranking')}")
         docs["grade_numeric"] = pd.to_numeric(docs["grade"], errors="coerce")
         tutor_stats = (
             docs[docs["tutor_group"] != "Sin tutor"]
@@ -189,8 +192,8 @@ def render_document_analysis(
 
         st.dataframe(tutor_stats)
 
-    render_section_anchor(section_anchors["Temas detectados"])
-    st.subheader("🧠 Temas detectados")
+    render_section_anchor(section_anchors[str(_("document.detected_topics"))])
+    st.subheader(f"🧠 {_('document.detected_topics')}")
 
     topic_counts = (
         docs.groupby("tópico_principal")["document_id"]
@@ -200,13 +203,15 @@ def render_document_analysis(
 
     for topic_id, count in topic_counts.items():
 
-        label = topic_label_map.get(topic_id, f"Tema {topic_id}")
+        label = topic_label_map.get(
+            topic_id, f"{_('document.theme_prefix')} {topic_id}"
+        )
 
-        with st.expander(f"{label} — {count} documentos"):
+        with st.expander(f"{label} — {count} {_('document.documents_suffix')}"):
 
             topic_docs = docs[docs["tópico_principal"] == topic_id]
 
-            for _, row in topic_docs.iterrows():
+            for idx, row in topic_docs.iterrows():
                 title = row["title"] if pd.notna(row["title"]) else row["document_id"]
                 st.markdown(
                     f"**{title}**  \n"
@@ -218,9 +223,9 @@ def render_document_analysis(
                 st.divider()
 
     if has_tutor_data and not tutor_stats.empty:
-        render_section_anchor(section_anchors["Especialización temática"])
+        render_section_anchor(section_anchors[str(_("document.thematic_spec"))])
         st.divider()
-        st.subheader("🎯 Especialización temática (Top 3 tutores)")
+        st.subheader(f"🎯 {_('document.spec_top3')}")
 
         top_tutors = tutor_stats.head(3).index
 
@@ -233,7 +238,11 @@ def render_document_analysis(
             tutor_topics = (
                 tutor_docs.groupby("tópico_principal")["document_id"]
                 .count()
-                .rename(index=lambda tid: topic_label_map.get(tid, f"Tema {tid}"))
+                .rename(
+                    index=lambda tid: topic_label_map.get(
+                        tid, f"{_('document.theme_prefix')} {tid}"
+                    )
+                )
                 .sort_values(ascending=True)
             )
 
@@ -243,7 +252,7 @@ def render_document_analysis(
 
             if not tutor_topics.empty:
                 dominant = tutor_topics.idxmax()
-                st.info(f"Línea dominante: **{dominant}**")
+                st.info(_("document.dominant_line").format(dominant=dominant))
 
             st.divider()
 
