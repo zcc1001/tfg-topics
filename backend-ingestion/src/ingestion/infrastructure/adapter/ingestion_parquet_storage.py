@@ -135,6 +135,8 @@ class IngestionParquetStorage(StoragePort):
     @staticmethod
     def _safe_float(value: Any) -> float | None:
         try:
+            if isinstance(value, str):
+                value = value.replace(",", ".")
             return float(value)
         except (TypeError, ValueError):
             return None
