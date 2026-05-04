@@ -31,7 +31,8 @@ class RepoListCsvReaderPort(RepoListReaderPort):
 
             if not owner_repo:
                 logger.warning(
-                    "Skipping row with invalid or unsupported GitHub repository URL: '%s'",
+                    "Skipping row with invalid or unsupported"
+                    " GitHub repository URL: '%s'",
                     repo_url,
                 )
                 continue
