@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 import pandas as pd
@@ -69,3 +70,47 @@ def test_fetch_repo_list_raises_value_error_on_parser_error(
         reader.fetch_repo_list()
 
     assert "Malformed CSV file" in str(exc.value)
+
+
+def test_fetch_repo_list_skips_invalid_url(tmp_path: Path) -> None:
+    """Rows with invalid/unsupported repository URLs are skipped with a warning."""
+    csv_content = (
+        "title,tutors,students,assignment_date,presentation_date,grade,repository_url\n"
+        "Valid thesis,Tutor A,1,01/01/2020,01/06/2020,7,"
+        "https://github.com/owner/repo\n"
+        "Invalid URL thesis,Tutor B,1,01/01/2020,01/06/2020,8,"
+        "https://github.com/vrt0004\n"
+        "Another valid thesis,Tutor C,1,01/01/2020,01/06/2020,9,"
+        "https://github.com/owner2/repo2\n"
+    )
+    path = tmp_path / "tfg_list.csv"
+    path.write_text(csv_content, encoding="utf-8")
+
+    reader = repo_list_csv_reader.RepoListCsvReaderPort(str(path))
+    repos = reader.fetch_repo_list()
+
+    assert len(repos) == 2
+    assert repos[0].repo_owner == "owner"
+    assert repos[0].repo_name == "repo"
+    assert repos[1].repo_owner == "owner2"
+    assert repos[1].repo_name == "repo2"
+
+
+def test_fetch_repo_list_skips_invalid_url_logs_warning(
+    tmp_path: Path, caplog: pytest.LogCaptureFixture
+) -> None:
+    """A warning is logged when a row with an invalid URL is skipped."""
+    csv_content = (
+        "title,tutors,students,assignment_date,presentation_date,grade,repository_url\n"
+        "Invalid URL thesis,Tutor B,1,01/01/2020,01/06/2020,8,"
+        "https://github.com/vrt0004\n"
+    )
+    path = tmp_path / "tfg_list.csv"
+    path.write_text(csv_content, encoding="utf-8")
+
+    reader = repo_list_csv_reader.RepoListCsvReaderPort(str(path))
+    with caplog.at_level(logging.WARNING):
+        repos = reader.fetch_repo_list()
+
+    assert len(repos) == 0
+    assert any("vrt0004" in record.message for record in caplog.records)
