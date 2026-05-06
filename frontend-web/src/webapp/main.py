@@ -228,6 +228,12 @@ def main() -> None:
                 ),
             ],
         }
+    wiki_url = "https://github.com/zcc1001/tfg-topics/wiki"
+    st.sidebar.divider()
+    st.sidebar.markdown(
+        f"[{_('menu.help_link')}]({wiki_url})",
+        help=_("menu.help_caption"),
+    )
 
     pg = st.navigation(pages, position="sidebar")
 
