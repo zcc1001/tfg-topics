@@ -1,9 +1,13 @@
 {
   "menu": {
-    "profile_selector": "Perfil de usuario:",
-    "academic_mode": "🎓 Estadísticas Académicas (TFG)",
-    "technical_mode": "🛠️ Análisis Técnico",
+    "profile_selector": "Vista:",
+    "academic_mode": "🎓 Análisis Académico (TFG)",
+    "academic_mode_help": "Explora documentos, temas, tutores y metadatos.",
+    "technical_mode": "🛠️ Análisis Técnico Modelado de Temas",
+    "technical_mode_help": "Revisa modelos, métricas, mapas e hiperparámetros.",
     "language_selector": "Idioma / Language",
+    "help_link": "Ayuda",
+    "help_caption": "Abrir la wiki del proyecto en GitHub",
     "group_exploration": "Exploración de Temáticas",
     "group_models": "Análisis por modelo",
     "group_hyper": "Hiperparametrización",

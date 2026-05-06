@@ -1,9 +1,13 @@
 {
   "menu": {
-    "profile_selector": "User Profile:",
-    "academic_mode": "🎓 Academic Statistics (Thesis)",
-    "technical_mode": "🛠️ Technical Analysis",
+    "profile_selector": "View:",
+    "academic_mode": "🎓 Academic Analysis",
+    "academic_mode_help": "Explore documents, topics, tutors, and metadata.",
+    "technical_mode": "🛠️ Topic Modeling Technical Analysis",
+    "technical_mode_help": "Review models, metrics, maps, and hyperparameters.",
     "language_selector": "Language / Idioma",
+    "help_link": "Help",
+    "help_caption": "Open the project wiki on GitHub",
     "group_exploration": "Topic Exploration",
     "group_models": "Model Analysis",
     "group_hyper": "Hyperparameter Tuning",

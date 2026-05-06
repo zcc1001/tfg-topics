@@ -146,10 +146,12 @@ def main() -> None:
     language_selector()
 
     modo_options = [_("menu.academic_mode"), _("menu.technical_mode")]
+    modo_captions = [_("menu.academic_mode_help"), _("menu.technical_mode_help")]
     modo = st.sidebar.radio(
         _("menu.profile_selector"),
         modo_options,
         index=0,
+        captions=modo_captions,
     )
 
     if modo == modo_options[0]:
