@@ -1,0 +1,36 @@
+services:
+
+  ingestion:
+    image: ghcr.io/${GH_USER:-zcc1001}/tfg-topics-ingestion:${VERSION:-latest}
+    container_name: tfg_topics_ingestion
+    profiles:
+      - ingestion
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - DATA_DIR=/data
+      - REPOS_CSV_FILE_NAME=tfg_list.csv
+    volumes:
+      - ./data:/data
+
+  processing:
+    image: ghcr.io/${GH_USER:-zcc1001}/tfg-topics-processing:${VERSION:-latest}
+    container_name: tfg_topics_processing
+    profiles:
+      - processing
+    environment:
+      - DATA_DIR=/data
+    volumes:
+      - ./data:/data
+
+  frontend:
+    image: ghcr.io/${GH_USER:-zcc1001}/tfg-topics-frontend:${VERSION:-latest}
+    container_name: tfg_topics_frontend
+    profiles:
+      - frontend
+    environment:
+      - DATA_DIR=/data
+      - STREAMLIT_BROWSER_SERVER_ADDRESS=localhost
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/data

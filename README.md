@@ -39,7 +39,7 @@ The project is organized into several key directories:
 
 - **`/backend-ingestion`**: Contains the logic for data collection from GitHub.
 - **`/backend-processing`**: Includes scripts for text preprocessing, topic modeling, and hyperparameter tuning.
-- **`/frontent-web`**: A simple web interface to display the results.
+- **`/frontend-web`**: A simple web interface to display the results.
 - **`/data`**: Stores the raw and processed data.
 - **`/prototypes`**: Jupyter notebooks for experimentation and prototyping.
 - **`/docs`**: Project documentation.
@@ -48,9 +48,109 @@ The project is organized into several key directories:
 
 ### Prerequisites
 
+For standard usage:
+- **Git**
+- **Docker** (Docker Desktop on Windows/Mac, or Docker Engine on Linux)
+
+For local development (optional):
 - Conda
-- Git
-- Python: 3.10
+- Python 3.10
+
+### Quick Start
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/zcc1001/tfg-topics
+   cd tfg-topics
+   ```
+
+2. **You are ready!** Proceed to the Makefile Usage section below. You do not need to install Python dependencies if you use the default Docker execution mode.
+
+### 🚀 Try it without code (Frontend Only)
+
+If you only want to visualize results and don't want to clone the repository, you can use the sample data from the latest release:
+
+1. Create an empty folder anywhere on your computer.
+2. Download `example-data.zip` and `docker-compose.release.yml` from the [Releases page](https://github.com/zcc1001/tfg-topics/releases).
+3. Extract `example-data.zip` into your folder (this should create a `data/` folder next to the `docker-compose.release.yml` file).
+4. Open your terminal in that folder and run:
+
+   ```bash
+   docker compose -f docker-compose.release.yml --profile frontend run --rm frontend
+   ```
+
+5. Open `http://localhost:8501` in your browser.
+
+## 🛠️ Makefile Usage
+
+The repository includes a `Makefile` to run ingestion, processing, the frontend, and
+the Docker workflow with consistent commands.
+
+To list the available targets and examples:
+
+```bash
+make help
+```
+
+### Execution Options (The Simple Way)
+
+The default execution `MODE` is `release`, which means **Docker will automatically download pre-built images from GitHub Container Registry**. You do not need to install Python or any dependencies locally to use these commands—just Docker!
+
+- **Start the web application**:
+  ```bash
+  make start
+  ```
+
+- **Run full data ingestion**:
+  ```bash
+  make ingest-all
+  ```
+
+- **Run full processing** (all models and datasets):
+  ```bash
+  make process-all
+  ```
+
+- **Run the entire pipeline sequentially** (ingestion, processing, and frontend):
+  ```bash
+  make pipeline
+  ```
+
+### Advanced Usage & Variables
+
+If you need fine-grained control over which models or datasets to run, or if you want to run the code locally without Docker, the `Makefile` exposes several variables:
+
+- `MODE`: `release` (default, pre-built Docker), `docker` (local Docker build), `local` (pure Python environment).
+- `INGEST`: Which data to ingest (`all`, `issues`, `readmes`, `thesis`, `abstracts`).
+- `MODELS`: Space-separated list of models (e.g., `"lda bertopic top2vec fastopic"`).
+- `DATASETS`: Space-separated list of datasets (e.g., `"readmes issues thesis abstracts"`).
+
+**Example of advanced processing** (running only LDA and BERTopic on thesis data using a local Python environment):
+
+```bash
+make processing MODELS="lda bertopic" DATASETS="thesis" MODE=local
+```
+
+Alternatively, you can just download the `docker-compose.release.yml` file, place it in an empty directory, create a `data/` folder, and run:
+```bash
+docker compose -f docker-compose.release.yml --profile frontend run --rm frontend
+```
+
+### Docker Lifecycle
+
+Use these targets to build and manage the full containerized environment when using `MODE=docker`:
+
+```bash
+make docker-build
+make docker-build-ingestion
+make docker-build-processing
+make docker-build-frontend
+```
+
+## 👨‍💻 Contributing & Local Development
+
+If you intend to modify the source code, you may want to set up a pure Python local environment instead of relying solely on Docker.
 
 ### Local Development Setup
 
@@ -89,131 +189,3 @@ This repository includes a devcontainer config at `.devcontainer/devcontainer.js
 When opened in Codespaces it provisions Python 3.10, development tools, configures
 `PYTHONPATH` for the `src/` modules, and installs the dependencies for ingestion,
 processing, and frontend automatically during `postCreateCommand`.
-
-## 🛠️ Makefile Usage
-
-The repository includes a `Makefile` to run ingestion, processing, the frontend, and
-the Docker workflow with consistent commands.
-
-To list the available targets and examples:
-
-```bash
-make help
-```
-
-### Default Variables
-
-The `Makefile` exposes these variables, which can be overridden from the command line:
-
-- `INGEST=all`
-- `MODEL=bertopic`
-- `DATASET=abstracts`
-- `MODELS="lda bertopic top2vec fastopic"`
-- `DATASETS="readmes issues thesis abstracts"`
-- `PYTHON=python`
-- `STREAMLIT=streamlit`
-- `DOCKER_COMPOSE="docker compose"`
-
-Example:
-
-```bash
-make processing MODEL=lda DATASET=thesis
-```
-
-### Local Execution
-
-These targets run the services directly from the local Python environment:
-
-- Run data ingestion:
-
-  ```bash
-  make ingestion
-  make ingestion INGEST="issues readmes"
-  make ingestion INGEST="all"
-  ```
-
-- Run processing for one model and one dataset:
-
-  ```bash
-  make processing
-  make processing MODEL=bertopic DATASET=thesis
-  ```
-
-- Run one model across all datasets:
-
-  ```bash
-  make processing-model MODEL=lda
-  make processing-model MODEL=fastopic DATASETS="readmes abstracts"
-  ```
-
-- Run all models for one dataset:
-
-  ```bash
-  make processing-dataset DATASET=issues
-  make processing-dataset DATASET=thesis MODELS="lda bertopic"
-  ```
-
-- Run multiple models across multiple datasets:
-
-  ```bash
-  make processing-all
-  make processing-all MODELS="lda bertopic" DATASETS="readmes thesis"
-  ```
-
-- Launch the web application:
-
-  ```bash
-  make frontend
-  ```
-
-### Docker Execution
-
-These targets use `docker compose` profiles defined by the project:
-
-- Run ingestion in Docker:
-
-  ```bash
-  make ingestion-docker
-  make ingestion-docker INGEST="all"
-  ```
-
-- Run processing in Docker:
-
-  ```bash
-  make processing-docker MODEL=top2vec DATASET=readmes
-  ```
-
-- Run one model across several datasets in Docker:
-
-  ```bash
-  make processing-model-docker MODEL=bertopic
-  ```
-
-- Run all models for one dataset in Docker:
-
-  ```bash
-  make processing-dataset-docker DATASET=abstracts
-  ```
-
-- Run all configured combinations in Docker:
-
-  ```bash
-  make processing-all-docker
-  ```
-
-- Launch the frontend in Docker:
-
-  ```bash
-  make frontend-docker
-  ```
-
-### Docker Lifecycle
-
-Use these targets to build and manage the full containerized environment:
-
-```bash
-make docker-build
-make docker-build-ingestion
-make docker-build-processing
-make docker-build-frontend
-```

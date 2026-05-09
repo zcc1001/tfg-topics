@@ -35,6 +35,7 @@ services:
       - frontend
     environment:
       - DATA_DIR=/data
+      - STREAMLIT_BROWSER_SERVER_ADDRESS=localhost
     ports:
       - "8501:8501"
     volumes:
