@@ -8,6 +8,7 @@
 	ingest-all \
 	process-all \
 	pipeline \
+	pull \
 	docker-build docker-build-ingestion docker-build-processing docker-build-frontend
 
 SHELL := /bin/bash
@@ -32,6 +33,7 @@ help:
 	@echo "  make ingest-all                           (Runs ingestion via Docker release by default)"
 	@echo "  make process-all                          (Runs all models via Docker release by default)"
 	@echo "  make pipeline                             (Runs ingest-all, process-all, and start sequentially)"
+	@echo "  make pull                                 (Pulls the latest pre-built Docker release images)"
 	@echo ""
 	@echo "Advanced usage examples:"
 	@echo "  make frontend                             (Runs frontend using pre-built release images)"
@@ -113,6 +115,10 @@ process-all:
 pipeline: ingest-all process-all start
 
 docker-build: docker-build-ingestion docker-build-processing docker-build-frontend
+
+pull:
+	@echo "⬇️ Pulling latest release images..."
+	$(DOCKER_COMPOSE_RELEASE) --profile ingestion --profile processing --profile frontend pull
 
 docker-build-ingestion:
 	$(DOCKER_COMPOSE) --profile ingestion build

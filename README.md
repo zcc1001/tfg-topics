@@ -77,7 +77,7 @@ If you only want to visualize results and don't want to clone the repository, yo
 4. Open your terminal in that folder and run:
 
    ```bash
-   docker compose -f docker-compose.release.yml --profile frontend run --rm frontend
+   docker compose -f docker-compose.release.yml --profile frontend run --rm --service-ports frontend
    ```
 
 5. Open `http://localhost:8501` in your browser.
@@ -117,6 +117,11 @@ The default execution `MODE` is `release`, which means **Docker will automatical
   make pipeline
   ```
 
+- **Update to the latest Docker images** (recommended before running pipeline/start):
+  ```bash
+  make pull
+  ```
+
 ### Advanced Usage & Variables
 
 If you need fine-grained control over which models or datasets to run, or if you want to run the code locally without Docker, the `Makefile` exposes several variables:
@@ -134,7 +139,7 @@ make processing MODELS="lda bertopic" DATASETS="thesis" MODE=local
 
 Alternatively, you can just download the `docker-compose.release.yml` file, place it in an empty directory, create a `data/` folder, and run:
 ```bash
-docker compose -f docker-compose.release.yml --profile frontend run --rm frontend
+docker compose -f docker-compose.release.yml --profile frontend run --rm --service-ports frontend
 ```
 
 ### Docker Lifecycle
