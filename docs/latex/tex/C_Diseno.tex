@@ -1,12 +1,163 @@
 \apendice{Especificación de diseño}
 
 \section{Introducción}
+Esta sección detalla las decisiones técnicas y estructurales adoptadas para
+transformar los requisitos del sistema en una solución de software funcional y
+mantenible. El objetivo principal del diseño ha sido establecer una base sólida
+que soporte las distintas fases del proyecto, desde la recopilación de datos en
+la plataforma GitHub hasta la aplicación de los algoritmos de modelado de temas
+y su posterior visualización.
+
+Para lograrlo, el diseño se ha abordado desde tres perspectivas
+complementarias: la estructuración y persistencia de los datos, la arquitectura
+de los componentes software y, por último, la definición de los procesos y
+flujos de ejecución. A la hora de tomar estas decisiones de diseño, se ha
+priorizado la modularidad del código, el rendimiento en el manejo de los
+volúmenes de texto extraídos y la facilidad para poder incorporar nuevos
+modelos en el futuro sin alterar la base existente.
+
+\subsection{Criterios de decisión y trade-offs}
+Antes de definir los artefactos concretos del sistema, se establecieron varios
+criterios de diseño para guiar las decisiones técnicas: mantenibilidad del
+código, reproducibilidad experimental, rendimiento sobre colecciones textuales
+grandes y facilidad de evolución del proyecto por parte de futuros estudiantes.
+
+A partir de estos criterios, se adoptaron las siguientes decisiones:
+
+\begin{itemize}
+    \item \textbf{Arquitectura Hexagonal en los módulos backend:} Se priorizó el desacoplamiento entre la lógica de negocio y los detalles de infraestructura para reducir el coste de mantenimiento y facilitar las pruebas unitarias~\cite{HexagonalArchitectureClean2022}. Como contrapartida, se asumió una mayor complejidad inicial en la organización del código y en la definición de puertos/adaptadores.
+    \item \textbf{Parquet como formato estándar de intercambio:} Se descartaron formatos como \acrshort{json} o \acrshort{csv} para el flujo interno, debido a su menor eficiencia en lectura y mayor consumo de almacenamiento en escenarios de volumen. Parquet permitió mejorar tiempos de acceso y compresión, a cambio de introducir una dependencia más fuerte del ecosistema analítico de Python~\cite{UserGuidePandas}.
+    \item \textbf{Pipeline modular por etapas (ingesta, procesamiento y visualización):} Se separaron las fases para poder reejecutar únicamente el tramo necesario según el tipo de cambio realizado (datos, modelos o interfaz). Esta modularidad incrementa la trazabilidad, aunque obliga a definir contratos de datos explícitos entre módulos.
+    \item \textbf{Estrategia de ejecución multi-entorno (\texttt{MODE=release}, \texttt{MODE=docker}, \texttt{MODE=local}):} Se buscó equilibrar accesibilidad para usuarios no técnicos y flexibilidad para desarrollo. El coste asociado es mantener y documentar correctamente varios flujos de ejecución.
+\end{itemize}
+
+\begin{table}[h]
+    \centering
+    \small
+    \begin{tabular}{p{0.27\textwidth} p{0.34\textwidth} p{0.30\textwidth}}
+        \toprule
+        \textbf{Decisión}           & \textbf{Beneficio principal}           & \textbf{Coste asumido}                       \\
+        \otoprule
+        Arquitectura Hexagonal      & Desacoplamiento y testabilidad         & Mayor complejidad inicial de diseño          \\
+        Parquet como formato común  & Mejor rendimiento y compresión         & Dependencia del ecosistema analítico         \\
+        Pipeline modular por etapas & Reejecución parcial y trazabilidad     & Necesidad de contratos de datos explícitos   \\
+        Multi-entorno de ejecución  & Flexibilidad para usuario y desarrollo & Mayor esfuerzo de documentación y validación \\
+        \bottomrule
+    \end{tabular}
+    \caption{Resumen de decisiones de diseño y sus principales trade-offs.}
+    \label{tabla:tradeoffs_diseno}
+\end{table}
+
+Estas decisiones se detallan y materializan en las secciones siguientes de
+diseño de datos, diseño arquitectónico y diseño procedimental.
 
 \section{Diseño de datos}
+El componente analítico de este trabajo requiere manipular, transformar y
+almacenar una cantidad considerable de texto en crudo y metadatos provenientes
+de repositorios. Durante las pruebas iniciales de concepto se plantearon
+formatos de persistencia tradicionales como \acrshort{json} o archivos
+\acrshort{csv}; sin embargo, acabaron siendo descartados.
 
+En su lugar, se ha optado por estandarizar el uso del formato columnar
+\textbf{Apache Parquet} para el almacenamiento local y el paso de mensajes
+entre todos los módulos del proyecto. Apoyándonos en las librerías
+\texttt{Pandas} y \texttt{PyArrow}~\cite{UserGuidePandas}, este formato nos
+aporta una compresión muy superior y tiempos de acceso prácticamente
+instantáneos, algo fundamental al procesar los muchos archivos provenientes de
+las distintas fuentes como \textit{Readmes}, \textit{Issues} y
+\textit{Abstracts} y demás documentos de texto.
+
+Los datos se estructuran de forma progresiva en diferentes grupos de
+almacenamiento, comenzando por las fuentes iniciales y desembocando en los
+resultados del modelado:
+
+\textbf{1. Datos de Entrada (\texttt{data/}):}
+El flujo arranca con el archivo maestro \texttt{tfg\_list.csv}. Este fichero actúa como la \textit{semilla} del sistema, albergando el catálogo inicial de repositorios que el módulo de ingesta debe descargar. Internamente, el \acrshort{csv} define una estructura tabular con metadatos clave para cada \acrshort{tfg}: el título del proyecto (\texttt{title}), las siglas de los tutores involucrados (\texttt{tutors}), la cantidad de alumnos (\texttt{students}), las fechas de asignación y presentación (\texttt{assignment\_date}, \texttt{presentation\_date}), la calificación obtenida (\texttt{grade}) y, lo más importante, el enlace directo (\texttt{repository\_url}), que sirve como punto de entrada a la \acrshort{api} de GitHub para comenzar la extracción.
+
+\textbf{2. Ficheros de Ingesta (\texttt{data/ingestion/}):}
+Contienen la información textual y descriptiva recopilada desde GitHub a partir del listado anterior. Todos los registros comparten como nexo común el identificador del repositorio.
+\begin{itemize}
+    \item \texttt{metadata.parquet}: Almacena los metadatos principales de los repositorios identificados como potenciales Trabajos de Fin de Grado (nombre, enlaces, fechas, número de estrellas, etc.).
+    \item \texttt{issues.parquet}: Contiene el texto extraído de las incidencias o debates abiertos en cada repositorio.
+    \item \texttt{readmes.parquet}: Contiene el texto extraído de los ficheros \textit{Readme} principales.
+    \item \texttt{thesis.parquet}: Almacena el contenido textual extraído de las memorias de los proyectos al completo.
+    \item \texttt{abstracts.parquet}: Guarda únicamente los resúmenes de dichas memorias, sirviendo como corpus alternativo y más directo para el análisis.
+\end{itemize}
+
+\textbf{3. Ficheros de Procesamiento (\texttt{data/processing/}):}
+Para cada algoritmo utilizado (\acrshort{lda}~\cite{blei2003lda}, BERTopic~\cite{QuickStartBERTopic}, Top2Vec~\cite{angelovTop2VecDistributedRepresentations2020}, FASTopic~\cite{FastopicFASTopic}) y para cada fuente de texto analizada, el sistema genera dinámicamente un conjunto de archivos Parquet con los resultados analíticos y del entrenamiento:
+\begin{itemize}
+    \item \texttt{*\_topics.parquet}: Recoge la lista de temas descubiertos y los pesos de las palabras clave asociadas.
+    \item \texttt{*\_document\_topics.parquet}: Guarda la distribución probabilística y la asignación principal de temas para cada documento analizado.
+    \item \texttt{*\_metrics.parquet}: Contiene las métricas de evaluación del rendimiento (por ejemplo, medidas de coherencia, diversidad, etc.).
+    \item \texttt{*\_model\_summary.parquet}: Ofrece un resumen estructural de los parámetros básicos del modelo entrenado.
+    \item \texttt{*\_hyperparameter\_trials.parquet}: Registra el historial completo de todas las iteraciones de prueba durante el \textit{tuning} o ajuste de hiperparámetros.
+    \item \texttt{*\_best\_hyperparameters.parquet}: Almacena de forma aislada la mejor configuración de hiperparámetros hallada para ese modelo en concreto.
+    \item \texttt{*\_params.parquet}: Contiene el diccionario general de parámetros bajo los que ha sido ejecutado finalmente el modelo.
+    \item \texttt{*\_topic\_coordinates.parquet}: Almacena las coordenadas dimensionales (normalmente proyecciones 2D) precalculadas, vitales para poder renderizar mapas de distancia de temas de manera instantánea en el \textit{frontend}.
+\end{itemize}
+
+\begin{landscape}
+    \begin{figure}[p]
+        \centering
+        \includegraphics[width=1.4\textwidth, height=1\textheight]{diagramas/diagrama_datos.pdf}
+        \caption{Diagrama de flujo de datos del sistema}
+        \label{diagramas/diagrama_datos.pdf}
+    \end{figure}
+\end{landscape}
 \section{Diseño arquitectónico}
+Teniendo en cuenta que el sistema requiere orquestar llamadas a servicios
+externos, rutinas de \acrshort{nlp} pesadas y varias librerías de modelado
+complejas, plantear un diseño tradicional en capas monolítico habría resultado
+en un código difícil de testear y de mantener. Por esta razón, el núcleo
+principal del \textit{backend} (los módulos \texttt{backend-ingestion} y
+\texttt{backend-processing}) se ha modelado siguiendo estrictamente los
+principios de la \textbf{Arquitectura
+    Hexagonal}~\cite{HexagonalArchitectureClean2022} (conocida también como patrón
+de Puertos y Adaptadores).
+
+Este paradigma arquitectónico nos ha permitido aislar por completo la lógica de
+negocio del proyecto de los detalles puramente técnicos de la infraestructura.
+La separación de responsabilidades se ha organizado en los siguientes bloques:
+
+\begin{enumerate}
+    \item \textbf{Dominio (\textit{Domain}):} Es el corazón de la aplicación. Aquí se han definido las entidades puras y los \textit{puertos} (interfaces declaradas mediante clases abstractas \texttt{abc.ABC} en Python). Esta capa es agnóstica; no incluye importaciones de librerías externas ni sabe de la existencia de Parquet o GitHub.
+    \item \textbf{Aplicación (\textit{Application}):} Contiene los \textit{casos de uso}. Estos módulos son los responsables de orquestar el flujo de la información utilizando exclusivamente las reglas del dominio. Una regla estricta que se ha aplicado en el desarrollo es la prohibición de realizar operaciones de entrada/salida directas en esta capa.
+    \item \textbf{Infraestructura (\textit{Infrastructure}):} En esta capa más externa residen los \textit{adaptadores}, que proporcionan las implementaciones reales para los puertos del dominio. Es aquí donde se encapsulan las llamadas a la \acrshort{api} de GitHub, las lecturas del sistema de ficheros y las invocaciones a los modelos específicos como \acrshort{lda}, BERTopic, Top2Vec o FASTopic.
+\end{enumerate}
+
+En cuanto a la interfaz de usuario (\texttt{frontend-web}), desarrollada
+íntegramente con \texttt{Streamlit}, su diseño arquitectónico es
+intencionadamente minimalista. Actúa simplemente como un cliente de sólo
+lectura que consume los archivos Parquet ya generados por el \textit{backend},
+delegando toda la complejidad computacional a los módulos de procesamiento
+subyacentes~\cite{StreamlitDocsa}.
+
+\begin{landscape}
+    \begin{figure}[p]
+        \centering
+        \includegraphics[width=1.5\textwidth, height=0.9\textheight]{diagramas/diagrama_arquitectura.pdf}
+        \caption{Esquema de componentes basado en Arquitectura Hexagonal}
+        \label{fig:diagramas/diagrama_arquitectura.pdf}
+    \end{figure}
+\end{landscape}
 
 \section{Diseño procedimental}
+Por último, el diseño procedimental especifica la secuencia lógica y el flujo
+de los algoritmos que permiten transformar los datos brutos en visualizaciones
+de temas. A nivel global, el ciclo de vida de la información se divide en un
+\textit{pipeline} de tres grandes fases automatizadas (manejadas a través de
+\texttt{Makefile} y \textit{Docker Compose}~\cite{DockerManuals}):
 
+\begin{enumerate}
+    \item \textbf{Ingesta de datos (\textit{Ingestion}):} El flujo se inicia lanzando consultas parametrizadas contra GitHub para buscar repositorios de \acrshort{tfg}. El algoritmo itera sobre los resultados de la búsqueda, descargando para cada repositorio sus datos básicos, el archivo léame y las incidencias abiertas. Se aplican filtros en tiempo de ejecución para descartar repositorios con información insuficiente, volcando el resultado válido en los primeros ficheros Parquet.
+    \item \textbf{Procesamiento y Modelado (\textit{Processing}):} Es el procedimiento central del proyecto. En primer lugar, se ejecuta un algoritmo de preprocesado de texto que normaliza el contenido (tokenización, reducción a lemas, borrado de palabras vacías y limpieza de código Markdown). Tras esto, el flujo pasa a la fase de entrenamiento, donde el sistema puede instanciar de forma genérica cualquiera de los modelos integrados (\acrshort{lda}, BERTopic, etc.). El sistema está programado para permitir el ajuste de hiperparámetros y generar, como salida final, la distribución probabilística de los temas encontrados.
+    \item \textbf{Visualización interactiva (\textit{Frontend}):} El procedimiento final es la exposición de los datos. En lugar de precargar todo en memoria, el procedimiento de visualización utiliza un enfoque de carga diferida. A medida que el usuario navega por la interfaz de Streamlit, el sistema lee bajo demanda las porciones necesarias de los ficheros Parquet y calcula en caliente las gráficas y métricas comparativas que se solicitan en la pantalla.
+\end{enumerate}
 
-
+\begin{figure}[p]
+    \centering
+    \includegraphics[width=0.9\textwidth, height=0.9\textheight]{diagramas/pipeline_procedimental.png}
+    \caption{Diagrama de Actividad del flujo procedimental del sistema}
+    \label{fig:diagramas/pipeline_procedimental.png}
+\end{figure}
