@@ -1,11 +1,267 @@
 \apendice{Documentación técnica de programación}
 
 \section{Introducción}
+Esta sección tiene como objetivo proporcionar una guía detallada para aquellos
+desarrolladores, investigadores o mantenedores que deseen comprender a nivel
+técnico la implementación de la aplicación \textbf{TFG Topics}, modificar su
+código fuente o añadir nuevas funcionalidades.
+
+El proyecto está desarrollado en Python 3.10~\cite{31019Documentation} y se
+fundamenta en los principios de la Arquitectura Hexagonal (Puertos y
+Adaptadores)~\cite{HexagonalArchitectureClean2022} para asegurar el
+desacoplamiento entre la lógica de negocio y las librerías externas.
+
+\imagen{diagramas/arquitectura_hexagonal.png}{Diagrama conceptual de la Arquitectura Hexagonal aplicada en los módulos backend}
+
+\section{Arquitectura del Sistema}
+El sistema se divide en tres módulos claramente diferenciados:
+\begin{itemize}
+    \item \textbf{backend-ingestion}: Encargado de interactuar con la \acrshort{api} de GitHub, extraer los datos (\textit{abstracts}, \textit{readmes}, \textit{issues}, contenido de la memoria) y almacenarlos en formato estructurado Apache Parquet.
+    \item \textbf{backend-processing}: Motor analítico que ejecuta las fases de preprocesamiento de texto (\acrshort{nlp}) y el entrenamiento de los algoritmos de modelado de tópicos (\acrshort{lda}, BERTopic, Top2Vec, FASTopic), evaluando hiperparámetros.
+    \item \textbf{frontend-web}: Aplicación web ligera desarrollada en Streamlit~\cite{StreamlitDocsa}, encargada únicamente de la visualización y lectura de los ficheros Parquet resultantes, sin poseer lógica de procesamiento pesada.
+\end{itemize}
+
+\imagen{diagramas/arquitectura_general.png}{Diagrama de componentes global del sistema y flujo de datos persistente}
+
+Ambos backends (\textit{ingestion} y \textit{processing}) implementan
+estrictamente una \textbf{Arquitectura Hexagonal}, estructurando su código
+interno en:
+\begin{itemize}
+    \item \textit{Domain}: Modelos de datos puros y lógica de negocio (independientes del framework).
+    \item \textit{Ports}: Interfaces abstractas (\texttt{abc.ABC}) que definen contratos de entrada y salida.
+    \item \textit{Use Cases}: Orquestación de la lógica de aplicación sin depender de operaciones de \acrshort{io}.
+    \item \textit{Adapters}: Implementación concreta de los puertos utilizando librerías externas (ej. llamadas a la \acrshort{api} de GitHub, lectura/escritura de Pandas y PyArrow, instanciación de modelos de \acrshort{ai}).
+\end{itemize}
 
 \section{Estructura de directorios}
+La jerarquía principal del repositorio está diseñada para separar entornos y
+responsabilidades:
+
+\begin{verbatim}
+tfg-topics/
+|-- backend-ingestion/      # Extracción de datos de GitHub
+|   |-- src/                # Código fuente
+|   |-- tests/              # Pruebas unitarias
+|-- backend-processing/     # Procesamiento Topic Modeling
+|   |-- src/                # Código fuente
+|   |-- tests/              # Pruebas del procesamiento
+|-- frontend-web/           # Interfaz de usuario en Streamlit
+|   |-- src/webapp/         # Páginas y componentes
+|-- data/                   # Archivos resultantes
+|-- docs/                   # Documentación
+|-- Makefile                # Orquestador principal de tareas
+|-- docker-compose.yml      # Definición de contenedores
+\end{verbatim}
 
 \section{Manual del programador}
 
+\subsection{Estándares de Código y Calidad}
+Durante el desarrollo de este Trabajo de Fin de Grado, se ha prestado especial
+atención a la calidad, legibilidad y mantenibilidad del software. Para
+garantizar que el proyecto pueda ser comprendido o ampliado por futuros
+estudiantes e investigadores sin problemas de comprensión, se han integrado
+herramientas automáticas que unifican el estilo de programación, logrando que
+todo el código base mantenga una estructura coherente y profesional.
+
+Las herramientas configuradas para este propósito son:
+\begin{itemize}
+    \item \textbf{Formateo automático con Black e isort:} \textit{Black}~\cite{BlackDocs} es la herramienta elegida para dar formato al código de forma determinista (gestionando la alineación, espacios y saltos de línea), limitando la longitud máxima a 88 caracteres por línea. Adicionalmente, \textit{isort}~\cite{IsortDocs} se encarga de agrupar y ordenar alfabéticamente las importaciones al principio de cada archivo. La adopción de estas herramientas exime al desarrollador de realizar el formateo de forma manual.
+    \item \textbf{Tipado estricto con Mypy:} A pesar de que Python es un lenguaje de tipado dinámico por naturaleza, en la arquitectura de este proyecto se ha exigido el uso de anotaciones de tipo (\textit{type hints}) para todas las variables, parámetros y retornos de funciones. \textit{Mypy}~\cite{MypyDocs} actúa como un analizador estático que valida el código antes de su ejecución, previniendo así un gran volumen de errores en tiempo de ejecución derivados de la incompatibilidad de tipos de datos.
+    \item \textbf{Revisiones automáticas (Pre-commit):} Con el fin de evitar que se introduzca código en el repositorio que incumpla las reglas de estilo o tipado, se ha implementado un sistema de ganchos de pre-confirmación (\textit{pre-commit hooks})~\cite{PreCommitDocs}. Esta herramienta actúa como un filtro de calidad: cada vez que se intenta realizar un \textit{commit} en Git, se analizan los cambios automáticamente. Si se detectan infracciones de formato, el sistema las corrige en la medida de lo posible; si existen errores lógicos o de tipado, el proceso se aborta hasta que sean solventados.
+\end{itemize}
+
+\subsection{Gestión de Errores y Trazabilidad}
+Para facilitar la depuración y asegurar un control riguroso sobre el flujo de
+ejecución (especialmente en procesos largos y desatendidos como la extracción o
+el entrenamiento de modelos), se han definido dos directrices principales en el
+desarrollo:
+
+\begin{itemize}
+    \item \textbf{Manejo explícito de excepciones:} Se ha prohibido la práctica de capturar y silenciar errores de forma genérica (por ejemplo, mediante bloques \texttt{except Exception: pass}). En su lugar, cuando se produce una anomalía (como un fallo de red o la ausencia de un fichero), el sistema debe interceptarla y lanzar una excepción personalizada propia del dominio del proyecto. Esto garantiza que problemas como un fallo en la \acrshort{api} de GitHub no deriven de forma silenciosa en errores incomprensibles durante el procesamiento de los datos.
+    \item \textbf{Trazabilidad mediante Logging:} Se ha descartado el uso de la instrucción básica \texttt{print()} para informar del estado de la ejecución. En su lugar, se ha integrado el sistema de \texttt{logging} nativo de Python, el cual permite categorizar los mensajes según su nivel de severidad: \texttt{INFO} (para trazar el progreso normal de los algoritmos), \texttt{WARNING} (para advertencias no bloqueantes) y \texttt{ERROR} (para registrar caídas críticas). Esta aproximación ha resultado fundamental para volcar el historial de ejecución a ficheros de texto y poder investigar las incidencias de forma asíncrona.
+\end{itemize}
+
 \section{Compilación, instalación y ejecución del proyecto}
+Con el objetivo de simplificar el despliegue y la reproducibilidad de los
+experimentos, el proyecto abstrae la complejidad del entorno mediante el uso de
+contenedores Docker~\cite{DockerManuals} y el orquestador \textbf{Make}. El
+fichero \texttt{Makefile} principal ha sido diseñado para proporcionar un
+sistema de ejecución polivalente, controlado por la variable \texttt{MODE}, que
+admite tres flujos de trabajo distintos:
+
+\begin{itemize}
+    \item \texttt{MODE=release} (Por defecto): Descarga y utiliza imágenes precompiladas alojadas en \textit{GitHub Container Registry} (\acrshort{ghcr}). Es la vía más rápida y recomendada para la ejecución sin alteración del código fuente.
+    \item \texttt{MODE=docker}: Compila las imágenes Docker localmente a partir del código fuente. Ideal para probar cambios en la infraestructura o en las dependencias.
+    \item \texttt{MODE=local}: Ejecuta el código de forma nativa utilizando el intérprete de Python del sistema anfitrión, sin aislar el entorno en contenedores.
+\end{itemize}
+
+\subsection{Variables de entorno y configuración}
+La configuración operativa del sistema se controla mediante variables de
+entorno. Esta estrategia permite mantener el mismo código para entornos
+locales, contenedores y ejecución en la nube, reduciendo acoplamientos y
+facilitando la reproducibilidad de los experimentos.
+
+\begin{itemize}
+    \item \texttt{DATA\_DIR}: Directorio base de datos del proyecto. Es consumido por \textit{backend-ingestion}, \textit{backend-processing} y \textit{frontend-web}. Si no se define, se utiliza por defecto la carpeta \texttt{data/} en la raíz del repositorio.
+    \item \texttt{GITHUB\_TOKEN}: Token personal de GitHub para autenticación en la \acrshort{api} REST. Es opcional, pero muy recomendable para evitar bloqueos por límites de peticiones.
+    \item \texttt{REPOS\_CSV\_FILE\_NAME}: Nombre del fichero CSV con la lista de repositorios a ingerir (por defecto \texttt{tfg\_list.csv}).
+    \item \texttt{LOG\_DIR}: Ruta personalizada para persistir logs. Si no se define, se utiliza \texttt{<DATA\_DIR>/logs}.
+\end{itemize}
+
+\subsection{Contrato de datos Parquet entre módulos}
+El sistema está diseñado como una cadena de procesamiento por etapas, con
+contratos de intercambio explícitos en Apache Parquet. Este enfoque desacopla
+los módulos y permite relanzar componentes sin rehacer todo el pipeline.
+
+\textbf{Salida mínima esperada de ingesta (\texttt{data/ingestion}):}
+\begin{itemize}
+    \item \texttt{issues.parquet}
+    \item \texttt{readmes.parquet}
+    \item \texttt{thesis.parquet}
+    \item \texttt{abstracts.parquet}
+    \item \texttt{metadata.parquet}
+\end{itemize}
+
+\textbf{Salida mínima esperada de procesamiento (\texttt{data/processing/<modelo>}):}
+\begin{itemize}
+    \item \texttt{<dataset>\_model\_summary.parquet}
+    \item \texttt{<dataset>\_metrics.parquet}
+    \item \texttt{<dataset>\_document\_topics.parquet}
+    \item \texttt{<dataset>\_topics.parquet}
+    \item \texttt{<dataset>\_params.parquet}
+    \item \texttt{<dataset>\_topic\_coordinates.parquet}
+    \item \texttt{<dataset>\_best\_hyperparameters.parquet}
+    \item \texttt{<dataset>\_hyperparameter\_trials.parquet}
+\end{itemize}
+
+La interfaz web consume estos artefactos en modo lectura, por lo que cualquier
+ausencia o desalineación en nombres o columnas impacta directamente en la
+visualización.
+
+\subsection{Trazabilidad y observabilidad}
+Los tres módulos principales incluyen trazabilidad homogénea mediante
+\texttt{logging} con salida dual a consola y fichero rotatorio. Esta decisión
+facilita tanto la depuración interactiva como la auditoría de ejecuciones
+desatendidas.
+
+\begin{itemize}
+    \item Carpeta de logs por defecto: \texttt{<DATA\_DIR>/logs}
+    \item Ficheros generados: \texttt{ingestion.log}, \texttt{processing.log},
+          \texttt{frontend.log}
+    \item Política de rotación: 10 MB por fichero con 5 copias de respaldo
+\end{itemize}
+
+\subsection{Comandos principales de orquestación}
+Para facilitar el uso del sistema y evitar la ejecución manual prolongada, se
+han definido alias en el \texttt{Makefile} que abstraen las invocaciones a
+Docker Compose~\cite{DockerManuals} y a los distintos scripts de Python:
+\begin{itemize}
+    \item \texttt{make start}: Levanta la interfaz gráfica (\textit{frontend-web}).
+    \item \texttt{make ingest-all}: Ejecuta la extracción de todos los conjuntos de datos contemplados (\textit{issues, readmes, thesis, abstracts}) desde GitHub.
+    \item \texttt{make process-all}: Ejecuta secuencialmente el entrenamiento y la evaluación de los cuatro modelos de \acrshort{ai} sobre todos los conjuntos de datos.
+    \item \texttt{make pipeline}: Orquesta el flujo completo de forma desatendida, encadenando \texttt{ingest-all}, \texttt{process-all} y \texttt{start}.
+    \item \texttt{make pull}: Descarga explícitamente las últimas imágenes publicadas.
+    \item \texttt{make docker-build}: Fuerza la reconstrucción de las imágenes Docker locales (comando complementario para \texttt{MODE=docker}).
+\end{itemize}
+
+\imagen{diagramas/flujo_docker.png}{Diagrama de interacción y flujo de datos en Apache Parquet entre contenedores Docker}
+
+\subsection{Configuración de Credenciales}
+Para la fase de extracción de datos (\texttt{backend-ingestion}), el sistema
+realiza múltiples llamadas a la \acrshort{api} REST de
+GitHub~\cite{GitHubRestDocs}. Para evitar bloqueos derivados de las políticas
+de límite de peticiones (\textit{rate limits}) impuestas a los clientes
+anónimos~\cite{GitHubRateLimitDocs}, resulta fundamental configurar un token de
+acceso personal.
+
+El orquestador está diseñado para inyectar automáticamente la variable de
+entorno \texttt{GITHUB\_TOKEN} en los contenedores o rutinas locales. Antes de
+lanzar cualquier proceso de ingesta, el investigador debe exportar su clave en
+la terminal activa:
+
+\textbf{En entornos de base Unix (Linux / macOS):}
+\begin{verbatim}
+export GITHUB_TOKEN="tu_token_generado_aqui"
+\end{verbatim}
+
+\textbf{En entornos Windows (PowerShell):}
+\begin{verbatim}
+$env:GITHUB_TOKEN="tu_token_generado_aqui"
+\end{verbatim}
+
+\subsection{Entorno Local de Desarrollo}
+Para los escenarios donde el investigador requiere modificar el código fuente
+localmente y depurar los cambios de forma interactiva, se ha previsto la
+variante \texttt{MODE=local}:
+\begin{enumerate}
+    \item El equipo anfitrión debe contar con Python 3.10 y Conda (o equivalente).
+    \item Se requiere instalar las dependencias de cada módulo (ej. mediante \texttt{pip
+              install -r requirements.txt}).
+    \item Las reglas de extracción o procesamiento se invocan forzando explícitamente el
+          modo local. Por ejemplo, para lanzar el flujo de ingesta nativamente:
+          \begin{verbatim}
+make ingestion INGEST="all" MODE=local
+          \end{verbatim}
+    \item Del mismo modo, se ejecutan las capas homólogas: \texttt{make processing
+              MODE=local} o \texttt{make frontend MODE=local}.
+\end{enumerate}
+
+\subsection{Integración con GitHub Codespaces}
+Como parte de los requisitos de accesibilidad universal propuestos para el
+\acrshort{tfg}, se ha configurado un entorno de desarrollo basado en la nube a
+través de la herramienta \textbf{GitHub
+    Codespaces}~\cite{GitHubCodespacesDocs}. El repositorio incluye la definición
+del entorno (\texttt{devcontainer.json}), que se encarga de automatizar la
+instalación de Python y todas las dependencias subyacentes.
+
+Al instanciar un Codespace directamente desde el navegador web, se proporciona
+al usuario una máquina virtual preconfigurada. Dentro de este entorno aislado,
+las invocaciones deben realizarse forzando el modo local, ya que las
+dependencias se han volcado sobre la propia máquina virtual del contenedor de
+Codespaces:
+\begin{verbatim}
+make ingest-all MODE=local
+make process-all MODE=local
+make start MODE=local
+\end{verbatim}
+
+\subsection{Guía de calidad y validación continua}
+La base del proyecto se valida mediante tres capas complementarias:
+\begin{itemize}
+    \item \textbf{Formateo y estilo:} \texttt{black}, \texttt{isort}, \texttt{flake8}
+    \item \textbf{Verificación de tipos:} \texttt{mypy}
+    \item \textbf{Pre-commit:} para impedir commits con deuda técnica evitable
+\end{itemize}
+
+Flujo recomendado antes de integrar cambios:
+\begin{verbatim}
+pre-commit run --all-files
+\end{verbatim}
 
 \section{Pruebas del sistema}
+La verificación funcional se delega en el framework
+\textbf{Pytest}~\cite{PytestDocs}. Gracias a la arquitectura hexagonal, la
+inmensa mayoría del código se prueba mediante test unitarios de ejecución
+rápida, aislando las dependencias pesadas o de \acrshort{io} mediante dobles de
+prueba (\textit{mocks}).
+
+Cada submódulo lógico del backend dispone de su propio directorio
+\texttt{tests/}. Para ejecutar la batería completa de pruebas unitarias y
+comprobar su validez, el desarrollador debe situarse en el directorio del
+módulo correspondiente e invocar el marco de pruebas:
+\begin{verbatim}
+cd backend-ingestion
+pytest tests/
+\end{verbatim}
+
+\imagen{manual_programador/reporte_tests.png}{Ejemplo de ejecución del pipeline de pruebas con Pytest}
+
+\subsection{Resolución de incidencias frecuentes}
+\begin{itemize}
+    \item \textbf{Error de CSV no encontrado en ingesta:} Verificar \texttt{DATA\_DIR} y \texttt{REPOS\_CSV\_FILE\_NAME}. El sistema espera encontrar el fichero en \texttt{<DATA\_DIR>/<REPOS\_CSV\_FILE\_NAME>}.
+    \item \textbf{Límites de GitHub alcanzados:} Definir \texttt{GITHUB\_TOKEN} antes de la ingesta para aumentar cuota de peticiones.
+    \item \textbf{Frontend sin datos:} Confirmar que existen ficheros Parquet de procesamiento para el modelo y dataset seleccionados.
+    \item \textbf{Modelo no soportado:} Revisar que el valor de \texttt{--model} pertenezca al conjunto implementado (\texttt{lda}, \texttt{bertopic}, \texttt{top2vec}, \texttt{fastopic}).
+    \item \textbf{Resultados incoherentes tras cambiar datos:} Relanzar \texttt{make process-all} para forzar regeneración completa de resultados.
+\end{itemize}
+
