@@ -1,11 +1,143 @@
 \apendice{Documentación de usuario}
 
 \section{Introducción}
+La presente sección constituye el manual de usuario de la aplicación
+\textbf{TFG Topics}, desarrollada como parte del Trabajo de Fin de Grado del
+grado de Ingeniería Informática de la Universidad de Burgos. El sistema
+consiste en una aplicación web diseñada para explorar y comparar los resultados
+obtenidos del análisis temático sobre memorias y repositorios de Trabajos Fin
+de Grado disponibles públicamente en GitHub.
 
-\section{Requisitos de usuarios}
+El proyecto se estructura en tres módulos principales de forma transparente
+para el usuario final:
+\begin{itemize}
+    \item \textbf{Ingesta (\textit{backend-ingestion}):} Módulo encargado de la extracción de datos desde la \acrshort{api} de GitHub y su almacenamiento estructurado en ficheros formato Parquet.
+    \item \textbf{Procesamiento (\textit{backend-processing}):} Módulo analítico que procesa los textos extraídos, entrena los modelos de modelado de temas (\acrshort{lda}, BERTopic, Top2Vec, FASTopic) y evalúa los hiperparámetros óptimos.
+    \item \textbf{Interfaz Web (\textit{frontend-web}):} Aplicación interactiva desarrollada en Streamlit~\cite{StreamlitDocsa} que permite la visualización y exploración de los resultados almacenados.
+\end{itemize}
 
-\section{Instalación}
+\section{Requisitos del sistema}
+Para asegurar el correcto funcionamiento de la plataforma, el equipo del
+usuario debe cumplir con una serie de requisitos dependiendo del modo de uso
+elegido:
 
-\section{Manual del usuario}
+\begin{itemize}
+    \item \textbf{Modo Visualización:} Únicamente se requiere disponer de un navegador web moderno (Google Chrome, Mozilla Firefox, Edge) para acceder a una instancia de la aplicación ya desplegada.
+    \item \textbf{Modo Recomendado (Docker):} Es necesario tener instalado \textit{Docker Engine} y \textit{Docker Compose} (o \textit{Docker Desktop} en entornos Windows/macOS). Esta es la forma más sencilla de ejecutar el proyecto, ya que utiliza imágenes precompiladas y no requiere configurar el entorno de programación de Python localmente.
+    \item \textbf{Modo Desarrollo Local:} Requiere tener instalado Python 3.10, gestor de dependencias (\textit{pip} o \textit{Conda}), la herramienta \textit{make} y el sistema de control de versiones \textit{Git}.
+\end{itemize}
 
+\section{Instalación y despliegue}
+El sistema se ha empaquetado utilizando contenedores
+Docker~\cite{DockerManuals} alojados en \ACRfull{ghcr}, lo que permite un
+despliegue rápido sin necesidad de compilar el código fuente.
 
+Para ejecutar la aplicación completa en un equipo local mediante Docker, se
+deben seguir los siguientes pasos:
+\begin{enumerate}
+    \item \textbf{Clonar el repositorio:} Obtener el código del proyecto desde el repositorio oficial mediante la línea de comandos:
+          \begin{verbatim}
+git clone https://github.com/zcc1001/tfg-topics
+cd tfg-topics
+    \end{verbatim}
+    \item \textbf{Actualizar las imágenes:} Descargar las últimas versiones de los contenedores utilizando la herramienta \textit{Make}:
+          \begin{verbatim}
+make pull
+    \end{verbatim}
+    \item \textbf{Ejecutar el flujo de trabajo:} El repositorio incluye comandos automatizados. Para ejecutar la extracción de datos, el procesamiento de los modelos y lanzar la interfaz web de manera secuencial y desatendida, se debe ejecutar:
+          \begin{verbatim}
+make pipeline
+    \end{verbatim}
+    \item \textbf{Arrancar la interfaz aislada:} Si los datos ya han sido procesados previamente y se desea arrancar únicamente la interfaz visual, se utiliza el comando:
+          \begin{verbatim}
+make start
+    \end{verbatim}
+\end{enumerate}
+
+Una vez finalizado el proceso de despliegue, la interfaz web estará disponible
+accediendo a la \acrshort{url} \texttt{http://localhost:8501} desde cualquier
+navegador web en la máquina anfitriona.
+
+\section{Manual del usuario de la interfaz}
+La aplicación web ofrece una interfaz gráfica intuitiva con un menú de
+navegación situado en el panel lateral izquierdo. Este menú permite alternar
+entre dos enfoques principales de análisis: el \textbf{Modo Académico} y el
+\textbf{Modo Técnico} como se muestra en la
+Figura~\ref{fig:manual_usuario/menu_lateral.png}.
+
+\imagen{manual_usuario/menu_lateral.png}{Menu lateral de navegación}
+
+\subsection{Modo Académico}
+Este modo está orientado al análisis cualitativo y exploratorio de los
+proyectos, y está pensado para docentes, miembros de tribunal o investigadores
+que deseen comprender el contenido de los trabajos sin entrar en detalles
+algorítmicos complejos.
+
+Como se aprecia en la Figura~\ref{fig:manual_usuario/modo_academico.png}, la
+interfaz proporciona:
+\begin{itemize}
+    \item \textbf{Filtros interactivos:} Permite afinar la búsqueda de proyectos utilizando controles interactivos. El usuario puede buscar por nombre de tutor (campo de texto opcional), seleccionar un rango de años de presentación y acotar por nota mediante un control deslizante de rango.
+    \item \textbf{Exploración de proyectos:} Una vez aplicados los filtros, se muestra el listado de resultados. Cada trabajo se presenta en una tarjeta detallada que incluye el título, un resumen descriptivo y una ficha con la \textit{Información Académica} (Autor, Tutor, Centro, Curso, etc.).
+    \item \textbf{Distribución de temáticas:} Muestra gráficos visuales y resúmenes sobre cuáles son las tecnologías, metodologías y temáticas más frecuentemente tratadas por el alumnado en los diferentes cursos académicos (ver Figura \ref{fig:manual_usuario/distribucion_academica.png}).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.8\textheight]{manual_usuario/modo_academico.png}
+    \caption{Vista Análisis Académico}
+    \label{fig:manual_usuario/modo_academico.png}
+\end{figure}
+\vspace{-8pt}
+\imagen{manual_usuario/distribucion_academica.png}{Vista Distribución Académica}
+
+\subsection{Modo Técnico}
+Orientado al análisis de los resultados y métricas obtenidas por los distintos
+algoritmos de Procesamiento de Lenguaje Natural (\acrshort{nlp}). Al margen de
+los controles globales situados en la parte inferior del menú lateral (como el
+selector de \textbf{Idioma / Language} y el selector de \textbf{Vista}), una
+vez activado el \textit{Análisis Técnico}, el menú se despliega ofreciendo una
+estructura jerárquica dividida en tres bloques principales:
+
+\imagen{manual_usuario/modo_tecnico.png}{Vista Modo Técnico}
+
+\subsubsection{Análisis por modelo}
+En esta sección el usuario puede explorar los resultados detallados de un
+algoritmo y conjunto de datos específicos. Incluye las siguientes opciones de
+navegación:
+\begin{itemize}
+    \item \textbf{Resumen ejecutivo:} (Figura~\ref{fig:manual_usuario/resumen_ejecutivo.png}) Encabeza este apartado ofreciendo métricas de alto nivel, tales como el número de tópicos detectados, la cantidad de documentos analizados y el valor de coherencia global del modelo. Además, destaca visualmente el tópico con mayor peso o distribución.
+    \item \textbf{Exploración de tópicos:} Proporciona una tabla interactiva (\textit{Tabla de tópicos}) que relaciona el identificador de cada tópico con sus palabras clave más relevantes, y ofrece vistas alternativas como nubes de palabras (\textit{Wordcloud}, Figura \ref{fig:manual_usuario/wordcloud_topicos.png}).
+    \item \textbf{Mapa intertópico:} Representación bidimensional para analizar la distancia semántica y relación entre los distintos tópicos descubiertos (Figura \ref{fig:manual_usuario/mapa_intertopico.png}).
+\end{itemize}
+
+\imagen{manual_usuario/resumen_ejecutivo.png}{Vista Resumen Ejecutivo - Análisis por modelo}
+
+\imagen{manual_usuario/wordcloud_topicos.png}{Vista Nube de Palabras (Wordcloud) - Exploración de tópicos}
+
+\imagen{manual_usuario/mapa_intertopico.png}{Vista Mapa Intertópico}
+
+\subsubsection{Hiperparametrización}
+Permite observar la evolución y los resultados del proceso de ajuste automático
+de parámetros de los modelos, a través de las siguientes subsecciones:
+\begin{itemize}
+    \item \textbf{Evolución del score:} Muestra de forma general cómo ha mejorado la métrica objetivo a lo largo del proceso de optimización.
+    \item \textbf{Parámetros vs rendimiento:} (Figura~\ref{fig:manual_usuario/evolucion_score.png}) Presenta una gráfica interactiva de dispersión (\textit{scatter plot}) que muestra el valor de coherencia obtenido en cada intento (\textit{trial}). Facilita la identificación del mejor modelo, marcado de forma destacada (por ejemplo, con una estrella roja indicando el \textit{Best trial}).
+    \item \textbf{Mejores hiperparámetros:} (Figura~\ref{fig:manual_usuario/mejores_params.png}) Muestra la configuración exacta que maximizó el rendimiento del modelo durante el entrenamiento.
+\end{itemize}
+
+\imagen{manual_usuario/evolucion_score.png}{Vista Evolución del score - Hiperparametrización}
+\imagen{manual_usuario/mejores_params.png}{Vista Mejores hiperparámetros - Hiperparametrización}
+\subsubsection{Comparativa de modelos}
+Aglutina las visiones que enfrentan los resultados de los cuatro modelos
+empleados (\acrshort{lda}~\cite{blei2003lda},
+BERTopic~\cite{QuickStartBERTopic},
+Top2Vec~\cite{angelovTop2VecDistributedRepresentations2020} y
+FASTopic~\cite{FastopicFASTopic}) bajo diferentes métricas cuantitativas.
+Comprende las vistas de:
+\begin{itemize}
+    \item \textbf{Resumen comparativo} y \textbf{Ranking global:} Evalúan el nivel de diversidad temática y coherencia de manera conjunta para establecer qué algoritmo se comporta mejor (Figura \ref{fig:manual_usuario/ranking_modelos.png}).
+    \item \textbf{Comparación de métricas:} Gráficos cruzados para contrastar los distintos aspectos de evaluación entre los algoritmos entrenados (Figura \ref{fig:manual_usuario/comparativa_modelos.png}).
+\end{itemize}
+
+\imagen{manual_usuario/ranking_modelos.png}{Vista Comparativa Modelo - Ranking modelos}
+\imagen{manual_usuario/comparativa_modelos.png}{Vista Comparativa Modelos - Resumen comparativo}

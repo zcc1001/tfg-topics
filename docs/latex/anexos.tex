@@ -19,7 +19,23 @@
 \hypersetup{
 	allcolors = {red}
 }
+% Acrónimos y glosario
+\usepackage[acronym,toc]{glossaries}
 
+\makenoidxglossaries
+\newacronym{tfg}{TFG}{Trabajo de Fin de Grado}
+\newacronym{lda}{LDA}{Latent Dirichlet Allocation}
+\newacronym{nlp}{NLP}{Natural Language Processing}
+\newacronym{ai}{AI}{Artificial Intelligence}
+\newacronym{csv}{CSV}{Comma-Separated Values}
+\newacronym{api}{API}{Application Programming Interface}
+\newacronym{ghcr}{GHCR}{GitHub Container Registry}
+\newacronym{uml}{UML}{Unified Modeling Language}
+\newacronym{dfd}{DFD}{Data Flow Diagram}
+\newacronym{url}{URL}{Uniform Resource Locator}
+
+
+\renewcommand{\acronymname}{Acrónimos}
 % Ecuaciones
 \usepackage{amsmath}
 
@@ -353,27 +369,21 @@
 
 
 % Datos de portada
-\title{título del TFG \\Documentación Técnica}
-\author{nombre alumno}
-\tutor{nombre tutor}
+\title{\fontsize{18pt}{22pt}\selectfont TFG Topics\\
+	\fontsize{16pt}{18pt}\selectfont Análisis de temas en Trabajos Fin de Grado\\
+	\fontsize{18pt}{22pt}\selectfont Documentación Técnica \\}
+\author{Zeldan Javier Campos Cordero}
+\tutor{D. Carlos López Nozal}
 \date{\today}
-
 \begin{document}
 
 \maketitle
 
-
-
 \cleardoublepage
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
 \frontmatter
-
 
 \clearpage
 
@@ -401,6 +411,7 @@
 \include{./tex/E_Manual_usuario}
 \include{./tex/F_ODS}
 
+\printnoidxglossary[type=\acronymtype,toctitle= Acrónimos,title=Acrónimos]
 
 \bibliographystyle{plain}
 \bibliography{bibliografiaAnexos}
