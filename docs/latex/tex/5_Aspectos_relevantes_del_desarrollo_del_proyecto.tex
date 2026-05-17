@@ -22,35 +22,28 @@ principales, que dieron lugar a la división del sistema en módulos
 independientes:
 
 \begin{itemize}
-      \item Un módulo de \textbf{ingestión}, responsable de la obtención y normalización
-            inicial de los documentos fuente.
-      \item Un módulo de \textbf{procesamiento}, encargado del preprocesado del texto y del
-            modelado de tópicos.
-      \item Un módulo de \textbf{visualización}, orientado a la exploración y análisis de
-            los resultados generados.
+      \item Un módulo de \textbf{ingestión} (\textit{backend-ingestion}), responsable de la
+            obtención y persistencia de datos desde GitHub.
+      \item Un módulo de \textbf{procesamiento} (\textit{backend-processing}), encargado
+            del preprocesado del texto, modelado de temas y evaluación.
+      \item Un módulo de \textbf{visualización} (\textit{frontend-web}), orientado a la
+            exploración y análisis de los resultados generados.
 \end{itemize}
 
-Para el diseño del código interno de cada modulo se empleó una arquitectura de
-tipo hexagonal~\cite{HexagonalArchitectureClean2022}. Este enfoque permite
-desacoplar la lógica de negocio de los detalles de infraestructura, como el
-acceso a datos, la ejecución de modelos o la interfaz de usuario
-(\acrfull{ui}). Esta decisión permitió separar claramente la lógica de dominio
-del procesamiento de tópicos de los detalles de infraestructura, como el acceso
-a datos, la ejecución de modelos concretos o la interfaz de usuario.
-
-Además, la arquitectura adoptada mejoró la testabilidad del sistema y
-contribuyó a una organización del código más clara y mantenible, evitando un
-crecimiento desordenado del proyecto a medida que se incorporaban nuevas
-funcionalidades.
+Esta división facilitó el desarrollo incremental y permitió evolucionar cada
+módulo con un acoplamiento mínimo. En los módulos de \textit{backend} se aplicó
+una arquitectura hexagonal~\cite{HexagonalArchitectureClean2022}, separando
+lógica de dominio, casos de uso y adaptadores de infraestructura. En la
+práctica, este enfoque mejoró la testabilidad, simplificó la sustitución de
+componentes y redujo el impacto de cambios en librerías externas.
 
 \section{Gestión de los datos y almacenamiento de resultados}
 
-Uno de los aspectos relevantes del desarrollo del proyecto fue la elección del
-formato de almacenamiento de los datos intermedios y de los resultados
-generados por los distintos modelos. Para este propósito se optó por utilizar
-el formato \textbf{Parquet}~\cite{ParquetDocumentation}, un formato de
-almacenamiento en columnas ampliamente utilizado en entornos de análisis de
-datos y \textit{big data}.
+Uno de los puntos críticos del desarrollo fue la elección de un formato común
+para el intercambio de información entre módulos. Para este propósito se optó
+por utilizar el formato \textbf{Parquet}~\cite{ParquetDocumentation}, un
+formato de almacenamiento en columnas ampliamente utilizado en entornos de
+análisis de datos y \textit{big data}.
 
 La elección de Parquet frente a alternativas más simples como \acrfull{csv} o
 formatos binarios genéricos se basó en varios criterios. En primer lugar,
@@ -59,6 +52,16 @@ acceso, gracias a su organización en columnas y a los mecanismos de compresión
 integrados. Este aspecto resulta especialmente relevante en un proyecto que
 genera múltiples ejecuciones de modelos, cada una con diferentes
 configuraciones de hiperparámetros y métricas asociadas.
+
+La persistencia se organizó en dos niveles:
+\begin{itemize}
+      \item \texttt{data/ingestion}: datasets base (\textit{issues}, \textit{readmes}, \textit{thesis}, \textit{abstracts}, metadatos).
+      \item \texttt{data/processing/<modelo>}: artefactos de entrenamiento y evaluación por modelo/dataset (tópicos, métricas, parámetros, mejores hiperparámetros y ensayos de optimización).
+\end{itemize}
+
+Este contrato explícito de ficheros permitió desacoplar ejecución y análisis:
+el módulo web trabaja en modo lectura sobre resultados ya calculados, mientras
+que el procesamiento puede relanzarse sin afectar a la interfaz.
 
 Desde el punto de vista de la implementación, el formato Parquet se utilizó
 principalmente para almacenar:
@@ -71,23 +74,16 @@ principalmente para almacenar:
             optimización.
 \end{itemize}
 
-Estos ficheros se organizan siguiendo una estructura de directorios coherente
-con los módulos del sistema, lo que facilita la localización y reutilización de
-los resultados generados. Además, el uso de un formato estándar y ampliamente
-soportado permite que los datos puedan ser consumidos directamente tanto por el
-módulo de visualización como por herramientas externas de análisis, como
-entornos interactivos de experimentación.
-
 \section{Optimización de hiperparámetros y gestión de experimentos}
 
-Uno de los aspectos más relevantes de la implementación fue la integración de
-Optuna para la optimización de hiperparámetros. Frente a herramientas más
-genéricas como \textit{GridSearchCV} de \textit{scikit-learn}, Optuna no impone
-restricciones sobre la estructura del modelo ni sobre el flujo de
-entrenamiento, lo que facilita su integración con bibliotecas heterogéneas como
-LDA, BERTopic, FASTopic o Top2Vec. Esta independencia del \textit{framework}
-resulta clave en un proyecto que combina modelos con paradigmas y requisitos
-muy diferentes.
+La fase de experimentación se apoyó en
+Optuna~\cite{OptunaHyperparameterOptimization} para la búsqueda de
+hiperparámetros. Frente a herramientas más genéricas como \textit{GridSearchCV}
+de \textit{scikit-learn}, Optuna no impone restricciones sobre la estructura
+del modelo ni sobre el flujo de entrenamiento, lo que facilita su integración
+con bibliotecas heterogéneas como \acrshort{lda}, BERTopic, FASTopic o Top2Vec.
+Esta independencia del \textit{framework} resulta clave en un proyecto que
+combina modelos con paradigmas y requisitos muy diferentes.
 
 Los resultados de cada ejecución, junto con los parámetros utilizados y las
 métricas calculadas, se almacenan en formato Parquet. Esta decisión facilita la
@@ -95,14 +91,31 @@ trazabilidad de los experimentos, permite analizar ejecuciones pasadas y evita
 la repetición innecesaria de cálculos costosos desde el punto de vista
 computacional.
 
+\section{Despliegue y modos de ejecución}
+
+Durante la implementación se priorizó que el proyecto pudiera ejecutarse tanto
+en contextos de uso final como en entornos de desarrollo. Para ello se definió
+una orquestación centralizada con \texttt{Makefile} y Docker
+Compose~\cite{DockerManuals}.
+
+El flujo de trabajo contempla tres modos:
+\begin{itemize}
+      \item \texttt{MODE=release}: uso de imágenes precompiladas en \acrshort{ghcr}, orientado a ejecución rápida.
+      \item \texttt{MODE=docker}: construcción local de imágenes para validar cambios de infraestructura.
+      \item \texttt{MODE=local}: ejecución nativa en Python para depuración y desarrollo iterativo.
+\end{itemize}
+
+Esta estrategia redujo fricción en la puesta en marcha y mejoró la
+reproducibilidad de resultados entre equipos y sistemas operativos.
+
 \section{Interfaz web y exploración de resultados}
 
 El módulo de visualización se implementó como un frontal web utilizando
-Streamlit. Este componente consume directamente los resultados generados por el
-módulo de procesamiento y almacenados en ficheros Parquet, manteniendo así un
-acoplamiento mínimo entre ambos módulos.
+Streamli~\cite{StreamlitDocsa}. Este componente consume directamente los
+resultados generados por el módulo de procesamiento y almacenados en ficheros
+Parquet, manteniendo así un acoplamiento mínimo entre ambos módulos.
 
-La interfaz permite seleccionar modelos, explorar tópicos generados, visualizar
+La interfaz permite seleccionar modelos, explorar temas generados, visualizar
 métricas y analizar resultados de forma interactiva. Esta decisión sustituye
 salidas estáticas por una herramienta más adecuada para un análisis
 exploratorio y facilita tanto la evaluación del sistema como la comprensión de
