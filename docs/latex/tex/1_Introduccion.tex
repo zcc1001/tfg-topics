@@ -1,56 +1,54 @@
 \capitulo{1}{Introducción}
 
-En el ámbito universitario anualmente se generan gran cantidad de documentos
-académicos que proporcionan una valiosa fuente de información. Especialmente
-las memorias de los \acrfull{tfg} que poseen un alto valor y que forman parte
-fundamental del proceso formativo del estudiante, ya que permiten aplicar los
+En el ámbito universitario se genera cada curso una gran cantidad de documentos
+académicos que proporcionan una valiosa fuente de información. Entre ellos, las
+memorias de los \acrfull{tfg} que ocupan un lugar relevante, ya que forman
+parte fundamental del proceso formativo del estudiante, y permiten aplicar los
 conocimientos adquiridos durante la realización de los estudios de
-grado~\cite{lopez2009proceso}. Estas memorias contienen información sobre
-tendencias tecnológicas actuales, herramientas y investigaciones realizadas
-sobre distintas áreas de la informática. Sin embargo, resulta muy laborioso
-ubicar y extraer esta información ya que encuentra almacenada de manera
-dispersa en distinto repositorios y formatos.
+grado~\cite{lopez2009proceso}. Estas memorias recogen tecnologías utilizadas,
+enfoques metodológicos y líneas de trabajo seguidas, lo que produce una buena
+representación del conocimiento en distintas áreas de la informática. Sin
+embargo, el principal problema es que esta información suele estar dispersa en
+repositorios y formatos heterogéneos, lo que dificulta su consulta sistemática.
 
-Este trabajo tiene como finalidad el desarrollo de una aplicación para el
-análisis cualitativo de los textos contenidos en las memorias de \acrshort{tfg}
-del grado en ingeniería Informática de la Universidad de Brugos. Esta
-herramienta permite el análisis, consulta, facilita la exploración, calculo de
-tendencias y comparación de trabajos a lo largo del tiempo partiendo de estos
-contenidos textuales. El conjunto de datos analizado se encuentra en formato
-\LaTeX{} y se encuentra disponible en plataformas como GitHub, a estos datos se
-le aplicaran técnicas de modelado de temas utilizando distintos algoritmos de
-última generación, entre ellos \acrfull{lda}~\cite{blei2003lda},
+Este trabajo tiene como finalidad el desarrollo de una aplicación orientada al
+análisis cualitativo de los textos asociados a \acrshort{tfg} del Grado en
+Ingeniería Informática de la Universidad de Burgos. Permitiendo explorar,
+comparar resultados, detectar tendencias temáticas y facilitar la consulta de
+contenido académico a lo largo del tiempo. Para ello, se parte de un conjunto
+de datos obtenido de repositorios públicos en GitHub, centrado en documentos en
+formato \LaTeX{}, ficheros \textit{README}, incidencias y resúmenes académicos.
+
+Sobre este corpus se aplican técnicas de modelado de temas con distintos
+enfoques, entre ellos: \acrfull{lda}~\cite{blei2003lda},
 \textbf{Top2Vec}~\cite{gTop2vecTopicModeling2022},
 \textbf{BERTopic}~\cite{grootendorstBERTopicNeuralTopic2022} y
-\textbf{FASTopic}~\cite{2024arXiv240517978W}.
+\textbf{FASTopic}~\cite{2024arXiv240517978W}. El propósito no es únicamente
+obtener resultados automáticos, sino también comparar el comportamiento de los
+modelos y estudiar su utilidad en un contexto académico real.
 
-La aplicación resultante servirá como ayuda a la comunidad docente,
-investigadora y estudiantil para la exploración de la información académica.
-Ademas, se busca poner en práctica los conocimiento adquiridos y competencias
-durante la titulación.
+La solución implementada se estructura en tres módulos: ingesta de datos,
+procesamiento/modelado y visualización. Esta separación permite desacoplar
+responsabilidades, mejorar la mantenibilidad del sistema y facilitar su
+reproducibilidad en distintos entornos de ejecución.
 
-Este proyecto se fundamenta en el uso de técnicas de modelado de temas. El
-modelado de temas es una tarea de aprendizaje no supervisado donde se
+Desde el punto de vista teórico, este proyecto se fundamenta en el uso de
+técnicas de modelado de temas, una tarea de aprendizaje no supervisado donde se
 identifica la estructura temática de un grupo de
 documentos~\cite{atkinson-abutridyGrandesModelosLenguaje2023}. Al utilizar
 estas técnicas es posible encontrar temas relevantes para organizar, buscar o
 comprender grandes cantidades de datos en formato de texto. Estos modelos se
-basan en el supuesto de cada documento puede explicarse como una mezcla de
-temas, donde cada tema es un grupo de términos que poseen una distribución de
-potabilidades.
+basan en el supuesto de que cada documento puede representarse como una
+combinación de temas, donde cada tema es una distribución de términos con
+distinta relevancia probabilística.
 
-Esta memoria se estructura de la siguiente manera: \textbf{Introducción}, se
-realiza una descripción inicial de el trabajo y su estructura;
-\textbf{Objetivos}, descripción de los objetivos generales y específicos que se
-pretenden alcanzar con la elaboración de este proyecto; \textbf{Conceptos
-    teóricos}, en esta sección se presenta el marco teórico y conceptual que
-fundamenta el modelado de temas; \textbf{Técnicas y herramientas}, se describen
-las técnicas y herramientas utilizadas para la elaboración de la aplicación;
-\textbf{Aspectos relevantes del desarrollo del proyecto}, se presentan los
-desafíos superados durante la realización del proyecto, la metodología seguida
-y el diseño del sistema; \textbf{Trabajos relacionados}, se exponen otros
-proyectos y aplicaciones similares y se realizar una comparación con el
-proyecto actual; \textbf{Conclusiones y lineas de trabajo futura}, los
-resultados obtenidos y su análisis comparativo y se detallan las conclusiones y
-las posibles líneas de trabajo futuro.
-
+Esta memoria se estructura del siguiente modo: en \textbf{Objetivos del
+    proyecto} se definen el objetivo general y los objetivos específicos; en
+\textbf{Conceptos teóricos} se presenta el marco conceptual del modelado de
+temas; en \textbf{Técnicas y herramientas} se describen las tecnologías
+utilizadas; en \textbf{Aspectos relevantes del desarrollo del proyecto} se
+detallan la metodología seguida, las decisiones técnicas y las dificultades
+abordadas; en \textbf{Trabajos relacionados} se analizan propuestas similares y
+se compara su enfoque con el de este trabajo; y, por último, en
+\textbf{Conclusiones y líneas de trabajo futuras}, se recogen los resultados
+obtenidos y las posibles extensiones del sistema.
