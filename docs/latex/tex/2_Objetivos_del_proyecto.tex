@@ -3,22 +3,24 @@
 El presente Trabajo Fin de Grado tiene como objetivo principal el desarrollo de
 una aplicación capaz de realizar análisis temáticos cualitativos sobre los
 textos contenidos en las memorias de los \acrfull{tfg} en Ingeniería
-Informática. Las memorias, \textit{issues}, \textit{commits}, documentos
-descriptivos del \acrshort{tfg} y código fuente se encuentran disponibles en
-repositorios de software almacenados en la plataforma GitHub.
+Informática. Las memorias, \textit{issues}, \textit{readmes},
+\textit{abstracts} y demás documentos descriptivos del \acrshort{tfg} se
+encuentran disponibles en repositorios de software alojados en la plataforma
+GitHub.
 
 Este proyecto busca aplicar técnicas de procesamiento del lenguaje natural y
-modelado de temas para facilitar la identificación de tendencias, temas
-recurrentes y áreas de investigación dentro del ámbito académico.
+modelado de temas para facilitar el análisis, explorar y comparar resultados,
+detectar tendencias temáticas y facilitar la consulta de contenido académico a
+lo largo del tiempo.
 
 \section{Objetivo general}
 
 Diseñar e implementar una aplicación que permita realizar análisis temáticos
-automáticos sobre la documentación disponible en el repositorio del
-\acrshort{tfg}, como \textit{readmes}, \textit{issues}, \textit{commits} y
-memorias en formato \LaTeX{}, utilizando para esto diversos algoritmos de
+automáticos sobre la documentación disponible en los repositorios del
+\acrshort{tfg}, como \textit{readmes}, \textit{issues}, memorias en formato
+\LaTeX{} y resúmenes académicos, utilizando para ello distintos algoritmos de
 modelado de temas y evaluando su rendimiento en términos de coherencia y
-eficiencia.
+calidad temática.
 
 \section{Objetivos específicos}
 
@@ -26,19 +28,19 @@ Para alcanzar el objetivo general, se plantean los siguientes objetivos
 específicos:
 
 \begin{itemize}
-    \item \textbf{Recopilar y preparar los datos:} Crear un conjunto de datos utilizando la información de los  \acrshort{tfg} disponibles públicamente en GitHub, realizando el preprocesamiento necesario de los textos.
+    \item \textbf{Recopilar y preparar los datos:} Construir un conjunto de datos a partir de \acrshort{tfg} disponibles públicamente en GitHub, integrando las fuentes \textit{issues}, \textit{readmes}, memorias y resúmenes.
 
-    \item \textbf{Implementar diferentes algoritmos de modelado de temas:} Investigar, aplicar y comparar métodos como \acrshort{lda}, \textbf{Top2Vec}, \textbf{BERTopic} y \textbf{FASTopic}.
+    \item \textbf{Implementar diferentes algoritmos de modelado de temas:} Aplicar y comparar métodos como \acrshort{lda}, \textbf{Top2Vec}, \textbf{BERTopic} y \textbf{FASTopic}.
 
-    \item \textbf{Evaluar el rendimiento de los modelos:} Medir y comparar la calidad de los temas generados utilizando métricas de coherencia temática.
+    \item \textbf{Evaluar el rendimiento de los modelos:} Medir y comparar la calidad de los temas generados mediante métricas de coherencia.
 
-    \item \textbf{Desarrollar una interfaz visual:} Diseñar una aplicación que permita la visualización de los resultados obtenidos.
+    \item \textbf{Desarrollar una interfaz visual:} Diseñar una aplicación que permita la exploración interactiva de resultados por modelo, dataset y métricas.
 
-    \item \textbf{Fomentar la gestión del conocimiento académico:} Promover el acceso y la reutilización del conocimiento generado por estudiantes en cursos anteriores, apoyando la investigación y la docencia.
+    \item \textbf{Fomentar la gestión del conocimiento académico:} Facilitar el acceso y la reutilización del conocimiento generado por estudiantes en cursos anteriores, como apoyo a docencia e investigación.
 
-    \item \textbf{Diseño de arquitectura:} Diseñar e implementar una arquitectura de software modular que separe el motor de análisis de la capa de servicio, demostrando principios de Ingeniería de Software.
+    \item \textbf{Diseño de arquitectura:} Diseñar e implementar una arquitectura de software modular que separe ingesta, procesamiento y visualización, siguiendo principios de Ingeniería del Software.
 
-    \item \textbf{Gestión:} Utilizar herramientas y metodologías ágiles para planificar y implementar el proyecto. Utilizando Zube.io y GitHub.
+    \item \textbf{Gestión:} Aplicar herramientas y metodologías ágiles para planificar y hacer seguimiento del proyecto, utilizando GitHub y Zube.
 
 \end{itemize}
 
@@ -50,9 +52,9 @@ específicos:
     \item Aplicar conocimientos adquiridos durante el grado, especialmente en el ámbito
           de Desarrollo Avanzado de Sistemas Software y Minería de Datos.
 
-    \item Consolidar conocimientos en las siguientes tecnologías: Python, git, docker.
+    \item Consolidar conocimientos en las siguientes tecnologías: Python, Git y Docker.
 
-    \item Mejorar habilidades de diseño de software, aplicación de buenas practicas en
+    \item Mejorar habilidades de diseño de software, aplicación de buenas prácticas en
           desarrollo, testing de software y documentación.
 \end{itemize}
 
