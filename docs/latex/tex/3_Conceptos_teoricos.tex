@@ -490,9 +490,9 @@ Top2Vec utiliza hiperparámetros principalmente en el modelo de \gls{embeddings}
 (\gls{doc2vec}, \acrshort{bert} o USE) y en configuraciones de \acrshort{umap}
 y \acrshort{hdbscan} compartiendo muchos de los ajustes de BERTopic.
 
-\subsection{Hiperparámetros en Fastopic}
+\subsection{Hiperparámetros en FASTopic}
 
-Fastopic está optimizado para grandes volúmenes de datos y permite configurar:
+FASTopic está optimizado para grandes volúmenes de datos y permite configurar:
 \begin{itemize}
 	\item tipo de embeddings (\acrshort{bert}, \gls{fasttext}, etc.).
 	\item número de clusters en métodos rápidos como \gls{kmeans}.
@@ -502,7 +502,7 @@ Fastopic está optimizado para grandes volúmenes de datos y permite configurar:
 Tanto la evaluación como la \gls{hiperparametrizacion} de modelos de temas son
 procesos fundamentales para garantizar la calidad del análisis temático.
 Modelos como LDA requieren ajustes cuidadosos en parámetros probabilísticos,
-mientras que modelos modernos como BERTopic, Top2Vec y Fastopic dependen más de
+mientras que modelos modernos como BERTopic, Top2Vec y FASTopic dependen más de
 configuraciones de \gls{embeddings}, \gls{reduccion_dimensionalidad} y
 \gls{clustering}. La combinación de métricas automáticas y evaluación humana
 proporciona la estrategia más robusta para obtener temas coherentes y útiles en

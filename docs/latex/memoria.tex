@@ -44,7 +44,14 @@
 \newacronym{etp}{ETP}{Embedding Transport Plan}
 \newacronym{scrum}{SCRUM}{Scrum Framework}
 \newacronym{csv}{CSV}{Comma-Separated Values}
+\newacronym{json}{JSON}{JavaScript Object Notation}
 \newacronym{ui}{UI}{User Interface}
+\newacronym{api}{API}{Application Programming Interface}
+\newacronym{ghcr}{GHCR}{GitHub Container Registry}
+\newacronym{url}{URL}{Uniform Resource Locator}
+\newacronym{io}{I/O}{Input/Output}
+\newacronym{uml}{UML}{Unified Modeling Language}
+\newacronym{dfd}{DFD}{Data Flow Diagram}
 
 % Glosario
 
@@ -502,7 +509,8 @@
 \newcommand{\nombre}{Zeldan Javier Campos Cordero} %%% cambio de comando
 
 % Datos de portada
-\title{Análisis de temas en Trabajos Fin de Grado}
+\title{\fontsize{18pt}{22pt}\selectfont TFG Topics\\
+	\fontsize{16pt}{18pt}\selectfont Análisis de temas en Trabajos Fin de Grado\\}
 \author{\nombre}
 \tutor{Carlos López Nozal}
 \date{\today}
@@ -544,20 +552,26 @@
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-  \textit{TFG topics} es una aplicación que pretende realizar análisis temáticos cualitativos de los textos contenidos en las memorias de los trabajos finales de grado (TFG). Su objetivo es desarrollar una herramienta que permita a los docentes y estudiantes explorar e identificar tendencias en el contenido académico de dichos trabajos.
+  \textit{TFG Topics} es una aplicación orientada al análisis temático
+  cualitativo de los textos asociados a los \acrfull{tfg}. El objetivo
+  principal es facilitar a docentes, investigadores y estudiantes la
+  exploración del contenido académico, la identificación de tendencias y la
+  comparación de resultados entre cursos.
 
-  Para ello, se parte de un conjunto de datos creado con las memorias de TFG en
-  formato LaTex disponibles públicamente en GitHub. Sobre estos textos se lleva a
-  cabo el procesamiento y modelado de temas utilizando diversos algoritmos como:
-  \textbf{Latent Dirichlet Allocation (LDA)} \cite{blei2003lda},\textbf{Top2Vec}
-  \cite{angelovTop2VecDistributedRepresentations2020}, \textbf{BERTopic}
-  \cite{grootendorstBERTopicNeuralTopic2022} y \textbf{FASTopic}
-  \cite{2024arXiv240517978W} \cite{2024arXiv240517978W}.
+  El sistema parte de un conjunto de datos construido a partir de repositorios
+  públicos en GitHub, incluyendo memorias en formato \LaTeX{}, ficheros
+  \textit{README}, \textit{issues} y resúmenes académicos. Sobre este corpus se
+  aplica un flujo de preprocesamiento y modelado de temas mediante \textbf{Latent
+    Dirichlet Allocation (LDA)}~\cite{blei2003lda},
+  \textbf{Top2Vec}~\cite{angelovTop2VecDistributedRepresentations2020},
+  \textbf{BERTopic}~\cite{grootendorstBERTopicNeuralTopic2022} y
+  \textbf{FASTopic}~\cite{2024arXiv240517978W}.
 
-  Este trabajo se centra en la implementación, comparación y evaluación de
-  diferentes algoritmos de modelado de temas \textbf{(Topic Modeling)}, con el
-  fin de construir una herramienta que ayude a la gestión del conocimiento
-  académico en el ámbito universitario.
+  El trabajo se centra en el diseño e implementación de la solución, así como en
+  la comparación de los modelos para valorar su utilidad en un contexto académico
+  real. Como resultado, se obtiene una herramienta reproducible para apoyar la
+  gestión del conocimiento y el análisis de la producción académica
+  universitaria.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
@@ -570,24 +584,28 @@
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-  \textit{TFG Topic} is an application designed to perform qualitative thematic analysis of the texts contained in Bachelor's Thesis (TFG) reports. Its main goal is to develop a tool that enables teachers and students to explore and identify trends within the academic content of these works.
+  \textit{TFG Topics} is an application for qualitative thematic analysis of
+  texts related to Final Degree Projects. Its main goal is to support teachers,
+  researchers, and students in exploring academic content, identifying trends,
+  and comparing results across academic years.
 
-  To achieve this, a dataset was built from TFG reports written in LaTeX format
-  and publicly available on GitHub. These texts are processed and analyzed using
-  various topic modeling algorithms, such as \textbf{Latent Dirichlet Allocation
-    (LDA)} \cite{blei2003lda},\textbf{Top2Vec}
-  \cite{angelovTop2VecDistributedRepresentations2020}, \textbf{BERTopic}
-  \cite{grootendorstBERTopicNeuralTopic2022} and \textbf{FASTopic}
-  \cite{2024arXiv240517978W} \cite{2024arXiv240517978W}.
+  The system uses a dataset built from public GitHub repositories, including
+  \LaTeX{} reports, README files, issues, and academic abstracts. A full text
+  processing and topic modeling pipeline is applied using \textbf{Latent
+    Dirichlet Allocation (LDA)}~\cite{blei2003lda},
+  \textbf{Top2Vec}~\cite{angelovTop2VecDistributedRepresentations2020},
+  \textbf{BERTopic}~\cite{grootendorstBERTopicNeuralTopic2022}, and
+  \textbf{FASTopic}~\cite{2024arXiv240517978W}.
 
-  This work focuses on the implementation, comparison, and evaluation of
-  different \textbf{Topic Modeling} algorithms, with the aim of building a tool
-  that supports academic knowledge management within the university context.
+  This work focuses on the design and implementation of the solution, together
+  with a comparative analysis of the selected models in a real academic setting.
+  The final result is a reproducible tool that supports academic knowledge
+  management and thematic exploration.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-  Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG, Data Analysis, PNL, Computer Science.
+  Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG, Data Analysis, NLP, Computer Science.
 \end{abstract}
 
 \clearpage
