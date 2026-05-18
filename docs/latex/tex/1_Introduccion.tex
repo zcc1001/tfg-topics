@@ -5,9 +5,10 @@ académicos que proporcionan una valiosa fuente de información. Entre ellos, la
 memorias de los \acrfull{tfg} que ocupan un lugar relevante, ya que forman
 parte fundamental del proceso formativo del estudiante, y permiten aplicar los
 conocimientos adquiridos durante la realización de los estudios de
-grado~\cite{lopez2009proceso}. Estas memorias recogen tecnologías utilizadas,
-enfoques metodológicos y líneas de trabajo seguidas, lo que produce una buena
-representación del conocimiento en distintas áreas de la informática. Sin
+grado~\cite{lopez2009proceso}. Al recopilar las tecnologías empleadas, los
+enfoques metodológicos adoptados y las líneas de desarrollo abordadas, estos
+documentos conforman una fiel radiografía del conocimiento generado en las
+diversas ramas de la ingeniería informática. Sin
 embargo, el principal problema es que esta información suele estar dispersa en
 repositorios y formatos heterogéneos, lo que dificulta su consulta sistemática.
 
@@ -18,6 +19,17 @@ comparar resultados, detectar tendencias temáticas y facilitar la consulta de
 contenido académico a lo largo del tiempo. Para ello, se parte de un conjunto
 de datos obtenido de repositorios públicos en GitHub, centrado en documentos en
 formato \LaTeX{}, ficheros \textit{README}, incidencias y resúmenes académicos.
+Como se muestra en la Tabla~\ref{tabla:fuentes_textuales_alcance}.
+
+\tablaSmall{Fuentes textuales incluidas en el alcance del proyecto}
+{l p{0.7\textwidth}}
+{fuentes_textuales_alcance}
+{ \textbf{Fuente textual} & \textbf{Uso principal en el proyecto} \\}{
+      \textit{readmes}   & Descripción general del repositorio, tecnologías empleadas y contexto funcional del trabajo. \\
+      \textit{issues}    & Información complementaria sobre incidencias, decisiones técnicas y evolución del desarrollo. \\
+      \textit{thesis}    & Contenido textual completo de las memorias en formato \LaTeX{} para análisis temático profundo. \\
+      \textit{abstracts} & Resúmenes académicos para análisis comparativo de temas de forma sintética y directa. \\
+}
 
 Sobre este corpus se aplican técnicas de modelado de temas con distintos
 enfoques, entre ellos: \acrfull{lda}~\cite{blei2003lda},
@@ -43,7 +55,7 @@ combinación de temas, donde cada tema es una distribución de términos con
 distinta relevancia probabilística.
 
 Esta memoria se estructura del siguiente modo: en \textbf{Objetivos del
-    proyecto} se definen el objetivo general y los objetivos específicos; en
+      proyecto} se definen el objetivo general y los objetivos específicos; en
 \textbf{Conceptos teóricos} se presenta el marco conceptual del modelado de
 temas; en \textbf{Técnicas y herramientas} se describen las tecnologías
 utilizadas; en \textbf{Aspectos relevantes del desarrollo del proyecto} se

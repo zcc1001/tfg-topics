@@ -30,11 +30,15 @@ de temas.
 \section{Preprocesamiento del textos}
 
 Antes de iniciar cualquier análisis los textos deben someterse a una serie de
-procesos para garantizar su limpieza, normalización y reducir dimensión del
-vocabulario, con el fin de garantizar la calidad de los análisis resultantes.
+procesos secuenciales para garantizar su limpieza, normalización y reducir la
+dimensión del vocabulario, con el fin de garantizar la calidad de los análisis
+resultantes. El flujo general de estas transformaciones se ilustra en la
+Figura~\ref{fig:diagramas/pipeline_nlp.png}.
+
+\imagen{diagramas/pipeline_nlp.png}{Pipeline general del preprocesamiento de lenguaje natural.}{0.7}
 
 \subsection{Tokenización}
-a La \gls{tokenizacion} es un proceso fundamental dentro de el \acrshort{nlp} y
+La \gls{tokenizacion} es un proceso fundamental dentro de el \acrshort{nlp} y
 la \acrshort{ai}, pues permite dividir el texto en unidades mínimas denominadas
 tokens, que pueden ser palabras, subpalabras, caracteres o unidades semánticas
 mas complejas~\cite{jm3}. Este proceso constituye la base para la mayoría de
@@ -107,9 +111,10 @@ en español, dormir es el lema para la forma duermes~\cite{jm3}.
 El lema \textit{(lemma)} se define como la forma de citación o forma base de
 una palabra. El concepto del lema es relevante para comprender la estructura
 del significado. Un lema puede ser polisémico, es decir, puede tener múltiples
-sentidos.Cada aspecto individual del significado de un lema se denomina sentido
-de palabra \textit{(word sense)}. Por ejemplo, el lema ratón tiene al menos dos
-sentidos distintos: El roedor ó el dispositivo de control de cursor~\cite{jm3}.
+sentidos. Cada aspecto individual del significado de un lema se denomina
+sentido de palabra \textit{(word sense)}. Por ejemplo, el lema ratón tiene al
+menos dos sentidos distintos: El roedor ó el dispositivo de control de
+cursor~\cite{jm3}.
 
 La \gls{lematizacion}, al reducir las palabras a su forma base, asegura que un
 sistema de \acrshort{nlp} trate variantes flexionales (como singular, plural o
@@ -231,7 +236,7 @@ En este \ACRshort{tfg} nos centraremos en el uso de los siguiente modelos:
 \begin{description}
 	\item[\ACRfull{lda}] Es un modelo probabilístico clásico que data
 	      de 2003. Se basa en el enfoque de bolsa de palabras (\acrshort{bow}) y asume que los
-	      documentos son una mezcla de temas y los temas una mezcla de palabras.Este es
+	      documentos son una mezcla de temas y los temas una mezcla de palabras. Este es
 	      una referencia fundamental en el modelado de temas~\cite{blei2003lda}. En la
 	      sección~\ref{sec:lda} se profundiza sobre este modelo.
 	\item[Top2Vec] Surge en 2020 como una alternativa que utiliza \gls{embeddings} de
@@ -530,25 +535,19 @@ presentan las propiedades de los cuatro algoritmos de modelado de temas
 evaluados. Esta comparación permite visualizar la evolución desde los modelos
 probabilísticos clásicos hacia los más recientes.
 
-\begin{table}[h!]
-	\centering
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{lcccc}
-			\toprule
-			\textbf{Características}                    & \textbf{LDA} & \textbf{Top2Vec}               & \textbf{BERTopic}                & \textbf{FASTopic}         \\
-			\midrule
-			Requiere indicar numero de temas \textit{k} & Sí           & No                             & No                               & No                        \\
-			Uso de \textit{embeddings}                  & No           & Sí                             & Sí                               & Sí                        \\
-			Representación del texto                    & BOW          & \textit{embeddings} semánticos & \textit{embeddings} contextuales & {embeddings} contextuales \\
-			Preprocesamiento necesario                  & Alto         & Muy bajo                       & Moderado                         & Bajo                      \\
-			Coherencia de temas                         & Media        & Muy Alta                       & Alta                             & Muy Alta                  \\
-			Coste computacional                         & Bajo         & Alto                           & Alto                             & Alto                      \\
-			Interpretabilidad                           & Alta         & Media                          & Media-Alta                       & Media                     \\
-
-			\bottomrule
-		\end{tabular}
-	}
-	\caption{Comparativa de las características de los algoritmos de modelado de temas.}
-	\label{tab:comparativa-características-modelos}
-\end{table}
+\tablaSmallSinColores{Comparativa de las características de los algoritmos de modelado de temas.}
+{p{0.25\textwidth} p{0.08\textwidth} p{0.20\textwidth} p{0.20\textwidth} p{0.20\textwidth}}
+{comparativa-características-modelos}
+{
+	\textbf{Características} & \textbf{LDA} & \textbf{Top2Vec} & \textbf{BERTopic} & \textbf{FASTopic} \\
+}
+{
+	Requiere indicar número de temas \textit{k} & Sí & No & No & No \\
+	Uso de \textit{embeddings} & No & Sí & Sí & Sí \\
+	Representación del texto & BOW & \textit{embeddings} semánticos & \textit{embeddings} contextuales & \textit{embeddings} contextuales \\
+	Preprocesamiento necesario & Alto & Muy bajo & Moderado & Bajo \\
+	Coherencia de temas & Media & Muy Alta & Alta & Muy Alta \\
+	Coste computacional & Bajo & Alto & Alto & Alto \\
+	Interpretabilidad & Alta & Media & Media-Alta & Media \\
+}
 

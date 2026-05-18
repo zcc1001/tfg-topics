@@ -98,12 +98,17 @@ en contextos de uso final como en entornos de desarrollo. Para ello se definió
 una orquestación centralizada con \texttt{Makefile} y Docker
 Compose~\cite{DockerManuals}.
 
-El flujo de trabajo contempla tres modos:
+El flujo de trabajo contempla tres modos, cuya arquitectura de decisión se
+ilustra en la Figura~\ref{fig:diagramas/modos_ejecucion.png}:
 \begin{itemize}
       \item \texttt{MODE=release}: uso de imágenes precompiladas en \acrshort{ghcr}, orientado a ejecución rápida.
       \item \texttt{MODE=docker}: construcción local de imágenes para validar cambios de infraestructura.
       \item \texttt{MODE=local}: ejecución nativa en Python para depuración y desarrollo iterativo.
 \end{itemize}
+
+\imagen{diagramas/modos_ejecucion.png}
+{Diagrama conceptual de los modos de ejecución del proyecto.}
+{0.9}
 
 Esta estrategia redujo fricción en la puesta en marcha y mejoró la
 reproducibilidad de resultados entre equipos y sistemas operativos.
@@ -111,12 +116,17 @@ reproducibilidad de resultados entre equipos y sistemas operativos.
 \section{Interfaz web y exploración de resultados}
 
 El módulo de visualización se implementó como un frontal web utilizando
-Streamli~\cite{StreamlitDocsa}. Este componente consume directamente los
+Streamlit~\cite{StreamlitDocsa}. Este componente consume directamente los
 resultados generados por el módulo de procesamiento y almacenados en ficheros
 Parquet, manteniendo así un acoplamiento mínimo entre ambos módulos.
 
 La interfaz permite seleccionar modelos, explorar temas generados, visualizar
-métricas y analizar resultados de forma interactiva. Esta decisión sustituye
+métricas y analizar resultados de forma interactiva, tal y como se puede
+apreciar en la Figura~\ref{fig:interfaz_streamlit.png}. Esta decisión sustituye
 salidas estáticas por una herramienta más adecuada para un análisis
 exploratorio y facilita tanto la evaluación del sistema como la comprensión de
 los resultados obtenidos.
+
+\imagen{interfaz_streamlit.png}
+{Vista general de la interfaz interactiva desarrollada con Streamlit.}
+{0.95}

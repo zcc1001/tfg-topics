@@ -4,6 +4,12 @@ En este capítulo se describen las técnicas y herramientas utilizadas durante e
 desarrollo del proyecto. Se abordan tanto las metodologías empleadas como las
 herramientas de software que facilitaron la implementación y gestión del mismo.
 
+En la Figura~\ref{fig:tech_stack.png} se presenta un resumen conceptual del
+ecosistema tecnológico empleado, categorizado por su función principal dentro
+de la arquitectura.
+
+\imagen{tech_stack.png}{Esquema de las principales tecnologías y librerías utilizadas.}{0.9}
+
 \section{Metodologías de desarrollo}
 
 El desarrollo del proyecto se llevó a cabo utilizando la metodología ágil
@@ -127,7 +133,33 @@ proyecto. La organización y limpieza de importaciones se ha gestionado usando
 \textbf{isort}, mientras que el análisis estático y la detección de posibles
 errores o incumplimientos de estilo se han realizado con \textbf{flake8}. Estas
 herramientas mejoran la legibilidad del código y reducen la aparición de
-errores durante el desarrollo.
+errores durante el desarrollo. A modo de síntesis, en la
+Tabla~\ref{tabla:flujo_desarrollo_validacion} se detalla el flujo integral de
+desarrollo, control de versiones y validación continua aplicado.
+
+\tablaSmall{Flujo de desarrollo, control de versiones y validación continua.}
+{p{0.22\textwidth} p{0.38\textwidth} p{0.30\textwidth}}
+{flujo_desarrollo_validacion}
+{
+    \textbf{Etapa} & \textbf{Acciones principales} & \textbf{Herramientas} \\
+}
+{
+    Planificación y seguimiento &
+    Definición de tareas, priorización y revisión periódica del avance. &
+    Zube, GitHub Issues. \\
+    Implementación & Desarrollo incremental por módulos y ejecución local o
+    contenedorizada. & Python, Visual Studio Code, Docker, Makefile. \\
+    Control de versiones & Versionado del código, integración de cambios y
+    trazabilidad de decisiones. & Git, GitHub. \\
+    Calidad estática & Formateo, orden de importaciones, análisis de estilo y
+    verificación de tipos. & Black, isort, flake8, mypy, pre-commit. \\
+    Pruebas & Ejecución de pruebas unitarias por módulo y validación funcional de
+    cambios. & Pytest. \\
+    Integración y despliegue & Ejecución reproducible del pipeline completo en
+    distintos modos. & Docker Compose, GHCR, Makefile. \\
+    Documentación & Redacción de memoria técnica y mantenimiento de documentación
+    del proyecto. & LaTeX, Visual Studio Code. \\
+}
 
 \section{Documentación}
 
