@@ -1,40 +1,201 @@
-\apendice{Especificación de Requisitos}
+﻿\apendice{Especificación de Requisitos}
 
 \section{Introducción}
+Esta sección se documenta el proceso de ingeniería de requisitos llevado a cabo
+durante las fases iniciales del proyecto. A partir del análisis del problema y
+de las necesidades del dominio analítico, se han establecido los objetivos
+principales del sistema y se ha redactado un catálogo formal detallando las
+funcionalidades esperadas (\acrfullpl{rf}) y las restricciones técnicas
+impuestas a la arquitectura (\acrfullpl{rnf}).
 
-Una muestra de cómo podría ser una tabla de casos de uso:
-
-% Caso de Uso 1 -> Consultar Experimentos.
-\begin{table}[p]
-	\centering
-	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
-		\toprule
-		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
-		\toprule
-		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Alumno \\
-		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
-		\textbf{Descripción}          & La descripción del CU \\
-		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
-		\textbf{Acciones}             &
-		\begin{enumerate}
-			\def\labelenumi{\arabic{enumi}.}
-			\tightlist
-			\item Pasos del CU
-			\item Pasos del CU (añadir tantos como sean necesarios)
-		\end{enumerate}\\
-		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
-		\textbf{Excepciones}          & Excepciones \\
-		\textbf{Importancia}          & Alta o Media o Baja... \\
-		\bottomrule
-	\end{tabularx}
-	\caption{CU-1 Nombre del caso de uso.}
-\end{table}
+Finalmente, se modela el comportamiento del sistema desde la perspectiva de sus
+usuarios mediante la especificación de \acrfullpl{cu}.
 
 \section{Objetivos generales}
+El principal propósito de este \acrshort{tfg} es proporcionar un entorno
+automatizado que facilite la investigación y el análisis temático sobre
+repositorios de software en GitHub. Para lograrlo, se han definido los
+siguientes objetivos generales:
+
+\begin{itemize}
+	\item \textbf{Construir un motor de ingesta de datos:} Capaz de extraer metadatos, \textit{issues} y documentación de repositorios públicos de GitHub de forma automatizada y resiliente.
+	\item \textbf{Implementar un pipeline de procesamiento \acrshort{nlp}:} Que permita normalizar los textos extraídos y prepararlos para el modelado matemático.
+	\item \textbf{Entrenar y evaluar algoritmos de Topic Modeling:} Desplegando y optimizando modelos consolidados como \acrshort{lda}, BERTopic, Top2Vec y FASTopic para la extracción de tópicos latentes.
+	\item \textbf{Desarrollar una interfaz web:} Que permita a los investigadores explorar de forma interactiva la distribución de temas y comparar empíricamente el rendimiento métrico de cada modelo.
+\end{itemize}
 
 \section{Catálogo de requisitos}
+El catálogo de requisitos desglosa los objetivos en unidades atómicas y
+verificables, dividiéndolas según su naturaleza.
 
-\section{Especificación de requisitos}
+\subsection{\acrfullpl{rf}}
+Definen las funcionalidades y acciones concretas que el sistema debe ser capaz
+de ejecutar.
 
+\begin{itemize}
+	\item \textbf{RF-1. Extracción de datos:} El sistema debe descargar iterativamente la información de repositorios en base a una lista en formato \acrshort{csv}, comunicándose con la \acrshort{api} de GitHub.
+	\item \textbf{RF-2. Preprocesamiento de texto:} El sistema debe aplicar técnicas de procesamiento de lenguaje natural (tokenización, lematización, borrado de \textit{stopwords}) para normalizar el texto.
+	\item \textbf{RF-3. Entrenamiento de modelos:} El sistema debe ser capaz de instanciar y entrenar múltiples algoritmos de modelado de temas sobre el texto preprocesado.
+	\item \textbf{RF-4. Optimización de hiperparámetros:} El sistema debe integrar mecanismos para evaluar y afinar los hiperparámetros de los modelos en busca de la máxima coherencia semántica.
+	\item \textbf{RF-5. Cálculo de métricas:} El sistema debe generar métricas estandarizadas para evaluar la coherencia y diversidad de los tópicos resultantes.
+	\item \textbf{RF-6. Visualización de tópicos:} La interfaz de usuario debe mostrar gráficas interactivas que representen la importancia de las palabras y la proyección bidimensional de los tópicos.
+	\item \textbf{RF-7. Comparativa de modelos:} La interfaz debe disponer de un panel que cruce y ordene el rendimiento métrico de los diferentes algoritmos.
+\end{itemize}
+
+\subsection{\acrfullpl{rnf}}
+Restricciones de diseño, rendimiento y arquitectura que garantizan la calidad y
+escalabilidad del producto final.
+
+\begin{itemize}
+	\item \textbf{RNF-1. Persistencia optimizada:} Dado el alto volumen de datos textuales, el almacenamiento local entre los módulos del sistema debe realizarse exclusivamente en formato Apache Parquet.
+	\item \textbf{RNF-2. Desacoplamiento estructural:} La lógica de negocio del sistema debe aislarse de los detalles técnicos y librerías externas siguiendo el patrón de Arquitectura Hexagonal.
+	\item \textbf{RNF-3. Contenerización:} Para evitar conflictos de dependencias, la ejecución de los diferentes módulos debe estar soportada por contenedores Docker independientes.
+	\item \textbf{RNF-4. Tolerancia a fallos de red:} El módulo de ingesta debe gestionar de forma silenciosa la posible pérdida de conexión o la caída de la \acrshort{api} remota mediante reintentos y persistencia parcial.
+\end{itemize}
+
+\section{Especificación de \acrshortpl{cu}}
+La especificación de \acrfullpl{cu} modela las interacciones entre los
+usuarios (actores) y el sistema. En este proyecto se identifican dos actores
+principales: el \textbf{Administrador/Desarrollador} (encargado de ejecutar las
+tareas pesadas del \textit{backend}) y el \textbf{Investigador/Usuario Web}
+(quien consume los datos a través del \textit{frontend}).
+
+El panorama general de interacciones queda plasmado en el diagrama de
+\acrshortpl{cu} adjunto (Figura~\ref{fig:diagramas/casos_uso.png}).
+
+\imagen{diagramas/casos_uso.png}{Diagrama de \acrshortpl{cu} del sistema TFG Topics}
+
+A continuación, se documentan de forma tabular los flujos principales asociados
+a cada uno de estos \acrshortpl{cu}.
+
+% Caso de Uso 1
+\tablaSmallSinColores{CU-1: Ejecutar pipeline de ingesta.}
+{p{0.21\textwidth} p{0.71\textwidth}}
+{cu_1}
+{
+	\textbf{CU-1}                 & \textbf{Ejecutar pipeline de ingesta}                                                                                \\
+}
+{
+	\textbf{Versión}              & 1.0                                                                                                                  \\
+	\textbf{Autor}                & Alumno                                                                                                               \\
+	\textbf{Requisitos asociados} & RF-1, RNF-1, RNF-4                                                                                                   \\
+	\textbf{Descripción}          & El administrador inicia la recolección de los datos desde la nube.                                                   \\
+	\textbf{Precondición}         & Disponer de conexión a Internet, de un archivo semilla de repositorios y de un token de GitHub válido.               \\
+	\textbf{Acciones}             &
+	\begin{enumerate}
+		\def\labelenumi{\arabic{enumi}.}
+		\tightlist
+		\item El administrador lanza la orden de ejecución (ej. mediante \texttt{make}).
+		\item El sistema lee el fichero \acrshort{csv} semilla.
+		\item El sistema consulta la \acrshort{api} y descarga \textit{readmes},
+		      \textit{abstracts}, \textit{issues} y contenido de \ACRshort{tfg}.
+		\item El sistema formatea los datos y los persiste en ficheros Parquet.
+	\end{enumerate}                                                                     \\
+	\textbf{Postcondición}        & Se han generado los archivos Parquet en \texttt{data/ingestion/}.                                                    \\
+	\textbf{Excepciones}          & Fallo de red, token expirado o repositorios eliminados (se registran en los \textit{logs} sin detener la ejecución). \\
+	\textbf{Importancia}          & Alta                                                                                                                 \\
+}
+
+% Caso de Uso 2
+\tablaSmallSinColores{CU-2: Entrenar modelos de tópicos.}
+{p{0.21\textwidth} p{0.71\textwidth}}
+{cu_2}
+{
+	\textbf{CU-2}                 & \textbf{Entrenar modelos de tópicos}                                                                            \\
+}
+{
+	\textbf{Versión}              & 1.0                                                                                                             \\
+	\textbf{Autor}                & Alumno                                                                                                          \\
+	\textbf{Requisitos asociados} & RF-2, RF-3, RF-4, RF-5                                                                                          \\
+	\textbf{Descripción}          & El administrador ejecuta el proceso de análisis de los datos extraídos.          \\
+	\textbf{Precondición}         & Deben existir archivos de ingesta generados por el CU-1.                                                        \\
+	\textbf{Acciones}             &
+	\begin{enumerate}
+		\def\labelenumi{\arabic{enumi}.}
+		\tightlist
+		\item El administrador lanza el módulo de \textit{processing}.
+		\item El sistema carga en memoria los textos crudos y aplica los filtros de limpieza
+		      \acrshort{nlp}.
+		\item El sistema entrena iterativamente los diferentes algoritmos.
+		\item El sistema optimiza automáticamente los hiperparámetros de los modelos.
+		\item Se calculan las métricas y las proyecciones 2D para la vista final.
+	\end{enumerate}                                                             \\
+	\textbf{Postcondición}        & Se han generado los ficheros Parquet con los resultados analíticos en la carpeta correspondiente a cada modelo. \\
+	\textbf{Excepciones}          & Insuficiente memoria RAM para cargar un corpus completo (se aborta el hilo).                                    \\
+	\textbf{Importancia}          & Alta                                                                                                            \\
+}
+
+% Caso de Uso 3
+\tablaSmallSinColores{CU-3: Explorar tópicos de un modelo.}
+{p{0.21\textwidth} p{0.71\textwidth}}
+{cu_3}
+{
+	\textbf{CU-3}                 & \textbf{Explorar tópicos de un modelo}                                                                    \\
+}
+{
+	\textbf{Versión}              & 1.0                                                                                                       \\
+	\textbf{Autor}                & Alumno                                                                                                    \\
+	\textbf{Requisitos asociados} & RF-6                                                                                                      \\
+	\textbf{Descripción}          & El investigador visualiza las temáticas descubiertas por un algoritmo en particular de forma interactiva. \\
+	\textbf{Precondición}         & El sistema web está arrancado y los modelos han sido entrenados. Deben existir archivos de ingesta generados por el CU-1. Deben existir archivos generados por el CU-2.                                          \\
+	\textbf{Acciones}             &
+	\begin{enumerate}
+		\def\labelenumi{\arabic{enumi}.}
+		\tightlist
+		\item El usuario accede a la pestaña de análisis de modelo en el \textit{frontend}.
+		\item Selecciona mediante un desplegable la fuente de texto y el modelo objetivo.
+		\item El sistema carga bajo demanda la información del modelo.
+		\item El usuario interactúa con los gráficos (zoom, selección de tópicos).
+	\end{enumerate}                                                        \\
+	\textbf{Postcondición}        & El usuario adquiere conclusiones sobre el corpus.                                                         \\
+	\textbf{Excepciones}          & Datos no disponibles si el modelo no fue entrenado (el \textit{frontend} muestra advertencia).            \\
+	\textbf{Importancia}          & Alta                                                                                                      \\
+}
+
+% Caso de Uso 4
+\tablaSmallSinColores{CU-4: Comparar rendimiento de modelos.}
+{p{0.21\textwidth} p{0.71\textwidth}}
+{cu_4}
+{
+	\textbf{CU-4}                 & \textbf{Comparar rendimiento de modelos}                                                                              \\
+}
+{
+	\textbf{Versión}              & 1.0                                                                                                                   \\
+	\textbf{Autor}                & Alumno                                                                                                                \\
+	\textbf{Requisitos asociados} & RF-7                                                                                                                  \\
+	\textbf{Descripción}          & El usuario coteja las métricas de distintos algoritmos para evaluar cuál se comporta mejor ante el conjunto de datos. \\
+	\textbf{Precondición}         & Al menos dos modelos diferentes deben haber sido entrenados para la misma fuente de datos.                            \\
+	\textbf{Acciones}             &
+	\begin{enumerate}
+		\def\labelenumi{\arabic{enumi}.}
+		\tightlist
+		\item El usuario accede a la pestaña de comparativa.
+		\item El sistema agrega la puntuación de coherencia de todos los modelos disponibles.
+		\item Se renderiza una tabla de clasificación o \textit{ranking} que consolida el
+		      rendimiento.
+		\item El usuario puede visualizar gráficos de barras comparativos.
+	\end{enumerate}                                                                  \\
+	\textbf{Postcondición}        & Ninguna alteración del estado del sistema.                                                                            \\
+	\textbf{Excepciones}          & Ninguna.                                                                                                              \\
+	\textbf{Importancia}          & Media                                                                                                                 \\
+}
+
+\section{Matriz de trazabilidad}
+Para asegurar que todos los \acrshortpl{rf} identificados están
+cubiertos por las interacciones de los usuarios con el sistema, se presenta a
+continuación la matriz de trazabilidad entre los \acrshortpl{cu} y los
+\acrshortpl{rf}.
+
+\tablaSmall{Matriz de trazabilidad entre \acrshortpl{cu} y \acrshortpl{rf}.}
+{l c c c c c c c}
+{matriz_trazabilidad}
+{
+	& \textbf{RF-1} & \textbf{RF-2} & \textbf{RF-3} & \textbf{RF-4} & \textbf{RF-5} & \textbf{RF-6} & \textbf{RF-7} \\
+}
+{
+	\textbf{CU-1} & X & & & & & & \\
+	\textbf{CU-2} & & X & X & X & X & & \\
+	\textbf{CU-3} & & & & & & X & \\
+	\textbf{CU-4} & & & & & & & X \\
+}
 

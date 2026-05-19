@@ -1,9 +1,83 @@
 \apendice{Anexo de sostenibilización curricular}
 
 \section{Introducción}
-Este anexo incluirá una reflexión personal del alumnado sobre los aspectos de la sostenibilidad que se abordan en el trabajo.
-Se pueden incluir tantas subsecciones como sean necesarias con la intención de explicar las competencias de sostenibilidad adquiridas durante el alumnado y aplicadas al Trabajo de Fin de Grado.
+El presente anexo recoge una reflexión crítica sobre la alineación del
+\ACRshort{tfg} con los principios de sostenibilidad y responsabilidad social,
+en concordancia con las directrices establecidas por la \acrfull{crue}.
 
-Más información en el documento de la CRUE \url{https://www.crue.org/wp-content/uploads/2020/02/Directrices_Sosteniblidad_Crue2012.pdf}.
+La ingeniería del software, tradicionalmente percibida como una disciplina
+aséptica, tiene un impacto profundo y directo en el consumo de recursos
+naturales, el desarrollo socioeconómico y la equidad social. Por tanto, el
+diseño, arquitectura y desarrollo de este sistema de análisis temático se ha
+llevado a cabo bajo el prisma de sostenibilidad ambiental, social y económica.
 
-Este anexo tendrá una extensión comprendida entre 600 y 800 palabras.
+A continuación, en la Tabla~\ref{tabla:ods_resumen}, se resumen las principales
+decisiones adoptadas y su impacto directo en la sostenibilidad.
+
+\tablaSmall{Resumen del impacto de las decisiones técnicas en la sostenibilidad.}
+{p{0.7\textwidth} p{0.3\textwidth}}
+{ods_resumen}
+{
+    \textbf{Decisión del proyecto}      & \textbf{Dimensión Sostenible} \\
+}
+{
+    Uso de IA ligera local y Parquet    & Ambiental        \\
+    Desarrollo de herramienta analítica & Social           \\
+    Anonimización de datos (RGPD)       & Social / Ética   \\
+    Licenciamiento de código abierto    & Económica        \\
+}
+
+\section{Sostenibilidad Ambiental}
+El auge reciente de la Inteligencia Artificial y de los modelos de
+Procesamiento de Lenguaje Natural (\acrshort{nlp}) ha traído consigo un
+incremento alarmante en la huella de carbono, debido a la ingente cantidad de
+recursos computacionales y energéticos necesarios para su entrenamiento. En
+este proyecto, se han aplicado principios de \textit{Green AI} (IA verde) para
+minimizar drásticamente el impacto medioambiental.
+
+En primer lugar, se ha evitado la dependencia de modelos de lenguaje cerrados
+en la nube que requieren centros de datos masivos. En su lugar, se ha optado
+por modelos probabilísticos ligeros (como \acrshort{lda}) y modelos basados en
+Transformers de tamaño reducido (como BERTopic y Top2Vec) que pueden ser
+ejecutados y afinados localmente utilizando un hardware doméstico estándar.
+
+Además, la arquitectura de persistencia de datos ha sido diseñada para ser
+altamente eficiente. La transición de formatos tradicionales en texto plano
+(como JSON o \acrshort{csv}) hacia el uso exclusivo de Apache Parquet ha
+permitido comprimir drásticamente el espacio de almacenamiento. Parquet, al ser
+un formato columnar optimizado, minimiza las operaciones de lectura y escritura
+en disco (I/O), reduciendo notablemente el consumo energético del procesador y
+el disco durante las pesadas fases de tratamiento de texto.
+
+\section{Sostenibilidad Social y Ética}
+Desde el punto de vista del impacto humano, el proyecto contribuye de forma
+directa al Educación de Calidad, Industria, Innovación e Infraestructura. La
+herramienta desarrollada tiene un fin puramente académico y divulgativo:
+proporcionar a investigadores, docentes y futuros estudiantes una plataforma
+analítica intuitiva para comprender las tendencias, tecnologías y temáticas que
+se están investigando en el ámbito universitario. Al extraer el conocimiento
+latente de memorias de \Acrshort{tfg}, se facilita la transferencia de
+conocimiento, se inspiran nuevas líneas de investigación para el alumnado y se
+evita la redundancia académica.
+
+\section{Sostenibilidad Económica}
+El ecosistema de este desarrollo se ha sustentado de forma exclusiva sobre
+tecnologías libres y gratuitas. El \textit{backend} (Python, Pandas, Optuna) y
+el motor de visualización (Streamlit) no exigen licencias comerciales de pago.
+
+Asimismo, la ligereza de la interfaz web permite que el producto final pueda
+ser albergado en plataformas en la nube de capa gratuita (como \textit{GitHub
+    Container Registry} o \textit{Streamlit Community Cloud}), garantizando una
+disponibilidad analítica universal a coste cero de mantenimiento operativo.
+
+\section{Conclusión}
+En conclusión, la elaboración de este \Acrshort{tfg} ha supuesto una
+oportunidad invaluable para interiorizar y poner en práctica las competencias
+transversales de sostenibilidad impulsadas por la \acrshort{crue}. Las
+decisiones de diseño técnico adoptadas desde la selección del formato Parquet
+para reducir el consumo energético, hasta la adopción de una licencia de código
+abierto para democratizar su uso y la anonimización proactiva de los datos
+recogidos demuestran que es posible concebir productos de software que sean
+técnicamente robustos a la par que social, económica y medioambientalmente
+responsables. Este proyecto contribuye a través de una praxis ética y
+respetuosa con su entorno material y humano.

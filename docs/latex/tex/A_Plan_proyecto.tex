@@ -1,13 +1,158 @@
-\apendice{Plan de Proyecto Software}
+﻿\apendice{Plan de Proyecto Software}
 
 \section{Introducción}
+Esta sección se detalla la gestión y planificación del \acrfull{tfg}. Se aborda
+la metodología de trabajo seguida, la temporalización de las tareas a lo largo
+de los meses de desarrollo, la gestión de riesgos y, finalmente, un estudio de
+viabilidad que engloba tanto los aspectos económicos como las consideraciones
+legales del software desarrollado.
 
-\section{Planificación temporal}
+\section{Metodología y planificación temporal}
+Para la organización del trabajo, se ha optado por seguir un marco de trabajo
+ágil adaptado a las necesidades de un proyecto individual académico, basándose
+en los principios fundamentales de \textbf{Scrum}. El desarrollo ha abarcado un
+periodo total de casi ocho meses, dando comienzo el 16 de octubre de 2025 y
+finalizando con su presentación en junio de 2026.
+
+El ciclo de vida del desarrollo se estructuró a alto nivel en seis grandes
+fases consecutivas:
+\begin{enumerate}
+    \item \textbf{Investigación y Viabilidad:} Análisis del estado del arte y selección tecnológica.
+    \item \textbf{Módulo de Ingesta:} Desarrollo de los adaptadores para extraer datos de GitHub.
+    \item \textbf{Procesamiento \acrshort{nlp} y Modelado:} Fase central de experimentación con modelos de tópicos.
+    \item \textbf{Interfaz Web:} Desarrollo de los cuadros de mando interactivos en Streamlit.
+    \item \textbf{Pruebas y Despliegue:} Refactorización, creación de tests y contenerización Docker.
+    \item \textbf{Redacción de la Memoria:} Documentación técnica y académica en \LaTeX.
+\end{enumerate}
+
+A nivel operativo, el proyecto se dividió en iteraciones o \textit{Sprints} de
+entre dos y tres semanas de duración, ajustando este margen de flexibilidad en
+función de la complejidad del módulo a desarrollar en cada momento. Las
+reuniones periódicas de seguimiento con los tutores del proyecto ejercieron la
+doble función de \textit{Sprint Planning} (para priorizar las siguientes
+tareas) y \textit{Sprint Review} (para evaluar los incrementos de software
+logrados).
+
+Para el seguimiento de las tareas y el control de versiones, se utilizó la
+plataforma de gestión ágil \textbf{Zube}, la cual se integra nativamente de
+forma bidireccional con las \textit{issues} de GitHub. Esta herramienta
+permitió gestionar el \textit{Product Backlog}, asignar prioridades y trazar el
+progreso visual de cada tarea mediante un tablero Kanban a lo largo de los
+diferentes \textit{Sprints}, tal y como se ilustra en la Figura
+\ref{fig:plan/zube_sprints.png}.
+
+\imagen{plan/zube_sprints.png}{Vista del panel de gestión de Sprints en la plataforma Zube}
+
+La temporalización exacta y la superposición de estas fases se ha modelado en
+el diagrama de Gantt adjunto (Figura \ref{fig:plan/gantt_planificacion.png}),
+que ilustra la línea base del cronograma del proyecto hasta el hito de defensa.
+
+\imagen{plan/gantt_planificacion.png}{Diagrama de Gantt con la planificación temporal del proyecto}
+
+\subsection{Evolución real del proyecto por sprints}
+
+Además de la planificación inicial, el seguimiento iterativo del desarrollo se
+gestionó mediante \textit{sprints} cerrados en Zube/GitHub. Esta trazabilidad
+permite contrastar el plan previsto con la evolución real del trabajo y
+evidenciar el grado de cumplimiento.
+
+En total se completaron doce iteraciones (Sprint 0 a Sprint 12), con cierre
+íntegro de tareas en todos los casos. La evolución del proyecto siguió una
+secuencia progresiva: arranque y viabilidad inicial, construcción del dataset,
+consolidación de los módulos de ingesta y procesamiento, mejoras funcionales y
+visuales en la interfaz, y una fase final orientada a revisión con usuarios,
+estabilidad e internacionalización. La distribución temporal y el grado de
+cumplimiento de estas iteraciones se detallan en la
+Tabla~\ref{tabla:sprints_cronologia}.
+
+\tablaSmall{Cronología de sprints y grado de ejecución del proyecto}
+{p{0.08\textwidth} p{0.14\textwidth} p{0.56\textwidth} p{0.08\textwidth} p{0.10\textwidth}}
+{sprints_cronologia}
+{
+    \textbf{Sprint} & \textbf{Fecha fin} & \textbf{Objetivo principal} & \textbf{Issues} & \textbf{Estado} \\
+}
+{
+    S0 & 29/10/2025  & Puesta en marcha del proyecto: configuración inicial, investigación de herramientas y arranque de documentación.  & 5/5 & 100\% \\
+    S1 & 20/11/2025  & Validación y comparación de modelos de temas (LDA, Top2Vec, BERTopic, FASTopic).                                  & 6/6 & 100\% \\
+    S2 & 04/12/2025  & Hiperparametrización y primeras visualizaciones de resultados experimentales.                                     & 6/6 & 100\% \\
+    S3 & 17/12/2025  & Construcción del dataset base con \textit{issues} y \textit{readmes} de repositorios seleccionados.               & 4/4 & 100\% \\
+    S4 & 30/12/2025  & Extensión de la ingesta a memorias en \LaTeX{} y puesta en marcha del esqueleto de \textit{processing}.           & 4/4 & 100\% \\
+    S5 & 15/01/2026  & Implementación del módulo de procesamiento y consolidación del flujo analítico.                                   & 7/7 & 100\% \\
+    S6 & 29/01/2026  & Conversión a aplicación desplegable, mejoras de experiencia de usuario y extensión funcional.                     & 3/3 & 100\% \\
+    S7 & 19/02/2026  & Mejora de usabilidad en la página de análisis académico de \acrshort{tfg}.                                        & 5/5 & 100\% \\
+    S8 & 05/03/2026  & Incorporación del \textit{datasource} de resúmenes académicos (\textit{abstracts}).                               & 6/6 & 100\% \\
+    S9 & 26/03/2026  & Mejora visual de la aplicación web y refinamiento de la presentación de resultados.                               & 7/7 & 100\% \\
+    S10 & 20/04/2026 & Revisiones con usuarios y ajustes derivados de pruebas funcionales.                                               & 4/4 & 100\% \\
+    S11 & 04/05/2026 & Refinamiento UX, datos demo para validación, estabilización de plataforma e internacionalización.                 & 6/6 & 100\% \\
+    S12 & 21/05/2026 & Usabilidad, Documentación y Despliegue.                                                                           & 6/6 & 100\% \\
+}
+
+El histórico de sprints refleja una planificación adaptativa coherente con la
+naturaleza experimental del proyecto. Aunque algunas tareas de evaluación y
+visualización se abordaron en fases tempranas, esta decisión permitió detectar
+limitaciones de forma anticipada y reorientar con mayor precisión el diseño de
+ingesta, procesamiento y experiencia de usuario en iteraciones posteriores.
+
+\section{Análisis de riesgos}
+Un pilar fundamental en la planificación de cualquier proyecto de ingeniería es
+la identificación temprana de riesgos y la definición de planes de mitigación.
+Durante las fases iniciales se identificaron los siguientes riesgos
+principales:
+
+\begin{itemize}
+    \item \textbf{Riesgo 1: Limitaciones de la \acrshort{api} de GitHub.} Al depender de una fuente externa para la ingesta de datos, existía el riesgo de alcanzar el límite de peticiones (Rate Limit). \textit{Mitigación:} Se implementó el uso de tokens autenticados, peticiones paginadas y tiempos de retardo controlados (\textit{sleeps}) para garantizar una extracción continua sin bloqueos.
+    \item \textbf{Riesgo 2: Altos tiempos de entrenamiento \acrshort{nlp}.} El procesamiento masivo de texto y el entrenamiento concurrente de cuatro modelos de tópicos (\acrshort{lda}, BERTopic, etc.) suponía un cuello de botella computacional. \textit{Mitigación:} Se optó por utilizar archivos Apache Parquet para agilizar las operaciones de \ACRshort{io} en disco y se aprovechó la aceleración por GPU local para la instanciación de los \textit{embeddings} de los Transformers.
+    \item \textbf{Riesgo 3: Incompatibilidad de dependencias de Python.} Las librerías de IA suelen presentar conflictos estrictos de versiones. \textit{Mitigación:} Se abordó mediante la contención temprana, aislando el entorno de desarrollo en contenedores Docker y especificando versiones exactas en un archivo \texttt{requirements.txt}.
+\end{itemize}
 
 \section{Estudio de viabilidad}
+Todo proyecto de ingeniería de software requiere de un análisis previo de
+viabilidad para garantizar que su ejecución sea realista en términos de
+recursos, coste y adecuación al marco normativo vigente.
 
 \subsection{Viabilidad económica}
+Al tratarse de un \acrshort{tfg} de naturaleza académica, no existe un
+presupuesto de inversión comercial real. No obstante, es imperativo cuantificar
+el valor del desarrollo para estimar cuál habría sido su coste total si este
+proyecto se hubiese encargado dentro de un entorno empresarial. El análisis
+contempla tres partidas principales:
+
+\begin{itemize}
+    \item \textbf{Costes de personal:} La carga lectiva de un \acrshort{tfg} estándar de 12 créditos ECTS equivale habitualmente a unas 300 horas de dedicación. Asumiendo el rol de un Desarrollador de Software Junior / Ingeniero de Datos con un coste para la empresa estimado de 15 €/hora, el coste salarial ascendería a \textbf{4.500 €}.
+    \item \textbf{Costes de hardware (Amortización):} El desarrollo de las herramientas y el entrenamiento de los algoritmos de modelado requieren alta capacidad de cómputo. Para ello, se ha utilizado un equipo propio (AMD Ryzen 5 7600X, 32 GB RAM, NVIDIA RTX 4070 SUPER 12GB). Estimando un valor de compra de 1.800 € y una vida útil de 5 años, la amortización correspondiente a los 8 meses del proyecto supone un impacto de \textbf{240 €}.
+    \item \textbf{Costes de software e infraestructura:} Todos los lenguajes, librerías, y entornos de desarrollo utilizados (Python, Visual Studio Code, Docker, GitHub) disponen de licencias de código abierto o planes gratuitos. En consecuencia, el coste en software es de \textbf{0 €}.
+    \item \textbf{Gastos generales prorrateados:} Asumiendo un consumo energético y conexión a Internet prorrateado de unos 20 €/mes durante 8 meses de trabajo en oficina u hogar, se estiman \textbf{160 €}.
+\end{itemize}
+
+A continuación, en la Tabla~\ref{tabla:presupuesto}, se muestra de forma
+resumida el desglose presupuestario del proyecto.
+
+\tablaSmall{Tabla resumen del presupuesto estimado del proyecto}
+{l r}
+{presupuesto}
+{
+    \textbf{Concepto}          & \textbf{Coste estimado} \\
+}
+{
+    Costes de personal (300h)  & 4.500 €                 \\
+    Amortización de hardware   & 240 €                   \\
+    Licencias de software      & 0 €                     \\
+    Gastos generales           & 160 €                   \\
+    \textbf{Presupuesto Total} & \textbf{4.900 €}        \\
+}
+
+Agregando todas las partidas, el presupuesto total de desarrollo de esta
+herramienta rondaría los \textbf{4.900 €}. Teniendo en cuenta la nula barrera
+de entrada a nivel de licencias y herramientas, se concluye que el proyecto es
+totalmente \textbf{económicamente viable}.
 
 \subsection{Viabilidad legal}
+Desde la perspectiva jurídica, el desarrollo, almacenamiento y futura
+distribución de esta aplicación en código abierto plantea dos retos principales
+que han sido solventados:
 
+\begin{itemize}
+    \item \textbf{Protección de datos personales:} Dado que el sistema requiere analizar metadatos e incidencias de repositorios que actúan como \acrshort{tfg}, existía el riesgo de vulnerar la privacidad de autores y tutores. Para solucionarlo, el módulo de extracción se ha configurado para \textbf{anonimizar intencionalmente} cualquier nombre o dato de contacto recopilado. Además, la información es extraída de forma no invasiva \textbf{exclusivamente desde repositorios públicos} de GitHub, acatando escrupulosamente los Términos de Servicio de su \acrshort{api} para usos académicos.
+    \item \textbf{Licenciamiento del software:} El código desarrollado hace uso de librerías de terceros (tales como \textit{Pandas} o \textit{Streamlit}) amparadas bajo licencias permisivas (BSD o Apache 2.0). Para asegurar la mayor interoperabilidad y evitar bloqueos en usos posteriores por otros investigadores, el código fuente completo de este proyecto será liberado en GitHub bajo la \textbf{Licencia MIT}. Esta licencia, al ser altamente permisiva, garantiza que cualquier usuario pueda modificar y distribuir el código base, requiriendo únicamente preservar el aviso de derechos de autor original, lo que consolida por completo su \textbf{viabilidad legal}.
+\end{itemize}
 

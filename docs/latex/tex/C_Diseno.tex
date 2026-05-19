@@ -31,22 +31,18 @@ A partir de estos criterios, se adoptaron las siguientes decisiones:
     \item \textbf{Estrategia de ejecución multi-entorno (\texttt{MODE=release}, \texttt{MODE=docker}, \texttt{MODE=local}):} Se buscó equilibrar accesibilidad para usuarios no técnicos y flexibilidad para desarrollo. El coste asociado es mantener y documentar correctamente varios flujos de ejecución.
 \end{itemize}
 
-\begin{table}[h]
-    \centering
-    \small
-    \begin{tabular}{p{0.27\textwidth} p{0.34\textwidth} p{0.30\textwidth}}
-        \toprule
-        \textbf{Decisión}           & \textbf{Beneficio principal}           & \textbf{Coste asumido}                       \\
-        \otoprule
-        Arquitectura Hexagonal      & Desacoplamiento y testabilidad         & Mayor complejidad inicial de diseño          \\
-        Parquet como formato común  & Mejor rendimiento y compresión         & Dependencia del ecosistema analítico         \\
-        Pipeline modular por etapas & Reejecución parcial y trazabilidad     & Necesidad de contratos de datos explícitos   \\
-        Multi-entorno de ejecución  & Flexibilidad para usuario y desarrollo & Mayor esfuerzo de documentación y validación \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resumen de decisiones de diseño y sus principales trade-offs.}
-    \label{tabla:tradeoffs_diseno}
-\end{table}
+\tablaSmallSinColores{Resumen de decisiones de diseño y sus principales trade-offs.}
+{p{0.27\textwidth} p{0.34\textwidth} p{0.30\textwidth}}
+{tradeoffs_diseno}
+{
+    \textbf{Decisión}           & \textbf{Beneficio principal}           & \textbf{Coste asumido}                       \\
+}
+{
+    Arquitectura Hexagonal      & Desacoplamiento y testabilidad         & Mayor complejidad inicial de diseño          \\
+    Parquet como formato común  & Mejor rendimiento y compresión         & Dependencia del ecosistema analítico         \\
+    Pipeline modular por etapas & Reejecución parcial y trazabilidad     & Necesidad de contratos de datos explícitos   \\
+    Multi-entorno de ejecución  & Flexibilidad para usuario y desarrollo & Mayor esfuerzo de documentación y validación \\
+}
 
 Estas decisiones se detallan y materializan en las secciones siguientes de
 diseño de datos, diseño arquitectónico y diseño procedimental.
@@ -105,6 +101,7 @@ Para cada algoritmo utilizado (\acrshort{lda}~\cite{blei2003lda}, BERTopic~\cite
         \label{diagramas/diagrama_datos.pdf}
     \end{figure}
 \end{landscape}
+
 \section{Diseño arquitectónico}
 Teniendo en cuenta que el sistema requiere orquestar llamadas a servicios
 externos, rutinas de \acrshort{nlp} pesadas y varias librerías de modelado
@@ -122,7 +119,7 @@ La separación de responsabilidades se ha organizado en los siguientes bloques:
 
 \begin{enumerate}
     \item \textbf{Dominio (\textit{Domain}):} Es el corazón de la aplicación. Aquí se han definido las entidades puras y los \textit{puertos} (interfaces declaradas mediante clases abstractas \texttt{abc.ABC} en Python). Esta capa es agnóstica; no incluye importaciones de librerías externas ni sabe de la existencia de Parquet o GitHub.
-    \item \textbf{Aplicación (\textit{Application}):} Contiene los \textit{casos de uso}. Estos módulos son los responsables de orquestar el flujo de la información utilizando exclusivamente las reglas del dominio. Una regla estricta que se ha aplicado en el desarrollo es la prohibición de realizar operaciones de entrada/salida directas en esta capa.
+    \item \textbf{Aplicación (\textit{Application}):} Contiene los \textit{\acrshortpl{cu}}. Estos módulos son los responsables de orquestar el flujo de la información utilizando exclusivamente las reglas del dominio. Una regla estricta que se ha aplicado en el desarrollo es la prohibición de realizar operaciones de entrada/salida directas en esta capa.
     \item \textbf{Infraestructura (\textit{Infrastructure}):} En esta capa más externa residen los \textit{adaptadores}, que proporcionan las implementaciones reales para los puertos del dominio. Es aquí donde se encapsulan las llamadas a la \acrshort{api} de GitHub, las lecturas del sistema de ficheros y las invocaciones a los modelos específicos como \acrshort{lda}, BERTopic, Top2Vec o FASTopic.
 \end{enumerate}
 
@@ -155,9 +152,4 @@ de temas. A nivel global, el ciclo de vida de la información se divide en un
     \item \textbf{Visualización interactiva (\textit{Frontend}):} El procedimiento final es la exposición de los datos. En lugar de precargar todo en memoria, el procedimiento de visualización utiliza un enfoque de carga diferida. A medida que el usuario navega por la interfaz de Streamlit, el sistema lee bajo demanda las porciones necesarias de los ficheros Parquet y calcula en caliente las gráficas y métricas comparativas que se solicitan en la pantalla.
 \end{enumerate}
 
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=0.9\textwidth, height=0.9\textheight]{diagramas/pipeline_procedimental.png}
-    \caption{Diagrama de Actividad del flujo procedimental del sistema}
-    \label{fig:diagramas/pipeline_procedimental.png}
-\end{figure}
+\imagen{diagramas/pipeline_procedimental.png}{Diagrama de Actividad del flujo procedimental del sistema}
