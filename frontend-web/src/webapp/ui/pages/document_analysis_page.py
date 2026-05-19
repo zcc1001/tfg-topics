@@ -31,7 +31,14 @@ def render_document_analysis(
     )
 
     topic_repository = TopicModelParquetRepository(processing_dir)
-    datasets = topic_repository.available_datasets() or DEFAULT_DATASETS
+    available_models = topic_repository.available_models()
+    datasets = topic_repository.available_datasets()
+
+    if not available_models or not datasets:
+        st.info(_("document.no_data_files"))
+        return
+
+    datasets = datasets or DEFAULT_DATASETS
     section_key = (selected_section or "default").lower().replace(" ", "_")
 
     dataset = persistent_selectbox(
@@ -84,13 +91,18 @@ def render_document_analysis(
             metadata_repo=MetadataParquetRepository(ingestion_dir),
         )
 
-        st.session_state["document_analysis_results"] = use_case.execute(
-            dataset=dataset,
-            model_name=model,
-            tutor=tutor_input if tutor_input else None,
-            year=year if year else None,
-            grade_range=grade_range,
-        )
+        try:
+            st.session_state["document_analysis_results"] = use_case.execute(
+                dataset=dataset,
+                model_name=model,
+                tutor=tutor_input if tutor_input else None,
+                year=year if year else None,
+                grade_range=grade_range,
+            )
+        except ValueError:
+            st.session_state.pop("document_analysis_results", None)
+            st.info(_("document.no_data_for_filters"))
+            return
         st.session_state["document_analysis_dataset"] = dataset
 
     if "document_analysis_results" not in st.session_state:

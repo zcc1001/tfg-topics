@@ -62,6 +62,8 @@
     "year": "Año de presentación",
     "grade_range": "Rango de nota",
     "press_analyze": "Pulsa `Analizar` para cargar resultados del dataset seleccionado.",
+    "no_data_files": "No hay ficheros de datos disponibles para el análisis de documentos.",
+    "no_data_for_filters": "No hay datos disponibles para los filtros seleccionados o faltan ficheros requeridos.",
     "no_docs": "No se encontraron documentos con los filtros seleccionados.",
     "summary": "Resumen general",
     "freq_topics": "Temas más frecuentes",

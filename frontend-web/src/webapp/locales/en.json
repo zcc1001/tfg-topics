@@ -62,6 +62,8 @@
     "year": "Presentation year",
     "grade_range": "Grade range",
     "press_analyze": "Press `Analyze` to load results for the selected dataset.",
+    "no_data_files": "There are no data files available for document analysis.",
+    "no_data_for_filters": "No data is available for the selected filters or required files are missing.",
     "no_docs": "No documents found with the selected filters.",
     "summary": "General Overview",
     "freq_topics": "Most Frequent Topics",
