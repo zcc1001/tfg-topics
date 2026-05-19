@@ -25,8 +25,8 @@ class GithubRestAdapter(GitHubPort):
         "tex/2_Objetivos_del_proyecto.tex",
         "tex/3_Conceptos_teoricos.tex",
         "tex/4_Tecnicas_y_herramientas.tex",
-        "tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto.tex"
-        "tex/6_Trabajos_relacionados.tex"
+        "tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto.tex",
+        "tex/6_Trabajos_relacionados.tex",
         "tex/7_Conclusiones_Lineas_de_trabajo_futuras.tex",
     ]
     MEMORIA_SUFFIX = "memoria.tex"

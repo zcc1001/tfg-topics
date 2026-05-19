@@ -13,6 +13,7 @@ from ingestion.domain.entities.entities import (
     ReadmeData,
     TextData,
     ThesisData,
+    ThesisInfo,
 )
 from ingestion.infrastructure.adapter.ingestion_parquet_storage import (
     IngestionParquetStorage,
@@ -188,3 +189,60 @@ def test_save_empty_lists(tmp_path: Path) -> None:
     assert not os.path.exists(storage.readmes_path)
     assert not os.path.exists(storage.thesis_path)
     assert not os.path.exists(storage.abstracts_path)
+
+
+def test_save_thesis_metadata(tmp_path: Path) -> None:
+    storage = IngestionParquetStorage(base_dir=str(tmp_path))
+    data = [
+        ThesisInfo(
+            thesis_id=1,
+            title="t",
+            tutor="tu",
+            student="s",
+            presentation_date="15/06/2023",
+            assignment_date="",
+            grade="9,5",
+            repository_url="u",
+            repo_owner="o",
+            repo_name="r",
+        ),
+        ThesisInfo(
+            thesis_id=2,
+            title="t2",
+            tutor="tu2",
+            student="s2",
+            presentation_date="invalid",
+            assignment_date="",
+            grade="not a float",
+            repository_url="u2",
+            repo_owner="o2",
+            repo_name="r2",
+        ),
+    ]
+    storage.save_thesis_metadata(data)
+    assert os.path.exists(storage.thesis_metadata_path)
+    df = pd.read_parquet(storage.thesis_metadata_path)
+    assert len(df) == 2
+    assert df.iloc[0]["year"] == 2023
+    assert df.iloc[0]["grade"] == 9.5
+    assert pd.isna(df.iloc[1]["year"])
+    assert pd.isna(df.iloc[1]["grade"])
+
+
+def test_save_thesis_metadata_empty(tmp_path: Path) -> None:
+    storage = IngestionParquetStorage(base_dir=str(tmp_path))
+    storage.save_thesis_metadata([])
+    assert not os.path.exists(storage.thesis_metadata_path)
+
+
+def test_validate_schema_mismatch() -> None:
+    df1 = pd.DataFrame({"A": [1]})
+    df2 = pd.DataFrame({"B": [2]})
+    with pytest.raises(ValueError, match="Schema mismatch"):
+        IngestionParquetStorage._validate_schema(df1, df2, "test")
+
+
+def test_validate_schema_success() -> None:
+    df1 = pd.DataFrame({"A": [1]})
+    df2 = pd.DataFrame({"A": [2]})
+    IngestionParquetStorage._validate_schema(df1, df2, "test")

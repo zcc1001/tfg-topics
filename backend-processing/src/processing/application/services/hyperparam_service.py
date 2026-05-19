@@ -64,7 +64,7 @@ class HyperparameterSearchService:
                 score = model_wrapper.train_and_evaluate(texts=texts, params=params)
             except Exception as exc:
                 logger.warning("Trial %s failed.", trial.number, exc_info=True)
-                logger.error(exc)
+                logger.exception(exc)
                 raise optuna.TrialPruned()
 
             logger.debug("Trial %s - score: %s", trial.number, score)

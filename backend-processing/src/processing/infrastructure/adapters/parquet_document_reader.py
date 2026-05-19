@@ -136,7 +136,7 @@ class ParquetDocumentRepository(DocumentRepository):
     def _decode_base64(self, value: str) -> Optional[str]:
         try:
             return base64.b64decode(value).decode("utf-8")
-        except (ValueError, UnicodeDecodeError) as exc:
+        except ValueError as exc:
             logger.warning("Skipping document due to decode error: %s", exc)
             return None
 

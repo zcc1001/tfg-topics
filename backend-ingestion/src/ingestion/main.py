@@ -150,7 +150,7 @@ def main() -> None:
         logger.info("Persisting thesis metadata")
         ingestor.ingest_thesis_metadata()
     except Exception as exc:
-        logger.error("A critical error occurred:%s", exc, exc_info=True)
+        logger.exception("A critical error occurred:%s", exc)
         raise
 
 
