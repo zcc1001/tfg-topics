@@ -1,14 +1,16 @@
-# TFG: Qualitative Thematic Analysis of Final Degree Projects
+# 🎓 TFG Qualitative Thematic Analysis
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub issues](https://img.shields.io/github/issues-closed/zcc1001/tfg-topics)](https://github.com/zcc1001/tfg-topics/issues)
 [![Wiki](https://img.shields.io/badge/wiki-available-brightgreen)](https://github.com/zcc1001/tfg-topics/wiki)
 [![GitHub Release](https://img.shields.io/github/v/release/zcc1001/tfg-topics?label=Release)](https://github.com/zcc1001/tfg-topics/releases)
 [![Zube](https://img.shields.io/badge/zube-managed-blue?logo=zube)](https://zube.io/)
-[![CI](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml/badge.svg)](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml)
+[![CI Workflow](https://github.com/zcc1001/tfg-topics/actions/workflows/ci.yml/badge.svg)](https://github.com/zcc1001/tfg-topics/actions)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=zcc1001_tfg-topics&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=zcc1001_tfg-topics)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=zcc1001_tfg-topics&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=zcc1001_tfg-topics)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=zcc1001_tfg-topics&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=zcc1001_tfg-topics)
+[![Docker Support](https://img.shields.io/badge/docker-supported-blue.svg)](https://www.docker.com/)
+[![SonarCloud Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=zcc1001_tfg-topics&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=zcc1001_tfg-topics)
 
 ## 📜 Description
 
@@ -22,175 +24,175 @@ The datasets are generated from the textual information of TFG reports available
 - **Text Preprocessing**: Cleans and prepares the text for analysis.
 - **Topic Modeling**: Implements multiple algorithms to identify underlying themes.
 - **Hyperparameter Optimization**: Automatically finds the best parameters for each model.
-- **API & Web Interface**: Exposes the results through a simple web interface.
+- **Web Interface**: Exposes the results through a simple web interface.
 
 ## 🤖 Algorithms
 
-The project explores and compares several state-of-the-art topic modeling techniques:
+The project explores and compares several topic modeling techniques:
 
 - [**LDA (Latent Dirichlet Allocation)**](https://github.com/lda-project/lda): A classic probabilistic approach for topic modeling.
 - [**Top2Vec**](https://github.com/ddangelov/Top2Vec): Leverages joint word and document embeddings to find topics.
 - [**BERTopic**](https://github.com/MaartenGr/BERTopic): Uses BERT embeddings and a class-based TF-IDF to create dense clusters.
 - [**FASTopic**](https://github.com/bobxwu/FASTopic): A modern and efficient topic modeling approach.
 
-## 📂 Project Structure
+## 🏗️ Core Architecture & Module Breakdown
 
-The project is organized into several key directories:
+The codebase is strictly structured around **Hexagonal Architecture** (Ports and Adapters) using a unified `src/` layout. This decouples core domain business rules from external libraries, database engines, web frameworks, and file I/O operations.
 
-- **`/backend-ingestion`**: Contains the logic for data collection from GitHub.
-- **`/backend-processing`**: Includes scripts for text preprocessing, topic modeling, and hyperparameter tuning.
-- **`/frontend-web`**: A simple web interface to display the results.
-- **`/data`**: Stores the raw and processed data.
-- **`/prototypes`**: Jupyter notebooks for experimentation and prototyping.
-- **`/docs`**: Project documentation.
+```mermaid
+flowchart TD
+    subgraph Ingestion_Module ["backend-ingestion"]
+        CSV["tfg_list.csv"] -->|Reads repo list| GH["GitHub API Adapter"]
+        GH -->|Fetches raw reports / issues| PI["Parquet Ingestion Writer"]
+    end
 
-## ⚙️ Installation
+    subgraph Data_Storage ["/data"]
+        DI["/data/ingestion/"]
+        DPDir["/data/processing/"]
+    end
+
+    subgraph Processing_Module ["backend-processing"]
+        PR["Parquet Reader Adapter"] -->|LaTeX Sanitization| LP["LatexTextProcessor"]
+        LP -->|Auto-tuning| OP["Optuna Hyperparams"]
+        OP -->|Trains models| TM["LDA / BERTopic / Top2Vec / FASTopic"]
+        TM -->|Serializes results| DP["Parquet Processing Writer"]
+    end
+
+    subgraph Frontend_Module ["frontend-web"]
+        SL["Streamlit App"]
+    end
+
+    PI -->|Writes Apache Parquet| DI
+    DI -->|Reads raw datasets| PR
+    DP -->|Writes Apache Parquet| DPDir
+    DPDir -->|Reads analytical results| SL
+    DI -->|Reads metadata| SL
+```
+
+### 📂 Directory Structure
+
+*   **`/backend-ingestion`**: Collects final degree project files (READMEs, raw latex code, issue logs, and abstracts) from GitHub. Outputs standardized `.parquet` datasets to `/data/ingestion/`.
+*   **`/backend-processing`**: Core NLP cleaning, automated Optuna hyperparameter optimization. Outputs result tables to `/data/processing/`.
+*   **`/frontend-web`**: Streamlit-based web dashboard. Displays topic clouds, intertopic coordinates, document-topic assignments, model comparisons, and specialized academic analysis filtered by tutor, year, and grades.
+*   **`/data`**: Central repository for all intermediate Parquet datasets (ignored by Git, managed dynamically by running pipelines).
+*   **`/prototypes`**: Jupyter notebooks detailing prototyping steps, experimental tests, and exploratory analysis.
+*   **`/docs`**: General project documentation.
+
+---
+
+## ⚙️ Installation & Development Environment
 
 ### Prerequisites
+For standard execution, only **Git** and **Docker** are required.
+To set up a local development environment, **Conda** and **Python 3.10** are required.
 
-For standard usage:
-- **Git**
-- **Docker** (Docker Desktop on Windows/Mac, or Docker Engine on Linux)
-
-For local development (optional):
-- Conda
-- Python 3.10
-
-### Quick Start
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/zcc1001/tfg-topics
-   cd tfg-topics
-   ```
-
-2. **You are ready!** Proceed to the Makefile Usage section below. You do not need to install Python dependencies if you use the default Docker execution mode.
-
-### 🚀 Try it without code (Frontend Only)
-
-If you only want to visualize results and don't want to clone the repository, you can use the sample data from the latest release:
-
-1. Create an empty folder anywhere on your computer.
-2. Download `example-data.zip` and `docker-compose.release.yml` from the [Releases page](https://github.com/zcc1001/tfg-topics/releases).
-3. Extract `example-data.zip` into your folder (this should create a `data/` folder next to the `docker-compose.release.yml` file).
-4. Open your terminal in that folder and run:
-
-   ```bash
-   docker compose -f docker-compose.release.yml --profile frontend run --rm --service-ports frontend
-   ```
-
-5. Open `http://localhost:8501` in your browser.
-
-## 🛠️ Makefile Usage
-
-The repository includes a `Makefile` to run ingestion, processing, the frontend, and
-the Docker workflow with consistent commands.
-
-To list the available targets and examples:
+### A. Quick Start using Docker (No Python Environment Needed)
+By default, the project is configured to run in `release` mode, which pulls pre-built Docker containers from the GitHub Container Registry. You can run the entire pipeline with a single command:
 
 ```bash
-make help
+# 1. Clone the repository
+git clone https://github.com/zcc1001/tfg-topics
+cd tfg-topics
+
+# 2. Ingest, process, and start the Streamlit web dashboard in one go!
+make pipeline
 ```
 
-### Execution Options (The Simple Way)
+---
 
-The default execution `MODE` is `release`, which means **Docker will automatically download pre-built images from GitHub Container Registry**. You do not need to install Python or any dependencies locally to use these commands—just Docker!
+### B. Standard Local Development Setup
+Follow these steps to configure a local Python environment for codebase modifications:
 
-- **Start the web application**:
-  ```bash
-  make start
-  ```
-
-- **Run full data ingestion**:
-  ```bash
-  make ingest-all
-  ```
-
-- **Run full processing** (all models and datasets):
-  ```bash
-  make process-all
-  ```
-
-- **Run the entire pipeline sequentially** (ingestion, processing, and frontend):
-  ```bash
-  make pipeline
-  ```
-
-- **Update to the latest Docker images** (recommended before running pipeline/start):
-  ```bash
-  make pull
-  ```
-
-### Advanced Usage & Variables
-
-If you need fine-grained control over which models or datasets to run, or if you want to run the code locally without Docker, the `Makefile` exposes several variables:
-
-- `MODE`: `release` (default, pre-built Docker), `docker` (local Docker build), `local` (pure Python environment).
-- `INGEST`: Which data to ingest (`all`, `issues`, `readmes`, `thesis`, `abstracts`).
-- `MODELS`: Space-separated list of models (e.g., `"lda bertopic top2vec fastopic"`).
-- `DATASETS`: Space-separated list of datasets (e.g., `"readmes issues thesis abstracts"`).
-
-**Example of advanced processing** (running only LDA and BERTopic on thesis data using a local Python environment):
-
-```bash
-make processing MODELS="lda bertopic" DATASETS="thesis" MODE=local
-```
-
-Alternatively, you can just download the `docker-compose.release.yml` file, place it in an empty directory, create a `data/` folder, and run:
-```bash
-docker compose -f docker-compose.release.yml --profile frontend run --rm --service-ports frontend
-```
-
-### Docker Lifecycle
-
-Use these targets to build and manage the full containerized environment when using `MODE=docker`:
-
-```bash
-make docker-build
-make docker-build-ingestion
-make docker-build-processing
-make docker-build-frontend
-```
-
-## 👨‍💻 Contributing & Local Development
-
-If you intend to modify the source code, you may want to set up a pure Python local environment instead of relying solely on Docker.
-
-### Local Development Setup
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/zcc1001/tfg-topics
-   cd tfg-topics
-   ```
-
-2. **Create and activate the Conda environment:**
-
+1. **Activate the Conda Environment**:
    ```shell
+   # From the project root directory
    conda env create -f environment.yml
    conda activate tfg-topics
    ```
 
-3. **Install development tools:**
-
+2. **Install Development & QA Tools**:
    ```shell
    pip install black isort flake8 mypy pre-commit
    pre-commit install
    ```
 
-4. **Install project dependencies (per module):**
-
+3. **Install Dependencies per Module**:
    ```shell
+   # 1. Ingestion requirements
    pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
+
+   # 2. Processing requirements
    pip install -r backend-processing/requirements.txt -r backend-processing/requirements-dev.txt
+
+   # 3. Frontend Web requirements
    pip install -r frontend-web/requirement.txt
    ```
 
-### GitHub Codespaces Setup
+---
 
-This repository includes a devcontainer config at `.devcontainer/devcontainer.json`.
-When opened in Codespaces it provisions Python 3.10, development tools, configures
-`PYTHONPATH` for the `src/` modules, and installs the dependencies for ingestion,
-processing, and frontend automatically during `postCreateCommand`.
+### C. GitHub Codespaces
+The project includes a comprehensive `.devcontainer` configuration. When launching a Codespace, it automatically provisions a Python 3.10 environment, configures the `PYTHONPATH` for all modular projects, and installs all module requirements and developer tools out-of-the-box.
+
+---
+
+## 🛠️ Unified Makefile Commands
+
+The root directory contains a `Makefile` that acts as the single developer control center. It supports three execution modes specified via `MODE`:
+*   `MODE=release` (Default): Uses lightweight, pre-built Docker images.
+*   `MODE=docker`: Builds and executes Docker containers from local source code.
+*   `MODE=local`: Executes scripts using your active local Python env.
+
+### Makefile Targets Grid
+
+| Target Command | Execution Mode | Scope & Purpose | Customization Example |
+| :--- | :--- | :--- | :--- |
+| `make help` | Standard | Lists all Makefile targets, options, and descriptions. | `make help` |
+| `make start` | Release / Docker / Local | Launches the Streamlit dashboard on port `8501`. | `make start MODE=local` |
+| `make ingest-all` | Release / Docker / Local | Ingests all project categories from the CSV list. | `make ingest-all MODE=local` |
+| `make process-all` | Release / Docker / Local | Trains and saves all combinations of 4 models and 4 datasets. | `make process-all MODE=docker` |
+| `make pipeline` | Release / Docker / Local | Runs `ingest-all`, `process-all`, and `start` sequentially. | `make pipeline MODE=local` |
+| `make pull` | Release | Pulls the latest pre-built container images from registry. | `make pull` |
+| `make docker-build` | Docker | Rebuilds all local Docker container images. | `make docker-build` |
+
+### Environment Customization Variables
+*   `INGEST`: Choose specific ingestion target (`all`, `issues`, `readmes`, `thesis`, `abstracts`).
+*   `MODELS`: Space-separated list of model algorithms (`lda`, `bertopic`, `top2vec`, `fastopic`).
+*   `DATASETS`: Space-separated list of datasets to process (`readmes`, `issues`, `thesis`, `abstracts`).
+
+**Example of Custom Local Processing Run**:
+```bash
+make processing MODELS="lda bertopic" DATASETS="thesis readmes" MODE=local
+```
+
+---
+
+## 📄 Seed List Input Schema (`tfg_list.csv`)
+
+The ingestion pipeline retrieves repositories listed in a CSV index file. By default, it expects a file named `tfg_list.csv` inside your designated `[DATA_DIR]/ingestion/` directory (or defined via `REPOS_CSV_FILE_NAME`). 
+
+This seed file **must contain all 7 headers** in its first line (in any order). Rows only require `repository_url` to have a valid value; other metadata blocks can remain empty:
+
+| Column | Value Required | Description |
+| :--- | :--- | :--- |
+| `title` | No | Academic title of the final degree project. |
+| `tutors` | No | Supervisor or tutors of the project (supports multiple names). |
+| `students` | No | Authoring student(s). |
+| `assignment_date` | No | Date when the project was assigned (Format: `DD/MM/YYYY`). |
+| `presentation_date` | No | Date when the project was defended (Format: `DD/MM/YYYY`). |
+| `grade` | No | Grade score obtained (supports dot/comma decimal separators). |
+| `repository_url` | **Yes** | GitHub project URL (SSH or HTTPS format). |
+
+---
+
+## 🚀 Running Frontend Directly from Release Assets
+
+If you only want to visualize results without running ingestion/processing pipelines or installing code:
+
+1. Create a new directory on your local machine.
+2. Download both `example-data.zip` and `docker-compose.release.yml` from the [Latest Releases Page](https://github.com/zcc1001/tfg-topics/releases).
+3. Unzip `example-data.zip` inside the directory (it will generate a `data/` folder).
+4. Run:
+   ```bash
+   docker compose -f docker-compose.release.yml --profile frontend run --rm --service-ports frontend
+   ```
+5. Navigate to `http://localhost:8501` to explore topic allocations, PCA intertopic representations, and coherence statistics.
