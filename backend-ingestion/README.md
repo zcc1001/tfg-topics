@@ -1,6 +1,6 @@
 # Ingestion Module
 
-This module is responsible for extracting textual data and academic metadata from GitHub repositories that are part of the Final Degree Project (TFG) dataset. 
+This module is responsible for extracting textual data and academic metadata from GitHub repositories that are part of the Final Degree Project (TFG) dataset.
 
 Its main purpose is to collect, normalize, and persist documents that will be processed later by the `processing` module. This module strictly follows a **Hexagonal (Ports and Adapters) Architecture** in Python 3.10, ensuring a clear separation between core domain logic and external infrastructure concerns.
 
@@ -50,7 +50,7 @@ src/ingestion/
 
 ### 1. Input: Repository List (`tfg_list.csv`)
 
-The pipeline requires a repository list in CSV format (by default `tfg_list.csv` in the data directory). 
+The pipeline requires a repository list in CSV format (by default `tfg_list.csv` in the data directory).
 
 > [!IMPORTANT]
 > **Header Requirement**: The CSV file **must contain all 7 headers** in its first line (in any order, though the default order is shown below). If any header is missing, the Pandas parser will raise an `AttributeError` and fail.
@@ -70,6 +70,7 @@ The 7 columns in the exact order of the default `tfg_list.csv` file:
 | `repository_url` | String | **Yes** | GitHub URL used to infer `repo_owner/repo_name` (supports HTTPS and SSH formats). |
 
 #### Minimal Input Example (With All Required Headers)
+
 ```csv
 title,tutors,students,assignment_date,presentation_date,grade,repository_url
 ,,,01/01/2025,15/07/2025,9.5,https://github.com/owner-one/tfg-project-a
@@ -98,6 +99,7 @@ data/ingestion/
 The following sections define the exact schemas of the generated Parquet files (serialized directly from core domain entities):
 
 #### A. Issues Dataset (`issues.parquet`)
+
 Each row corresponds to a single GitHub issue. Pull requests are automatically filtered out.
 
 | Column | Type | Description |
@@ -111,6 +113,7 @@ Each row corresponds to a single GitHub issue. Pull requests are automatically f
 | `retrieved_at` | Timestamp | Timestamp when the data was extracted (UTC) |
 
 #### B. README Dataset (`readmes.parquet`)
+
 Each row corresponds to a repository's default branch README file. Preserves markdown syntax.
 
 | Column | Type | Description |
@@ -121,6 +124,7 @@ Each row corresponds to a repository's default branch README file. Preserves mar
 | `retrieved_at` | Timestamp | Timestamp when the README was extracted (UTC) |
 
 #### C. Thesis Dataset (`thesis.parquet`)
+
 Each row corresponds to a project's technical report sections. The module downloads and extracts specific LaTeX files in the repository (e.g., `tex/1_Introduccion.tex` to `tex/7_Conclusiones_Lineas_de_trabajo_futuras.tex`).
 
 | Column | Type | Description |
@@ -130,6 +134,7 @@ Each row corresponds to a project's technical report sections. The module downlo
 | `retrieved_at` | Timestamp | Timestamp when the LaTeX files were extracted (UTC) |
 
 #### D. Abstracts Dataset (`abstracts.parquet`)
+
 Each row corresponds to the extracted academic abstract from `memoria.tex`. The parser automatically identifies LaTeX abstract blocks and filters out keyword lists.
 
 | Column | Type | Description |
@@ -142,14 +147,15 @@ Each row corresponds to the extracted academic abstract from `memoria.tex`. The 
 | `retrieved_at` | Timestamp | Timestamp when the abstract was extracted (UTC) |
 
 #### E. Thesis Metadata Dataset (`metadata.parquet`)
+
 This dataset maps and persists academic metadata for downstream processing, automatically converting grades to floats and dates to defense years.
 
 | Column | Type | Description |
 | :--- | :--- | :--- |
 | `thesis_id` | Int64 | Unique project identifier |
 | `title` | String | TFG title |
-| `tutor` | String | Supervisor or tutors of the project |
-| `student` | String | Student author |
+| `tutor` | String | Supervisor or tutors of the project anonymized |
+| `student` | String | Student names anonymized. |
 | `year` | Int64 (Nullable) | Defense year extracted from `presentation_date` |
 | `grade` | Float64 (Nullable) | Numeric grade (normalized to use decimal dot) |
 | `repository_url` | String | Full GitHub repository URL |
@@ -172,6 +178,7 @@ You can configure the pipeline's behavior using the following environment variab
 
 1. **Option A: `.env` file**  
    Create a `.env` file directly under the `/backend-ingestion` directory:
+
    ```env
    GITHUB_TOKEN="ghp_yourPersonalAccessTokenHere"
    DATA_DIR="./data"
@@ -180,6 +187,7 @@ You can configure the pipeline's behavior using the following environment variab
 
 2. **Option B: Shell Export**  
    Export the variables in your terminal before launching the pipeline:
+
    ```bash
    export GITHUB_TOKEN=ghp_yourPersonalAccessTokenHere
    export DATA_DIR=/path/to/my/data
@@ -197,18 +205,25 @@ You can configure the pipeline's behavior using the following environment variab
 From the project **root** directory (`/`), you can seamlessly orchestrate local or containerized execution:
 
 * **Local Python execution (all targets)**:
+
   ```bash
   make ingestion MODE=local
   ```
+
 * **Local Python execution (specific targets)**:
+
   ```bash
   make ingestion MODE=local INGEST="issues readmes"
   ```
+
 * **Production/Pre-built Docker execution (recommended)**:
+
   ```bash
   make ingestion MODE=release INGEST="all"
   ```
+
 * **Local Docker Build & execution**:
+
   ```bash
   make ingestion MODE=docker INGEST="all"
   ```
@@ -220,6 +235,7 @@ From the project **root** directory (`/`), you can seamlessly orchestrate local 
 If you prefer to run it manually from this directory (`/backend-ingestion`):
 
 1. **Set up the virtual environment and activate it**:
+
    ```bash
    python -m venv .venv
    
@@ -231,11 +247,13 @@ If you prefer to run it manually from this directory (`/backend-ingestion`):
    ```
 
 2. **Install dependencies**:
+
    ```bash
    pip install -r requirements.txt -r requirements-dev.txt
    ```
 
 3. **Run the entrypoint script**:
+
    ```bash
    # Run all ingestion pipelines
    python src/ingestion/main.py

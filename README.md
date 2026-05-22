@@ -35,16 +35,19 @@ The project explores and compares several topic modeling techniques:
 - [**BERTopic**](https://github.com/MaartenGr/BERTopic): Uses BERT embeddings and a class-based TF-IDF to create dense clusters.
 - [**FASTopic**](https://github.com/bobxwu/FASTopic): A modern and efficient topic modeling approach.
 
-## 🏗️ Core Architecture & Module Breakdown
+## 🏗️ Core Architecture & Data Pipeline Flow
 
-The codebase is strictly structured around **Hexagonal Architecture** (Ports and Adapters) using a unified `src/` layout. This decouples core domain business rules from external libraries, database engines, web frameworks, and file I/O operations.
+To guarantee long-term maintainability, testability, and a strict separation of concerns, this system is built entirely on the principles of **Hexagonal Architecture** (also known as *Ports & Adapters*) using a clean `src/` layout. This design decouples core domain logic (such as text preprocessing and topic model fitting) from external technologies, frameworks, APIs, and file systems.
+
+The high-level conceptual flow of the pipeline is structured into five cohesive, decoupled layers:
+
+1. **🌐 External Data Sources**: Represents the seed indexes (project list) and the remote GitHub repositories housing raw academic LaTeX reports, READMEs, and issue logs.
+2. **📥 Ingestion Layer**: Automates raw data retrieval by querying the GitHub API and extracting repository contents.
+3. **🗄️ Persistence Layer**: Serves as the central storage engine, persisting both raw ingested texts and final trained models/analytical metrics.
+4. **🧠 Processing Layer**: The core analytical engine where the text is sanitized, topic models are trained.
+5. **💻 Presentation Layer**: A dynamic, web-based Streamlit dashboard that pulls from the persistence layer to visualize topics.
 
 ```mermaid
----
-config:
-  theme: 'neutral'
-displayMode: compact
----
 flowchart TD
 
     Index["📄 Seed Repo List<br/>"]
