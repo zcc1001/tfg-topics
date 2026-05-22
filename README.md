@@ -40,53 +40,72 @@ The project explores and compares several topic modeling techniques:
 The codebase is strictly structured around **Hexagonal Architecture** (Ports and Adapters) using a unified `src/` layout. This decouples core domain business rules from external libraries, database engines, web frameworks, and file I/O operations.
 
 ```mermaid
+---
+config:
+  theme: 'neutral'
+displayMode: compact
+---
 flowchart TD
-    subgraph Ingestion_Module ["backend-ingestion"]
-        CSV["tfg_list.csv"] -->|Reads repo list| GH["GitHub API Adapter"]
-        GH -->|Fetches raw reports / issues| PI["Parquet Ingestion Writer"]
+
+    Index["📄 Seed Repo List<br/>"]
+
+    subgraph Sources ["🌐 External Data Sources"]
+        GitHub["💻 GitHub Repositories<br/>(LaTeX Texts, READMEs, Issues)"]
     end
 
-    subgraph Data_Storage ["/data"]
-        DI["/data/ingestion/"]
-        DPDir["/data/processing/"]
+    subgraph Ingestion ["📥 Ingestion Layer"]
+        Extractor["⚙️ Content Extractor<br/>(API Reader & Downloader)"]
     end
 
-    subgraph Processing_Module ["backend-processing"]
-        PR["Parquet Reader Adapter"] -->|LaTeX Sanitization| LP["LatexTextProcessor"]
-        LP -->|Auto-tuning| OP["Optuna Hyperparams"]
-        OP -->|Trains models| TM["LDA / BERTopic / Top2Vec / FASTopic"]
-        TM -->|Serializes results| DP["Parquet Processing Writer"]
+    subgraph Persistence ["🗄️ Persistence Layer"]
+        RawDB[("📁 Raw Datasets<br/>(Ingested Texts & Metadata)")]
+        ProcessedDB[("📊 Processed Models & Metrics<br/>(Analytical Results)")]
     end
 
-    subgraph Frontend_Module ["frontend-web"]
-        SL["Streamlit App"]
+    subgraph Processing ["🧠 Processing Layer"]
+        Cleaning["📝 Text Preprocessing<br/>(LaTeX & Academic Sanitization)"]
+        Tuning["🧪 Hyperparameter Tuning<br/>(Coherence Optimization)"]
+        Modeling["🤖 Model Fitting<br/>(Topic Classification)"]
     end
 
-    PI -->|Writes Apache Parquet| DI
-    DI -->|Reads raw datasets| PR
-    DP -->|Writes Apache Parquet| DPDir
-    DPDir -->|Reads analytical results| SL
-    DI -->|Reads metadata| SL
+    subgraph Presentation ["💻 Presentation Layer"]
+        Dashboard["🎨 Dashboard<br/>(Visualization & Search)"]
+    end
+
+    %% Flow connections
+    Index -->|Defines targets| Extractor
+    GitHub -->|Provides reports & logs| Extractor
+    Extractor -->|Persists raw files| RawDB
+
+    RawDB -->|Provides raw corpus| Cleaning
+    Cleaning --> Tuning
+    Tuning --> Modeling
+    Modeling -->|Saves models & metrics| ProcessedDB
+
+    ProcessedDB -->|Feeds visualizations| Dashboard
+    RawDB -->|Provides metadata| Dashboard
 ```
 
 ### 📂 Directory Structure
 
-*   **`/backend-ingestion`**: Collects final degree project files (READMEs, raw latex code, issue logs, and abstracts) from GitHub. Outputs standardized `.parquet` datasets to `/data/ingestion/`.
-*   **`/backend-processing`**: Core NLP cleaning, automated Optuna hyperparameter optimization. Outputs result tables to `/data/processing/`.
-*   **`/frontend-web`**: Streamlit-based web dashboard. Displays topic clouds, intertopic coordinates, document-topic assignments, model comparisons, and specialized academic analysis filtered by tutor, year, and grades.
-*   **`/data`**: Central repository for all intermediate Parquet datasets (ignored by Git, managed dynamically by running pipelines).
-*   **`/prototypes`**: Jupyter notebooks detailing prototyping steps, experimental tests, and exploratory analysis.
-*   **`/docs`**: General project documentation.
+- **`/backend-ingestion`**: Collects final degree project files (READMEs, raw latex code, issue logs, and abstracts) from GitHub. Outputs standardized `.parquet` datasets to `/data/ingestion/`.
+- **`/backend-processing`**: Core NLP cleaning, automated Optuna hyperparameter optimization. Outputs result tables to `/data/processing/`.
+- **`/frontend-web`**: Streamlit-based web dashboard. Displays topic clouds, intertopic coordinates, document-topic assignments, model comparisons, and specialized academic analysis filtered by tutor, year, and grades.
+- **`/data`**: Central repository for all intermediate Parquet datasets (ignored by Git, managed dynamically by running pipelines).
+- **`/prototypes`**: Jupyter notebooks detailing prototyping steps, experimental tests, and exploratory analysis.
+- **`/docs`**: General project documentation.
 
 ---
 
 ## ⚙️ Installation & Development Environment
 
 ### Prerequisites
+
 For standard execution, only **Git** and **Docker** are required.
 To set up a local development environment, **Conda** and **Python 3.10** are required.
 
 ### A. Quick Start using Docker (No Python Environment Needed)
+
 By default, the project is configured to run in `release` mode, which pulls pre-built Docker containers from the GitHub Container Registry. You can run the entire pipeline with a single command:
 
 ```bash
@@ -101,9 +120,11 @@ make pipeline
 ---
 
 ### B. Standard Local Development Setup
+
 Follow these steps to configure a local Python environment for codebase modifications:
 
 1. **Activate the Conda Environment**:
+
    ```shell
    # From the project root directory
    conda env create -f environment.yml
@@ -111,12 +132,14 @@ Follow these steps to configure a local Python environment for codebase modifica
    ```
 
 2. **Install Development & QA Tools**:
+
    ```shell
    pip install black isort flake8 mypy pre-commit
    pre-commit install
    ```
 
 3. **Install Dependencies per Module**:
+
    ```shell
    # 1. Ingestion requirements
    pip install -r backend-ingestion/requirements.txt -r backend-ingestion/requirements-dev.txt
@@ -131,6 +154,7 @@ Follow these steps to configure a local Python environment for codebase modifica
 ---
 
 ### C. GitHub Codespaces
+
 The project includes a comprehensive `.devcontainer` configuration. When launching a Codespace, it automatically provisions a Python 3.10 environment, configures the `PYTHONPATH` for all modular projects, and installs all module requirements and developer tools out-of-the-box.
 
 ---
@@ -138,9 +162,10 @@ The project includes a comprehensive `.devcontainer` configuration. When launchi
 ## 🛠️ Unified Makefile Commands
 
 The root directory contains a `Makefile` that acts as the single developer control center. It supports three execution modes specified via `MODE`:
-*   `MODE=release` (Default): Uses lightweight, pre-built Docker images.
-*   `MODE=docker`: Builds and executes Docker containers from local source code.
-*   `MODE=local`: Executes scripts using your active local Python env.
+
+- `MODE=release` (Default): Uses lightweight, pre-built Docker images.
+- `MODE=docker`: Builds and executes Docker containers from local source code.
+- `MODE=local`: Executes scripts using your active local Python env.
 
 ### Makefile Targets Grid
 
@@ -155,11 +180,14 @@ The root directory contains a `Makefile` that acts as the single developer contr
 | `make docker-build` | Docker | Rebuilds all local Docker container images. | `make docker-build` |
 
 ### Environment Customization Variables
-*   `INGEST`: Choose specific ingestion target (`all`, `issues`, `readmes`, `thesis`, `abstracts`).
-*   `MODELS`: Space-separated list of model algorithms (`lda`, `bertopic`, `top2vec`, `fastopic`).
-*   `DATASETS`: Space-separated list of datasets to process (`readmes`, `issues`, `thesis`, `abstracts`).
+
+- `INGEST`: Choose specific ingestion target (`all`, `issues`, `readmes`, `thesis`, `abstracts`).
+
+- `MODELS`: Space-separated list of model algorithms (`lda`, `bertopic`, `top2vec`, `fastopic`).
+- `DATASETS`: Space-separated list of datasets to process (`readmes`, `issues`, `thesis`, `abstracts`).
 
 **Example of Custom Local Processing Run**:
+
 ```bash
 make processing MODELS="lda bertopic" DATASETS="thesis readmes" MODE=local
 ```
@@ -168,15 +196,15 @@ make processing MODELS="lda bertopic" DATASETS="thesis readmes" MODE=local
 
 ## 📄 Seed List Input Schema (`tfg_list.csv`)
 
-The ingestion pipeline retrieves repositories listed in a CSV index file. By default, it expects a file named `tfg_list.csv` inside your designated `[DATA_DIR]/ingestion/` directory (or defined via `REPOS_CSV_FILE_NAME`). 
+The ingestion pipeline retrieves repositories listed in a CSV index file. By default, it expects a file named `tfg_list.csv` inside your designated `[DATA_DIR]/ingestion/` directory (or defined via `REPOS_CSV_FILE_NAME`).
 
 This seed file **must contain all 7 headers** in its first line (in any order). Rows only require `repository_url` to have a valid value; other metadata blocks can remain empty:
 
 | Column | Value Required | Description |
 | :--- | :--- | :--- |
 | `title` | No | Academic title of the final degree project. |
-| `tutors` | No | Supervisor or tutors of the project (supports multiple names). |
-| `students` | No | Authoring student(s). |
+| `tutors` | No | Supervisor or tutors of the project (supports multiple names)(anonymized). |
+| `students` | No | Authoring student(s)(anonymized). |
 | `assignment_date` | No | Date when the project was assigned (Format: `DD/MM/YYYY`). |
 | `presentation_date` | No | Date when the project was defended (Format: `DD/MM/YYYY`). |
 | `grade` | No | Grade score obtained (supports dot/comma decimal separators). |
@@ -192,7 +220,9 @@ If you only want to visualize results without running ingestion/processing pipel
 2. Download both `example-data.zip` and `docker-compose.release.yml` from the [Latest Releases Page](https://github.com/zcc1001/tfg-topics/releases).
 3. Unzip `example-data.zip` inside the directory (it will generate a `data/` folder).
 4. Run:
+
    ```bash
    docker compose -f docker-compose.release.yml --profile frontend run --rm --service-ports frontend
    ```
+
 5. Navigate to `http://localhost:8501` to explore topic allocations, PCA intertopic representations, and coherence statistics.
