@@ -1,4 +1,72 @@
 \capitulo{7}{Conclusiones y Líneas de trabajo futuras}
 
-Todo proyecto debe incluir las conclusiones que se derivan de su desarrollo. Éstas pueden ser de diferente índole, dependiendo de la tipología del proyecto, pero normalmente van a estar presentes un conjunto de conclusiones relacionadas con los resultados del proyecto y un conjunto de conclusiones técnicas. 
-Además, resulta muy útil realizar un informe crítico indicando cómo se puede mejorar el proyecto, o cómo se puede continuar trabajando en la línea del proyecto realizado. 
+El proyecto \nombreProyecto ha permitido diseñar e implementar una solución
+completa para el análisis temático cualitativo de memorias de \ACRshort{tfg}
+del grado en Ingeniería Informática de la Universidad de Burgos publicadas en
+GitHub, cubriendo todo el ciclo de vida del dato: ingesta, procesamiento,
+modelado y visualización.
+
+A nivel de objetivos, se considera que el proyecto se ha cumplido de forma
+satisfactoria. Se ha construido un \gls{pipeline} modular con tres bloques bien
+diferenciados (\textit{backend-ingestion}, \textit{backend-processing} y
+\textit{frontend-web}), con una arquitectura hexagonal en \textit{backend} que
+facilita la mantenibilidad, la escalabilidad y la sustitución de componentes.
+Además, se ha definido un contrato de datos estable en formato Parquet, lo que
+mejora la trazabilidad experimental y desacopla claramente la generación de
+resultados de su consumo en la interfaz.
+
+Desde el punto de vista experimental, se han entrenado y comparado cuatro
+enfoques de modelado de temas (\ACRshort{lda}, BERTopic, Top2Vec y FASTopic)
+sobre cuatro fuentes textuales (\textit{abstracts}, \textit{issues},
+\textit{readmes} y cuerpo de las memorias). En el estado actual del proyecto,
+BERTopic ofrece la mejor coherencia en \textit{issues}, \textit{readmes} y
+cuerpo de las memorias, mientras que Top2Vec destaca en \textit{abstracts}. Por
+su parte, LDA presenta un comportamiento competitivo en varios escenarios con
+un coste computacional significativamente menor. Este resultado evidencia un
+compromiso técnico relevante entre calidad semántica e inversión de recursos.
+
+Estos resultados confirman que no existe un único modelo óptimo universal, sino
+que el rendimiento depende del tipo de texto analizado y de su granularidad
+semántica. También se observa un compromiso claro entre calidad temática y
+coste computacional: los modelos basados en \textit{embeddings} suelen mejorar
+la coherencia en varios escenarios, a costa de mayores tiempos de ejecución.
+
+Como valoración crítica, identificamos tres limitaciones principales. En primer
+lugar, la evaluación se apoya mayoritariamente en métricas automáticas de
+coherencia, que no sustituyen una validación cualitativa experta. En segundo
+lugar, la heterogeneidad de los repositorios de origen introduce ruido
+documental y estructural que afecta a la estabilidad del modelado. En tercer
+lugar, algunos modelos basados en \textit{embeddings} presentan costes de
+ejecución elevados, lo que condiciona la escalabilidad en corpus más grandes.
+
+Además de los resultados cuantitativos, uno de los aportes principales del
+trabajo es haber construido una base software reutilizable: el sistema permite
+reejecutar fases de forma independiente, comparar configuraciones de manera
+homogénea y exponer resultados en una interfaz interactiva orientada a análisis
+exploratorio.
+
+\section{Líneas de trabajo futuras}
+
+Como evolución natural del proyecto, se plantean las siguientes líneas:
+
+\begin{itemize}
+      \item Ampliar la evaluación con más métricas automáticas (por ejemplo, diversidad
+            temática y estabilidad entre ejecuciones) y reforzar la validación humana con
+            protocolos estandarizados de evaluación.
+      \item Incorporar análisis temporal para estudiar la evolución de temáticas por curso
+            académico y detectar tendencias emergentes.
+      \item Mejorar la normalización lingüística en español (tratamiento de tecnicismos,
+            acrónimos y expresiones de dominio) para aumentar la calidad semántica de los
+            temas.
+      \item Explorar variantes de modelado adicionales (modelos jerárquicos, dinámicos o
+            nuevas configuraciones de \textit{sentence-transformers}).
+      \item Optimizar rendimiento mediante caché de \textit{embeddings}, ejecución paralela
+            y otras estrategias de reducción de coste computacional.
+      \item Mejorar la interfaz de usuario: filtros académicos más ricos, exportación de
+            informes para toma de decisiones y mejoras en accesibilidad para usuarios con
+            necesidades especiales.
+\end{itemize}
+
+En definitiva, este \ACRshort{tfg} no solo entrega un prototipo funcional, sino
+una base técnica sólida y extensible sobre la que continuar investigación
+aplicada en analítica temática de documentación académica.

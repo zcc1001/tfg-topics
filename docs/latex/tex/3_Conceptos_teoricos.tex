@@ -35,7 +35,7 @@ dimensión del vocabulario, con el fin de garantizar la calidad de los análisis
 resultantes. El flujo general de estas transformaciones se ilustra en la
 Figura~\ref{fig:diagramas/pipeline_nlp.png}.
 
-\imagen{diagramas/pipeline_nlp.png}{Pipeline general del preprocesamiento de lenguaje natural.}{0.7}
+\imagen{diagramas/pipeline_nlp.png}{\Gls{pipeline} general del preprocesamiento de lenguaje natural.}{0.7}
 
 \subsection{Tokenización}
 La \gls{tokenizacion} es un proceso fundamental dentro de el \acrshort{nlp} y
@@ -205,7 +205,7 @@ posible identificar las palabras más similares a un término concreto del
 vocabulario utilizando métodos como la \gls{similitud_coseno} o la
 \gls{distancia_euclidiana}. Estas técnicas permiten agrupar palabras
 relacionadas, clasificar textos, categorizar documentos y descubrir temas o
-tópicos latentes dentro del texto~\cite{hankarComprehensiveOverviewTopic2025}.
+temas latentes dentro del texto~\cite{hankarComprehensiveOverviewTopic2025}.
 
 \section{Modelado de temas}
 
@@ -413,9 +413,9 @@ cuantos temas son adecuados para un conjunto de datos
 determinado~\cite{pedroUnderstandingTopicCoherence2022}.
 
 La \gls{coherencia} busca medir hasta qué punto las palabras más
-representativas de un tópico tienden a aparecer juntas en el \gls{corpus} y a
+representativas de un tema tienden a aparecer juntas en el \gls{corpus} y a
 mantener relaciones semánticas coherentes. Una mayor \gls{coherencia} indica un
-tópico más interpretable y semánticamente consistente.
+tema más interpretable y semánticamente consistente.
 
 Los métodos más usados son:
 \begin{itemize}
@@ -459,7 +459,7 @@ dominados por pocos temas.
 
 \subsubsection{Parámetro $\beta$}
 
-Determina cuántas palabras componen cada tópico. Un valor alto genera temas más
+Determina cuántas palabras componen cada tema. Un valor alto genera temas más
 dispersos y un valor bajo produce temas más específicos.
 
 \subsubsection{Número de Iteraciones}
@@ -501,7 +501,7 @@ FASTopic está optimizado para grandes volúmenes de datos y permite configurar:
 \begin{itemize}
 	\item tipo de embeddings (\acrshort{bert}, \gls{fasttext}, etc.).
 	\item número de clusters en métodos rápidos como \gls{kmeans}.
-	\item número de palabras clave extraídas por tópico.
+	\item número de palabras clave extraídas por tema.
 \end{itemize}
 
 Tanto la evaluación como la \gls{hiperparametrizacion} de modelos de temas son

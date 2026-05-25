@@ -173,6 +173,10 @@
   name=Contenedorización,
   description={Técnica de virtualización ligera que encapsula una aplicación y sus dependencias en entornos aislados}
 }
+\newglossaryentry{pipeline}{
+  name=Pipeline,
+  description={Cadena de procesamiento secuencial de datos estructurada en etapas, donde la salida de cada fase actúa como entrada de la siguiente}
+}
 
 \renewcommand{\glossaryname}{Glosario}
 \renewcommand{\acronymname}{Acrónimos}
@@ -565,10 +569,11 @@
   comparación de resultados entre cursos.
 
   El sistema parte de un conjunto de datos construido a partir de repositorios
-  públicos en GitHub, incluyendo memorias en formato \LaTeX{}, ficheros
-  \textit{README}, \textit{issues} y resúmenes académicos. Sobre este corpus se
-  aplica un flujo de preprocesamiento y modelado de temas mediante \textbf{Latent
-    Dirichlet Allocation (LDA)}~\cite{blei2003lda},
+  públicos en GitHub, incluyendo contenido de memorias de \acrshort{tfg} en
+  formato \LaTeX{}, ficheros \textit{readmes}, \textit{issues} y
+  \text{abstracts}. Sobre este corpus se aplica un flujo de preprocesamiento y
+  modelado de temas mediante \textbf{Latent Dirichlet Allocation
+    (LDA)}~\cite{blei2003lda},
   \textbf{Top2Vec}~\cite{angelovTop2VecDistributedRepresentations2020},
   \textbf{BERTopic}~\cite{grootendorstBERTopicNeuralTopic2022} y
   \textbf{FASTopic}~\cite{2024arXiv240517978W}.
@@ -596,7 +601,7 @@
   and comparing results across academic years.
 
   The system uses a dataset built from public GitHub repositories, including
-  \LaTeX{} reports, README files, issues, and academic abstracts. A full text
+  \LaTeX{} reports, readme files, issues, and academic abstracts. A full text
   processing and topic modeling pipeline is applied using \textbf{Latent
     Dirichlet Allocation (LDA)}~\cite{blei2003lda},
   \textbf{Top2Vec}~\cite{angelovTop2VecDistributedRepresentations2020},
