@@ -509,10 +509,13 @@
   }
 \makeatother
 
+\usepackage{xspace}
+\newcommand{\nombreProyecto}{\textit{TFG Topics}\xspace}
+
 \newcommand{\nombre}{Zeldan Javier Campos Cordero} %%% cambio de comando
 
 % Datos de portada
-\title{\fontsize{18pt}{22pt}\selectfont TFG Topics\\
+\title{\fontsize{18pt}{22pt}\selectfont \nombreProyecto\\
 	\fontsize{16pt}{18pt}\selectfont Análisis de temas en Trabajos Fin de Grado\\}
 \author{\nombre}
 \tutor{Carlos López Nozal}
@@ -555,7 +558,7 @@
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-  \textit{TFG Topics} es una aplicación orientada al análisis temático
+  \nombreProyecto es una aplicación orientada al análisis temático
   cualitativo de los textos asociados a los \acrfull{tfg}. El objetivo
   principal es facilitar a docentes, investigadores y estudiantes la
   exploración del contenido académico, la identificación de tendencias y la
@@ -587,7 +590,7 @@
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-  \textit{TFG Topics} is an application for qualitative thematic analysis of
+  \nombreProyecto is an application for qualitative thematic analysis of
   texts related to Final Degree Projects. Its main goal is to support teachers,
   researchers, and students in exploring academic content, identifying trends,
   and comparing results across academic years.

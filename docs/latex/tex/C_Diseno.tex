@@ -96,9 +96,9 @@ Para cada algoritmo utilizado (\acrshort{lda}~\cite{blei2003lda}, BERTopic~\cite
 \begin{landscape}
     \begin{figure}[p]
         \centering
-        \includegraphics[width=1.4\textwidth, height=1\textheight]{diagramas/diagrama_datos.pdf}
+        \includegraphics[width=1.4\textwidth, height=1\textheight]{diagramas/diagrama_datos.png}
         \caption{Diagrama de flujo de datos del sistema}
-        \label{diagramas/diagrama_datos.pdf}
+        \label{diagramas/diagrama_datos.png}
     \end{figure}
 \end{landscape}
 
@@ -130,14 +130,7 @@ lectura que consume los archivos Parquet ya generados por el \textit{backend},
 delegando toda la complejidad computacional a los módulos de procesamiento
 subyacentes~\cite{StreamlitDocsa}.
 
-\begin{landscape}
-    \begin{figure}[p]
-        \centering
-        \includegraphics[width=1.5\textwidth, height=0.9\textheight]{diagramas/diagrama_arquitectura.pdf}
-        \caption{Esquema de componentes basado en Arquitectura Hexagonal}
-        \label{fig:diagramas/diagrama_arquitectura.pdf}
-    \end{figure}
-\end{landscape}
+\imagen[H]{diagramas/diagrama_arq_hexagonal.png}{Esquema de componentes basado en Arquitectura Hexagonal}
 
 \section{Diseño procedimental}
 Por último, el diseño procedimental especifica la secuencia lógica y el flujo
@@ -149,7 +142,22 @@ de temas. A nivel global, el ciclo de vida de la información se divide en un
 \begin{enumerate}
     \item \textbf{Ingesta de datos (\textit{Ingestion}):} El flujo se inicia lanzando consultas parametrizadas contra GitHub para buscar repositorios de \acrshort{tfg}. El algoritmo itera sobre los resultados de la búsqueda, descargando para cada repositorio sus datos básicos, el archivo léame y las incidencias abiertas. Se aplican filtros en tiempo de ejecución para descartar repositorios con información insuficiente, volcando el resultado válido en los primeros ficheros Parquet.
     \item \textbf{Procesamiento y Modelado (\textit{Processing}):} Es el procedimiento central del proyecto. En primer lugar, se ejecuta un algoritmo de preprocesado de texto que normaliza el contenido (tokenización, reducción a lemas, borrado de palabras vacías y limpieza de código Markdown). Tras esto, el flujo pasa a la fase de entrenamiento, donde el sistema puede instanciar de forma genérica cualquiera de los modelos integrados (\acrshort{lda}, BERTopic, etc.). El sistema está programado para permitir el ajuste de hiperparámetros y generar, como salida final, la distribución probabilística de los temas encontrados.
-    \item \textbf{Visualización interactiva (\textit{Frontend}):} El procedimiento final es la exposición de los datos. En lugar de precargar todo en memoria, el procedimiento de visualización utiliza un enfoque de carga diferida. A medida que el usuario navega por la interfaz de Streamlit, el sistema lee bajo demanda las porciones necesarias de los ficheros Parquet y calcula en caliente las gráficas y métricas comparativas que se solicitan en la pantalla.
+    \item \textbf{Visualización interactiva (\textit{Frontend}):} El procedimiento final es la exposición de los datos. A medida que el usuario navega por la interfaz de Streamlit, el sistema lee bajo demanda las porciones necesarias de los ficheros Parquet y calcula en caliente las gráficas y métricas comparativas que se solicitan en la pantalla.
 \end{enumerate}
 
-\imagen{diagramas/pipeline_procedimental.png}{Diagrama de Actividad del flujo procedimental del sistema}
+A nivel global, la secuencia lógica de control e intercambio de información del
+sistema se resume en la Figura~\ref{fig:diagramas/pipeline_general.png}.
+
+\imagen[H]{diagramas/pipeline_general.png}{Flujo procedimental general del sistema}
+
+A continuación, se desglosa el comportamiento detallado de cada una de estas
+tres etapas del pipeline:
+
+\subsection{Procesos de Ingesta}
+\imagen[H]{diagramas/pipeline_ingesta.png}{Diagrama de actividad de la fase de Ingesta}
+
+\subsection{Procesos de Procesamiento}
+\imagen[H]{diagramas/pipeline_procesamiento.png}{Diagrama de actividad de la fase de Procesamientoo}
+
+\subsection{Flujo de la Interfaz de Visualización}
+\imagen[H]{diagramas/pipeline_interfaz.png}{Diagrama de actividad del módulo de Interfaz Visual}[0.6]

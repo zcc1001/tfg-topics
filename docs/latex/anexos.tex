@@ -9,6 +9,7 @@
 \usepackage{microtype}
 \usepackage{placeins}
 \usepackage{pdflscape}
+\usepackage{xparse}
 
 \RequirePackage{booktabs}
 \RequirePackage[table]{xcolor}
@@ -24,7 +25,7 @@
 \usepackage[acronym,toc]{glossaries}
 
 \makenoidxglossaries
-\newacronym{tfg}{TFG}{Trabajo de Fin de Grado}
+\newacronym[plural={TFG}, longplural={Trabajos de Fin de Grado}]{tfg}{TFG}{Trabajo de Fin de Grado}
 \newacronym{lda}{LDA}{Latent Dirichlet Allocation}
 \newacronym{nlp}{NLP}{Natural Language Processing}
 \newacronym{ai}{AI}{Artificial Intelligence}
@@ -61,11 +62,18 @@
 
 % Imagenes
 \usepackage{graphicx}
-\newcommand{\imagen}[2]{
-	\begin{figure}[!h]
+
+% Comando para insertar una imagen en los anexos.
+% Parámetros:
+% #1 (Opcional, entre corchetes, por defecto !h): Posicionamiento de la figura (ej. H, !h, t)
+% #2 (Requerido, entre llaves): Ruta del archivo de la imagen (ej. diagramas/pipeline.png)
+% #3 (Requerido, entre llaves): Texto explicativo a pie de figura (caption)
+% #4 (Opcional, entre corchetes, por defecto 0.9): Escala de ancho relativo a \textwidth (ej. 0.75)
+\NewDocumentCommand{\imagen}{O{!h} m m O{0.9}}{
+	\begin{figure}[#1]
 		\centering
-		\includegraphics[width=0.9\textwidth]{#1}
-		\caption{#2}\label{fig:#1}
+		\includegraphics[width=#4\textwidth]{#2}
+		\caption{#3}\label{fig:#2}
 	\end{figure}
 	\FloatBarrier
 }
@@ -374,9 +382,11 @@
   }
 \makeatother
 
+\usepackage{xspace}
+\newcommand{\nombreProyecto}{\textit{TFG Topics}\xspace}
 
 % Datos de portada
-\title{\fontsize{18pt}{22pt}\selectfont TFG Topics\\
+\title{\fontsize{18pt}{22pt}\selectfont \nombreProyecto\\
 	\fontsize{16pt}{18pt}\selectfont Análisis de temas en Trabajos Fin de Grado\\
 	\fontsize{18pt}{22pt}\selectfont Documentación Técnica \\}
 \author{Zeldan Javier Campos Cordero}
