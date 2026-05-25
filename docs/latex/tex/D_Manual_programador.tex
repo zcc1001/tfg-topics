@@ -1,10 +1,10 @@
-﻿\apendice{Documentación técnica de programación}
+\apendice{Documentación técnica de programación}
 
 \section{Introducción}
 Esta sección tiene como objetivo proporcionar una guía detallada para aquellos
 desarrolladores, investigadores o mantenedores que deseen comprender a nivel
-técnico la implementación de la aplicación \textbf{TFG Topics}, modificar su
-código fuente o añadir nuevas funcionalidades.
+técnico la implementación de la aplicación \nombreProyecto, modificar su código
+fuente o añadir nuevas funcionalidades.
 
 El proyecto está desarrollado en Python 3.10~\cite{31019Documentation} y se
 fundamenta en los principios de la Arquitectura Hexagonal (Puertos y
@@ -17,7 +17,7 @@ desacoplamiento entre la lógica de negocio y las librerías externas.
 El sistema se divide en tres módulos claramente diferenciados:
 \begin{itemize}
     \item \textbf{backend-ingestion}: Encargado de interactuar con la \acrshort{api} de GitHub, extraer los datos (\textit{abstracts}, \textit{readmes}, \textit{issues}, contenido de la memoria) y almacenarlos en formato estructurado Apache Parquet.
-    \item \textbf{backend-processing}: Motor analítico que ejecuta las fases de preprocesamiento de texto (\acrshort{nlp}) y el entrenamiento de los algoritmos de modelado de tópicos (\acrshort{lda}, BERTopic, Top2Vec, FASTopic), evaluando hiperparámetros.
+    \item \textbf{backend-processing}: Motor analítico que ejecuta las fases de preprocesamiento de texto (\acrshort{nlp}) y el entrenamiento de los algoritmos de modelado de temas (\acrshort{lda}, BERTopic, Top2Vec, FASTopic), evaluando hiperparámetros.
     \item \textbf{frontend-web}: Aplicación web ligera desarrollada en Streamlit~\cite{StreamlitDocsa}, encargada únicamente de la visualización y lectura de los ficheros Parquet resultantes, sin poseer lógica de procesamiento pesada.
 \end{itemize}
 

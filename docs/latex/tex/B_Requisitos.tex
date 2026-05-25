@@ -1,27 +1,40 @@
-﻿\apendice{Especificación de Requisitos}
+\apendice{Especificación de Requisitos}
 
 \section{Introducción}
-Esta sección se documenta el proceso de ingeniería de requisitos llevado a cabo
-durante las fases iniciales del proyecto. A partir del análisis del problema y
-de las necesidades del dominio analítico, se han establecido los objetivos
-principales del sistema y se ha redactado un catálogo formal detallando las
-funcionalidades esperadas (\acrfullpl{rf}) y las restricciones técnicas
-impuestas a la arquitectura (\acrfullpl{rnf}).
+En esta sección se documenta el proceso de ingeniería de requisitos llevado a
+cabo durante las fases iniciales del proyecto. A partir del análisis del
+problema y de las necesidades del dominio analítico, se han establecido los
+objetivos principales del sistema y se ha redactado un catálogo formal
+detallando las funcionalidades esperadas (\acrfullpl{rf}) y las restricciones
+técnicas impuestas a la arquitectura (\acrfullpl{rnf}).
 
 Finalmente, se modela el comportamiento del sistema desde la perspectiva de sus
 usuarios mediante la especificación de \acrfullpl{cu}.
 
+\subsection{Términos del Dominio}
+Para facilitar la comprensión del catálogo de requisitos y de los flujos de
+interacción del sistema, se definen a continuación los conceptos clave
+relativos al dominio de datos analizado:
+
+\begin{description}
+	\item[\textbf{Trabajo de Fin de Grado (TFG):}] Proyecto académico y práctico obligatorio que los estudiantes de último curso de Ingeniería Informática desarrollan y defienden para demostrar las competencias y conocimientos adquiridos a lo largo de su titulación.
+	\item[\textbf{Readme (Fichero README):}] Archivo de documentación (usualmente en formato Markdown o texto plano) ubicado en la raíz del repositorio de GitHub que proporciona información introductoria del proyecto, instrucciones de configuración, despliegue y uso de la aplicación desarrollada.
+	\item[\textbf{Abstract (Resumen académico):}] Síntesis concisa del trabajo (habitualmente redactada tanto en español como en inglés) que resume de forma compacta los objetivos, la metodología empleada y las conclusiones principales del \Acrshort{tfg}.
+	\item[\textbf{Issue (Incidencia/Tarea):}] Herramienta integrada en el repositorio de GitHub para registrar, planificar y realizar el seguimiento de tareas pendientes, errores de programación, debates de diseño o hitos del desarrollo. En este contexto, representan el histórico de actividad y comunicación del proyecto.
+	\item[\textbf{Contenido / Memoria del TFG:}] Texto íntegro contenido en los ficheros fuente en \LaTeX{} redactados por el alumno, que constituye el documento analítico y descriptivo formal de su trabajo.
+\end{description}
+
 \section{Objetivos generales}
-El principal propósito de este \acrshort{tfg} es proporcionar un entorno
-automatizado que facilite la investigación y el análisis temático sobre
-repositorios de software en GitHub. Para lograrlo, se han definido los
-siguientes objetivos generales:
+El principal propósito de \nombreProyecto{} es proporcionar una herramienta que
+facilite el análisis temático de los \acrshort{tfg} del grado de Ingeniería
+Informática de la Universidad de Burgos disponibles en repositorios públicos de
+GtHub. Para lograrlo, se han definido los siguientes objetivos generales:
 
 \begin{itemize}
-	\item \textbf{Construir un motor de ingesta de datos:} Capaz de extraer metadatos, \textit{issues} y documentación de repositorios públicos de GitHub de forma automatizada y resiliente.
-	\item \textbf{Implementar un pipeline de procesamiento \acrshort{nlp}:} Que permita normalizar los textos extraídos y prepararlos para el modelado matemático.
-	\item \textbf{Entrenar y evaluar algoritmos de Topic Modeling:} Desplegando y optimizando modelos consolidados como \acrshort{lda}, BERTopic, Top2Vec y FASTopic para la extracción de tópicos latentes.
-	\item \textbf{Desarrollar una interfaz web:} Que permita a los investigadores explorar de forma interactiva la distribución de temas y comparar empíricamente el rendimiento métrico de cada modelo.
+	\item \textbf{Extracción de datos:} Extraer el contenido de las memorias de \acrshort{tfg}, \textit{readmes}, \textit{issues} y \textit{abstracts} de repositorios públicos de GitHub.
+	\item \textbf{Implementar procesamiento \acrshort{nlp}:} Normalizar los textos extraídos y prepararlos para el modelado temático.
+	\item \textbf{Entrenar y evaluar algoritmos de modelado de temas:} Entrenar modelos como \acrshort{lda}, BERTopic, Top2Vec y FASTopic para la extracción de temas.
+	\item \textbf{Desarrollar una interfaz web:} Permitir a los investigadores explorar de forma interactiva la distribución de temas y comparar empíricamente el rendimiento de cada modelo.
 \end{itemize}
 
 \section{Catálogo de requisitos}
@@ -33,13 +46,14 @@ Definen las funcionalidades y acciones concretas que el sistema debe ser capaz
 de ejecutar.
 
 \begin{itemize}
-	\item \textbf{RF-1. Extracción de datos:} El sistema debe descargar iterativamente la información de repositorios en base a una lista en formato \acrshort{csv}, comunicándose con la \acrshort{api} de GitHub.
+	\item \textbf{RF-1. Extracción de datos:} El sistema debe descargar la información de repositorios a partir de un listado de orígenes parametrizado, comunicándose con la \acrshort{api} de GitHub.
 	\item \textbf{RF-2. Preprocesamiento de texto:} El sistema debe aplicar técnicas de procesamiento de lenguaje natural (tokenización, lematización, borrado de \textit{stopwords}) para normalizar el texto.
 	\item \textbf{RF-3. Entrenamiento de modelos:} El sistema debe ser capaz de instanciar y entrenar múltiples algoritmos de modelado de temas sobre el texto preprocesado.
 	\item \textbf{RF-4. Optimización de hiperparámetros:} El sistema debe integrar mecanismos para evaluar y afinar los hiperparámetros de los modelos en busca de la máxima coherencia semántica.
-	\item \textbf{RF-5. Cálculo de métricas:} El sistema debe generar métricas estandarizadas para evaluar la coherencia y diversidad de los tópicos resultantes.
-	\item \textbf{RF-6. Visualización de tópicos:} La interfaz de usuario debe mostrar gráficas interactivas que representen la importancia de las palabras y la proyección bidimensional de los tópicos.
+	\item \textbf{RF-5. Cálculo de métricas:} El sistema debe generar métricas estandarizadas para evaluar la coherencia y diversidad de los temas.
+	\item \textbf{RF-6. Visualización de temas:} La interfaz de usuario debe mostrar gráficas interactivas que representen la importancia de las palabras y de los temas.
 	\item \textbf{RF-7. Comparativa de modelos:} La interfaz debe disponer de un panel que cruce y ordene el rendimiento métrico de los diferentes algoritmos.
+	\item \textbf{RF-8. Análisis exploratorio académico:} La interfaz de usuario debe permitir filtrar los proyectos (por tutor, rango de años y calificaciones) y visualizar gráficos sobre la distribución y evolución de temáticas por curso académico.
 \end{itemize}
 
 \subsection{\acrfullpl{rnf}}
@@ -54,18 +68,27 @@ escalabilidad del producto final.
 \end{itemize}
 
 \section{Especificación de \acrshortpl{cu}}
-La especificación de \acrfullpl{cu} modela las interacciones entre los
-usuarios (actores) y el sistema. En este proyecto se identifican dos actores
-principales: el \textbf{Administrador/Desarrollador} (encargado de ejecutar las
-tareas pesadas del \textit{backend}) y el \textbf{Investigador/Usuario Web}
-(quien consume los datos a través del \textit{frontend}).
+La especificación de \acrfullpl{cu} modela las interacciones entre los usuarios (o sistemas externos) y la aplicación para lograr objetivos específicos.
 
+\subsection{Catálogo de Actores}
+Para acotar el alcance de las interacciones, se definen a continuación los
+roles o sistemas externos que participan en el sistema analítico:
+
+\begin{description}
+	\item[\textbf{Administrador / Desarrollador (Humano, Primario Backend):}] Perfil con conocimientos técnicos encargado de la configuración del sistema, la puesta en marcha de los entornos y la ejecución desatendida del pipeline de datos en sus etapas de ingesta y procesamiento desde la CLI.
+	\item[\textbf{Usuario Académico (Humano, Primario Frontend):}] Docente o estudiante que busca respuestas funcionales en el corpus analizado. Su objetivo es identificar qué tecnologías se investigan más, cómo evolucionan las temáticas a lo largo de los cursos y qué tendencias existen en los \ACRshortpl{tfg} de Ingeniería Informática, todo ello a través de filtros y distribuciones temporales sencillas y sin necesidad de conocer en detalle el modelado de temas.
+	\item[\textbf{Usuario Técnico / Investigador IA (Humano, Primario Frontend):}] Experto en \acrshort{nlp} que evalúa la calidad científica y estadística de los resultados. Utiliza la interfaz web técnica para analizar proyecciones, comprobar curvas de optimización de hiperparámetros y comparar cuantitativamente las métricas de coherencia entre los algoritmos.
+	\item[\textbf{API de GitHub (Sistema Externo, Secundario):}] Interfaz de programación provista por GitHub que actúa como proveedor de datos externo. Es consumida por el pipeline para descargar de forma automatizada el contenido de las memorias de \acrshort{tfg}, \textit{readmes}, \textit{issues} y \textit{abstracts} del repositorio semilla.
+\end{description}
+
+\subsection{Diagrama de Casos de Uso}
 El panorama general de interacciones queda plasmado en el diagrama de
 \acrshortpl{cu} adjunto (Figura~\ref{fig:diagramas/casos_uso.png}).
 
-\imagen{diagramas/casos_uso.png}{Diagrama de \acrshortpl{cu} del sistema TFG Topics}
+\imagen{diagramas/casos_uso.png}{Diagrama de \acrshortpl{cu} del sistema \nombreProyecto}
 
-A continuación, se documentan de forma tabular los flujos principales asociados
+\subsection{Fichas Tabulares de Casos de Uso}
+A continuación, se documentan de forma tabular los flujos detallados asociados
 a cada uno de estos \acrshortpl{cu}.
 
 % Caso de Uso 1
@@ -78,6 +101,7 @@ a cada uno de estos \acrshortpl{cu}.
 {
 	\textbf{Versión}              & 1.0                                                                                                                  \\
 	\textbf{Autor}                & Alumno                                                                                                               \\
+	\textbf{Actores}              & \textbf{Principal:} Administrador / Desarrollador. \newline \textbf{Secundario:} API de GitHub (Sistema externo).    \\
 	\textbf{Requisitos asociados} & RF-1, RNF-1, RNF-4                                                                                                   \\
 	\textbf{Descripción}          & El administrador inicia la recolección de los datos desde la nube.                                                   \\
 	\textbf{Precondición}         & Disponer de conexión a Internet, de un archivo semilla de repositorios y de un token de GitHub válido.               \\
@@ -85,27 +109,28 @@ a cada uno de estos \acrshortpl{cu}.
 	\begin{enumerate}
 		\def\labelenumi{\arabic{enumi}.}
 		\tightlist
-		\item El administrador lanza la orden de ejecución (ej. mediante \texttt{make}).
-		\item El sistema lee el fichero \acrshort{csv} semilla.
-		\item El sistema consulta la \acrshort{api} y descarga \textit{readmes},
-		      \textit{abstracts}, \textit{issues} y contenido de \ACRshort{tfg}.
-		\item El sistema formatea los datos y los persiste en ficheros Parquet.
+		\item El administrador lanza la orden de ejecución.
+		\item El sistema lee el fichero semilla.
+		\item El sistema consulta la \acrshort{api} y descarga el contenido de las memorias
+		      de \acrshort{tfg}, \textit{readmes}, \textit{issues} y \textit{abstracts}.
+		\item El sistema formatea los datos y los persiste.
 	\end{enumerate}                                                                     \\
-	\textbf{Postcondición}        & Se han generado los archivos Parquet en \texttt{data/ingestion/}.                                                    \\
+	\textbf{Postcondición}        & Se han generado los archivos con los datos extraídos.                                                    \\
 	\textbf{Excepciones}          & Fallo de red, token expirado o repositorios eliminados (se registran en los \textit{logs} sin detener la ejecución). \\
 	\textbf{Importancia}          & Alta                                                                                                                 \\
 }
 
 % Caso de Uso 2
-\tablaSmallSinColores{CU-2: Entrenar modelos de tópicos.}
+\tablaSmallSinColores{CU-2: Entrenar modelos de temas.}
 {p{0.21\textwidth} p{0.71\textwidth}}
 {cu_2}
 {
-	\textbf{CU-2}                 & \textbf{Entrenar modelos de tópicos}                                                                            \\
+	\textbf{CU-2}                 & \textbf{Entrenar modelos de temas}                                                                            \\
 }
 {
 	\textbf{Versión}              & 1.0                                                                                                             \\
 	\textbf{Autor}                & Alumno                                                                                                          \\
+	\textbf{Actores}              & \textbf{Principal:} Administrador / Desarrollador.                                                              \\
 	\textbf{Requisitos asociados} & RF-2, RF-3, RF-4, RF-5                                                                                          \\
 	\textbf{Descripción}          & El administrador ejecuta el proceso de análisis de los datos extraídos.          \\
 	\textbf{Precondición}         & Deben existir archivos de ingesta generados por el CU-1.                                                        \\
@@ -118,25 +143,26 @@ a cada uno de estos \acrshortpl{cu}.
 		      \acrshort{nlp}.
 		\item El sistema entrena iterativamente los diferentes algoritmos.
 		\item El sistema optimiza automáticamente los hiperparámetros de los modelos.
-		\item Se calculan las métricas y las proyecciones 2D para la vista final.
+		\item Se calculan las métricas para la vista final.
 	\end{enumerate}                                                             \\
-	\textbf{Postcondición}        & Se han generado los ficheros Parquet con los resultados analíticos en la carpeta correspondiente a cada modelo. \\
+	\textbf{Postcondición}        & Se han generado los ficheros con los resultados analíticos correspondiente a cada modelo. \\
 	\textbf{Excepciones}          & Insuficiente memoria RAM para cargar un corpus completo (se aborta el hilo).                                    \\
 	\textbf{Importancia}          & Alta                                                                                                            \\
 }
 
 % Caso de Uso 3
-\tablaSmallSinColores{CU-3: Explorar tópicos de un modelo.}
+\tablaSmallSinColores{CU-3: Explorar temas de un modelo.}
 {p{0.21\textwidth} p{0.71\textwidth}}
 {cu_3}
 {
-	\textbf{CU-3}                 & \textbf{Explorar tópicos de un modelo}                                                                    \\
+	\textbf{CU-3}                 & \textbf{Explorar temas de un modelo}                                                                    \\
 }
 {
 	\textbf{Versión}              & 1.0                                                                                                       \\
 	\textbf{Autor}                & Alumno                                                                                                    \\
+	\textbf{Actores}              & \textbf{Principal:} Usuario Técnico / Investigador IA.                                                    \\
 	\textbf{Requisitos asociados} & RF-6                                                                                                      \\
-	\textbf{Descripción}          & El investigador visualiza las temáticas descubiertas por un algoritmo en particular de forma interactiva. \\
+	\textbf{Descripción}          & El usuario técnico visualiza las temáticas descubiertas por un algoritmo en particular de forma interactiva. \\
 	\textbf{Precondición}         & El sistema web está arrancado y los modelos han sido entrenados. Deben existir archivos de ingesta generados por el CU-1. Deben existir archivos generados por el CU-2.                                          \\
 	\textbf{Acciones}             &
 	\begin{enumerate}
@@ -145,7 +171,7 @@ a cada uno de estos \acrshortpl{cu}.
 		\item El usuario accede a la pestaña de análisis de modelo en el \textit{frontend}.
 		\item Selecciona mediante un desplegable la fuente de texto y el modelo objetivo.
 		\item El sistema carga bajo demanda la información del modelo.
-		\item El usuario interactúa con los gráficos (zoom, selección de tópicos).
+		\item El usuario interactúa con los gráficos.
 	\end{enumerate}                                                        \\
 	\textbf{Postcondición}        & El usuario adquiere conclusiones sobre el corpus.                                                         \\
 	\textbf{Excepciones}          & Datos no disponibles si el modelo no fue entrenado (el \textit{frontend} muestra advertencia).            \\
@@ -162,8 +188,9 @@ a cada uno de estos \acrshortpl{cu}.
 {
 	\textbf{Versión}              & 1.0                                                                                                                   \\
 	\textbf{Autor}                & Alumno                                                                                                                \\
+	\textbf{Actores}              & \textbf{Principal:} Usuario Técnico / Investigador IA.                                                                \\
 	\textbf{Requisitos asociados} & RF-7                                                                                                                  \\
-	\textbf{Descripción}          & El usuario coteja las métricas de distintos algoritmos para evaluar cuál se comporta mejor ante el conjunto de datos. \\
+	\textbf{Descripción}          & El usuario técnico coteja las métricas de distintos algoritmos para evaluar cuál se comporta mejor ante el conjunto de datos. \\
 	\textbf{Precondición}         & Al menos dos modelos diferentes deben haber sido entrenados para la misma fuente de datos.                            \\
 	\textbf{Acciones}             &
 	\begin{enumerate}
@@ -173,29 +200,59 @@ a cada uno de estos \acrshortpl{cu}.
 		\item El sistema agrega la puntuación de coherencia de todos los modelos disponibles.
 		\item Se renderiza una tabla de clasificación o \textit{ranking} que consolida el
 		      rendimiento.
-		\item El usuario puede visualizar gráficos de barras comparativos.
+		\item El usuario puede visualizar gráficos comparativos.
 	\end{enumerate}                                                                  \\
 	\textbf{Postcondición}        & Ninguna alteración del estado del sistema.                                                                            \\
 	\textbf{Excepciones}          & Ninguna.                                                                                                              \\
 	\textbf{Importancia}          & Media                                                                                                                 \\
 }
 
-\section{Matriz de trazabilidad}
-Para asegurar que todos los \acrshortpl{rf} identificados están
-cubiertos por las interacciones de los usuarios con el sistema, se presenta a
-continuación la matriz de trazabilidad entre los \acrshortpl{cu} y los
-\acrshortpl{rf}.
-
-\tablaSmall{Matriz de trazabilidad entre \acrshortpl{cu} y \acrshortpl{rf}.}
-{l c c c c c c c}
-{matriz_trazabilidad}
+% Caso de Uso 5
+\tablaSmallSinColores{CU-5: Consultar tendencias y metadatos académicos.}
+{p{0.21\textwidth} p{0.71\textwidth}}
+{cu_5}
 {
-	& \textbf{RF-1} & \textbf{RF-2} & \textbf{RF-3} & \textbf{RF-4} & \textbf{RF-5} & \textbf{RF-6} & \textbf{RF-7} \\
+	\textbf{CU-5}                 & \textbf{Consultar tendencias y metadatos académicos}                                                                 \\
 }
 {
-	\textbf{CU-1} & X & & & & & & \\
-	\textbf{CU-2} & & X & X & X & X & & \\
-	\textbf{CU-3} & & & & & & X & \\
-	\textbf{CU-4} & & & & & & & X \\
+	\textbf{Versión}              & 1.0                                                                                                                  \\
+	\textbf{Autor}                & Alumno                                                                                                               \\
+	\textbf{Actores}              & \textbf{Principal:} Usuario Académico.                                                                               \\
+	\textbf{Requisitos asociados} & RF-8                                                                                                                 \\
+	\textbf{Descripción}          & El usuario académico filtra los proyectos y analiza visualmente la evolución de temas y tecnologías por curso.       \\
+	\textbf{Precondición}         & La interfaz web está iniciada y dispone de los datos de los proyectos cargados.                                  \\
+	\textbf{Acciones}             &
+	\begin{enumerate}
+		\def\labelenumi{\arabic{enumi}.}
+		\tightlist
+		\item El usuario accede a la pestaña de análisis académico en el \textit{frontend}.
+		\item Aplica filtros por rango de años, notas o nombre del tutor si lo desea.
+		\item El sistema actualiza el listado y muestra las fichas de los proyectos
+		      correspondientes.
+		\item El usuario visualiza la distribución de temas y evolución de tecnologías en los
+		      gráficos interactivos de la sección.
+	\end{enumerate}                                                                                                                                     \\
+	\textbf{Postcondición}        & Se presenta la información filtrada y los gráficos de evolución correspondientes.                                    \\
+	\textbf{Excepciones}          & Ninguna.                                                                                                             \\
+	\textbf{Importancia}          & Alta                                                                                                                 \\
+}
+
+\section{Matriz de trazabilidad}
+Para asegurar que todos los \acrshortpl{rf} identificados están cubiertos por
+las interacciones de los usuarios con el sistema, se presenta a continuación la
+matriz de trazabilidad entre los \acrshortpl{cu} y los \acrshortpl{rf}.
+
+\tablaSmall{Matriz de trazabilidad entre \acrshortpl{cu} y \acrshortpl{rf}.}
+{l c c c c c c c c}
+{matriz_trazabilidad}
+{
+	& \textbf{RF-1} & \textbf{RF-2} & \textbf{RF-3} & \textbf{RF-4} & \textbf{RF-5} & \textbf{RF-6} & \textbf{RF-7} & \textbf{RF-8} \\
+}
+{
+	\textbf{CU-1} & X & & & & & & & \\
+	\textbf{CU-2} & & X & X & X & X & & & \\
+	\textbf{CU-3} & & & & & & X & & \\
+	\textbf{CU-4} & & & & & & & X & \\
+	\textbf{CU-5} & & & & & & & & X \\
 }
 

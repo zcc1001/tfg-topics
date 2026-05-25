@@ -19,7 +19,7 @@ fases consecutivas:
 \begin{enumerate}
     \item \textbf{Investigación y Viabilidad:} Análisis del estado del arte y selección tecnológica.
     \item \textbf{Módulo de Ingesta:} Desarrollo de los adaptadores para extraer datos de GitHub.
-    \item \textbf{Procesamiento \acrshort{nlp} y Modelado:} Fase central de experimentación con modelos de tópicos.
+    \item \textbf{Procesamiento \acrshort{nlp} y Modelado:} Fase central de experimentación con modelos de temas.
     \item \textbf{Interfaz Web:} Desarrollo de los cuadros de mando interactivos en Streamlit.
     \item \textbf{Pruebas y Despliegue:} Refactorización, creación de tests y contenerización Docker.
     \item \textbf{Redacción de la Memoria:} Documentación técnica y académica en \LaTeX.
@@ -101,7 +101,7 @@ principales:
 
 \begin{itemize}
     \item \textbf{Riesgo 1: Limitaciones de la \acrshort{api} de GitHub.} Al depender de una fuente externa para la ingesta de datos, existía el riesgo de alcanzar el límite de peticiones (Rate Limit). \textit{Mitigación:} Se implementó el uso de tokens autenticados, peticiones paginadas y tiempos de retardo controlados (\textit{sleeps}) para garantizar una extracción continua sin bloqueos.
-    \item \textbf{Riesgo 2: Altos tiempos de entrenamiento \acrshort{nlp}.} El procesamiento masivo de texto y el entrenamiento concurrente de cuatro modelos de tópicos (\acrshort{lda}, BERTopic, etc.) suponía un cuello de botella computacional. \textit{Mitigación:} Se optó por utilizar archivos Apache Parquet para agilizar las operaciones de \ACRshort{io} en disco y se aprovechó la aceleración por GPU local para la instanciación de los \textit{embeddings} de los Transformers.
+    \item \textbf{Riesgo 2: Altos tiempos de entrenamiento \acrshort{nlp}.} El procesamiento masivo de texto y el entrenamiento concurrente de cuatro modelos de temas (\acrshort{lda}, BERTopic, etc.) suponía un cuello de botella computacional. \textit{Mitigación:} Se optó por utilizar archivos Apache Parquet para agilizar las operaciones de \ACRshort{io} en disco y se aprovechó la aceleración por GPU local para la instanciación de los \textit{embeddings} de los Transformers.
     \item \textbf{Riesgo 3: Incompatibilidad de dependencias de Python.} Las librerías de IA suelen presentar conflictos estrictos de versiones. \textit{Mitigación:} Se abordó mediante la contención temprana, aislando el entorno de desarrollo en contenedores Docker y especificando versiones exactas en un archivo \texttt{requirements.txt}.
 \end{itemize}
 
