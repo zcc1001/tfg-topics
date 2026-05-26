@@ -253,6 +253,13 @@
 
 %
 % Comando para incluir imágenes en formato apaisado (sin marco).
+% Parámetros: 
+% #1 altura relativa al texto 
+% #2 ruta de la imagen
+% #3 pie de figura 
+% #4 etiqueta para referencias 
+% #5 opciones extra de includegraphics.
+% Ejemplos para #5: keepaspectratio ; trim=1cm 1cm 1cm 1cm,clip ; page=1
 \newcommand{\figuraApaisadaSinMarco}[5]{%
   \begin{figure}%
     \begin{center}%

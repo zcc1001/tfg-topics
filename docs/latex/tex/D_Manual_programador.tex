@@ -21,7 +21,7 @@ El sistema se divide en tres módulos claramente diferenciados:
     \item \textbf{frontend-web}: Aplicación web ligera desarrollada en Streamlit~\cite{StreamlitDocsa}, encargada únicamente de la visualización y lectura de los ficheros Parquet resultantes, sin poseer lógica de procesamiento pesada.
 \end{itemize}
 
-\imagen{diagramas/arquitectura_general.png}{Diagrama de componentes global del sistema y flujo de datos persistente}
+\figuraApaisadaSinMarco{0.9}{diagramas/diagrama_componentes.pdf}{Diagrama de componentes global del sistema y flujo de datos persistente}{diagramas/diagrama_componentes.pdf}{keepaspectratio}
 
 Ambos backends (\textit{ingestion} y \textit{processing}) implementan
 estrictamente una \textbf{Arquitectura Hexagonal}, estructurando su código

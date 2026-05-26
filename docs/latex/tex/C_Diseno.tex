@@ -93,14 +93,10 @@ Para cada algoritmo utilizado (\acrshort{lda}~\cite{blei2003lda}, BERTopic~\cite
     \item \texttt{*\_topic\_coordinates.parquet}: Almacena las coordenadas dimensionales (normalmente proyecciones 2D) precalculadas, vitales para poder renderizar mapas de distancia de temas de manera instantánea en el \textit{frontend}.
 \end{itemize}
 
-\begin{landscape}
-    \begin{figure}[p]
-        \centering
-        \includegraphics[width=1.4\textwidth, height=1\textheight]{diagramas/diagrama_datos.png}
-        \caption{Diagrama de flujo de datos del sistema}
-        \label{diagramas/diagrama_datos.png}
-    \end{figure}
-\end{landscape}
+\figuraApaisadaSinMarco{0.8}{diagramas/diagrama_datos.pdf}
+{Diagrama de flujo de datos del sistema}
+{fig:diagramas/diagrama_datos.pdf}
+{keepaspectratio}
 
 \section{Diseño arquitectónico}
 Teniendo en cuenta que el sistema requiere orquestar llamadas a servicios
@@ -154,10 +150,46 @@ A continuación, se desglosa el comportamiento detallado de cada una de estas
 tres etapas del pipeline:
 
 \subsection{Procesos de Ingesta}
-\imagen[H]{diagramas/pipeline_ingesta.png}{Diagrama de actividad de la fase de Ingesta}
+\imagen[H]{diagramas/pipeline_ingesta.pdf}{Diagrama de actividad de la fase de Ingesta}
 
-\subsection{Procesos de Procesamiento}
-\imagen[H]{diagramas/pipeline_procesamiento.png}{Diagrama de actividad de la fase de Procesamientoo}
+El módulo de ingesta se encarga de la recolección inicial y homogeneización del
+corpus documental. En la Figura~\ref{fig:diagramas/pipeline_ingesta.pdf} se
+muestra el diagrama de actividad que gobierna las decisiones lógicas y filtros
+de este proceso. Por su parte, la interacción procedimental y el paso de
+mensajes entre las distintas capas se detallan en el diagrama de secuencia de
+la Figura~\ref{fig:diagramas/sequence-ingestion.pdf}.
+
+\figuraApaisadaSinMarco{0.9}{diagramas/sequence-ingestion.pdf}
+{Diagrama de secuencia detallado de la fase de ingesta}
+{fig:diagramas/sequence-ingestion.pdf}
+{keepaspectratio}
+
+\subsection{Procesamiento}
+\imagen[H]{diagramas/pipeline_procesamiento.pdf}{Diagrama de actividad de la fase de Procesamiento}
+
+El procesamiento de los datos es la etapa de mayor peso analítico y científico
+del sistema. El flujo operativo se ilustra en el diagrama de actividad de la
+Figura~\ref{fig:diagramas/pipeline_procesamiento.pdf}. Las llamadas e
+interacciones detalladas del pipeline de optimización e inferencia se recogen
+en el diagrama de secuencia de la
+Figura~\ref{fig:diagramas/sequence-processing.pdf}.
+
+\figuraApaisadaSinMarco{0.9}{diagramas/sequence-processing.pdf}
+{Diagrama de secuencia de la optimización de hiperparámetros y ajuste del modelo}
+{fig:diagramas/sequence-processing.pdf}
+{keepaspectratio}
 
 \subsection{Flujo de la Interfaz de Visualización}
 \imagen[H]{diagramas/pipeline_interfaz.png}{Diagrama de actividad del módulo de Interfaz Visual}[0.6]
+
+La capa visual y de interacción con el usuario se describe de forma conceptual
+en el diagrama de actividad de la
+Figura~\ref{fig:diagramas/pipeline_interfaz.png}. Las operaciones de
+intercambio dinámico de datos se encuentran detalladas en el diagrama de
+secuencia de la Figura~\ref{fig:diagramas/sequence-frontend.pdf}.
+
+\figuraApaisadaSinMarco{0.9}{diagramas/sequence-frontend.pdf}
+{Diagrama de secuencia del flujo de visualización web interactiva en Streamlit}
+{fig:diagramas/sequence-frontend.pdf}
+{keepaspectratio}
+
