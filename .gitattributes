@@ -1,0 +1,13 @@
+__pycache__/ export-ignore
+.idea/ export-ignore
+.vscode/ export-ignore
+.mypy_cache/ export-ignore
+.pytest_cache/ export-ignore
+.devcontainer/ export-ignore
+out/ export-ignore
+prototypes/ export-ignore
+data/logs/ export-ignore
+data/ingestion/ export-ignore
+data/processing/ export-ignore
+docs/ export-ignore
+tests/ export-ignore
