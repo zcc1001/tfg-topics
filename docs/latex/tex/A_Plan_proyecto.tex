@@ -58,7 +58,7 @@ evidenciar el grado de cumplimiento.
 
 En total se completaron doce iteraciones (Sprint 0 a Sprint 12), con cierre
 íntegro de tareas en todos los casos. La evolución del proyecto siguió una
-secuencia progresiva: arranque y viabilidad inicial, construcción del dataset,
+secuencia progresiva: arranque y viabilidad inicial, construcción del conjunto de datos,
 consolidación de los módulos de ingesta y procesamiento, mejoras funcionales y
 visuales en la interfaz, y una fase final orientada a revisión con usuarios,
 estabilidad e internacionalización. La distribución temporal y el grado de
@@ -75,7 +75,7 @@ Tabla~\ref{tabla:sprints_cronologia}.
     S0 & 29/10/2025  & Puesta en marcha del proyecto: configuración inicial, investigación de herramientas y arranque de documentación.  & 5/5 & 100\% \\
     S1 & 20/11/2025  & Validación y comparación de modelos de temas (LDA, Top2Vec, BERTopic, FASTopic).                                  & 6/6 & 100\% \\
     S2 & 04/12/2025  & Hiperparametrización y primeras visualizaciones de resultados experimentales.                                     & 6/6 & 100\% \\
-    S3 & 17/12/2025  & Construcción del dataset base con \textit{issues} y \textit{readmes} de repositorios seleccionados.               & 4/4 & 100\% \\
+    S3 & 17/12/2025  & Construcción del conjunto de datos base con \textit{issues} y \textit{readmes} de repositorios seleccionados.               & 4/4 & 100\% \\
     S4 & 30/12/2025  & Extensión de la ingesta a memorias en \LaTeX{} y puesta en marcha del esqueleto de \textit{processing}.           & 4/4 & 100\% \\
     S5 & 15/01/2026  & Implementación del módulo de procesamiento y consolidación del flujo analítico.                                   & 7/7 & 100\% \\
     S6 & 29/01/2026  & Conversión a aplicación desplegable, mejoras de experiencia de usuario y extensión funcional.                     & 3/3 & 100\% \\
@@ -153,6 +153,6 @@ que han sido solventados:
 
 \begin{itemize}
     \item \textbf{Protección de datos personales:} Dado que el sistema requiere analizar metadatos e incidencias de repositorios que actúan como \acrshort{tfg}, existía el riesgo de vulnerar la privacidad de autores y tutores. Para solucionarlo, el módulo de extracción se ha configurado para \textbf{anonimizar intencionalmente} cualquier nombre o dato de contacto recopilado. Además, la información es extraída de forma no invasiva \textbf{exclusivamente desde repositorios públicos} de GitHub, acatando escrupulosamente los Términos de Servicio de su \acrshort{api} para usos académicos.
-    \item \textbf{Licenciamiento del software:} El código desarrollado hace uso de librerías de terceros (tales como \textit{Pandas} o \textit{Streamlit}) amparadas bajo licencias permisivas (BSD o Apache 2.0). Para asegurar la mayor interoperabilidad y evitar bloqueos en usos posteriores por otros investigadores, el código fuente completo de este proyecto será liberado en GitHub bajo la \textbf{Licencia MIT}. Esta licencia, al ser altamente permisiva, garantiza que cualquier usuario pueda modificar y distribuir el código base, requiriendo únicamente preservar el aviso de derechos de autor original, lo que consolida por completo su \textbf{viabilidad legal}.
+    \item \textbf{Licenciamiento del software:} El código desarrollado hace uso de librerías de terceros (tales como Pandas o Streamlit) amparadas bajo licencias permisivas (BSD o Apache 2.0). Para asegurar la mayor interoperabilidad y evitar bloqueos en usos posteriores por otros investigadores, el código fuente completo de este proyecto será liberado en GitHub bajo la \textbf{Licencia MIT}. Esta licencia, al ser altamente permisiva, garantiza que cualquier usuario pueda modificar y distribuir el código base, requiriendo únicamente preservar el aviso de derechos de autor original, lo que consolida por completo su \textbf{viabilidad legal}.
 \end{itemize}
 

@@ -32,6 +32,8 @@
 \newacronym{ects}{ECTS}{European Credit Transfer and Accumulation System}
 \newacronym{lda}{LDA}{Latent Dirichlet Allocation}
 \newacronym{nlp}{NLP}{Natural Language Processing}
+\newacronym{llm}{LLM}{Large Language Model}
+\newacronym{rag}{RAG}{Retrieval-Augmented Generation}
 \newacronym{ai}{AI}{Artificial Intelligence}
 \newacronym{nltk}{NLTK}{Natural Language Tool Kit}
 \newacronym{bow}{BOW}{Bag of Words}
@@ -51,10 +53,12 @@
 \newacronym{api}{API}{Application Programming Interface}
 \newacronym{ghcr}{GHCR}{GitHub Container Registry}
 \newacronym{url}{URL}{Uniform Resource Locator}
+\newacronym{pdf}{PDF}{Portable Document Format}
 \newacronym{io}{I/O}{Input/Output}
 \newacronym{uml}{UML}{Unified Modeling Language}
 \newacronym{dfd}{DFD}{Data Flow Diagram}
 \newacronym[plural={CU}, longplural={Casos de Uso}]{cu}{CU}{Caso de Uso}
+\newacronym{eac}{EAC}{Entorno Como Código}
 
 % Glosario
 
@@ -569,32 +573,34 @@
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-  \nombreProyecto es una aplicación orientada al análisis temático
-  cualitativo de los textos asociados a los \acrfull{tfg}. El objetivo
-  principal es facilitar a docentes, investigadores y estudiantes la
-  exploración del contenido académico, la identificación de tendencias y la
-  comparación de resultados entre cursos.
+  \nombreProyecto{} es una aplicación orientada al análisis temático cualitativo de la información textual asociada a los \acrfull{tfg}. El sistema se orienta a dos perfiles analíticos diferenciados. En el ámbito de la gestión académica, proporciona a docentes y estudiantes herramientas para mejorar la exploración de contenidos de \Acrshort{tfg}, permitiendo identificar las líneas temáticas asociadas a tutores específicos o a proyectos con mayores calificaciones. Por otro lado, en el ámbito de la investigación, facilita herramientas avanzadas para la construcción de modelos de temas orientadas a evaluar y comparar la coherencia metodológica de múltiples modelos.
 
-  El sistema parte de un conjunto de datos construido a partir de repositorios
-  públicos en GitHub, incluyendo contenido de memorias de \acrshort{tfg} en
-  formato \LaTeX{}, ficheros \textit{readmes}, \textit{issues} y
-  \text{abstracts}. Sobre este corpus se aplica un flujo de preprocesamiento y
-  modelado de temas mediante \textbf{Latent Dirichlet Allocation
-    (LDA)}~\cite{blei2003lda},
-  \textbf{Top2Vec}~\cite{angelovTop2VecDistributedRepresentations2020},
-  \textbf{BERTopic}~\cite{grootendorstBERTopicNeuralTopic2022} y
-  \textbf{FASTopic}~\cite{2024arXiv240517978W}.
+  Para alcanzar estos objetivos, se ha creado un conjunto de datos con 351
+  instancias correspondientes a \Acrshort{tfg} del Grado de Ingeniería
+  Informática presentados en la Universidad de Burgos. Por cada proyecto se
+  distinguen dos tipos de información: una académica, resultante de la gestión
+  interna de la asignatura, y una técnica extraída de los repositorios de GitHub
+  de los estudiantes, la cual incluye memorias en formato LaTeX, archivos
+  \textit{README}, \textit{issues} y resúmenes.
 
-  El trabajo se centra en el diseño e implementación de la solución, así como en
-  la comparación de los modelos para valorar su utilidad en un contexto académico
-  real. Como resultado, se obtiene una herramienta reproducible para apoyar la
-  gestión del conocimiento y el análisis de la producción académica
-  universitaria.
+  Sobre este corpus se aplican técnicas de procesamiento del lenguaje natural
+  (\Acrshort{nlp}) y la optimización mediante hiperparametrización en la
+  construcción del modelado de temas. Se evalúan cuatro estrategias: una
+  aproximación tradicional basada en bolsa de palabras mediante \acrfull{lda} y
+  tres enfoques basados en embeddings latentes: \textbf{Top2Vec},
+  \textbf{BERTopic} y \textbf{FastTopic}. Como resultado, se ha diseñado e
+  implementado una aplicación web mediante el framework \textit{Streamlit}. La
+  plataforma permite analizar dinámicamente los temas de los distintos modelos
+  obtenidos con la información del histórico de los \Acrshort{tfg} de la
+  institución junto con la coherencia de los mismos. Un despliegue de la
+  aplicación está disponible en
+  \url{https://huggingface.co/spaces/zcc1001/tfg-topics}.
+
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-  Análisis temático, Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG, Análisis de Datos, Procesamiento del Lenguaje Natural, Ingeniería Informática.
+  Análisis temático, Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG,, Procesamiento del Lenguaje Natural, Streamlit.
 \end{abstract}
 
 \clearpage
@@ -602,28 +608,30 @@
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-  \nombreProyecto is an application for qualitative thematic analysis of
-  texts related to Final Degree Projects. Its main goal is to support teachers,
-  researchers, and students in exploring academic content, identifying trends,
-  and comparing results across academic years.
+  \nombreProyecto{} is an application for qualitative thematic analysis of textual information associated with Final Degree Project reports (\Acrshort{tfg}). The system targets two distinct analytical user profiles. In the context of academic management, it provides teachers and students with tools to improve exploration of \Acrshort{tfg} content, enabling identification of thematic lines linked to specific supervisors or to projects with higher grades. In the research context, it offers advanced tools for building topic models aimed at evaluating and comparing the methodological coherence of multiple models.
 
-  The system uses a dataset built from public GitHub repositories, including
-  \LaTeX{} reports, readme files, issues, and academic abstracts. A full text
-  processing and topic modeling pipeline is applied using \textbf{Latent
-    Dirichlet Allocation (LDA)}~\cite{blei2003lda},
-  \textbf{Top2Vec}~\cite{angelovTop2VecDistributedRepresentations2020},
-  \textbf{BERTopic}~\cite{grootendorstBERTopicNeuralTopic2022}, and
-  \textbf{FASTopic}~\cite{2024arXiv240517978W}.
+  To achieve these objectives, a dataset of 351 instances was created,
+  corresponding to \Acrshort{tfg} projects from the Computer Engineering degree
+  at the University of Burgos. For each project, two types of information are
+  distinguished: academic information, resulting from the course’s internal
+  management, and technical information extracted from students’ GitHub
+  repositories, including LaTeX reports, \textit{README} files, \textit{issues},
+  and abstracts.
 
-  This work focuses on the design and implementation of the solution, together
-  with a comparative analysis of the selected models in a real academic setting.
-  The final result is a reproducible tool that supports academic knowledge
-  management and thematic exploration.
+  On this corpus, natural language processing techniques (\Acrshort{nlp}) and
+  hyperparameter optimization are applied in topic model construction. Four
+  strategies are evaluated: a traditional bag-of-words approach based on
+  \acrfull{lda} and three latent embedding-based approaches: Top2Vec, BERTopic,
+  and FastTopic. As a result, a web application was designed using the Streamlit
+  framework. The platform enables dynamic analysis of topics from the different
+  models obtained from the institution’s historical \Acrshort{tfg} data, together
+  with their coherence. A deployment of the application is available at
+  \url{https://huggingface.co/spaces/zcc1001/tfg-topics}.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-  Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG, Data Analysis, NLP, Computer Science.
+  Topic Modeling, LDA, BERTopic, Top2Vec, FASTopic, TFG, NLP, Streamlit.
 \end{abstract}
 
 \clearpage

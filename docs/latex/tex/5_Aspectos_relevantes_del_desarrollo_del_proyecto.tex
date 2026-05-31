@@ -12,7 +12,7 @@ documentos en LaTeX de los distintos \acrshort{tfg}, se decidió implementar un
 proceso específico de limpieza y normalización del texto, desacoplado del resto
 del sistema para facilitar su reutilización y evolución. También debido a la
 necesidad de experimentar con distintos enfoques de modelado de temas, se optó
-por diseñar una interfaz que permitiera la abstracción y asi integrar
+por diseñar una interfaz que permitiera la abstracción y así integrar
 diferentes proveedores de modelos. Estas necesidades influyeron directamente en
 el diseño del sistema, requiriendo una arquitectura flexible que permitiera
 integrar múltiples modelos sin modificar la lógica principal de la aplicación.
@@ -31,11 +31,11 @@ independientes:
 \end{itemize}
 
 Esta división facilitó el desarrollo incremental y permitió evolucionar cada
-módulo con un acoplamiento mínimo. En los módulos de \textit{backend} se aplicó
-una arquitectura hexagonal~\cite{HexagonalArchitectureClean2022}, separando
-lógica de dominio, \acrshortpl{cu} y adaptadores de infraestructura. En la
-práctica, este enfoque mejoró la testabilidad, simplificó la sustitución de
-componentes y redujo el impacto de cambios en librerías externas.
+módulo con un acoplamiento mínimo. En los módulos de backend se aplicó una
+arquitectura hexagonal~\cite{HexagonalArchitectureClean2022}, separando lógica
+de dominio, \acrshortpl{cu} y adaptadores de infraestructura. En la práctica,
+este enfoque mejoró la testabilidad, simplificó la sustitución de componentes y
+redujo el impacto de cambios en librerías externas.
 
 \section{Gestión de los datos y almacenamiento de resultados}
 
@@ -56,7 +56,7 @@ configuraciones de hiperparámetros y métricas asociadas.
 La persistencia se organizó en dos niveles:
 \begin{itemize}
       \item \texttt{data/ingestion}: datasets base (\textit{issues}, \textit{readmes}, \textit{thesis}, \textit{abstracts}, metadatos).
-      \item \texttt{data/processing/<modelo>}: artefactos de entrenamiento y evaluación por modelo/dataset (temas, métricas, parámetros, mejores hiperparámetros y ensayos de optimización).
+      \item \texttt{data/processing/<modelo>}: artefactos de entrenamiento y evaluación por modelo/conjunto de datos (temas, métricas, parámetros, mejores hiperparámetros y ensayos de optimización).
 \end{itemize}
 
 Este contrato explícito de ficheros permitió desacoplar ejecución y análisis:
@@ -97,6 +97,27 @@ Durante la implementación se priorizó que el proyecto pudiera ejecutarse tanto
 en contextos de uso final como en entornos de desarrollo. Para ello se definió
 una orquestación centralizada con \texttt{Makefile} y Docker
 Compose~\cite{DockerManuals}.
+
+Un aspecto destacable de este \acrshort{tfg} ha sido la aplicación de prácticas
+de gestión del ciclo de desarrollo ya descritas en el capítulo de Técnicas y
+herramientas: control de versiones con Git, planificación y seguimiento con
+GitHub Issues y Zube, automatización de validaciones mediante integración
+continua, y gestión de versiones de entrega. Estas prácticas se integraron
+directamente con la estrategia de despliegue para garantizar trazabilidad y
+reproducibilidad del sistema. Como evidencia pública del proceso puede
+consultarse el repositorio oficial del proyecto en
+\url{https://github.com/zcc1001/tfg-topics}. Para más detalle operativo sobre
+herramientas y flujos, véase el Capítulo 4.
+
+En este contexto, \textbf{GitHub Actions} se utilizó para automatizar
+\textit{workflows} de validación continua sobre cambios de código e
+integraciones, ejecutando pruebas y verificaciones de calidad. Asimismo,
+\textbf{\acrshort{ghcr}} se empleó como registro de contenedores para publicar
+imágenes versionadas consumidas por el modo \texttt{MODE=release}, reduciendo
+el tiempo de puesta en marcha en entornos nuevos. Por último, \textbf{GitHub
+      Releases} se utilizó para gestionar versiones estables del proyecto y
+centralizar artefactos y notas de versión, reforzando la trazabilidad de cada
+entrega.
 
 El flujo de trabajo contempla tres modos, cuya arquitectura de decisión se
 ilustra en la Figura~\ref{fig:diagramas/modos_ejecucion.png}:

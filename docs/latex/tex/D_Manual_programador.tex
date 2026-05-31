@@ -260,7 +260,7 @@ pytest tests/
 \begin{itemize}
     \item \textbf{Error de CSV no encontrado en ingesta:} Verificar \texttt{DATA\_DIR} y \texttt{REPOS\_CSV\_FILE\_NAME}. El sistema espera encontrar el fichero en \texttt{<DATA\_DIR>/<REPOS\_CSV\_FILE\_NAME>}.
     \item \textbf{Límites de GitHub alcanzados:} Definir \texttt{GITHUB\_TOKEN} antes de la ingesta para aumentar cuota de peticiones.
-    \item \textbf{Frontend sin datos:} Confirmar que existen ficheros Parquet de procesamiento para el modelo y dataset seleccionados.
+    \item \textbf{Frontend sin datos:} Confirmar que existen ficheros Parquet de procesamiento para el modelo y el conjunto de datos seleccionados.
     \item \textbf{Modelo no soportado:} Revisar que el valor de \texttt{--model} pertenezca al conjunto implementado (\texttt{lda}, \texttt{bertopic}, \texttt{top2vec}, \texttt{fastopic}).
     \item \textbf{Resultados incoherentes tras cambiar datos:} Relanzar \texttt{make process-all} para forzar regeneración completa de resultados.
 \end{itemize}

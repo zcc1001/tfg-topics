@@ -16,11 +16,22 @@ Este trabajo tiene como finalidad el desarrollo de una aplicación orientada al
 análisis cualitativo de los textos asociados a \acrshort{tfg} del Grado en
 Ingeniería Informática de la Universidad de Burgos. Permitiendo explorar,
 comparar resultados, detectar tendencias temáticas y facilitar la consulta de
-contenido académico a lo largo del tiempo. Para ello, se parte de un conjunto
-de datos obtenido de repositorios públicos en GitHub, centrado en contenido de
-memorias de \acrshort{tfg} en formato \LaTeX{}, ficheros \textit{readmes},
-\textit{issues} y \textit{abstracts}. Como se muestra en la
-Tabla~\ref{tabla:fuentes_textuales_alcance}.
+contenido académico a lo largo del tiempo. Para la consecución de los objetivos
+del sistema, se ha construido un conjunto de datos a partir del registro
+histórico de los \acrfull{tfg} defendidos en la Universidad de Burgos. Por cada
+proyecto integrado en el corpus, se distinguen y extraen dos tipos de
+información claramente diferenciados:
+
+\textbf{Metadatos de Gestión Académica}: Información estructurada provista por los
+responsables de la asignatura, que contempla variables institucionales como el
+curso lectivo, la calificación final obtenida y la asignación de los tutores
+correspondientes.
+
+\textbf{Artefactos del Repositorio de Software}: Información técnica y textual
+desarrollada por el estudiante en su repositorio remoto de GitHub. Este flujo
+de datos abarca el código fuente de las memorias en formato \LaTeX, los
+archivos \textit{README}, el histórico de incidencias (\textit{issues}) y los resúmenes
+(\textit{abstracts}) del proyecto. Se muestra un descripción más detallada de los estos elementos documentales asociados a los \acrshort{tfg} en la Tabla~\ref{tabla:fuentes_textuales_alcance}.
 
 \tablaSmall{Fuentes textuales incluidas en el alcance del proyecto}
 {l p{0.7\textwidth}}
@@ -32,28 +43,47 @@ Tabla~\ref{tabla:fuentes_textuales_alcance}.
       \textit{abstracts} & Resúmenes académicos para análisis comparativo de temas de forma directa. \\
 }
 
-Sobre este corpus se aplican técnicas de modelado de temas con distintos
-enfoques, entre ellos: \acrfull{lda}~\cite{blei2003lda},
-\textbf{Top2Vec}~\cite{gTop2vecTopicModeling2022},
+Sobre este corpus se aplican cuatro técnicas de modelado de temas, una clásica
+basada en \acrfull{bow} (\acrfull{lda}~\cite{blei2003lda}), y tres enfoques
+basados en \textit{embeddings}
+(\textbf{Top2Vec}~\cite{gTop2vecTopicModeling2022},
 \textbf{BERTopic}~\cite{grootendorstBERTopicNeuralTopic2022} y
-\textbf{FASTopic}~\cite{2024arXiv240517978W}. El propósito no es únicamente
+\textbf{FASTopic}~\cite{2024arXiv240517978W}). El propósito no es únicamente
 obtener resultados automáticos, sino también comparar el comportamiento de los
-modelos y estudiar su utilidad en un contexto académico real.
+modelos y estudiar su utilidad en un contexto académico real. La comparación de
+modelos implica procesos de construcción basados en la optimización de
+parámetros y medidas de coherencia.
 
-La solución implementada se estructura en tres módulos: ingesta de datos,
-procesamiento/modelado y visualización. Esta separación permite desacoplar
-responsabilidades, mejorar la mantenibilidad del sistema y facilitar su
-reproducibilidad en distintos entornos de ejecución.
+La solución implementada se basa en una arquitectura hexagonal con tres
+módulos: ingesta de datos, procesamiento y visualización. Esta separación
+permite desacoplar responsabilidades, mejorar la mantenibilidad del sistema y
+facilitar su reproducibilidad en distintos entornos de ejecución.
 
-Desde el punto de vista teórico, este proyecto se fundamenta en el uso de
-técnicas de modelado de temas, una tarea de aprendizaje no supervisado donde se
-identifica la estructura temática de un grupo de
-documentos~\cite{atkinson-abutridyGrandesModelosLenguaje2023}. Al utilizar
-estas técnicas es posible encontrar temas relevantes para organizar, buscar o
-comprender grandes cantidades de datos en formato de texto. Estos modelos se
-basan en el supuesto de que cada documento puede representarse como una
-combinación de temas, donde cada tema es una distribución de términos con
-distinta relevancia probabilística.
+Desde el punto de vista teórico, este proyecto se fundamenta en la aplicación
+de técnicas de \gls{topic_modeling} (\textit{Topic Modeling}), una subárea del
+aprendizaje no supervisado cuyo propósito es identificar la estructura temática
+latente en un conjunto de documentos
+~\cite{atkinson-abutridyGrandesModelosLenguaje2023}. Estos modelos matemáticos
+parten del supuesto de que cada documento puede representarse como una
+combinación finita de temas, donde cada tema se define, a su vez, como una
+distribución de probabilidad sobre un vocabulario de términos.
+
+La utilidad analítica de esta abstracción probabilística se proyecta
+directamente sobre los distintos perfiles de usuario del sistema:
+
+\textbf{Tutores y Estudiantes}: Se benefician de la capacidad del modelo para condensar
+y organizar grandes corpus textuales no estructurados. Esto les permite
+optimizar la exploración y búsqueda semántica de información académica,
+facilitando la identificación de las líneas de trabajo asociadas a directores
+específicos o la categorización de los proyectos con mayor rendimiento
+académico.
+
+\textbf{Investigadores}: Encuentran su utilidad en la granularidad del análisis de
+temas. Al examinar la distribución e importancia probabilística de los
+términos, los investigadores disponen de las herramientas necesarias para
+evaluar y comparar la coherencia entre múltiples estrategias de construcción de
+modelos de temas, permitiendo el descubrimiento y seguimiento de tendencias
+científicas emergentes.
 
 Esta memoria se estructura del siguiente modo: en \textbf{Objetivos del
       proyecto} se definen el objetivo general y los objetivos específicos; en
@@ -65,3 +95,13 @@ abordadas; en \textbf{Trabajos relacionados} se analizan propuestas similares y
 se compara su enfoque con el de este trabajo; y, por último, en
 \textbf{Conclusiones y líneas de trabajo futuras}, se recogen los resultados
 obtenidos y las posibles extensiones del sistema.
+
+\section{Materiales adjuntos}
+A continuación una lista con los recursos entregados junto con esta memoria:
+
+\begin{itemize}
+      \item Repositorio del proyecto: \url{https://github.com/zcc1001/tfg-topic}
+      \item Wiki del proyecto: \url{https://github.com/zcc1001/tfg-topics/wiki}
+      \item Despliege de la aplicación:
+            \url{https://huggingface.co/spaces/zcc1001/tfg-topics}
+\end{itemize}

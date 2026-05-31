@@ -10,31 +10,53 @@ de la arquitectura.
 
 \imagen{tech_stack.png}{Esquema de las principales tecnologías y librerías utilizadas.}{0.9}
 
-\section{Metodologías de desarrollo}
+\section{Marco de trabajo}
 
-El desarrollo del proyecto se llevó a cabo utilizando la metodología ágil
-\acrfull{scrum}~\cite{agile_alliance} de forma adaptada al contexto de un
-proyecto académico individual. Esta metodología permitió una gestión flexible y
-adaptativa del proyecto. El trabajo se organizó en \gls{sprint} de dos semanas,
-donde se definieron objetivos claros y se realizaron revisiones periódicas para
-evaluar el progreso. Frente a metodologías estrictamente secuenciales, este
-enfoque resulta especialmente adecuado en proyectos de carácter experimental,
-como es el caso del modelado de temas, donde los resultados dependen en gran
-medida de la calidad del preprocesado y de la configuración de los modelos.
+El desarrollo de \nombreProyecto{} se llevó a cabo aplicando prácticas ágiles
+basadas en \acrfull{scrum}~\cite{agile_alliance} de forma adaptada al contexto
+de un proyecto académico individual. Este enfoque permitió una gestión flexible
+y adaptativa del proyecto. El trabajo se organizó en \gls{sprint} de dos
+semanas, donde se definieron objetivos claros y se realizaron revisiones
+periódicas para evaluar el progreso. Frente a enfoques estrictamente
+secuenciales, este enfoque resulta especialmente adecuado en proyectos de
+carácter experimental, como es el caso del modelado de temas, donde los
+resultados dependen en gran medida de la calidad del preprocesado y de la
+configuración de los modelos.
 
 Para la planificación de tareas y realizar seguimiento del proyecto se utilizó
-la aplicación web \textbf{Zube}~\cite{zube}. Esta herramienta se integra
-\gls{kanban}.
+la aplicación web Zube~\cite{zube}. Esta herramienta se integra \gls{kanban}.
+Los gráficos burndown se utilizaron junto con el tutor en la reuniones de
+revisión de los sprints.
 
 Para seguir el flujo de trabajo de \acrshort{scrum} y facilitar el proceso de
 desarrollo, en este caso el tutor adoptó los roles de product owner y
-\acrshort{scrum} master.
+\acrshort{scrum} master. Como evidencia de seguimiento, el tablero de Zube del
+proyecto está disponible en \url{https://zube.io/tfg_topics/tfg-topics/}. De
+forma complementaria, la trazabilidad de tareas e incidencias también puede
+consultarse en las \textit{issues} del repositorio de GitHub del proyecto
+\url{https://github.com/zcc1001/tfg-topics/issues}.
 
-\section{Herramientas de gestión de proyectos}
+\section{ Plataforma de Gestión de Ciclo de Vida del Software (DevOps)}
 
-Para la gestión del proyecto se utilizó la plataforma \textbf{GitHub}. Esta
-herramienta permitió el alojamiento y gestión del código fuente, permitiendo
-llevar un \gls{control_versiones} eficiente utilizando Git~\cite{GitReference}.
+Para la gestión del proyecto \nombreProyecto{} se adoptó la plataforma integral
+de GitHub. Esta infraestructura se configuró como núcleo operativo para
+soportar las prácticas del proceso de desarrollo adoptado. Las evidencias de
+ejecución pública se encuentran accesibles en el repositorio oficial del
+proyecto ejecución pueden consultarse en el repositorio oficial del proyecto
+\url{https://github.com/zcc1001/tfg-topics}.
+
+A nivel operativo, el ecosistema de trabajo se articuló en las siguientes
+dimensiones:
+
+\begin{itemize}
+    \item \textbf{Gestión de versiones de código:} Utilizando Git como sistema de control de versiones distribuido, se aplicó un modelo de ramificación que favoreció la trazabilidad de cambios, el aislamiento por funcionalidades y la estabilidad de la rama principal~\cite{GitReference}.
+    \item \textbf{Gestión de tareas y planificación ágil:} El seguimiento del \textit{backlog} y de las iteraciones se instrumentó con GitHub Issues y su integración con los tableros Kanban de Zube, facilitando la vinculación entre tareas, incidencias y \textit{commits}.
+    \item \textbf{Integración continua y control de calidad:} Mediante GitHub Actions  se automatizaron los flujos de trabajo textit{workflows} para ejecutar baterías de pruebas unitarias (\textit{testing}) y análisis estático de calidad de código en cada solicitud de extracción (\textit{pull request}), asegurando la calidad del software.
+    \item \textbf{Construcción de releases y despliegue:} Se definieron canalizaciones automatizadas para empaquetar versiones estables y sostener el despliegue continuo de los componentes de la aplicación.
+    \item \textbf{Gestión del conocimiento y documentación:} Se utilizó GitHub Wiki para centralizar documentación técnica y funcional del sistema, estructurando de manera exhaustiva tanto el manual del programador —detallando la arquitectura hexagonal y la API— como el manual de usuario para la explotación de la interfaz en Streamlit.
+    \item \textbf{Entornos de desarrollo virtualizados (GitHub Codespaces):} Se configuraron \textit{devcontainers} para habilitar entornos estandarizados  e independientes de la máquina local mediante GitHub Codespaces. Esta aproximación de \acrfull{eac} eliminó los conflictos de configuración de dependencias de Python y las librerías de modelado de temas. Asimismo, facilitó la comunicación síncrona y asíncrona con el tutor del proyecto, permitiendo desplegar de manera inmediata entornos efímeros pero completamente funcionales para testear y validar de forma conjunta los nuevos incrementos de software antes de su consolidación en producción.
+    \item \textbf{Ingeniería de software asistida por IA:} GitHub Copilot se empleó como soporte de asistencia técnica en tareas de codificación, refactorización y revisión crítica de código, manteniendo supervisión humana en todo momento. Como evidencia, la incidencia pública \#63 documenta su uso en revisiones y propuestas de mejora: \url{https://github.com/zcc1001/tfg-topics/issues/63}.
+\end{itemize}
 
 \section{Herramientas de desarrollo}
 
@@ -152,13 +174,13 @@ desarrollo, control de versiones y validación continua aplicado.
     Control de versiones & Versionado del código, integración de cambios y
     trazabilidad de decisiones. & Git, GitHub. \\
     Calidad estática & Formateo, orden de importaciones, análisis de estilo y
-    verificación de tipos. & Black, isort, flake8, mypy, pre-commit. \\
+    verificación de tipos. & Black, isort, flake8, mypy, pre-commit, SonarQube. \\
     Pruebas & Ejecución de pruebas unitarias por módulo y validación funcional de
     cambios. & Pytest. \\
     Integración y despliegue & Ejecución reproducible del \gls{pipeline} completo en
-    distintos modos. & Docker Compose, \acrshort{ghcr}, Makefile. \\
+    distintos modos. & Docker Compose, \acrshort{ghcr}, Makefile, GitHub actions. \\
     Documentación & Redacción de memoria técnica y mantenimiento de documentación
-    del proyecto. & LaTeX, Visual Studio Code. \\
+    del proyecto. & LaTeX, Visual Studio Code, Wiki, markdown. \\
 }
 
 \section{Documentación}

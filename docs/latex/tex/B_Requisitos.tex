@@ -17,6 +17,8 @@ interacción del sistema, se definen a continuación los conceptos clave
 relativos al dominio de datos analizado:
 
 \begin{description}
+	\item[\textbf{Metadatos de Gestión Académica:}] Información estructurada del contexto docente del \acrshort{tfg}, procedente del proceso de gestión académica de la asignatura. Incluye variables institucionales como curso lectivo, fechas de asignación/presentación, calificación final, tutores y estudiantes.
+	\item[\textbf{Artefactos del Repositorio de Software:}] Información técnica y textual desarrollada durante la ejecución del \acrshort{tfg} y alojada en repositorios públicos de GitHub. Incluye la memoria en \LaTeX{}, archivos \textit{README}, histórico de \textit{issues} y \textit{abstracts}.
 	\item[\textbf{Trabajo de Fin de Grado (TFG):}] Proyecto académico y práctico obligatorio que los estudiantes de último curso de Ingeniería Informática desarrollan y defienden para demostrar las competencias y conocimientos adquiridos a lo largo de su titulación.
 	\item[\textbf{Readme (Fichero README):}] Archivo de documentación (usualmente en formato Markdown o texto plano) ubicado en la raíz del repositorio de GitHub que proporciona información introductoria del proyecto, instrucciones de configuración, despliegue y uso de la aplicación desarrollada.
 	\item[\textbf{Abstract (Resumen académico):}] Síntesis concisa del trabajo (habitualmente redactada tanto en español como en inglés) que resume de forma compacta los objetivos, la metodología empleada y las conclusiones principales del \Acrshort{tfg}.
@@ -31,7 +33,7 @@ Informática de la Universidad de Burgos disponibles en repositorios públicos d
 GtHub. Para lograrlo, se han definido los siguientes objetivos generales:
 
 \begin{itemize}
-	\item \textbf{Extracción de datos:} Extraer el contenido de las memorias de \acrshort{tfg}, \textit{readmes}, \textit{issues} y \textit{abstracts} de repositorios públicos de GitHub.
+	\item \textbf{Extracción de datos:} Integrar los metadatos de gestión académica y extraer los artefactos del repositorio de software (memorias \acrshort{tfg} en \LaTeX{}, \textit{readmes}, \textit{issues} y \textit{abstracts}) desde repositorios públicos de GitHub.
 	\item \textbf{Implementar procesamiento \acrshort{nlp}:} Normalizar los textos extraídos y prepararlos para el modelado temático.
 	\item \textbf{Entrenar y evaluar algoritmos de modelado de temas:} Entrenar modelos como \acrshort{lda}, BERTopic, Top2Vec y FASTopic para la extracción de temas.
 	\item \textbf{Desarrollar una interfaz web:} Permitir a los investigadores explorar de forma interactiva la distribución de temas y comparar empíricamente el rendimiento de cada modelo.
@@ -46,7 +48,7 @@ Definen las funcionalidades y acciones concretas que el sistema debe ser capaz
 de ejecutar.
 
 \begin{itemize}
-	\item \textbf{RF-1. Extracción de datos:} El sistema debe descargar la información de repositorios a partir de un listado de orígenes parametrizado, comunicándose con la \acrshort{api} de GitHub.
+	\item \textbf{RF-1. Extracción de datos:} El sistema debe descargar los artefactos del repositorio de software a partir de un listado de orígenes parametrizado, comunicándose con la \acrshort{api} de GitHub, e integrarlos con los metadatos de gestión académica disponibles.
 	\item \textbf{RF-2. Preprocesamiento de texto:} El sistema debe aplicar técnicas de procesamiento de lenguaje natural (tokenización, lematización, borrado de \textit{stopwords}) para normalizar el texto.
 	\item \textbf{RF-3. Entrenamiento de modelos:} El sistema debe ser capaz de instanciar y entrenar múltiples algoritmos de modelado de temas sobre el texto preprocesado.
 	\item \textbf{RF-4. Optimización de hiperparámetros:} El sistema debe integrar mecanismos para evaluar y afinar los hiperparámetros de los modelos en busca de la máxima coherencia semántica.
@@ -75,10 +77,10 @@ Para acotar el alcance de las interacciones, se definen a continuación los
 roles o sistemas externos que participan en el sistema analítico:
 
 \begin{description}
-	\item[\textbf{Administrador / Desarrollador (Humano, Primario Backend):}] Perfil con conocimientos técnicos encargado de la configuración del sistema, la puesta en marcha de los entornos y la ejecución desatendida del pipeline de datos en sus etapas de ingesta y procesamiento desde la CLI.
+	\item[\textbf{Administrador / Desarrollador (Humano, Primario Backend):}] Perfil con conocimientos técnicos encargado de la configuración del sistema, la puesta en marcha de los entornos y la ejecución desatendida del \gls{pipeline} de datos en sus etapas de ingesta y procesamiento desde la CLI.
 	\item[\textbf{Usuario Académico (Humano, Primario Frontend):}] Docente o estudiante que busca respuestas funcionales en el corpus analizado. Su objetivo es identificar qué tecnologías se investigan más, cómo evolucionan las temáticas a lo largo de los cursos y qué tendencias existen en los \ACRshortpl{tfg} de Ingeniería Informática, todo ello a través de filtros y distribuciones temporales sencillas y sin necesidad de conocer en detalle el modelado de temas.
 	\item[\textbf{Usuario Técnico / Investigador IA (Humano, Primario Frontend):}] Experto en \acrshort{nlp} que evalúa la calidad científica y estadística de los resultados. Utiliza la interfaz web técnica para analizar proyecciones, comprobar curvas de optimización de hiperparámetros y comparar cuantitativamente las métricas de coherencia entre los algoritmos.
-	\item[\textbf{API de GitHub (Sistema Externo, Secundario):}] Interfaz de programación provista por GitHub que actúa como proveedor de datos externo. Es consumida por el pipeline para descargar de forma automatizada el contenido de las memorias de \acrshort{tfg}, \textit{readmes}, \textit{issues} y \textit{abstracts} del repositorio semilla.
+	\item[\textbf{API de GitHub (Sistema Externo, Secundario):}] Interfaz de programación provista por GitHub que actúa como proveedor de los artefactos del repositorio de software. Es consumida por el \gls{pipeline} para descargar de forma automatizada memorias de \acrshort{tfg}, \textit{readmes}, \textit{issues} y \textit{abstracts} del repositorio semilla.
 \end{description}
 
 \subsection{Diagrama de Casos de Uso}
@@ -92,11 +94,11 @@ A continuación, se documentan de forma tabular los flujos detallados asociados
 a cada uno de estos \acrshortpl{cu}.
 
 % Caso de Uso 1
-\tablaSmallSinColores{CU-1: Ejecutar pipeline de ingesta.}
+\tablaSmallSinColores{CU-1: Ejecutar \gls{pipeline} de ingesta.}
 {p{0.21\textwidth} p{0.71\textwidth}}
 {cu_1}
 {
-	\textbf{CU-1}                 & \textbf{Ejecutar pipeline de ingesta}                                                                                \\
+	\textbf{CU-1}                 & \textbf{Ejecutar \gls{pipeline} de ingesta}                                                                                \\
 }
 {
 	\textbf{Versión}              & 1.0                                                                                                                  \\
@@ -168,13 +170,13 @@ a cada uno de estos \acrshortpl{cu}.
 	\begin{enumerate}
 		\def\labelenumi{\arabic{enumi}.}
 		\tightlist
-		\item El usuario accede a la pestaña de análisis de modelo en el \textit{frontend}.
+		\item El usuario accede a la pestaña de análisis de modelo en el frontend.
 		\item Selecciona mediante un desplegable la fuente de texto y el modelo objetivo.
 		\item El sistema carga bajo demanda la información del modelo.
 		\item El usuario interactúa con los gráficos.
 	\end{enumerate}                                                        \\
 	\textbf{Postcondición}        & El usuario adquiere conclusiones sobre el corpus.                                                         \\
-	\textbf{Excepciones}          & Datos no disponibles si el modelo no fue entrenado (el \textit{frontend} muestra advertencia).            \\
+	\textbf{Excepciones}          & Datos no disponibles si el modelo no fue entrenado (el frontend muestra advertencia).            \\
 	\textbf{Importancia}          & Alta                                                                                                      \\
 }
 
@@ -225,7 +227,7 @@ a cada uno de estos \acrshortpl{cu}.
 	\begin{enumerate}
 		\def\labelenumi{\arabic{enumi}.}
 		\tightlist
-		\item El usuario accede a la pestaña de análisis académico en el \textit{frontend}.
+		\item El usuario accede a la pestaña de análisis académico en el frontend.
 		\item Aplica filtros por rango de años, notas o nombre del tutor si lo desea.
 		\item El sistema actualiza el listado y muestra las fichas de los proyectos
 		      correspondientes.

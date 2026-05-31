@@ -9,11 +9,11 @@ modelado y visualización.
 A nivel de objetivos, se considera que el proyecto se ha cumplido de forma
 satisfactoria. Se ha construido un \gls{pipeline} modular con tres bloques bien
 diferenciados (\textit{backend-ingestion}, \textit{backend-processing} y
-\textit{frontend-web}), con una arquitectura hexagonal en \textit{backend} que
-facilita la mantenibilidad, la escalabilidad y la sustitución de componentes.
-Además, se ha definido un contrato de datos estable en formato Parquet, lo que
-mejora la trazabilidad experimental y desacopla claramente la generación de
-resultados de su consumo en la interfaz.
+\textit{frontend-web}), con una arquitectura hexagonal en backend que facilita
+la mantenibilidad, la escalabilidad y la sustitución de componentes. Además, se
+ha definido un contrato de datos estable en formato Parquet, lo que mejora la
+trazabilidad experimental y desacopla claramente la generación de resultados de
+su consumo en la interfaz.
 
 Desde el punto de vista experimental, se han entrenado y comparado cuatro
 enfoques de modelado de temas (\ACRshort{lda}, BERTopic, Top2Vec y FASTopic)
@@ -50,6 +50,15 @@ exploratorio.
 Como evolución natural del proyecto, se plantean las siguientes líneas:
 
 \begin{itemize}
+      \item Mejora de la interpretación de los temas generados. Actualmente, los temas
+            obtenidos por los modelos se representan mediante distribuciones de
+            probabilidad sobre conjuntos de términos, lo que requiere una interpretación
+            posterior por parte del usuario para identificar de manera precisa la temática
+            asociada. Habitualmente, esta tarea se realiza mediante validación humana. Como
+            línea de trabajo futura, se plantea incorporar modelos grandes de lenguaje
+            (\acrfull{llm}) para automatizar el proceso de etiquetado e interpretación
+            semántica de los temas, ya que las pruebas preliminares realizadas han mostrado
+            resultados satisfactorios en tareas de clasificación e identificación temática.
       \item Ampliar la evaluación con más métricas automáticas (por ejemplo, diversidad
             temática y estabilidad entre ejecuciones) y reforzar la validación humana con
             protocolos estandarizados de evaluación.

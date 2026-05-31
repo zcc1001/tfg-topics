@@ -90,7 +90,7 @@ Para cada algoritmo utilizado (\acrshort{lda}~\cite{blei2003lda}, BERTopic~\cite
     \item \texttt{*\_hyperparameter\_trials.parquet}: Registra el historial completo de todas las iteraciones de prueba durante el \textit{tuning} o ajuste de hiperparámetros.
     \item \texttt{*\_best\_hyperparameters.parquet}: Almacena de forma aislada la mejor configuración de hiperparámetros hallada para ese modelo en concreto.
     \item \texttt{*\_params.parquet}: Contiene el diccionario general de parámetros bajo los que ha sido ejecutado finalmente el modelo.
-    \item \texttt{*\_topic\_coordinates.parquet}: Almacena las coordenadas dimensionales (normalmente proyecciones 2D) precalculadas, vitales para poder renderizar mapas de distancia de temas de manera instantánea en el \textit{frontend}.
+    \item \texttt{*\_topic\_coordinates.parquet}: Almacena las coordenadas dimensionales (normalmente proyecciones 2D) precalculadas, vitales para poder renderizar mapas de distancia de temas de manera instantánea en el frontend.
 \end{itemize}
 
 \figuraApaisadaSinMarco{0.8}{diagramas/diagrama_datos.pdf}
@@ -103,7 +103,7 @@ Teniendo en cuenta que el sistema requiere orquestar llamadas a servicios
 externos, rutinas de \acrshort{nlp} pesadas y varias librerías de modelado
 complejas, plantear un diseño tradicional en capas monolítico habría resultado
 en un código difícil de testear y de mantener. Por esta razón, el núcleo
-principal del \textit{backend} (los módulos \texttt{backend-ingestion} y
+principal del backend (los módulos \texttt{backend-ingestion} y
 \texttt{backend-processing}) se ha modelado siguiendo estrictamente los
 principios de la \textbf{Arquitectura
     Hexagonal}~\cite{HexagonalArchitectureClean2022} (conocida también como patrón
@@ -122,7 +122,7 @@ La separación de responsabilidades se ha organizado en los siguientes bloques:
 En cuanto a la interfaz de usuario (\texttt{frontend-web}), desarrollada
 íntegramente con \texttt{Streamlit}, su diseño arquitectónico es
 intencionadamente minimalista. Actúa simplemente como un cliente de sólo
-lectura que consume los archivos Parquet ya generados por el \textit{backend},
+lectura que consume los archivos Parquet ya generados por el backend,
 delegando toda la complejidad computacional a los módulos de procesamiento
 subyacentes~\cite{StreamlitDocsa}.
 
@@ -132,13 +132,13 @@ subyacentes~\cite{StreamlitDocsa}.
 Por último, el diseño procedimental especifica la secuencia lógica y el flujo
 de los algoritmos que permiten transformar los datos brutos en visualizaciones
 de temas. A nivel global, el ciclo de vida de la información se divide en un
-\textit{pipeline} de tres grandes fases automatizadas (manejadas a través de
+\gls{pipeline} de tres grandes fases automatizadas (manejadas a través de
 \texttt{Makefile} y \textit{Docker Compose}~\cite{DockerManuals}):
 
 \begin{enumerate}
     \item \textbf{Ingesta de datos (\textit{Ingestion}):} El flujo se inicia lanzando consultas parametrizadas contra GitHub para buscar repositorios de \acrshort{tfg}. El algoritmo itera sobre los resultados de la búsqueda, descargando para cada repositorio sus datos básicos, el archivo léame y las incidencias abiertas. Se aplican filtros en tiempo de ejecución para descartar repositorios con información insuficiente, volcando el resultado válido en los primeros ficheros Parquet.
     \item \textbf{Procesamiento y Modelado (\textit{Processing}):} Es el procedimiento central del proyecto. En primer lugar, se ejecuta un algoritmo de preprocesado de texto que normaliza el contenido (tokenización, reducción a lemas, borrado de palabras vacías y limpieza de código Markdown). Tras esto, el flujo pasa a la fase de entrenamiento, donde el sistema puede instanciar de forma genérica cualquiera de los modelos integrados (\acrshort{lda}, BERTopic, etc.). El sistema está programado para permitir el ajuste de hiperparámetros y generar, como salida final, la distribución probabilística de los temas encontrados.
-    \item \textbf{Visualización interactiva (\textit{Frontend}):} El procedimiento final es la exposición de los datos. A medida que el usuario navega por la interfaz de Streamlit, el sistema lee bajo demanda las porciones necesarias de los ficheros Parquet y calcula en caliente las gráficas y métricas comparativas que se solicitan en la pantalla.
+    \item \textbf{Visualización interactiva (frontend):} El procedimiento final es la exposición de los datos. A medida que el usuario navega por la interfaz de Streamlit, el sistema lee bajo demanda las porciones necesarias de los ficheros Parquet y calcula en caliente las gráficas y métricas comparativas que se solicitan en la pantalla.
 \end{enumerate}
 
 A nivel global, la secuencia lógica de control e intercambio de información del

@@ -1,8 +1,8 @@
 \capitulo{3}{Conceptos teóricos}
 
 A continuación se exponen conceptos teóricos que sientan las bases del
-proyecto, cubriendo desde el pre-procesamiento de texto hasta los algoritmos
-avanzados de modelado.
+proyecto, cubriendo desde el procesamiento de lenguaje natural hasta los
+algoritmos avanzados de modelado de temas.
 
 \section{Procesamiento de lenguaje natural}
 
@@ -26,6 +26,33 @@ contexto de este trabajo, las técnicas de \acrshort{nlp} se utilizan para
 preparar los textos de las memorias de \acrshort{tfg}, transformándolos en
 datos estructurados que puedan ser analizados mediante algoritmos de modelado
 de temas.
+
+\subsection{Conjunto de datos para el modelado temático}
+
+Los modelos de temas de este proyecto se construyen a partir de un conjunto de
+datos del registro histórico de los \acrfull{tfg} defendidos en la Universidad
+de Burgos. Dicho conjunto de datos se organiza en dos bloques de información
+claramente diferenciados: \textbf{Metadatos de Gestión Académica} y
+\textbf{Artefactos del Repositorio de Software}. Además, el corpus de trabajo
+está formado por 351 instancias de \acrshort{tfg}.
+
+Los \textbf{Metadatos de Gestión Académica} recogen la información estructurada
+del contexto docente (curso lectivo, fechas de asignación y presentación,
+calificación final, tutores y estudiantes). Este bloque permite segmentar y
+comparar resultados por criterios académicos, por ejemplo para estudiar la
+evolución temporal de temáticas, analizar la distribución de líneas de trabajo
+por tutor o relacionar temas con rangos de calificación.
+
+Por su parte, los \textbf{Artefactos del Repositorio de Software} constituyen
+la evidencia textual y técnica del trabajo desarrollado en cada \acrshort{tfg}
+(memoria en \LaTeX{}, \textit{README}, \textit{issues} y \textit{abstracts}).
+Este bloque es la base lingüística sobre la que se aplican las técnicas de
+\acrshort{nlp} y los algoritmos de modelado de temas para extraer patrones
+semánticos, términos representativos y estructuras temáticas latentes.
+
+Para una descripción completa del dominio, términos y requisitos asociados al
+conjunto de datos (actores, fuentes, restricciones y casos de uso), véase el
+apéndice de Especificación de Requisitos.
 
 \section{Preprocesamiento del textos}
 
@@ -234,7 +261,7 @@ aspectos~\cite{bismiTopicModellingUsing2023a}:
 
 En este \ACRshort{tfg} nos centraremos en el uso de los siguiente modelos:
 \begin{description}
-	\item[\ACRfull{lda}] Es un modelo probabilístico clásico que data
+	\item[\acrfull{lda}] Es un modelo probabilístico clásico que data
 	      de 2003. Se basa en el enfoque de bolsa de palabras (\acrshort{bow}) y asume que los
 	      documentos son una mezcla de temas y los temas una mezcla de palabras. Este es
 	      una referencia fundamental en el modelado de temas~\cite{blei2003lda}. En la
@@ -268,8 +295,8 @@ Dirichlet. En este modelo se asume que cada documento expone una serie de temas
 y cada tema se caracteriza por una distribución de palabras basada en la
 frecuencia de aparición en el documento. Los resultados obtenidos al ejecutar
 el modelo no son deterministas, por lo que se puede obtener un resultado
-distinto en cada ejecución para el mismo
-\textit{dataset}~\cite{phdTopicModelingAlgorithms2023,bismiTopicModellingUsing2023a}.
+distinto en cada ejecución para el mismo conjunto de
+datos~\cite{phdTopicModelingAlgorithms2023,bismiTopicModellingUsing2023a}.
 
 \acrshort{lda} posee dos parámetros~\cite{bhangaleIntroductionTopicModelling2023} que
 debemos ajustar para mejorar los resultados obtenidos:
@@ -313,7 +340,7 @@ Ventajas de Top2Vec~\cite{angelovTop2VecDistributedRepresentations2020}:
 BERTopic es un método de modelado de temas que combina \gls{embeddings}
 semánticos, \gls{reduccion_dimensionalidad} y \gls{clustering} para identificar
 temas en grandes colecciones de texto de manera automática y
-precisa~\cite{grootendorstBERTopicNeuralTopic2022}
+precisa~\cite{grootendorstBERTopicNeuralTopic2022}.
 
 BERTopic se basa en el uso de \acrfull{bert} para generar representaciones
 vectoriales~\gls{embeddings} de los documentos y temas. El proceso se ejecuta
@@ -395,10 +422,10 @@ intervención humana, las más comunes son: perplejidad y coherencia.
 
 \subsubsection{Perplejidad}
 
-Es una medida utilizada en modelos probabilísticos como \acrshort{lda}. Indica
-que tan bien el modelo es capaz de predecir documentos no vistos. Cuanto mas
-baja mejor se considera el desempeño del modelo, implica que el modelo tiene
-una mayor capacidad para anticipar las palabras de textos que no han sido
+Es una medida utilizada en modelos probabilísticos como \acrshort{lda}. indica
+la capacidad del modelo para predecir documentos no vistos. Cuanto mas baja
+mejor se considera el desempeño del modelo, implica que el modelo tiene una
+mayor capacidad para anticipar las palabras de textos que no han sido
 utilizados durante el entrenamiento.
 
 Solo es útil para comparar versiones diferentes del mismo tipo de modelo
@@ -407,7 +434,7 @@ probabilístico (\acrshort{lda}). No es adecuada para modelos basados en
 
 \subsubsection{Coherencia}
 
-Es una métrica que evalúa que tan relacionados están los términos de las
+Es una métrica que evalúa como de relacionados están los términos de las
 palabras más representativas de un tema. Esta métrica permite identificar
 cuantos temas son adecuados para un conjunto de datos
 determinado~\cite{pedroUnderstandingTopicCoherence2022}.
@@ -430,9 +457,9 @@ FASTopic.
 \subsection{Evaluación Humana}
 El investigador revisa la lista de términos que componen cada tema y determina
 si son coherentes. En investigación cualitativa es habitual que varias personas
-evalúen los phdTopicModelingAlgorithms2023 y se calcule el índice de acuerdo
-inter-evaluador. Esto ayuda a evitar que la evaluación dependa de la
-subjetividad de una sola persona~\cite{vajHowEvaluateNovel2023}
+evalúen los resultados y se calcule el índice de acuerdo inter-evaluador. Esto
+ayuda a evitar que la evaluación dependa de la subjetividad de una sola
+persona~\cite{vajHowEvaluateNovel2023}
 
 \section{Hiperparametrización de Modelos}
 Los hiperparámetros son valores configurados por el investigador antes de
@@ -530,7 +557,7 @@ niveles de complejidad y eficiencia:
 \section{Comparación de modelos}
 
 Con el objetivo de visualizar las diferencias de los distintos modelos
-seleccionados, en la Tabla~\ref{tab:comparativa-características-modelos} se
+seleccionados, en la Tabla~\ref{tabla:comparativa-características-modelos} se
 presentan las propiedades de los cuatro algoritmos de modelado de temas
 evaluados. Esta comparación permite visualizar la evolución desde los modelos
 probabilísticos clásicos hacia los más recientes.
