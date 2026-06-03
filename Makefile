@@ -2,6 +2,7 @@
 	help \
 	ingestion \
 	processing \
+	processing-single \
 	frontend \
 	print-mode \
 	start \
@@ -11,7 +12,19 @@
 	pull \
 	docker-build docker-build-ingestion docker-build-processing docker-build-frontend
 
-SHELL := /bin/bash
+ifeq ($(OS),Windows_NT)
+SHELL := cmd
+.SHELLFLAGS := /C
+RUN_INGEST_LOCAL = set PYTHONPATH=backend-ingestion/src&& $(PYTHON) -m ingestion.main --ingest $(INGEST)
+RUN_PROCESSING_LOCAL = set PYTHONPATH=backend-processing/src&& $(PYTHON) -m processing.main --model "$(MODEL)" --dataset "$(DATASET)"
+RUN_FRONTEND_LOCAL = cd $(FRONTEND_DIR) && set PYTHONPATH=src&& $(STREAMLIT) run src/webapp/main.py
+else
+SHELL := /bin/sh
+.SHELLFLAGS := -ec
+RUN_INGEST_LOCAL = PYTHONPATH=backend-ingestion/src $(PYTHON) -m ingestion.main --ingest $(INGEST)
+RUN_PROCESSING_LOCAL = PYTHONPATH=backend-processing/src $(PYTHON) -m processing.main --model "$(MODEL)" --dataset "$(DATASET)"
+RUN_FRONTEND_LOCAL = cd $(FRONTEND_DIR) && PYTHONPATH=src $(STREAMLIT) run src/webapp/main.py
+endif
 
 PYTHON ?= python
 STREAMLIT ?= streamlit
@@ -24,6 +37,15 @@ MODELS ?= bertopic
 DATASETS ?= abstracts
 
 MODE ?= release
+
+PROCESSING_TARGETS := $(foreach model,$(MODELS),$(foreach dataset,$(DATASETS),processing-$(model)-$(dataset)))
+
+define REGISTER_PROCESSING_TARGET
+processing-$(1)-$(2):
+	@"$(MAKE)" --no-print-directory processing-single MODE=$(MODE) MODEL="$(1)" DATASET="$(2)"
+endef
+
+$(foreach model,$(MODELS),$(foreach dataset,$(DATASETS),$(eval $(call REGISTER_PROCESSING_TARGET,$(model),$(dataset)))))
 
 help:
 	@echo "TFG Topics Make targets"
@@ -68,29 +90,24 @@ ifeq ($(MODE),release)
 else ifeq ($(MODE),docker)
 	$(DOCKER_COMPOSE) --profile ingestion run --rm ingestion --ingest $(INGEST)
 else ifeq ($(MODE),local)
-	PYTHONPATH=backend-ingestion/src $(PYTHON) -m ingestion.main --ingest $(INGEST)
+	$(RUN_INGEST_LOCAL)
 else
 	@echo "Invalid MODE: $(MODE). Use release, docker, or local." && exit 1
 endif
 
-processing: print-mode
-	@set -euo pipefail; \
-	fail=0; \
-	for model in $(MODELS); do \
-		for dataset in $(DATASETS); do \
-			echo ">>> processing model=$$model dataset=$$dataset (mode: $(MODE))"; \
-			if [ "$(MODE)" = "release" ]; then \
-				$(DOCKER_COMPOSE_RELEASE) --profile processing run --rm processing --model "$$model" --dataset "$$dataset" || fail=1; \
-			elif [ "$(MODE)" = "docker" ]; then \
-				$(DOCKER_COMPOSE) --profile processing run --rm processing --model "$$model" --dataset "$$dataset" || fail=1; \
-			elif [ "$(MODE)" = "local" ]; then \
-				PYTHONPATH=backend-processing/src $(PYTHON) -m processing.main --model "$$model" --dataset "$$dataset" || fail=1; \
-			else \
-				echo "Invalid MODE: $(MODE)"; exit 1; \
-			fi; \
-		done; \
-	done; \
-	exit $$fail
+processing: print-mode $(PROCESSING_TARGETS)
+
+processing-single:
+	@echo ">>> processing model=$(MODEL) dataset=$(DATASET) (mode: $(MODE))"
+ifeq ($(MODE),release)
+	$(DOCKER_COMPOSE_RELEASE) --profile processing run --rm processing --model "$(MODEL)" --dataset "$(DATASET)"
+else ifeq ($(MODE),docker)
+	$(DOCKER_COMPOSE) --profile processing run --rm processing --model "$(MODEL)" --dataset "$(DATASET)"
+else ifeq ($(MODE),local)
+	$(RUN_PROCESSING_LOCAL)
+else
+	@echo "Invalid MODE: $(MODE). Use release, docker, or local." && exit 1
+endif
 
 frontend: print-mode
 ifeq ($(MODE),release)
@@ -98,7 +115,7 @@ ifeq ($(MODE),release)
 else ifeq ($(MODE),docker)
 	$(DOCKER_COMPOSE) --profile frontend run --rm --service-ports frontend
 else ifeq ($(MODE),local)
-	cd $(FRONTEND_DIR) && PYTHONPATH=src $(STREAMLIT) run src/webapp/main.py
+	$(RUN_FRONTEND_LOCAL)
 else
 	@echo "Invalid MODE: $(MODE). Use release, docker, or local." && exit 1
 endif
@@ -107,10 +124,10 @@ endif
 start: frontend
 
 ingest-all:
-	@$(MAKE) ingestion INGEST="all"
+	@"$(MAKE)" ingestion INGEST="all"
 
 process-all:
-	@$(MAKE) processing MODELS="lda bertopic top2vec fastopic" DATASETS="readmes issues thesis abstracts"
+	@"$(MAKE)" processing MODELS="lda bertopic top2vec fastopic" DATASETS="readmes issues thesis abstracts"
 
 pipeline: ingest-all process-all start
 

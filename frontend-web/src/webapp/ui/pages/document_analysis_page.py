@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.express as px
 import streamlit as st
 
 from webapp.application.usecases.analyze_documents_usecase import (
@@ -252,22 +252,50 @@ def render_document_analysis(
                 .count()
                 .rename(
                     index=lambda tid: topic_label_map.get(
-                        tid, f"{_('document.theme_prefix')} {tid}"
+                        tid,
+                        f"{_('document.theme_prefix')} {tid}",
                     )
                 )
                 .sort_values(ascending=True)
             )
 
-            fig, ax = plt.subplots()
-            tutor_topics.plot(kind="barh", ax=ax)
-            st.pyplot(fig)
-
             if not tutor_topics.empty:
+
+                chart_df = tutor_topics.reset_index().rename(
+                    columns={
+                        "tópico_principal": "Tema",
+                        "document_id": "Documentos",
+                    }
+                )
+
+                fig = px.bar(
+                    chart_df,
+                    x="Documentos",
+                    y="Tema",
+                    orientation="h",
+                    title=f"Especialización temática de {tutor}",
+                    text="Documentos",
+                )
+
+                fig.update_layout(
+                    height=max(350, len(chart_df) * 40),
+                    showlegend=False,
+                    margin=dict(l=20, r=20, t=50, b=20),
+                )
+
+                fig.update_traces(textposition="outside")
+
+                st.plotly_chart(
+                    fig,
+                    use_container_width=True,
+                    key=f"tutor_chart_{tutor}",
+                )
+
                 dominant = tutor_topics.idxmax()
+
                 st.info(_("document.dominant_line").format(dominant=dominant))
 
             st.divider()
-
     if selected_section:
         scroll_to_section(section_anchors.get(selected_section))
 

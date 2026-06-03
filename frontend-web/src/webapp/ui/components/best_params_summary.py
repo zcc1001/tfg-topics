@@ -20,7 +20,6 @@ def render_best_params_summary(best_params_df: pd.DataFrame) -> None:
 
     col1.metric("Modelo", row["model"])
     col2.metric("Best score (coherence)", f"{row['best_score']:.3f}")
-    col3.metric("Num. tópicos", int(row.get("num_topics", 0)))
 
     st.markdown("**Parámetros seleccionados:**")
 
