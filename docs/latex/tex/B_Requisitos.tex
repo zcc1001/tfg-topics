@@ -91,7 +91,8 @@ El panorama general de interacciones queda plasmado en el diagrama de
 
 \subsection{Fichas Tabulares de Casos de Uso}
 A continuación, se documentan de forma tabular los flujos detallados asociados
-a cada uno de estos \acrshortpl{cu}.
+a cada uno de estos \acrshortpl{cu}, integrando los correspondientes casos de
+prueba para cada funcionalidad.
 
 % Caso de Uso 1
 \tablaSmallSinColores{CU-1: Ejecutar \gls{pipeline} de ingesta.}
@@ -120,6 +121,7 @@ a cada uno de estos \acrshortpl{cu}.
 	\textbf{Postcondición}        & Se han generado los archivos con los datos extraídos.                                                    \\
 	\textbf{Excepciones}          & Fallo de red, token expirado o repositorios eliminados (se registran en los \textit{logs} sin detener la ejecución). \\
 	\textbf{Importancia}          & Alta                                                                                                                 \\
+	\textbf{Casos de prueba}      & \textbf{Prueba 1 - Ingesta exitosa:} Verificar que el pipeline lee el \acrshort{csv} semilla y descarga todos los artefactos de GitHub generando archivos Parquet poblados. \newline \textbf{Prueba 2 - Error de Red/Token:} Validar que si el token es inválido o no hay red, el sistema captura el error y registra los avisos en el archivo de log sin detener la ejecución. \\
 }
 
 % Caso de Uso 2
@@ -150,6 +152,7 @@ a cada uno de estos \acrshortpl{cu}.
 	\textbf{Postcondición}        & Se han generado los ficheros con los resultados analíticos correspondiente a cada modelo. \\
 	\textbf{Excepciones}          & Insuficiente memoria RAM para cargar un corpus completo (se aborta el hilo).                                    \\
 	\textbf{Importancia}          & Alta                                                                                                            \\
+	\textbf{Casos de prueba}      & \textbf{Prueba 1 - Entrenamiento exitoso:} Comprobar que tras leer los archivos Parquet de ingesta, el preprocesamiento \acrshort{nlp} limpia el texto, se entrenan los cuatro modelos y se guardan las métricas. \newline \textbf{Prueba 2 - Límite de memoria:} Validar el comportamiento del sistema cuando el volumen de textos del corpus es muy elevado, asegurando que no haya bloqueos o desbordamientos de memoria descontrolados. \\
 }
 
 % Caso de Uso 3
@@ -178,6 +181,7 @@ a cada uno de estos \acrshortpl{cu}.
 	\textbf{Postcondición}        & El usuario adquiere conclusiones sobre el corpus.                                                         \\
 	\textbf{Excepciones}          & Datos no disponibles si el modelo no fue entrenado (el frontend muestra advertencia).            \\
 	\textbf{Importancia}          & Alta                                                                                                      \\
+	\textbf{Casos de prueba}      & \textbf{Prueba 1 - Exploración correcta:} Verificar que al seleccionar un modelo y fuente en el menú desplegable, la interfaz carga interactivamente los gráficos de distribución y palabras clave de forma inmediata. \newline \textbf{Prueba 2 - Datos no disponibles:} Confirmar que si se intenta cargar un modelo no entrenado, la interfaz web muestra un mensaje de advertencia amigable en lugar de colapsar. \\
 }
 
 % Caso de Uso 4
@@ -207,6 +211,7 @@ a cada uno de estos \acrshortpl{cu}.
 	\textbf{Postcondición}        & Ninguna alteración del estado del sistema.                                                                            \\
 	\textbf{Excepciones}          & Ninguna.                                                                                                              \\
 	\textbf{Importancia}          & Media                                                                                                                 \\
+	\textbf{Casos de prueba}      & \textbf{Prueba 1 - Visualización del ranking:} Validar que el panel comparativo muestra la tabla y los gráficos de rendimiento con las métricas de coherencia y diversidad de todos los modelos entrenados. \newline \textbf{Prueba 2 - Comparación con un solo modelo:} Verificar el comportamiento de la interfaz cuando solo hay un modelo entrenado, garantizando que el sistema indique la falta de modelos para realizar una comparación. \\
 }
 
 % Caso de Uso 5
@@ -237,6 +242,7 @@ a cada uno de estos \acrshortpl{cu}.
 	\textbf{Postcondición}        & Se presenta la información filtrada y los gráficos de evolución correspondientes.                                    \\
 	\textbf{Excepciones}          & Ninguna.                                                                                                             \\
 	\textbf{Importancia}          & Alta                                                                                                                 \\
+	\textbf{Casos de prueba}      & \textbf{Prueba 1 - Filtrado dinámico:} Comprobar que los filtros por tutor, nota y rango de años en la vista académica actualizan la lista de proyectos y los gráficos de evolución. \newline \textbf{Prueba 2 - Búsqueda por texto libre:} Validar que la barra de búsqueda filtra correctamente los proyectos que contienen los términos clave en sus títulos o resúmenes. \\
 }
 
 \section{Matriz de trazabilidad}
@@ -257,4 +263,3 @@ matriz de trazabilidad entre los \acrshortpl{cu} y los \acrshortpl{rf}.
 	\textbf{CU-4} & & & & & & & X & \\
 	\textbf{CU-5} & & & & & & & & X \\
 }
-

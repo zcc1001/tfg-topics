@@ -1,16 +1,16 @@
-﻿\apendice{Plan de Proyecto Software}
+\apendice{Plan de Proyecto Software}
 
 \section{Introducción}
-Esta sección se detalla la gestión y planificación del \acrfull{tfg}. Se aborda
-la metodología de trabajo seguida, la temporalización de las tareas a lo largo
-de los meses de desarrollo, la gestión de riesgos y, finalmente, un estudio de
-viabilidad que engloba tanto los aspectos económicos como las consideraciones
-legales del software desarrollado.
+Esta sección se detalla la gestión y planificación del proyecto
+\nombreProyecto. Se aborda la metodología de trabajo seguida, la
+temporalización de las tareas a lo largo de los meses de desarrollo, la gestión
+de riesgos y, finalmente, un estudio de viabilidad que engloba tanto los
+aspectos económicos como las consideraciones legales del software desarrollado.
 
 \section{Metodología y planificación temporal}
 Para la organización del trabajo, se ha optado por seguir un marco de trabajo
 ágil adaptado a las necesidades de un proyecto individual académico, basándose
-en los principios fundamentales de \textbf{Scrum}. El desarrollo ha abarcado un
+en los principios fundamentales de \textit{Scrum}. El desarrollo ha abarcado un
 periodo total de casi ocho meses, dando comienzo el 16 de octubre de 2025 y
 finalizando con su presentación en junio de 2026.
 
@@ -18,7 +18,7 @@ El ciclo de vida del desarrollo se estructuró a alto nivel en seis grandes
 fases consecutivas:
 \begin{enumerate}
     \item \textbf{Investigación y Viabilidad:} Análisis del estado del arte y selección tecnológica.
-    \item \textbf{Módulo de Ingesta:} Desarrollo de los adaptadores para extraer datos de GitHub.
+    \item \textbf{Módulo de Ingesta:} Desarrollo de los adaptadores para extraer datos de \href{https://github.com}{GitHub}.
     \item \textbf{Procesamiento \acrshort{nlp} y Modelado:} Fase central de experimentación con modelos de temas.
     \item \textbf{Interfaz Web:} Desarrollo de los cuadros de mando interactivos en Streamlit.
     \item \textbf{Pruebas y Despliegue:} Refactorización, creación de tests y contenerización Docker.
@@ -35,34 +35,46 @@ logrados).
 
 Para el seguimiento de las tareas y el control de versiones, se utilizó la
 plataforma de gestión ágil \textbf{Zube}, la cual se integra nativamente de
-forma bidireccional con las \textit{issues} de GitHub. Esta herramienta
-permitió gestionar el \textit{Product Backlog}, asignar prioridades y trazar el
-progreso visual de cada tarea mediante un tablero Kanban a lo largo de los
-diferentes \textit{Sprints}, tal y como se ilustra en la Figura
+forma bidireccional con las \textit{issues} del repositorio en
+\href{https://github.com/zcc1001/tfg-topics}{GitHub}. Esta herramienta permitió
+gestionar el \textit{Product Backlog}, asignar prioridades y trazar el progreso
+visual de cada tarea mediante un tablero Kanban a lo largo de los diferentes
+\textit{Sprints}, tal y como se ilustra en la Figura
 \ref{fig:plan/zube_sprints.png}.
 
 \imagen{plan/zube_sprints.png}{Vista del panel de gestión de Sprints en la plataforma Zube}
 
-La temporalización exacta y la superposición de estas fases se ha modelado en
-el diagrama de Gantt adjunto (Figura \ref{fig:plan/gantt_planificacion.png}),
-que ilustra la línea base del cronograma del proyecto hasta el hito de defensa.
+Esta integración bidireccional garantiza que cualquier actualización en el
+estado de una tarea dentro de la interfaz de Zube se sincronice de forma
+inmediata con el repositorio del proyecto. En particular, la gestión del
+desarrollo se apoyó en los siguientes elementos clave:
+\begin{itemize}
+    \item \textbf{Gestión de incidencias y tareas (\textit{Issues}):} Se emplearon las \href{https://github.com/zcc1001/tfg-topics/issues}{\textit{issues} de GitHub} (Figura~\ref{fig:plan/github_issues.png}) para documentar individualmente cada tarea de desarrollo, corrección de errores o mejora, sirviendo como el elemento atómico de trabajo y discusión.
+    \item \textbf{Planificación de hitos (\textit{Milestones}):} El avance temporal del proyecto se organizó en hitos dentro de \href{https://github.com/zcc1001/tfg-topics/milestones}{GitHub} (Figura~\ref{fig:plan/github_milestrones.png}), agrupando las tareas planificadas para cada \textit{sprint} y marcando fechas de entrega específicas.
+    \item \textbf{Tablero Kanban:} A través de la pestaña principal de Zube (Figura \ref{fig:plan/zube_tab.png}), se dispuso de un tablero Kanban interactivo para visualizar de forma clara el flujo de trabajo (desde la bandeja de entrada hasta la validación y finalización de tareas), optimizando la distribución del esfuerzo.
+    \item \textbf{Gráfico de trabajo restante (\textit{Burndown Chart}):} Para monitorizar el ritmo del desarrollo durante cada iteración y asegurar el cumplimiento de los objetivos fijados, se utilizaron los gráficos de \textit{burndown} generados por Zube (Figura~\ref{fig:plan/zube_burndown.png}), los cuales muestran la tendencia diaria de cierre de tareas.
+\end{itemize}
 
-\imagen{plan/gantt_planificacion.png}{Diagrama de Gantt con la planificación temporal del proyecto}
+\imagen{plan/github_issues.png}{Panel de gestión de Issues en GitHub}
+\imagen{plan/github_milestrones.png}{Vista de los Milestones planificados en GitHub}
+\imagen{plan/zube_tab.png}{Pestaña de gestión de tareas y tablero Kanban en Zube}
+\imagen{plan/zube_burndown.png}{Gráfico Burndown de seguimiento del trabajo en Zube}
 
 \subsection{Evolución real del proyecto por sprints}
 
 Además de la planificación inicial, el seguimiento iterativo del desarrollo se
-gestionó mediante \textit{sprints} cerrados en Zube/GitHub. Esta trazabilidad
-permite contrastar el plan previsto con la evolución real del trabajo y
-evidenciar el grado de cumplimiento.
+gestionó mediante \textit{sprints} cerrados en la plataforma Zube y en
+\href{https://github.com/zcc1001/tfg-topics}{GitHub}. Esta trazabilidad permite
+contrastar el plan previsto con la evolución real del trabajo y evidenciar el
+grado de cumplimiento.
 
-En total se completaron doce iteraciones (Sprint 0 a Sprint 12), con cierre
+En total se completaron doce iteraciones (Sprint 0 a Sprint 13), con cierre
 íntegro de tareas en todos los casos. La evolución del proyecto siguió una
-secuencia progresiva: arranque y viabilidad inicial, construcción del conjunto de datos,
-consolidación de los módulos de ingesta y procesamiento, mejoras funcionales y
-visuales en la interfaz, y una fase final orientada a revisión con usuarios,
-estabilidad e internacionalización. La distribución temporal y el grado de
-cumplimiento de estas iteraciones se detallan en la
+secuencia progresiva: arranque y viabilidad inicial, construcción del conjunto
+de datos, consolidación de los módulos de ingesta y procesamiento, mejoras
+funcionales y visuales en la interfaz, y una fase final orientada a revisión
+con usuarios, estabilidad e internacionalización. La distribución temporal y el
+grado de cumplimiento de estas iteraciones se detallan en la
 Tabla~\ref{tabla:sprints_cronologia}.
 
 \tablaSmall{Cronología de sprints y grado de ejecución del proyecto}
@@ -85,6 +97,7 @@ Tabla~\ref{tabla:sprints_cronologia}.
     S10 & 20/04/2026 & Revisiones con usuarios y ajustes derivados de pruebas funcionales.                                               & 4/4 & 100\% \\
     S11 & 04/05/2026 & Refinamiento UX, datos demo para validación, estabilización de plataforma e internacionalización.                 & 6/6 & 100\% \\
     S12 & 21/05/2026 & Usabilidad, Documentación y Despliegue.                                                                           & 6/6 & 100\% \\
+    S13 & 03/06/2026 & Revisión documentación y despliegue.                                                                           & 4/4 & 100\% \\
 }
 
 El histórico de sprints refleja una planificación adaptativa coherente con la
@@ -102,7 +115,7 @@ principales:
 \begin{itemize}
     \item \textbf{Riesgo 1: Limitaciones de la \acrshort{api} de GitHub.} Al depender de una fuente externa para la ingesta de datos, existía el riesgo de alcanzar el límite de peticiones (Rate Limit). \textit{Mitigación:} Se implementó el uso de tokens autenticados, peticiones paginadas y tiempos de retardo controlados (\textit{sleeps}) para garantizar una extracción continua sin bloqueos.
     \item \textbf{Riesgo 2: Altos tiempos de entrenamiento \acrshort{nlp}.} El procesamiento masivo de texto y el entrenamiento concurrente de cuatro modelos de temas (\acrshort{lda}, BERTopic, etc.) suponía un cuello de botella computacional. \textit{Mitigación:} Se optó por utilizar archivos Apache Parquet para agilizar las operaciones de \ACRshort{io} en disco y se aprovechó la aceleración por GPU local para la instanciación de los \textit{embeddings} de los Transformers.
-    \item \textbf{Riesgo 3: Incompatibilidad de dependencias de Python.} Las librerías de IA suelen presentar conflictos estrictos de versiones. \textit{Mitigación:} Se abordó mediante la contención temprana, aislando el entorno de desarrollo en contenedores Docker y especificando versiones exactas en un archivo \texttt{requirements.txt}.
+    \item \textbf{Riesgo 3: Incompatibilidad de dependencias de Python.} Las librerías de \acrshort{ai} suelen presentar conflictos estrictos de versiones. \textit{Mitigación:} Se abordó mediante la contención temprana, aislando el entorno de desarrollo en contenedores Docker y especificando versiones exactas en un archivo \texttt{requirements.txt}.
 \end{itemize}
 
 \section{Estudio de viabilidad}
@@ -118,10 +131,11 @@ proyecto se hubiese encargado dentro de un entorno empresarial. El análisis
 contempla tres partidas principales:
 
 \begin{itemize}
-    \item \textbf{Costes de personal:} La carga lectiva de un \acrshort{tfg} estándar de 12 créditos ECTS equivale habitualmente a unas 300 horas de dedicación. Asumiendo el rol de un Desarrollador de Software Junior / Ingeniero de Datos con un coste para la empresa estimado de 15 €/hora, el coste salarial ascendería a \textbf{4.500 €}.
+    \item \textbf{Costes de personal:} La carga lectiva de un \acrshort{tfg} estándar de 12 créditos ECTS equivale habitualmente a unas 300 horas de dedicación. Para estimar el coste salarial real en el mercado español actual, se toma como referencia el salario bruto anual medio de un Desarrollador de Software / Ingeniero de Datos de nivel medio (\textit{Mid-level} o \textit{Semi-senior}) bajo las tablas reales de mercado y el \textit{XIX Convenio Colectivo Estatal de Empresas de Consultoría y Estudios de Mercado}~\cite{BoeConvenioTIC} (la media de mercado real para perfiles tecnológicos con experiencia intermedia y conocimientos de analítica de datos e inteligencia artificial ronda los 38.000 € brutos anuales, según datos de la \textit{Guía del Mercado Laboral 2026} de Hays~\cite{HaysGuia2026}). A esta cifra se le añade aproximadamente un 32\% en concepto de cotizaciones a la Seguridad Social a cargo del empleador (contingencias comunes, desempleo, FOGASA, formación profesional y MEI, de acuerdo con la regulación de tipos de cotización vigente~\cite{BoeCotizaciones2026}), resultando en un coste anual para la empresa de 50.160 €. Considerando la jornada anual estándar de 1.800 horas estipulada en dicho convenio, el coste por hora del desarrollador asciende a aproximadamente 27,87 €/hora. Por lo tanto, el coste total de personal por las 300 horas de dedicación estimadas se cifra en \textbf{8.360 €}.
+    \item \textbf{Costes de revisión y auditoría (Tutoría):} El seguimiento, asesoramiento técnico, validación y control de calidad metodológica han sido desempeñados por el tutor del proyecto (ejerciendo funciones homólogas a las de un Consultor Senior o Director Técnico). Se estima una dedicación acumulada de 25 horas para reuniones de seguimiento, revisión de entregables y evaluación final del proyecto. Con un coste de mercado medio para este perfil de consultoría senior fijado en 45 €/hora, el coste total de esta partida asciende a \textbf{1.125 €}.
     \item \textbf{Costes de hardware (Amortización):} El desarrollo de las herramientas y el entrenamiento de los algoritmos de modelado requieren alta capacidad de cómputo. Para ello, se ha utilizado un equipo propio (AMD Ryzen 5 7600X, 32 GB RAM, NVIDIA RTX 4070 SUPER 12GB). Estimando un valor de compra de 1.800 € y una vida útil de 5 años, la amortización correspondiente a los 8 meses del proyecto supone un impacto de \textbf{240 €}.
-    \item \textbf{Costes de software e infraestructura:} Todos los lenguajes, librerías, y entornos de desarrollo utilizados (Python, Visual Studio Code, Docker, GitHub) disponen de licencias de código abierto o planes gratuitos. En consecuencia, el coste en software es de \textbf{0 €}.
-    \item \textbf{Gastos generales prorrateados:} Asumiendo un consumo energético y conexión a Internet prorrateado de unos 20 €/mes durante 8 meses de trabajo en oficina u hogar, se estiman \textbf{160 €}.
+    \item \textbf{Costes de software e infraestructura:} Todos los lenguajes, librerías, y entornos de desarrollo utilizados (Python, Visual Studio Code, Docker, \href{https://github.com/zcc1001/tfg-topics}{GitHub}) disponen de licencias de código abierto o planes gratuitos. En consecuencia, el coste en software es de \textbf{0 €}.
+    \item \textbf{Gastos generales prorrateados:} Contemplan costes indirectos del proyecto a lo largo de sus 8 meses de duración, desglosados de forma mensual: alquiler proporcional del espacio de oficina o puesto de trabajo (80 €/mes), consumo eléctrico (40 €/mes), conexión a internet de banda ancha (30 €/mes) y material de oficina (10 €/mes). Esto supone un gasto general mensual de 160 €/mes, resultando en un total prorrateado de \textbf{1.280 €}.
 \end{itemize}
 
 A continuación, en la Tabla~\ref{tabla:presupuesto}, se muestra de forma
@@ -131,18 +145,19 @@ resumida el desglose presupuestario del proyecto.
 {l r}
 {presupuesto}
 {
-    \textbf{Concepto}          & \textbf{Coste estimado} \\
+    \textbf{Concepto}                               & \textbf{Coste estimado} \\
 }
 {
-    Costes de personal (300h)  & 4.500 €                 \\
-    Amortización de hardware   & 240 €                   \\
-    Licencias de software      & 0 €                     \\
-    Gastos generales           & 160 €                   \\
-    \textbf{Presupuesto Total} & \textbf{4.900 €}        \\
+    Costes de personal (desarrollo, 300h)           & 8.360 €                 \\
+    Revisión y auditoría (tutoría, 25h)             & 1.125 €                 \\
+    Amortización de hardware                        & 240 €                   \\
+    Licencias de software                           & 0 €                     \\
+    Gastos generales                                & 1.280 €                 \\
+    \textbf{Presupuesto Total}                      & \textbf{11.005 €}       \\
 }
 
 Agregando todas las partidas, el presupuesto total de desarrollo de esta
-herramienta rondaría los \textbf{4.900 €}. Teniendo en cuenta la nula barrera
+herramienta rondaría los \textbf{11.005 €}. Teniendo en cuenta la nula barrera
 de entrada a nivel de licencias y herramientas, se concluye que el proyecto es
 totalmente \textbf{económicamente viable}.
 
@@ -152,7 +167,7 @@ distribución de esta aplicación en código abierto plantea dos retos principal
 que han sido solventados:
 
 \begin{itemize}
-    \item \textbf{Protección de datos personales:} Dado que el sistema requiere analizar metadatos e incidencias de repositorios que actúan como \acrshort{tfg}, existía el riesgo de vulnerar la privacidad de autores y tutores. Para solucionarlo, el módulo de extracción se ha configurado para \textbf{anonimizar intencionalmente} cualquier nombre o dato de contacto recopilado. Además, la información es extraída de forma no invasiva \textbf{exclusivamente desde repositorios públicos} de GitHub, acatando escrupulosamente los Términos de Servicio de su \acrshort{api} para usos académicos.
-    \item \textbf{Licenciamiento del software:} El código desarrollado hace uso de librerías de terceros (tales como Pandas o Streamlit) amparadas bajo licencias permisivas (BSD o Apache 2.0). Para asegurar la mayor interoperabilidad y evitar bloqueos en usos posteriores por otros investigadores, el código fuente completo de este proyecto será liberado en GitHub bajo la \textbf{Licencia MIT}. Esta licencia, al ser altamente permisiva, garantiza que cualquier usuario pueda modificar y distribuir el código base, requiriendo únicamente preservar el aviso de derechos de autor original, lo que consolida por completo su \textbf{viabilidad legal}.
+    \item \textbf{Protección de datos personales:} Dado que el sistema requiere analizar metadatos e incidencias de repositorios que actúan como \acrshort{tfg}, existía el riesgo de vulnerar la privacidad de autores y tutores. Para solucionarlo, el módulo de extracción se ha configurado para \textbf{anonimizar intencionalmente} cualquier nombre o dato de contacto recopilado. Además, la información es extraída de forma no invasiva \textbf{exclusivamente desde repositorios públicos} de \href{https://github.com}{GitHub}, acatando escrupulosamente los Términos de Servicio de su \acrshort{api} para usos académicos.
+    \item \textbf{Licenciamiento del software:} El código desarrollado hace uso de librerías de terceros (tales como Pandas o Streamlit) amparadas bajo licencias permisivas (BSD o Apache 2.0). Para asegurar la mayor interoperabilidad y evitar bloqueos en usos posteriores por otros investigadores, el código fuente completo de este proyecto será liberado en \href{https://github.com/zcc1001/tfg-topics}{GitHub} bajo la \textbf{Licencia Apache 2.0}. Esta licencia de código abierto y altamente permisiva permite a cualquier usuario usar, modificar y distribuir el software para cualquier propósito, tanto comercial como académico, garantizando al mismo tiempo la protección frente a reclamaciones de patentes y requiriendo la conservación del aviso de derechos de autor original y del descargo de responsabilidad, lo que consolida por completo su \textbf{viabilidad legal}.
 \end{itemize}
 

@@ -2,14 +2,14 @@
 
 \section{Introducción}
 El presente anexo recoge una reflexión crítica sobre la alineación del
-\ACRshort{tfg} con los principios de sostenibilidad y responsabilidad social,
-en concordancia con las directrices establecidas por la \ACRfull{crue}.
+\acrshort{tfg} con los principios de sostenibilidad y responsabilidad social,
+en concordancia con las directrices establecidas por la \acrfull{crue}.
 
-La ingeniería del software, tradicionalmente percibida como una disciplina
-aséptica, tiene un impacto profundo y directo en el consumo de recursos
-naturales, el desarrollo socioeconómico y la equidad social. Por tanto, el
-diseño, arquitectura y desarrollo de este sistema de análisis temático se ha
-llevado a cabo bajo el prisma de sostenibilidad ambiental, social y económica.
+La ingeniería del software, tiene un impacto profundo y directo en el consumo
+de recursos naturales, el desarrollo socioeconómico y la equidad social. Por
+tanto, el diseño, arquitectura y desarrollo de este sistema de análisis
+temático se ha llevado a cabo bajo el prisma de sostenibilidad ambiental,
+social y económica.
 
 A continuación, en la Tabla~\ref{tabla:ods_resumen}, se resumen las principales
 decisiones adoptadas y su impacto directo en la sostenibilidad.
@@ -28,12 +28,11 @@ decisiones adoptadas y su impacto directo en la sostenibilidad.
 }
 
 \section{Sostenibilidad Ambiental}
-El auge reciente de la Inteligencia Artificial y de los modelos de
-Procesamiento de Lenguaje Natural (\acrshort{nlp}) ha traído consigo un
-incremento alarmante en la huella de carbono, debido a la ingente cantidad de
-recursos computacionales y energéticos necesarios para su entrenamiento. En
-este proyecto, se han aplicado principios de \textit{Green AI} (IA verde) para
-minimizar drásticamente el impacto medioambiental.
+El auge reciente de la \acrshort{ai} y de los modelos de \acrshort{nlp} ha
+traído consigo un incremento alarmante en la huella de carbono, debido a la
+ingente cantidad de recursos computacionales y energéticos necesarios para su
+entrenamiento. En este proyecto, se han aplicado principios de \textit{Green
+    AI} (IA verde) para minimizar drásticamente el impacto medioambiental.
 
 En primer lugar, se ha evitado la dependencia de modelos de lenguaje cerrados
 en la nube que requieren centros de datos masivos. En su lugar, se ha optado
@@ -46,8 +45,8 @@ altamente eficiente. La transición de formatos tradicionales en texto plano
 (como JSON o \acrshort{csv}) hacia el uso exclusivo de Apache Parquet ha
 permitido comprimir drásticamente el espacio de almacenamiento. Parquet, al ser
 un formato columnar optimizado, minimiza las operaciones de lectura y escritura
-en disco (I/O), reduciendo notablemente el consumo energético del procesador y
-el disco durante las pesadas fases de tratamiento de texto.
+en disco (\acrshort{io}), reduciendo notablemente el consumo energético del
+procesador y el disco durante las pesadas fases de tratamiento de texto.
 
 \section{Sostenibilidad Social y Ética}
 Desde el punto de vista del impacto humano, el proyecto contribuye de forma
@@ -62,8 +61,8 @@ evita la redundancia académica.
 
 \section{Sostenibilidad Económica}
 El ecosistema de este desarrollo se ha sustentado de forma exclusiva sobre
-tecnologías libres y gratuitas. El backend (Python, Pandas, Optuna) y
-el motor de visualización (Streamlit) no exigen licencias comerciales de pago.
+tecnologías libres y gratuitas. El backend (Python, Pandas, Optuna) y el motor
+de visualización (Streamlit) no exigen licencias comerciales de pago.
 
 Asimismo, la ligereza de la interfaz web permite que el producto final pueda
 ser albergado en plataformas en la nube de capa gratuita (como \textit{GitHub
@@ -73,11 +72,11 @@ disponibilidad analítica universal a coste cero de mantenimiento operativo.
 \section{Conclusión}
 En conclusión, la elaboración de este \Acrshort{tfg} ha supuesto una
 oportunidad invaluable para interiorizar y poner en práctica las competencias
-    transversales de sostenibilidad impulsadas por la \acrshort{crue}. Las decisiones de
-diseño técnico adoptadas desde la selección del formato Parquet para reducir el
-consumo energético, hasta la adopción de una licencia de código abierto para
-democratizar su uso y la anonimización proactiva de los datos recogidos
-demuestran que es posible concebir productos de software que sean técnicamente
-robustos a la par que social, económica y medioambientalmente responsables.
-Este proyecto contribuye a través de una praxis ética y respetuosa con su
-entorno material y humano.
+transversales de sostenibilidad impulsadas por la \acrshort{crue}. Las
+decisiones de diseño técnico adoptadas desde la selección del formato Parquet
+para reducir el consumo energético, hasta la adopción de una licencia de código
+abierto para democratizar su uso y la anonimización proactiva de los datos
+recogidos demuestran que es posible concebir productos de software que sean
+técnicamente robustos a la par que social, económica y medioambientalmente
+responsables. Este proyecto contribuye a través de una praxis ética y
+respetuosa con su entorno material y humano.
